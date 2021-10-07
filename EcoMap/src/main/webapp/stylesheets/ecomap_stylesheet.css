@@ -43,11 +43,6 @@ a:visited, a:link {
 footer, footer a{
     color: grey;
 }
-footer {
-	position: absolute;
-    bottom: 0%;
-    padding: 0em;
-}
 /*Desktop Style*/
 @media only screen and (min-width: 768px) {
     body {
@@ -79,6 +74,17 @@ footer {
     #logo {
         position: relative;
         left: 5%;
+    }
+    #map {
+    	float: left;
+    	position: relative;
+    	left: 20%;
+    }
+    footer {
+		position: relative;
+		height: 2em;
+		top: 100%;
+		right: 15%;
     }
 }
 

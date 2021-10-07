@@ -32,28 +32,25 @@
                 </ul>
             </div>
             <h1>Eco-map</h1>
-            <div>
-                <article>
+            <div id="map">
                     <iframe
-                        width="600"
-                        height="450"
+                        width="500"
+                        height="350"
                         style="border:0"
                         loading="lazy"
                         allowfullscreen
-                        src="https://www.google.com/maps/embed/v1/view?key=ab09a04f93fd18d7&center=28.5384,8133789&zoom=8">
+                        src="https://www.google.com/maps/embed/v1/view?key=AIzaSyCUTl_Ic9Ub7dI4otY5NTTFOy8znlXK5mE&center=28.5384,-81.3789&zoom=8">
                     </iframe>
-                </article>
             </div>
         </section>
 
-        <div id="bottom">        
-            <footer>
-                <a href="https://www.orlando.gov/System-pages/Website-Legal-Notices">Website Legal Notice</a>  | 
-                <a href="https://www.orlando.gov/General-Pages/Sitemap">Sitemap</a> | 
-                <a href="https://www.orlando.gov/Our-Government/News-and-Information/City-Official-Assets">The City Beautiful</a>
-                &copy; 2021 City of Orlando | 
-                Powered by <a href="http://www.opencities.com/">OpenCities</a>            
-            </footer>
-        </div>
+             
+        <footer>
+            <a href="https://www.orlando.gov/System-pages/Website-Legal-Notices">Website Legal Notice</a>  | 
+            <a href="https://www.orlando.gov/General-Pages/Sitemap">Sitemap</a> | 
+            <a href="https://www.orlando.gov/Our-Government/News-and-Information/City-Official-Assets">The City Beautiful</a>
+            &copy; 2021 City of Orlando | 
+            Powered by <a href="http://www.opencities.com/">OpenCities</a>            
+        </footer>
     </body>
 </html>
