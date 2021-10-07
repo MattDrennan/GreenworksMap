@@ -19,22 +19,34 @@
     <body>
         <header>
             <a id="menu" href="">&#9776; Menu</a>
-            <img id="logo" src="icons/CityOfOrlando_logo.png" alt="City of Orlando">
+            <img id="logo" src="icons/CityOfOrlando_logo.png" alt="City of Orlando logo">
             <input id="search" type="text" placeholder="Find almost anything on our website">
+            <input id="search_button" type="button" value="Search">
         </header>
         
         <section>
-            <ul class="breadcrumb">
-                <li><a href="https://www.orlando.gov/Home">Home</a></li>
-                <li>Eco-map</li>
-            </ul>
+            <div>
+                <ul class="breadcrumb">
+                    <li><a href="https://www.orlando.gov/Home">Home</a></li>
+                    <li>Eco-map</li>
+                </ul>
+            </div>
             <h1>Eco-map</h1>
-            <article>
-                [Insert embed here]
-            </article>
+            <div>
+                <article>
+                    <iframe
+                        width="600"
+                        height="450"
+                        style="border:0"
+                        loading="lazy"
+                        allowfullscreen
+                        src="https://www.google.com/maps/embed/v1/view?key=ab09a04f93fd18d7&center=28.5384,8133789&zoom=8">
+                    </iframe>
+                </article>
+            </div>
         </section>
 
-        <section>        
+        <div id="bottom">        
             <footer>
                 <a href="https://www.orlando.gov/System-pages/Website-Legal-Notices">Website Legal Notice</a>  | 
                 <a href="https://www.orlando.gov/General-Pages/Sitemap">Sitemap</a> | 
@@ -42,6 +54,6 @@
                 &copy; 2021 City of Orlando | 
                 Powered by <a href="http://www.opencities.com/">OpenCities</a>            
             </footer>
-     </section>
+        </div>
     </body>
 </html>

@@ -32,24 +32,43 @@ ul.breadcrumb li+li:before {
 a {
     text-decoration: none;
 }
+a:hover, a:focus {
+	color: blue;
+	font-style: italic;
+	text-decoration: underline;
+}
+a:visited, a:link {
+	text-decoration: none;
+}
 footer, footer a{
     color: grey;
-    position: relative;
 }
-
+footer {
+	position: absolute;
+    bottom: 0%;
+    padding: 0em;
+}
 /*Desktop Style*/
 @media only screen and (min-width: 768px) {
     body {
         font: black;
         background-color: white;
-        width: 1vw;
-        height: 1vh;
+        width: 100vw;
+        height: 100vh;
     }
     #search {
         float: right;
         position: relative;
-        right: 2%;
+        right: 7%;
         width: 20em;
+    }
+    #search_button {
+    	float: right;
+    	position: relative;
+    	left: 18%;
+    	height: 1.6em;
+    	z-index: 5;
+    	padding: 0em;
     }
     #menu {
         float: left;
