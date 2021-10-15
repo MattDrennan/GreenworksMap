@@ -44,6 +44,9 @@
             </div>
         </section>
 
+	<script	src="https://maps.google.com/maps/api/js?key=AIzaSyCUT1_Ic9Ub7dI4otYSNTTOy8zn1XK5mE&callback=initMap&v=weekly"
+     async>
+	</script>
              
         <footer>
             <a href="https://www.orlando.gov/System-pages/Website-Legal-Notices">Website Legal Notice</a>  | 
