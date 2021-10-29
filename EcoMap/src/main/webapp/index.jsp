@@ -29,7 +29,8 @@
             <input id="search" type="text" placeholder="Find almost anything on our website">
             <input id="search_button" type="button" value="Search">
         </header>
-        
+        //adds the mock header for the page including the CoO logo, a search field, and a menu 
+
         <section>
             <div>
                 <ul class="breadcrumb">
@@ -37,7 +38,10 @@
                     <li>Eco-map</li>
                 </ul>
             </div>
+            //adds a static breadcrumb navigation to show the user the URL path taken to the current page
+
             <h1>Eco-map</h1>
+
             <div id="map">
                     <iframe
                         width="500"
@@ -48,12 +52,14 @@
                         src="https://www.google.com/maps/embed/v1/view?key=AIzaSyD9nc7U6UPDjbOZUwgTn1pdDxBqX49zjI4&center=28.5384,-81.3789&zoom=12">
                     </iframe>
             </div>
+            //sets the parameters for the Google Maps API embed
         </section>
-
-	<script	src="https://maps.google.com/maps/api/js?key=AIzaSyCUT1_Ic9Ub7dI4otYSNTTOy8zn1XK5mE&callback=initMap&v=weekly"
-     async>
-	</script>
-             
+        
+        <script	src="https://maps.google.com/maps/api/js?key=AIzaSyCUT1_Ic9Ub7dI4otYSNTTOy8zn1XK5mE&callback=initMap&v=weekly"
+        async>
+        </script>
+        //script renders the map under the breadcrumb nav
+        
         <footer>
             <a href="https://www.orlando.gov/System-pages/Website-Legal-Notices">Website Legal Notice</a>  | 
             <a href="https://www.orlando.gov/General-Pages/Sitemap">Sitemap</a> | 
@@ -61,5 +67,6 @@
             &copy; 2021 City of Orlando | 
             Powered by <a href="http://www.opencities.com/">OpenCities</a>            
         </footer>
+        //simulates the footer as shown on the real CoO site
     </body>
 </html>
