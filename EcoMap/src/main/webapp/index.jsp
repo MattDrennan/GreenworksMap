@@ -1,18 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+    <%@ page import = "com.GREENWORKS.DAO.*" %> <%-- to access the DAO package java code --%>
+    <%@ page import = "com.GREENWORKS.object.*" %> <%-- to access the object package --%>
+    <%@ page import = "java.util.Date" %> <%-- (for specification only) to parse and/or format Date values --%>
+    <%@ page import = "java.util.*" %> <%-- to access most Java classes (i.e: LinkedList, Scanner, Date)--%>
 <html>
     <head>
         <!--
             Filename: OrlandoEcoMap.com
             Date of Creation: 27 Sep 2021
             Editor: Kashai Bingham
-            Edited: 29 Sep 2021
+            Edited: 28 Oct 2021
+            Version: 2.3
         -->
         
         <meta charset="utf-8" />
         <title>Eco-map - City of Orlando</title>
 
         <link href="stylesheets/ecomap_stylesheet.css" rel="stylesheet" />
+        <link href="scripts/map.js" rel="script" defer/>
     </head>
 
 
