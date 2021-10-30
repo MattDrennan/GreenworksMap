@@ -45,11 +45,10 @@ footer, footer a{
 }
 /*Desktop Style*/
 @media only screen and (min-width: 768px) {
-    body {
-        font: black;
-        background-color: white;
-        width: 100vw;
-        height: 100vh;
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
     }
     #search {
         float: right;
@@ -76,21 +75,28 @@ footer, footer a{
         left: 5%;
     }
     #map {
-    	float: left;
-    	position: relative;
-    	left: 20%;
+        height: 65%;
+        width: 80%;
+        position: relative;
+        left: 10%;
     }
     footer {
-		position: relative;
+		position: absolute;
 		height: 2em;
-		top: 100%;
-		right: 15%;
+		bottom: 0;
+        width: 100%;
+        text-align: center;
     }
 }
 
 /*Mobile Style*/
-@media only screen and (min-width: 600px) {
-    body {
-        width: 100vw;
+@media only screen and (max-width: 767px) {
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    #map {
+        height: 100%;
     }
 }

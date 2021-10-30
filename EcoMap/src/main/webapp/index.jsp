@@ -4,7 +4,8 @@
     <%@ page import = "com.GREENWORKS.object.*" %> <%-- to access the object package --%>
     <%@ page import = "java.util.Date" %> <%-- (for specification only) to parse and/or format Date values --%>
     <%@ page import = "java.util.*" %> <%-- to access most Java classes (i.e: LinkedList, Scanner, Date)--%>
-<html>
+<!DOCTYPE html>
+    <html>
     <head>
         <!--
             Filename: OrlandoEcoMap.com
@@ -18,7 +19,6 @@
         <title>Eco-map - City of Orlando</title>
 
         <link href="stylesheets/ecomap_stylesheet.css" rel="stylesheet" />
-        <link href="scripts/map.js" rel="script" defer/>
     </head>
 
 
@@ -29,7 +29,7 @@
             <input id="search" type="text" placeholder="Find almost anything on our website">
             <input id="search_button" type="button" value="Search">
         </header>
-        //adds the mock header for the page including the CoO logo, a search field, and a menu 
+        <!-- adds the mock header for the page including the CoO logo, a search field, and a menu -->
 
         <section>
             <div>
@@ -38,35 +38,27 @@
                     <li>Eco-map</li>
                 </ul>
             </div>
-            //adds a static breadcrumb navigation to show the user the URL path taken to the current page
+            <!-- adds a static breadcrumb navigation to show the user the URL path taken to the current page -->
 
-            <h1>Eco-map</h1>
-
-            <div id="map">
-                    <iframe
-                        width="500"
-                        height="350"
-                        style="border:0"
-                        loading="lazy"
-                        allowfullscreen
-                        src="https://www.google.com/maps/embed/v1/view?key=AIzaSyD9nc7U6UPDjbOZUwgTn1pdDxBqX49zjI4&center=28.5384,-81.3789&zoom=12">
-                    </iframe>
-            </div>
-            //sets the parameters for the Google Maps API embed
+            <h1>Eco-map</h1>            
         </section>
-        
-        <script	src="https://maps.google.com/maps/api/js?key=AIzaSyCUT1_Ic9Ub7dI4otYSNTTOy8zn1XK5mE&callback=initMap&v=weekly"
-        async>
-        </script>
-        //script renders the map under the breadcrumb nav
-        
-        <footer>
-            <a href="https://www.orlando.gov/System-pages/Website-Legal-Notices">Website Legal Notice</a>  | 
-            <a href="https://www.orlando.gov/General-Pages/Sitemap">Sitemap</a> | 
-            <a href="https://www.orlando.gov/Our-Government/News-and-Information/City-Official-Assets">The City Beautiful</a>
-            &copy; 2021 City of Orlando | 
-            Powered by <a href="http://www.opencities.com/">OpenCities</a>            
-        </footer>
-        //simulates the footer as shown on the real CoO site
+        <div id="map"></div> 
+        <!--sets the parameters for the Google Maps API embed -->
+
+        <script	async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9nc7U6UPDjbOZUwgTn1pdDxBqX49zjI4&callback=init"
+        ></script>
+        <!--script renders the map under the breadcrumb nav --> 
+        <script src="scripts/mapEmbed.js"></script> <!--references the init callback to the mapEmbed js file -->
+        <div id="foot">
+            <footer>
+                <a href="https://www.orlando.gov/System-pages/Website-Legal-Notices">Website Legal Notice</a>  | 
+                <a href="https://www.orlando.gov/General-Pages/Sitemap">Sitemap</a> | 
+                <a href="https://www.orlando.gov/Our-Government/News-and-Information/City-Official-Assets">The City Beautiful</a>
+                &copy; 2021 City of Orlando | 
+                Powered by <a href="http://www.opencities.com/">OpenCities</a>            
+            </footer>
+        </div>
+        <!-- simulates the footer as shown on the real CoO site -->
     </body>
 </html>
