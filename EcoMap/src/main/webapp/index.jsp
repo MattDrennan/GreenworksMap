@@ -25,9 +25,10 @@
     <body>
         <header>
             <a id="menu" href="">&#9776; Menu</a>
-            <img id="logo" src="icons/CityOfOrlando_logo.png" alt="City of Orlando logo">
+            <a id="logo" href="https://www.orlando.gov"><img src="icons/CityOfOrlando_logo.png" alt="City of Orlando logo"></a>
             <input id="search" type="text" placeholder="Find almost anything on our website">
             <input id="search_button" type="button" value="Search">
+            <a id="mobile_search" href=""><img src="icons/search_icon.png"></a>
         </header>
         <!-- adds the mock header for the page including the CoO logo, a search field, and a menu -->
 
@@ -52,12 +53,16 @@
         <script src="scripts/mapEmbed.js"></script> <!--references the init callback to the mapEmbed js file -->
         <div id="foot">
             <footer>
-                <a href="https://www.orlando.gov/System-pages/Website-Legal-Notices">Website Legal Notice</a>  | 
-                <a href="https://www.orlando.gov/General-Pages/Sitemap">Sitemap</a> | 
-                <a href="https://www.orlando.gov/Our-Government/News-and-Information/City-Official-Assets">The City Beautiful</a>
-                &copy; 2021 City of Orlando | 
-                Powered by <a href="http://www.opencities.com/">OpenCities</a>            
-            </footer>
+                <div id="left">
+                  <a href="https://www.orlando.gov/System-pages/Website-Legal-Notices">Website Legal Notice</a>  | 
+                  <a href="https://www.orlando.gov/General-Pages/Sitemap">Sitemap</a> | 
+                  <a href="https://www.orlando.gov/Our-Government/News-and-Information/City-Official-Assets">The City Beautiful</a>
+                </div>
+                <div id="right">
+                  © 2021 City of Orlando | 
+                Powered by <a href="http://www.opencities.com/">OpenCities</a>
+                </div>                           
+              </footer>
         </div>
         <!-- simulates the footer as shown on the real CoO site -->
     </body>
