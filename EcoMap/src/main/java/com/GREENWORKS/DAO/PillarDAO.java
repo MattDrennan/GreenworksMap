@@ -70,9 +70,10 @@ public class PillarDAO {
      * @return pillarList The returned LinkedList stores all the information from each data
      * entry that meets the selection requirements.
      */
-    public LinkedList<EcoPillar> showSelectedPillar(String pillarCall) {
+    public LinkedList<EcoPillar> showSelectedPillar(ArrayList<String> pillarCall) {
         //setPswd(); //uncomment if and only if the pswd is not explicitly given
         LinkedList<EcoPillar> pillarList = new LinkedList<EcoPillar>();
+		String query = "";
 
         try {
 			Scanner sc = new Scanner(login);
@@ -82,18 +83,22 @@ public class PillarDAO {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(url, username, pswd);
 			//Query string for the MySQL dB
-			String tableRetrieve = pillarCall;
-			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery(tableRetrieve);
-			
-			while(rs.next()) {
-				EcoPillar item = new EcoPillar();
-				item.setSp_id(rs.getInt("sp_id"));
-				item.setAddress(rs.getString("Street_address"));
-				item.setDescription(rs.getString("Description"));
-				item.setZip_Code(rs.getInt("Zip"));
-				pillarList.add(item);
-			} 
+
+			for(int i = 0; i < pillarCall.size(); i++) {
+				String tableRetrieve = query;
+				Statement st = conn.createStatement();
+				ResultSet rs = st.executeQuery(tableRetrieve);
+				
+				while(rs.next()) {
+					EcoPillar item = new EcoPillar();
+					item.setSp_id(rs.getInt("sp_id"));
+					item.setAddress(rs.getString("Street_address"));
+					item.setDescription(rs.getString("Description"));
+					item.setZip_Code(rs.getInt("Zip"));
+					pillarList.add(item);
+				} 	
+			}
+			// loops through the array of pillar calls and stores all the return values
 			
 			conn.close();
 		} catch (Exception e) {

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class FilterPillars extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -18,34 +19,35 @@ public class FilterPillars extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String pillarSelect[] = request.getParameterValues("pillar_name"), dataQuery = ""; 	
+		String pillarSelect[] = request.getParameterValues("pillar_name");
+		ArrayList<String> dataQuery = new ArrayList<String>(); 	
 	
 		for (int i = 0; i < pillarSelect.length; i++) { 
 			switch(pillarSelect[i]) {
 				case "CE": 
-					dataQuery += "CALL SP_showEnergy();";
+					dataQuery.add("CALL SP_showEnergy();");
 					break;
 				case "GB":
-					dataQuery += "CALL SP_showBuildings();";
+					dataQuery.add("CALL SP_showBuildings();");
 					break;
 				case "LF":
-					dataQuery += "CALL SP_showFood();";
+					dataQuery.add("CALL SP_showFood();");
 					break;
 				case "LV":
-					dataQuery += "CALL SP_showWaste();";
+					dataQuery.add("CALL SP_showWaste();");
 					break;
 				case "ZW":
-					dataQuery += "CALL SP_showWater();";
+					dataQuery.add("CALL SP_showWater();");
 					break;
 				case "CW":
-					dataQuery += "CALL SP_showTransportation();";
+					dataQuery.add("CALL SP_showTransportation();");
 					break;
 				case "EA":
-					dataQuery += "CALL SP_showPillars();";
+					dataQuery.add("CALL SP_showPillars();");
 					break;
 			}
 		}
-
+		//adds a new query for each value pulled from pillar_name
 		
 		PillarDAO pd = new PillarDAO();
 		LinkedList<EcoPillar> markers = pd.showSelectedPillar(dataQuery);
