@@ -4,4 +4,24 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+  <servlet>
+  	<servlet-name>ShowPillars</servlet-name>
+  	<display-name>ShowPillars</display-name>
+  	<description></description>
+  	<servlet-class>com.GREENWORKS.controller.ShowPillars</servlet-class>
+  </servlet>
+  <servlet>
+	<servlet-name>FilterPillars</servlet-name>
+	<display-name>FilterPillars</display-name>
+	<description></description>
+	<servlet-class>com.GREENWORKS.controller.FilterPillars</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ShowPillars</servlet-name>
+  	<url-pattern>/showAll</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+	<servlet-name>FilterPillars</servlet-name>
+	<url-pattern>/showFilter</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -1,11 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+    <%@ page import="java.util.LinkedList" %>
+    <%@ page import="com.GREENWORKS.object.*" %>
 <html>
     <head>
         <!--
             Filename: OrlandoEcoMap.com
             Date of Creation: 27 Sep 2021
             Editor: Kashai Bingham
-            Edited: 3 Nov 2021
-            Version: 2.5
+            Edited: 5 Nov 2021
+            Version: 2.5.1
         -->
         
         <meta charset="utf-8" />
@@ -18,14 +22,14 @@
                 document.getElementById("filter").style.display = "block";
             }
             function Filter_Close() {
-                document.getElementById("uncheck").checked = false;
                 document.getElementById("filter").style.display = "none";
             }
         </script>
     </head>
 
-
     <body>
+        <% EcoPillar hi = new EcoPillar(); 
+%>
         <header>
             <a id="menu" href="">&#9776; Menu</a>
             <a id="logo" href="https://www.orlando.gov"><img src="icons/CityOfOrlando_logo.png" alt="City of Orlando logo"></a>
@@ -49,35 +53,38 @@
             <!--solution found on StackOverflow: https://stackoverflow.com/questions/5003867/how-to-call-javascript-function-instead-of-href-in-html/5003904-->
         </section>
         <div id="filter">
-            <h2>Filter</h2><hr>
-            <div class="pillars">
-                <div class="options">
-                    <input class="check" type="checkbox"></input><label class="label">Clean Energy</label>
-                </div>
-                <div class="options">
-                    <input class="check" type="checkbox"></input><label class="label">Green Buildings</label>
-                </div>
-                <div class="options">
-                    <input class="check" type="checkbox"></input><label class="label">Local Food Systems</label>
-                </div>
-                <div class="options">
-                    <input class="check" type="checkbox"></input><label class="label">Livability</label>
-                </div>
-                <div class="options">
-                    <input class="check" type="checkbox"></input><label class="label">Zero Waste</label>
-                </div>
-                <div class="options">
-                    <input class="check" type="checkbox"></input><label class="label">Clean Water</label>
-                </div>
-                <div class="options">
-                    <input class="check" type="checkbox"></input><label class="label">Electic & Alt. Transportation</label>
-                </div>
-            </div>
-            <hr>
-            <div class="action_controls">
-                <button id="uncheck" type="reset" onclick="Filter_Close()">Close</button>
-                <input type="submit" value="Save"></input>
-            </div>
+                <form action="/showFilter" name="filter" method="post">
+                    <h2>Filter</h2><hr>
+                    <div class="pillars">
+                        <div class="options">
+                            <input class="check" type="checkbox" name="pillar_name" value="CE"></input><label class="label">Clean Energy</label>
+                        </div>
+                        <div class="options">
+                            <input class="check" type="checkbox" name="pillar_name" value="GB"></input><label class="label">Green Buildings</label>
+                        </div>
+                        <div class="options">
+                            <input class="check" type="checkbox" name="pillar_name" value="LF"></input><label class="label">Local Food Systems</label>
+                        </div>
+                        <div class="options">
+                            <input class="check" type="checkbox" name="pillar_name" value="LV"></input><label class="label">Livability</label>
+                        </div>
+                        <div class="options">
+                            <input class="check" type="checkbox" name="pillar_name" value="ZW"></input><label class="label">Zero Waste</label>
+                        </div>
+                        <div class="options">
+                            <input class="check" type="checkbox" name="pillar_name" value="CW"></input><label class="label">Clean Water</label>
+                        </div>
+                        <div class="options">
+                            <input class="check" type="checkbox" name="pillar_name" value="EA"></input><label class="label">Electic & Alt. Transportation</label>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="action_controls">
+                        <button id="uncheck" type="reset" onclick="Filter_Close()">Close</button>
+                        <input type="submit" value="Save"></input>
+                    </div>
+        
+                </form>
         </div>
         <div id="map"></div> 
         <!--sets the parameters for the Google Maps API embed -->
@@ -87,8 +94,7 @@
         ></script>
         <!--script renders the map under the breadcrumb nav --> 
         <script src="scripts/mapEmbed.js"></script> <!--references the init callback to the mapEmbed js file -->
-        
-        <div id="foot">
+        <div>
             <footer>
                 <div id="left">
                   <a href="https://www.orlando.gov/System-pages/Website-Legal-Notices">Website Legal Notice</a>  | 

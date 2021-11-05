@@ -60,7 +60,7 @@ function init() {
             origin: new google.maps.Point(0, 0),
             anchor: new google.maps.Point(0, 0)
         },
-    ];
+    ];/*
     var markers = [
         [{lat: 28.3827392697488, lng:-81.51192658984489}, icons[5], "<h3><b>Hyatt Grand Cypress | Wall,  J-1772</b></h3><p>1 Grand Cypress Blvd 32836</p>"],
         [{lat: 28.36139019500751, lng:-81.65126904290888}, icons[5], "<h3><b>The Grove Resort & Spa | J-1772</b></h3><p>15651 Grove Resort Av 34787</p>"],
@@ -80,7 +80,7 @@ function init() {
     
     for (let i=0; i < markers.length; i++) {
         addMarkers(markers[i]);
-    } 
+    } */
     //loops thru the markers array to add the values to the map
 
 
