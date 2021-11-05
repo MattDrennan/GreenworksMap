@@ -1,7 +1,7 @@
 /*
     Filename: mapEmbed.js
     Date of Creation: 28 Oct 2021
-    Edited: 29 Oct 2021
+    Edited: 3 Nov 2021
     Editor: Kashai Bingham
 */
 
@@ -77,9 +77,10 @@ function init() {
     ];
     //creates an array of locations on the map with their respective custom markers
 
+    
     for (let i=0; i < markers.length; i++) {
         addMarkers(markers[i]);
-    }
+    } 
     //loops thru the markers array to add the values to the map
 
 

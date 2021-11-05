@@ -33,7 +33,7 @@ public class PillarDAO {
      * @return pillarList The returned value is a LinkedList storing all the information for each 
      * data entry.
      */
-    public LinkedList<EcoPillar> showPillar() {
+    public LinkedList<EcoPillar> showPillars() {
         //setPswd(); //uncomment if and only if the pswd is not explicitly given
         LinkedList<EcoPillar> pillarList = new LinkedList<EcoPillar>();
 
@@ -46,10 +46,12 @@ public class PillarDAO {
 			
 			while(rs.next()) {
 				EcoPillar item = new EcoPillar();
-				item.setId(rs.getString("Loc_ID"));
-				item.setAddress(rs.getString("Street_address"));
-				item.setDescription(rs.getString("Description"));
-				item.setZip_Code(rs.getInt("Zip"));
+				item.setSp_id(rs.getInt("sp_id"));
+				item.setAddress(rs.getString("street_address"));
+				item.setDescription(rs.getString("loc_descr"));
+				item.setZip_Code(rs.getInt("zip_code"));
+				item.setLat(rs.getFloat("lat"));
+				item.setLng(rs.getFloat("lng"));
 				pillarList.add(item);
 			} 
 			
@@ -61,7 +63,7 @@ public class PillarDAO {
         return pillarList;
     }
 
-
+//TODO confirm that showPillarSelected is able to pass the correct info to the correct table
     /**
      * The showSelectedPillar method pulls all the values from the dB that matches the filter criteria.
      * @param pillarCall This String will return the Stored Procedure call/s for the appropriate data.
@@ -86,7 +88,7 @@ public class PillarDAO {
 			
 			while(rs.next()) {
 				EcoPillar item = new EcoPillar();
-				item.setId(rs.getString("Loc_ID"));
+				item.setSp_id(rs.getInt("sp_id"));
 				item.setAddress(rs.getString("Street_address"));
 				item.setDescription(rs.getString("Description"));
 				item.setZip_Code(rs.getInt("Zip"));
@@ -101,5 +103,56 @@ public class PillarDAO {
         return pillarList;
     }
 
-    //TODO create method for the Events table
+	public int iconSelect(int sp_id) {
+		int position = 0;
+		String pillar_code = ""; 
+
+		try {
+			Scanner sc = new Scanner(login);
+			pswd = sc.nextLine();
+			sc.close();
+			
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(url, username, pswd);
+
+			//Query string for the MySQL dB
+			String tableRetrieve = "CALL SP_pillar_code(" + sp_id + ");"; //calls SP to pull pillar code
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(tableRetrieve);
+			
+			pillar_code = rs.getString("pillar_code"); //stores pillar code in variable	
+			conn.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		} 
+
+		switch (pillar_code) {
+			case "CE": 
+			position = 0;
+			break;
+			case "GB": 
+			position = 1;
+			break;
+			case "LV": 
+			position = 2;
+			break;
+			case "LF": 
+			position = 3;
+			break;
+			case "ZW": 
+			position = 4;
+			break;
+			case "EA": 
+			position = 5;
+			break;
+			case "CW": 
+			position = 6;
+			break;
+		}
+		//converts sub-pillar id to a pillar code position for the icons array in the mapEmbed.js file
+
+		return position;
+	}
+
+    //TODO create method for the Events table/stored procedure
 }

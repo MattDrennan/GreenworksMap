@@ -1,24 +1,27 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
-    <%@ page import = "com.GREENWORKS.DAO.*" %> <%-- to access the DAO package java code --%>
-    <%@ page import = "com.GREENWORKS.object.*" %> <%-- to access the object package --%>
-    <%@ page import = "java.util.Date" %> <%-- (for specification only) to parse and/or format Date values --%>
-    <%@ page import = "java.util.*" %> <%-- to access most Java classes (i.e: LinkedList, Scanner, Date)--%>
-<!DOCTYPE html>
-    <html>
+<html>
     <head>
         <!--
             Filename: OrlandoEcoMap.com
             Date of Creation: 27 Sep 2021
             Editor: Kashai Bingham
-            Edited: 28 Oct 2021
-            Version: 2.3
+            Edited: 3 Nov 2021
+            Version: 2.5
         -->
         
         <meta charset="utf-8" />
         <title>Eco-map - City of Orlando</title>
 
         <link href="stylesheets/ecomap_stylesheet.css" rel="stylesheet" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            function Filter_Open() {
+                document.getElementById("filter").style.display = "block";
+            }
+            function Filter_Close() {
+                document.getElementById("uncheck").checked = false;
+                document.getElementById("filter").style.display = "none";
+            }
+        </script>
     </head>
 
 
@@ -41,8 +44,41 @@
             </div>
             <!-- adds a static breadcrumb navigation to show the user the URL path taken to the current page -->
 
-            <h1>Eco-map</h1>            
+            <h1>Eco-map</h1>
+            <a id="filter_settings" href="javascript:void(0);" onclick="Filter_Open();"><img src="icons/filter_icon.png" alt="Filter"></a>
+            <!--solution found on StackOverflow: https://stackoverflow.com/questions/5003867/how-to-call-javascript-function-instead-of-href-in-html/5003904-->
         </section>
+        <div id="filter">
+            <h2>Filter</h2><hr>
+            <div class="pillars">
+                <div class="options">
+                    <input class="check" type="checkbox"></input><label class="label">Clean Energy</label>
+                </div>
+                <div class="options">
+                    <input class="check" type="checkbox"></input><label class="label">Green Buildings</label>
+                </div>
+                <div class="options">
+                    <input class="check" type="checkbox"></input><label class="label">Local Food Systems</label>
+                </div>
+                <div class="options">
+                    <input class="check" type="checkbox"></input><label class="label">Livability</label>
+                </div>
+                <div class="options">
+                    <input class="check" type="checkbox"></input><label class="label">Zero Waste</label>
+                </div>
+                <div class="options">
+                    <input class="check" type="checkbox"></input><label class="label">Clean Water</label>
+                </div>
+                <div class="options">
+                    <input class="check" type="checkbox"></input><label class="label">Electic & Alt. Transportation</label>
+                </div>
+            </div>
+            <hr>
+            <div class="action_controls">
+                <button id="uncheck" type="reset" onclick="Filter_Close()">Close</button>
+                <input type="submit" value="Save"></input>
+            </div>
+        </div>
         <div id="map"></div> 
         <!--sets the parameters for the Google Maps API embed -->
 
@@ -51,6 +87,7 @@
         ></script>
         <!--script renders the map under the breadcrumb nav --> 
         <script src="scripts/mapEmbed.js"></script> <!--references the init callback to the mapEmbed js file -->
+        
         <div id="foot">
             <footer>
                 <div id="left">

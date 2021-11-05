@@ -3,18 +3,25 @@ package com.GREENWORKS.object;
 import java.sql.Date;
 
 public class EcoPillar {
-    private String id;
-	private String address;
-	private String description;
-    private int zip_code;
-	private Date endDate;
-	
-	 public String getId() {
-		return id;
+    private String address, descr;
+    private int loc_id, sp_id, zip_code;
+	private Date startDate, endDate;
+	private float lat, lng;
+
+	public int getLoc_id() {
+		return loc_id;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setLoc_id(int loc_id) {
+		this.loc_id = loc_id;
+	}
+
+	public int getSp_id() {
+		return sp_id;
+	}
+
+	public void setSp_id(int sp_id) {
+		this.sp_id = sp_id;
 	}
 
 	public String getAddress() {
@@ -25,12 +32,12 @@ public class EcoPillar {
 		this.address = address;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getDescr() {
+		return descr;
 	}
 
 	public void setDescription(String description) {
-		this.description = description;
+		this.descr = description;
 	}
 	
     public int getZip_Code() {
@@ -41,6 +48,14 @@ public class EcoPillar {
         this.zip_code = zip_code;
     }
 
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
 	public Date getEndDate() {
 		return endDate;
 	}
@@ -49,11 +64,30 @@ public class EcoPillar {
 		this.endDate = endDate;
 	}
 
+	public float getLat() {
+		return lat;
+	}
+
+	public void setLat(float lat) {
+		this.lat = lat;
+	}
+
+	public float getLng() {
+		return lng;
+	}
+
+	public void setLng(float lng) {
+		this.lng = lng;
+	}
+	
 	@Override
 	public String toString() {
-		return "EcoPillar [id=" + id + ", address=" + address + ", description=" + description + ", zip_code=" + zip_code + ", endDate=" + endDate + "]";
+		return "EcoPillar [loc_id=" + loc_id + ", spi_id="+ sp_id + "address=" + 
+		address + ", description=" + descr + ", zip_code=" + zip_code + ", endDate=" + 
+		endDate + "]";
 	}
-	public String toPrint() {
-		return address + "; " + description;
+	public String toPrint(int num) {
+		return "{lat:" +  lat + "lng:" + lng + "}, icons[" + num + "], <h3><b>" + 
+		descr + "</b></h3><p>" + address + "&emsp;" + zip_code + "</p>";
 	}
 }
