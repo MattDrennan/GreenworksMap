@@ -2,8 +2,8 @@ package com.GREENWORKS.controller;
 
 import com.GREENWORKS.DAO.*;
 import com.GREENWORKS.object.*;
-import java.io.IOException;
 import javax.servlet.RequestDispatcher;
+import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,11 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.LinkedList;
 import java.util.ArrayList;
 
+/**
+ * Servlet implementation class FilterPillars
+ */
 public class FilterPillars extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-    
+	private static final long serialVersionUID = 1L;
 
-    /**
+	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -55,5 +57,13 @@ public class FilterPillars extends HttpServlet {
 
 		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 		rd.forward(request, response);
+	}
+	
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 }

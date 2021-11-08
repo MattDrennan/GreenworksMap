@@ -7,21 +7,31 @@
   <servlet>
   	<servlet-name>ShowPillars</servlet-name>
   	<display-name>ShowPillars</display-name>
-  	<description></description>
+  	<description>Shows all 7 Pillars on the map</description>
   	<servlet-class>com.GREENWORKS.controller.ShowPillars</servlet-class>
   </servlet>
   <servlet>
-	<servlet-name>FilterPillars</servlet-name>
-	<display-name>FilterPillars</display-name>
-	<description></description>
-	<servlet-class>com.GREENWORKS.controller.FilterPillars</servlet-class>
+  	<servlet-name>FilterPillars</servlet-name>
+  	<display-name>FilterPillars</display-name>
+  	<description>Shows the selected Pillars on the map</description>
+  	<servlet-class>com.GREENWORKS.controller.FilterPillars</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>Hi</servlet-name>
+  	<display-name>Hi</display-name>
+  	<description></description>
+  	<servlet-class>com.GREENWORKS.controller.Hi</servlet-class>
   </servlet>
   <servlet-mapping>
   	<servlet-name>ShowPillars</servlet-name>
   	<url-pattern>/showAll</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-	<servlet-name>FilterPillars</servlet-name>
-	<url-pattern>/showFilter</url-pattern>
+  	<servlet-name>FilterPillars</servlet-name>
+  	<url-pattern>/showFilter</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>Hi</servlet-name>
+  	<url-pattern>/Hi</url-pattern>
   </servlet-mapping>
 </web-app>

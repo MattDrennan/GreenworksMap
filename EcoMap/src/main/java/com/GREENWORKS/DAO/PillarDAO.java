@@ -34,7 +34,7 @@ public class PillarDAO {
      * data entry.
      */
     public LinkedList<EcoPillar> showPillars() {
-        //setPswd(); //uncomment if and only if the pswd is not explicitly given
+        setPswd(); //uncomment if and only if the pswd is not explicitly given
         LinkedList<EcoPillar> pillarList = new LinkedList<EcoPillar>();
 
         try {
@@ -71,7 +71,7 @@ public class PillarDAO {
      * entry that meets the selection requirements.
      */
     public LinkedList<EcoPillar> showSelectedPillar(ArrayList<String> pillarCall) {
-        //setPswd(); //uncomment if and only if the pswd is not explicitly given
+    	setPswd(); //uncomment if and only if the pswd is not explicitly given
         LinkedList<EcoPillar> pillarList = new LinkedList<EcoPillar>();
 		String query = "";
 
@@ -109,10 +109,12 @@ public class PillarDAO {
     }
 
 	public int iconSelect(int sp_id) {
+		setPswd();
 		int position = 0;
 		String pillar_code = ""; 
 
 		try {
+			
 			Scanner sc = new Scanner(login);
 			pswd = sc.nextLine();
 			sc.close();

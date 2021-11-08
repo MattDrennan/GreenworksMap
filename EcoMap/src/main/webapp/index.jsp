@@ -1,7 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
-    <%@ page import="java.util.LinkedList" %>
-    <%@ page import="com.GREENWORKS.object.*" %>
 <html>
     <head>
         <!--
@@ -28,8 +24,6 @@
     </head>
 
     <body>
-        <% EcoPillar hi = new EcoPillar(); 
-%>
         <header>
             <a id="menu" href="">&#9776; Menu</a>
             <a id="logo" href="https://www.orlando.gov"><img src="icons/CityOfOrlando_logo.png" alt="City of Orlando logo"></a>
@@ -53,7 +47,7 @@
             <!--solution found on StackOverflow: https://stackoverflow.com/questions/5003867/how-to-call-javascript-function-instead-of-href-in-html/5003904-->
         </section>
         <div id="filter">
-                <form action="/showFilter" name="filter" method="post">
+                <form action="showFilter" name="filter" method="post">
                     <h2>Filter</h2><hr>
                     <div class="pillars">
                         <div class="options">
@@ -94,6 +88,9 @@
         ></script>
         <!--script renders the map under the breadcrumb nav --> 
         <script src="scripts/mapEmbed.js"></script> <!--references the init callback to the mapEmbed js file -->
+        
+        
+        
         <div>
             <footer>
                 <div id="left">
@@ -102,7 +99,7 @@
                   <a href="https://www.orlando.gov/Our-Government/News-and-Information/City-Official-Assets">The City Beautiful</a>
                 </div>
                 <div id="right">
-                  © 2021 City of Orlando | 
+                 &copy; 2021 City of Orlando | 
                 Powered by <a href="http://www.opencities.com/">OpenCities</a>
                 </div>                           
               </footer>
