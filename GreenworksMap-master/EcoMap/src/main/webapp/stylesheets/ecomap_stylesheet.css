@@ -1,0 +1,96 @@
+@charset "utf-8";
+
+/*
+Filename: ecomap_stylesheet.css
+Date of creation: 27 Sep 2021
+Editor: Kashai Bingham
+*/
+
+div.row {clear: both;}
+div.row::after {
+    clear: both;
+    content: "";
+    display: table;
+}
+div[class^="col-"] {float: left;}
+div.col-1-1 {width: 100%;}
+div.col-1-3 {width: 33.33%;}
+div.col-2-3 {width: 66.67%;}
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+ul.breadcrumb li {
+    display: inline;
+}
+ul.breadcrumb li+li:before {
+    padding: 10px;
+    color: black;
+    content: "/\00a0";
+}
+a {
+    text-decoration: none;
+}
+a:hover, a:focus {
+	color: blue;
+	font-style: italic;
+	text-decoration: underline;
+}
+a:visited, a:link {
+	text-decoration: none;
+}
+footer, footer a{
+    color: grey;
+}
+/*Desktop Style*/
+@media only screen and (min-width: 768px) {
+    body {
+        font: black;
+        background-color: white;
+        width: 100vw;
+        height: 100vh;
+    }
+    #search {
+        float: right;
+        position: relative;
+        right: 7%;
+        width: 20em;
+    }
+    #search_button {
+    	float: right;
+    	position: relative;
+    	left: 18%;
+    	height: 1.6em;
+    	z-index: 5;
+    	padding: 0em;
+    }
+    #menu {
+        float: left;
+        position: relative;
+        font-size: 1.5em;
+        left: 2%;
+    }
+    #logo {
+        position: relative;
+        left: 5%;
+    }
+    #map {
+    	float: left;
+    	position: relative;
+    	left: 20%;
+    }
+    footer {
+		position: relative;
+		height: 2em;
+		top: 100%;
+		right: 15%;
+    }
+}
+
+/*Mobile Style*/
+@media only screen and (min-width: 600px) {
+    body {
+        width: 100vw;
+    }
+}
