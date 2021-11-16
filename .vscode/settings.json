@@ -1,0 +1,7 @@
+{
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "maven.view": "flat",
+    "maven.pomfile.autoUpdateEffectivePOM": true,
+    "maven.terminal.useJavaHome": true,
+    "maven.executable.path": "C:\\apache-maven-3.8.3\\bin"
+}
