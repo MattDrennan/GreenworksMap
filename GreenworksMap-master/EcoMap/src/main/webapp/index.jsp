@@ -31,8 +31,12 @@
                 "esri/config",
                 "esri/Map", 
                 "esri/views/MapView",
-                "esri/layers/FeatureLayer"],
-                function (esriConfig, Map, MapView, FeatureLayer) {
+                "esri/layers/FeatureLayer",
+                "esri/Graphic",
+                "esri/layers/GraphicsLayer",
+                "esri/symbols/PictureMarkerSymbol"
+            ],
+                function (esriConfig, Map, MapView, FeatureLayer, Graphic, GraphicsLayer, PictureMarkerSymbol) {
 
                 // Cason's API key
                 //!! This is not a safe means of accessing a user's API key  !!//
@@ -43,13 +47,17 @@
                 basemap: "arcgis-navigation" // Basemap layer service
                 });
 
+
+
                 //This is the custom FeatureLayer with the coordinates of some of the locations found in the .xlsx/.csv
                 const layer = new FeatureLayer({
                     url: "https://services3.arcgis.com/NwOA6aZjvCAq7BpD/arcgis/rest/services/locations_2/FeatureServer/0"
                 });
                 
                 //These are the few values on the .csv used for the layer map. Doesn't seem to overlay for some reason.
-                map.add(layer);
+                map.add(layer); 
+
+
 
                 const view = new MapView({
                 map: map,
@@ -58,6 +66,33 @@
                 zoom: 11, // Zoom level
                 container: "viewDiv" // Div element
                 });     
+
+
+                //test input for a marker - Orlando Executive Airport
+                const point = {
+                    type: "point",
+                    longitude: -81.33214, 
+                    latitude: 28.54611
+                };
+
+                //sets the marker color and type
+                const marker = {
+                    type: "picture-marker",
+                    url: "icons/GreenWorksIcons_Individual_GreenBuildings.png",
+                    width: "35px",
+                    height: "35px"
+                };
+
+                //to add a GraphicsLayer instead of a FeatureLayer for marker population
+                const gL = new GraphicsLayer();
+                map.add(gL);// adds GraphicsLayer - fails to render marker
+                
+                //add a graphic to render the point
+                const graphic = new Graphic({
+                    geometry: point,
+                    symbol: marker
+                });
+                gL.add(graphic);
         });
         </script>
 

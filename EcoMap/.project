@@ -46,45 +46,10 @@
 			<type>1</type>
 			<location>C:/Users/K. Alecia/Documents/College/Valencia College/Fall/2021 Fall/CEN 4910C/Greenworks Map/EcoMap/src/main/webapp/icons/CityOfOrlando_logo.png</location>
 		</link>
-		<link>
-			<name>src/main/webapp/icons/GreenWorksIcons_Individual_CleanEnergy.png</name>
-			<type>1</type>
-			<location>C:/Users/K. Alecia/Documents/College/Valencia College/Fall/2021 Fall/CEN 4910C/Greenworks Map/EcoMap/src/main/webapp/icons/GreenWorksIcons_Individual_CleanEnergy.png</location>
-		</link>
-		<link>
-			<name>src/main/webapp/icons/GreenWorksIcons_Individual_GreenBuildings.png</name>
-			<type>1</type>
-			<location>C:/Users/K. Alecia/Documents/College/Valencia College/Fall/2021 Fall/CEN 4910C/Greenworks Map/EcoMap/src/main/webapp/icons/GreenWorksIcons_Individual_GreenBuildings.png</location>
-		</link>
-		<link>
-			<name>src/main/webapp/icons/GreenWorksIcons_Individual_Livability.png</name>
-			<type>1</type>
-			<location>C:/Users/K. Alecia/Documents/College/Valencia College/Fall/2021 Fall/CEN 4910C/Greenworks Map/EcoMap/src/main/webapp/icons/GreenWorksIcons_Individual_Livability.png</location>
-		</link>
-		<link>
-			<name>src/main/webapp/icons/GreenWorksIcons_Individual_LocalFoodSystems.png</name>
-			<type>1</type>
-			<location>C:/Users/K. Alecia/Documents/College/Valencia College/Fall/2021 Fall/CEN 4910C/Greenworks Map/EcoMap/src/main/webapp/icons/GreenWorksIcons_Individual_LocalFoodSystems.png</location>
-		</link>
-		<link>
-			<name>src/main/webapp/icons/GreenWorksIcons_Individual_SolidWaste.png</name>
-			<type>1</type>
-			<location>C:/Users/K. Alecia/Documents/College/Valencia College/Fall/2021 Fall/CEN 4910C/Greenworks Map/EcoMap/src/main/webapp/icons/GreenWorksIcons_Individual_SolidWaste.png</location>
-		</link>
-		<link>
-			<name>src/main/webapp/icons/GreenWorksIcons_Individual_Transportation.png</name>
-			<type>1</type>
-			<location>C:/Users/K. Alecia/Documents/College/Valencia College/Fall/2021 Fall/CEN 4910C/Greenworks Map/EcoMap/src/main/webapp/icons/GreenWorksIcons_Individual_Transportation.png</location>
-		</link>
-		<link>
-			<name>src/main/webapp/icons/GreenWorksIcons_Individual_Water.png</name>
-			<type>1</type>
-			<location>C:/Users/K. Alecia/Documents/College/Valencia College/Fall/2021 Fall/CEN 4910C/Greenworks Map/EcoMap/src/main/webapp/icons/GreenWorksIcons_Individual_Water.png</location>
-		</link>
 	</linkedResources>
 	<filteredResources>
 		<filter>
-			<id>1633630076163</id>
+			<id>1637798748187</id>
 			<name></name>
 			<type>30</type>
 			<matcher>

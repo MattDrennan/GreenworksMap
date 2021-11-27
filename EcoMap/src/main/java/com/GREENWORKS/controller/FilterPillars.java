@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.LinkedList;
 import java.util.ArrayList;
+import com.google.gson.Gson;
 
 /**
  * Servlet implementation class FilterPillars
@@ -21,38 +22,22 @@ public class FilterPillars extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String pillarSelect[] = request.getParameterValues("pillar_name");
+		String[] pillarSelect = request.getParameterValues("pillar_name");
+		String sp_call = "CALL SP_show";
 		ArrayList<String> dataQuery = new ArrayList<String>(); 	
-	
+
+		
 		for (int i = 0; i < pillarSelect.length; i++) { 
-			switch(pillarSelect[i]) {
-				case "CE": 
-					dataQuery.add("CALL SP_showEnergy();");
-					break;
-				case "GB":
-					dataQuery.add("CALL SP_showBuildings();");
-					break;
-				case "LF":
-					dataQuery.add("CALL SP_showFood();");
-					break;
-				case "LV":
-					dataQuery.add("CALL SP_showWaste();");
-					break;
-				case "ZW":
-					dataQuery.add("CALL SP_showWater();");
-					break;
-				case "CW":
-					dataQuery.add("CALL SP_showTransportation();");
-					break;
-				case "EA":
-					dataQuery.add("CALL SP_showPillars();");
-					break;
-			}
+			dataQuery.add(sp_call + pillarSelect[i] + "();");
+			//SP call format: CALL SP_show<Pillar_table_name>();
+			
 		}
-		//adds a new query for each value pulled from pillar_name
+		//adds a new query for each value pulled from pillar_name */
+
 		
 		PillarDAO pd = new PillarDAO();
 		LinkedList<EcoPillar> markers = pd.showSelectedPillar(dataQuery);
+		System.out.println(new Gson().toJson(markers.get(0)));
 		request.setAttribute("markers", markers);
 
 		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
@@ -63,7 +48,6 @@ public class FilterPillars extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 }

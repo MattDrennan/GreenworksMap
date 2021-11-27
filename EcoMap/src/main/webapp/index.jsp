@@ -1,11 +1,11 @@
 <html>
     <head>
         <!--
-            Filename: OrlandoEcoMap.com
+            Filename: index.jsp
             Date of Creation: 27 Sep 2021
             Editor: Kashai Bingham
-            Edited: 5 Nov 2021
-            Version: 2.5.1
+            Edited: 20 Nov 2021
+            Version: 2.5.3
         -->
         
         <meta charset="utf-8" />
@@ -46,30 +46,31 @@
             <a id="filter_settings" href="javascript:void(0);" onclick="Filter_Open();"><img src="icons/filter_icon.png" alt="Filter"></a>
             <!--solution found on StackOverflow: https://stackoverflow.com/questions/5003867/how-to-call-javascript-function-instead-of-href-in-html/5003904-->
         </section>
+
         <div id="filter">
-                <form action="showFilter" name="filter" method="post">
+                <form action="showFilter" name="filter" method="post" accept-charset="utf-8">
                     <h2>Filter</h2><hr>
                     <div class="pillars">
                         <div class="options">
-                            <input class="check" type="checkbox" name="pillar_name" value="CE"></input><label class="label">Clean Energy</label>
+                            <input class="check" type="checkbox" name="pillar_name" value="Energy"></input><label class="label">Clean Energy</label>
                         </div>
                         <div class="options">
-                            <input class="check" type="checkbox" name="pillar_name" value="GB"></input><label class="label">Green Buildings</label>
+                            <input class="check" type="checkbox" name="pillar_name" value="Buildings"></input><label class="label">Green Buildings</label>
                         </div>
                         <div class="options">
-                            <input class="check" type="checkbox" name="pillar_name" value="LF"></input><label class="label">Local Food Systems</label>
+                            <input class="check" type="checkbox" name="pillar_name" value="Food"></input><label class="label">Local Food Systems</label>
                         </div>
                         <div class="options">
-                            <input class="check" type="checkbox" name="pillar_name" value="LV"></input><label class="label">Livability</label>
+                            <input class="check" type="checkbox" name="pillar_name" value="Livability"></input><label class="label">Livability</label>
                         </div>
                         <div class="options">
-                            <input class="check" type="checkbox" name="pillar_name" value="ZW"></input><label class="label">Zero Waste</label>
+                            <input class="check" type="checkbox" name="pillar_name" value="Waste"></input><label class="label">Zero Waste</label>
                         </div>
                         <div class="options">
-                            <input class="check" type="checkbox" name="pillar_name" value="CW"></input><label class="label">Clean Water</label>
+                            <input class="check" type="checkbox" name="pillar_name" value="Water"></input><label class="label">Clean Water</label>
                         </div>
                         <div class="options">
-                            <input class="check" type="checkbox" name="pillar_name" value="EA"></input><label class="label">Electic & Alt. Transportation</label>
+                            <input class="check" type="checkbox" name="pillar_name" value="Transportation"></input><label class="label">Electic & Alt. Transportation</label>
                         </div>
                     </div>
                     <hr>
@@ -80,16 +81,17 @@
         
                 </form>
         </div>
+        
         <div id="map"></div> 
         <!--sets the parameters for the Google Maps API embed -->
 
         <script	async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9nc7U6UPDjbOZUwgTn1pdDxBqX49zjI4&callback=init"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9nc7U6UPDjbOZUwgTn1pdDxBqX49zjI4&callback=initMap"
         ></script>
-        <!--script renders the map under the breadcrumb nav --> 
-        <script src="scripts/mapEmbed.js"></script> <!--references the init callback to the mapEmbed js file -->
-        
-        
+        <!--script renders the map under the breadcrumb nav -->
+
+        <script src="scripts/mapEmbed.js"></script> 
+        <!--references the init callback to the mapEmbed js file -->       
         
         <div>
             <footer>

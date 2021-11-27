@@ -1,12 +1,11 @@
 package com.GREENWORKS.object;
 
-import java.sql.Date;
-
+/**
+ * Creates a POJO for the Orlando Greenworks Pillar locations
+ */
 public class EcoPillar {
     private String address, descr;
     private int loc_id, sp_id, zip_code;
-	private Date startDate, endDate;
-	private float lat, lng;
 
 	public int getLoc_id() {
 		return loc_id;
@@ -36,7 +35,7 @@ public class EcoPillar {
 		return descr;
 	}
 
-	public void setDescription(String description) {
+	public void setDescr(String description) {
 		this.descr = description;
 	}
 	
@@ -47,47 +46,10 @@ public class EcoPillar {
     public void setZip_Code(int zip_code) {
         this.zip_code = zip_code;
     }
-
-	public Date getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
-
-	public Date getEndDate() {
-		return endDate;
-	}
-	
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
-
-	public float getLat() {
-		return lat;
-	}
-
-	public void setLat(float lat) {
-		this.lat = lat;
-	}
-
-	public float getLng() {
-		return lng;
-	}
-
-	public void setLng(float lng) {
-		this.lng = lng;
-	}
 	
 	@Override
 	public String toString() {
-		return "EcoPillar [loc_id=" + loc_id + ", spi_id="+ sp_id + "address=" + 
-		address + ", description=" + descr + ", zip_code=" + zip_code + ", endDate=" + 
-		endDate + "]";
-	}
-	public String toPrint(int num) {
-		return "{lat:" +  lat + "lng:" + lng + "}, icons[" + num + "], <h3><b>" + 
-		descr + "</b></h3><p>" + address + "&emsp;" + zip_code + "</p>";
+		return "EcoPillar [loc_id=" + loc_id + ", sp_id="+ sp_id + "address=" + 
+		address + ", description=" + descr + ", zip_code=" + zip_code + "]";
 	}
 }

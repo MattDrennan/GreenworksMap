@@ -9,8 +9,7 @@ import com.GREENWORKS.object.*;
 import java.io.*;
 
 public class PillarDAO {
-    private String url = "jdbc:mysql://localhost:3306/orlando eco-map", username = "", pswd = ""; //leave 'pswd' blank if using a file reference 
-	private File login = new File("");
+    private String url = "jdbc:mysql://localhost:3306/eco_map", username = "root", pswd = ""; //leave 'pswd' blank if using a file reference 
     //TODO add the dB url, username, and pswd filepath
 
     /** 
@@ -19,7 +18,7 @@ public class PillarDAO {
      */
     public void setPswd() { //use if and only if the pswd is not explicitly given but is referencing a file
 		try {
-			File login = new File("C:\\Users\\K. Alecia\\Desktop\\pswd.txt");
+			File login = new File("C:\\Users\\K. Alecia\\Desktop\\pswd.txt"); 
 			Scanner sc = new Scanner(login);
 			pswd = sc.nextLine();
 			sc.close();
@@ -40,21 +39,24 @@ public class PillarDAO {
         try {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(url, username, pswd);
-			String tableRetrieve = "CALL SP_showPillars()"; 
+			//Creates connection to MySQL dB
+
+			String tableRetrieve = "CALL SP_showGWLocations()"; 
 			Statement st = conn.createStatement();
 			ResultSet rs = st.executeQuery(tableRetrieve);
-			
+			//creates query for dB
+
 			while(rs.next()) {
 				EcoPillar item = new EcoPillar();
-				item.setSp_id(rs.getInt("sp_id"));
-				item.setAddress(rs.getString("street_address"));
-				item.setDescription(rs.getString("loc_descr"));
-				item.setZip_Code(rs.getInt("zip_code"));
-				item.setLat(rs.getFloat("lat"));
-				item.setLng(rs.getFloat("lng"));
+				item.setSp_id(rs.getInt("Sub_PillarID"));
+				item.setLoc_id(rs.getInt("Location_ID"));
+				item.setAddress(rs.getString("Street_address"));
+				item.setDescr(rs.getString("Descr"));
+				item.setZip_Code(rs.getInt("Zip_code"));
 				pillarList.add(item);
 			} 
-			
+			//stores records to a LinkedList<EcoPillar>
+
 			conn.close();
 		} catch (Exception e) {
 			System.out.println(e);
@@ -75,26 +77,23 @@ public class PillarDAO {
         LinkedList<EcoPillar> pillarList = new LinkedList<EcoPillar>();
 		String query = "";
 
-        try {
-			Scanner sc = new Scanner(login);
-			pswd = sc.nextLine();
-			sc.close();
-			
+        try {		
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(url, username, pswd);
-			//Query string for the MySQL dB
+			//Creates connection to the MySQL dB
 
 			for(int i = 0; i < pillarCall.size(); i++) {
-				String tableRetrieve = query;
+				query = pillarCall.get(i);
 				Statement st = conn.createStatement();
-				ResultSet rs = st.executeQuery(tableRetrieve);
+				ResultSet rs = st.executeQuery(query);
 				
 				while(rs.next()) {
 					EcoPillar item = new EcoPillar();
-					item.setSp_id(rs.getInt("sp_id"));
+					item.setSp_id(rs.getInt("Sub_PillarID"));
+					item.setLoc_id(rs.getInt("Location_ID"));
 					item.setAddress(rs.getString("Street_address"));
-					item.setDescription(rs.getString("Description"));
-					item.setZip_Code(rs.getInt("Zip"));
+					item.setDescr(rs.getString("Descr"));
+					item.setZip_Code(rs.getInt("Zip_code"));
 					pillarList.add(item);
 				} 	
 			}
@@ -107,59 +106,6 @@ public class PillarDAO {
 
         return pillarList;
     }
-
-	public int iconSelect(int sp_id) {
-		setPswd();
-		int position = 0;
-		String pillar_code = ""; 
-
-		try {
-			
-			Scanner sc = new Scanner(login);
-			pswd = sc.nextLine();
-			sc.close();
-			
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection conn = DriverManager.getConnection(url, username, pswd);
-
-			//Query string for the MySQL dB
-			String tableRetrieve = "CALL SP_pillar_code(" + sp_id + ");"; //calls SP to pull pillar code
-			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery(tableRetrieve);
-			
-			pillar_code = rs.getString("pillar_code"); //stores pillar code in variable	
-			conn.close();
-		} catch (Exception e) {
-			System.out.println(e);
-		} 
-
-		switch (pillar_code) {
-			case "CE": 
-			position = 0;
-			break;
-			case "GB": 
-			position = 1;
-			break;
-			case "LV": 
-			position = 2;
-			break;
-			case "LF": 
-			position = 3;
-			break;
-			case "ZW": 
-			position = 4;
-			break;
-			case "EA": 
-			position = 5;
-			break;
-			case "CW": 
-			position = 6;
-			break;
-		}
-		//converts sub-pillar id to a pillar code position for the icons array in the mapEmbed.js file
-
-		return position;
-	}
 
     //TODO create method for the Events table/stored procedure
 }
