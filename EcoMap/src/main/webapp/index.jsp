@@ -43,8 +43,26 @@
             <!-- adds a static breadcrumb navigation to show the user the URL path taken to the current page -->
 
             <h1>Eco-map</h1>
-            <a id="filter_settings" href="javascript:void(0);" onclick="Filter_Open();"><img src="icons/filter_icon.png" alt="Filter"></a>
-            <!--solution found on StackOverflow: https://stackoverflow.com/questions/5003867/how-to-call-javascript-function-instead-of-href-in-html/5003904-->
+            <div class="map_options">
+                <div id="filter_items">
+                    <figure>
+                        <a href="javascript:void(0);" onclick="Filter_Open();">
+                            <img id="filter_icon" src="icons/filter.png" alt=" ">
+                            <div id="fc_background"><figcaption>Filter</figcaption></div>
+                        </a>
+                    </figure>
+                </div>
+                <!--solution found on StackOverflow: https://stackoverflow.com/questions/5003867/how-to-call-javascript-function-instead-of-href-in-html/5003904-->
+
+                <div id="calendar_items">
+                    <figure>
+                        <a href="javascript:void(0);" >
+                            <img id="calendar_icon" src="icons/calendar.png" alt=" ">
+                            <div id="fc_background"><figcaption>Events</figcaption></div>
+                        </a>
+                    </figure>
+                </div>
+            </div>
         </section>
 
         <div id="filter">
