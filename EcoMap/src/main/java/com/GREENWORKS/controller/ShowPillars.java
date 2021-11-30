@@ -1,6 +1,7 @@
 package com.GREENWORKS.controller;
 
-import com.GREENWORKS.DAO.*;
+import com.GREENWORKS.object.*;
+import java.util.LinkedList;
 import javax.servlet.RequestDispatcher;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -19,8 +20,8 @@ public class ShowPillars extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		PillarDAO pd = new PillarDAO();
-		pd.showPillars();
+		LinkedList<EcoPillar> markers = ServletController.returnAll();
+		request.setAttribute("markers", markers);
 
 		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 		rd.forward(request, response);
