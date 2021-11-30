@@ -42,6 +42,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>src/main/webapp/locations.csv</name>
+			<type>1</type>
+			<location>C:/Users/K. Alecia/Downloads/locations.csv</location>
+		</link>
+		<link>
 			<name>src/main/webapp/icons/CityOfOrlando_logo.png</name>
 			<type>1</type>
 			<location>C:/Users/K. Alecia/Documents/College/Valencia College/Fall/2021 Fall/CEN 4910C/Greenworks Map/EcoMap/src/main/webapp/icons/CityOfOrlando_logo.png</location>

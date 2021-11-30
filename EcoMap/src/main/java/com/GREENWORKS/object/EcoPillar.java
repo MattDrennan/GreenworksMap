@@ -49,7 +49,7 @@ public class EcoPillar {
 	
 	@Override
 	public String toString() {
-		return "EcoPillar [loc_id=" + loc_id + ", sp_id="+ sp_id + "address=" + 
+		return "EcoPillar [loc_id=" + loc_id + ", sp_id="+ sp_id + ", address=" + 
 		address + ", description=" + descr + ", zip_code=" + zip_code + "]";
 	}
 }

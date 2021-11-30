@@ -30,9 +30,8 @@ public class FilterPillars extends HttpServlet {
 		for (int i = 0; i < pillarSelect.length; i++) { 
 			dataQuery.add(sp_call + pillarSelect[i] + "();");
 			//SP call format: CALL SP_show<Pillar_table_name>();
-			
 		}
-		//adds a new query for each value pulled from pillar_name */
+		//adds a new query for each value pulled from pillar_name
 
 		
 		PillarDAO pd = new PillarDAO();

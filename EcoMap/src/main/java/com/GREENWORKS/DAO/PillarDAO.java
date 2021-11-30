@@ -1,7 +1,7 @@
 package com.GREENWORKS.DAO;
 
 import java.sql.*;
-//import java.sql.Date; //TODO uncomment when the Events method is created
+//import java.sql.Date; //uncomment when the Events method is created
 import java.util.*;
 
 import com.GREENWORKS.object.*;
@@ -10,7 +10,6 @@ import java.io.*;
 
 public class PillarDAO {
     private String url = "jdbc:mysql://localhost:3306/eco_map", username = "root", pswd = ""; //leave 'pswd' blank if using a file reference 
-    //TODO add the dB url, username, and pswd filepath
 
     /** 
      * The setPswd method accesses a file which has stored the dB password in an attempt to obfuscate.
@@ -65,7 +64,6 @@ public class PillarDAO {
         return pillarList;
     }
 
-//TODO confirm that showPillarSelected is able to pass the correct info to the correct table
     /**
      * The showSelectedPillar method pulls all the values from the dB that matches the filter criteria.
      * @param pillarCall This String will return the Stored Procedure call/s for the appropriate data.
