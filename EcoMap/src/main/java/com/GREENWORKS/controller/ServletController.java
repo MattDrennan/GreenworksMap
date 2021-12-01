@@ -3,6 +3,7 @@ package com.GREENWORKS.controller;
 import com.GREENWORKS.DAO.*;
 import com.GREENWORKS.object.*;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,18 +39,24 @@ public class ServletController {
      */
     public static void toJsonFile(LinkedList<EcoPillar> jsonText) {
         try {
-            String filepath = "EcoMap\\src\\main\\resources";
+            File filepath = new File("EcoMap\\location.json");
             FileWriter fileWrite = new FileWriter(filepath); // to create a means to write text to the newly create file
+            int i = 1, length = jsonText.size();
 
-            while (jsonText != null) {
-                String input = new Gson().toJson(jsonText), jsonValue = input + "\n";
-                if (!input.isEmpty() && !input.matches(" ")) {
-                    fileWrite.write(jsonValue); 
-                    System.out.println(); //test only - delete when done
-                    //writes the JSON value to the file when the line is not empty
+            fileWrite.write("{\n\t\"EcoPillars\": [\n"); //to add the opening brace and property definition
+            for (EcoPillar jsonValue : jsonText) {
+                String input = new Gson().toJson(jsonValue);
+
+                if (i < length) {
+                    fileWrite.write("\t\t" + input + ",\n");
+                    i++;
+                    //appends a comma at the end of the json object and increases the current count
+                } else {
+                    fileWrite.write("\t\t" + input); 
                 }
             }
-
+            
+            fileWrite.write("\n\t]\n}"); //to add the closing brace
             fileWrite.close();
             //closes open IO resources
         } catch (IOException ioe) {
