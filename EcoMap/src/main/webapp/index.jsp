@@ -4,8 +4,8 @@
             Filename: index.jsp
             Date of Creation: 27 Sep 2021
             Editor: Kashai Bingham
-            Edited: 20 Nov 2021
-            Version: 2.5.3
+            Edited: 29 Nov 2021
+            Version: 2.5.5
         -->
         
         <meta charset="utf-8" />
@@ -41,6 +41,12 @@
                 </ul>
             </div>
             <!-- adds a static breadcrumb navigation to show the user the URL path taken to the current page -->
+            
+            <% String locations = String.valueOf(request.getAttribute("markers")); %>
+            <script >
+                markers = "<%= locations %>"; //reads the values but the corresponding var in js file does not read it
+            </script>
+            <!-- reads the attribute values to a script variable -->
 
             <h1>Eco-map</h1>
             <div class="map_options">

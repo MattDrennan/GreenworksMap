@@ -4,14 +4,14 @@
     Edited: 27 Nov 2021
     Editor: Kashai Bingham
 */
-//test solution from SO: https://stackoverflow.com/questions/46868703/google-maps-api-add-marker-by-address-javascript/46906152
 
 /*concepts and solutions modified from YouTube and StackOverflow: 
     https://www.youtube.com/watch?v=Zxf1mnP5zcw&ab_channel=TraversyMedia
     https://stackoverflow.com/questions/15096461/resize-google-maps-marker-icon-image
+    https://stackoverflow.com/questions/46868703/google-maps-api-add-marker-by-address-javascript/46906152
 */
 
-//console.log(locations);
+let markers; //has to be let and not var otherwise the code breaks. 'markers' cannot read the markers stored in jsp
 function initMap() {
     var orlando = {lat: 28.5384,lng:-81.3789};
     var settings = {
@@ -67,85 +67,69 @@ function initMap() {
         }
     };
     //creates an enum of formatted custom markers 
-    
-    var example = [
-    	["Icons.TRANSPORT", "<h3><b>Hyatt Grand Cypress | Wall,  J-1772</b></h3><p>1 Grand Cypress Blvd 32836</p>", "1 Grand Cypress Blvd"],
-    	["Icons.FOOD", "<h3><b>Lake Eola Park</b></h3><p>512 East Washington Street 32801</p>", "512 East Washington Street"],
-    	["Icons.WASTE", "<h3><b>Engelwood Neighborhood Center Drop-off</b></h3><p>6123 La Costa Drive 32807</p>", "6123 La Costa Drive"]
-    ];
-    
-    var markers = [
-        [{lat: 28.3827392697488, lng:-81.51192658984489}, Icons.TRANSPORTATION, "<h3><b>Hyatt Grand Cypress | Wall,  J-1772</b></h3><p>1 Grand Cypress Blvd 32836</p>"],
-        [{lat: 28.36139019500751, lng:-81.65126904290888}, Icons.TRANSPORTATION, "<h3><b>The Grove Resort & Spa | J-1772</b></h3><p>15651 Grove Resort Av 34787</p>"],
-        [{lat: 28.63589290791497, lng:-81.40665410148256}, Icons.TRANSPORTATION, "<h3><b>Arbors at Maitland Apartments | J-1772</b></h3><p>8636 Villa Pt 32810</p>"],
-        [{lat: 28.529192569341674, lng:-81.30176163216836}, Icons.FOOD, "<h3><b>Engelwood Pool/Neighborhood Center</b></h3><p>6123 La Costa Dr 32807</p>"],
-        [{lat: 28.54339138017911, lng:-81.37082163216803}, Icons.FOOD, "<h3><b>Lake Eola Park</b></h3><p>512 East Washington Street 32801</p>"],
-        [{lat: 28.56785758601878, lng:-81.35732177634839}, Icons.FOOD, "<h3><b>Leu Gardens</b></h3><p>1920 N Forest Ave 32803</p>"],
-        [{lat: 28.549277200995455, lng:-81.3723680744954}, Icons.LIVABILITY, "<h3><b>Lake Eola Heights</b></h3><p>406 East Amelia Street 32803</p>"],
-        [{lat: 28.56163747511122, lng:-81.36069591875179}, Icons.LIVABILITY, "<h3><b>Colonialtown Community Garden</b></h3><p>1517 Lake Highland Drive 32803</p>"],
-        [{lat: 28.502025309871062, lng:-81.31224305571776}, Icons.LIVABILITY, "<h3><b>Citrus Square – resident only</b></h3><p>5625 Hickey Drive 32822</p>"],
-        [{lat: 28.528717265309098, lng:-81.30133154751329}, Icons.WASTE, "<h3><b>Engelwood Neighborhood Center Drop-off</b></h3><p>6123 La Costa Drive 32807</p>"],
-        [{lat: 28.525619067249835, lng:-81.39507803216848}, Icons.WASTE, "<h3><b>Solid Waste Management Division Drop-off</b></h3><p>1028 South Woods Avenue 32805</p>"],
-        [{lat: 28.525573814470956, lng:-81.32556584565985}, Icons.WASTE, "<h3><b>Dover Shores Community Center Drop-off</b></h3><p>1400 Gaston Foster Rd 32812</p>"],
-    ];
-    //hard codes an array of locations on the map with their respective custom markers
-    //addMarkers("Orlando Executive Airport");
+        
     for (let i=0; i < markers.length; i++) {
         addMarkers(markers[i]);
     } 
     //loops thru the markers array to add the values to the map
 
     function addMarkers(location) {
-        var Icon = iconSelect(location[2]);
-        //var address = location[2];
-        var marker = new google.maps.Marker({
-            position: location[0],
-            map: map,
-            icon: location[1]
-        });
-    	
-    	//geocoder.geocode({address: location});
+        var spid = location[0], locid = location[1], address = location[2], descr = location[3, zip = 4];
+        var Icon = iconSelect(spid), content = "<h3><b>" + descr + "</b></h3><p>" + address + " " + zip  + "</p>";
+
     
+        geocoder.geocode({'address': address}, function(results, status) {
+            var coords = results[0].geometry.location;
+            if (status === 'OK') {
+              map.setCenter(results[0].geometry.location);
+              var marker = new google.maps.Marker({
+                map: map,
+                position: coords,
+                icon: Icon
+              });
+            } else {
+              alert('Geocode was not successful for the following reason: ' + status);
+            }
+          });
+
         //uncomment when the info window information is ready
     	var infoWindow = new google.maps.InfoWindow();
         marker.addListener("click", function(){
-            infoWindow.setContent(location[2]);
+            infoWindow.setContent(content);
             infoWindow.open(map,marker);
         });
     }
     //adds and renders the locations and custom markers to the map
 
     function iconSelect(pillar) {
-        var value = "";
-        switch (pillar) {
-            case "livability":
-                value = Icons.LIVABILITY;
-                break;
-            case "food":
-                value = Icons.FOOD;
-                break;
-            case "buildings":
-                value = Icons.BUILDINGS;
-                break;
-            case "waste":
-                value = Icons.WASTE;
-                break;
-            case "water":
-                value = Icons.WATER;
-                break;
-            case "energy":
+        var value = 0; //change so that the first digitis what is evaluated
+        switch (pillar.charAt(0)) {
+            case "1":
                 value = Icons.ENERGY;
                 break;
-            case "transport":
-                value = Icons.TRANSPORT;
+            case "2":
+                value = Icons.WATER;
+                break;
+            case "3":
+                value = Icons.TRANSPORTATION;
+                break;
+            case "4":
+                value = Icons.BUILDINGS;
+                break;
+            case "5":
+                value = Icons.LIVABILITY;
+                break;
+            case "6":
+                value = Icons.FOOD;
+                break;
+            case "7":
+                value = Icons.WASTE;
                 break;
         }
         return value;
     }
     //selects the icons based on the corresponding pillar
 }
-
-
 
 /*
 function clearMap() {

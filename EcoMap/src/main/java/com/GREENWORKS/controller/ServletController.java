@@ -3,9 +3,9 @@ package com.GREENWORKS.controller;
 import com.GREENWORKS.DAO.*;
 import com.GREENWORKS.object.*;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+// import java.io.File;
+// import java.io.FileWriter;
+// import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import com.google.gson.Gson;
@@ -37,31 +37,26 @@ public class ServletController {
      * This method writes the parameter value to a JSON file
      * @param jsonText - takes an EcoPillar value to convert to JSON
      */
-    public static void toJsonFile(LinkedList<EcoPillar> jsonText) {
-        try {
-            File filepath = new File("EcoMap\\location.json");
-            FileWriter fileWrite = new FileWriter(filepath); // to create a means to write text to the newly create file
-            int i = 1, length = jsonText.size();
+    public static String toJsonFile(LinkedList<EcoPillar> values) {
+        String jsObject = "";
+        int i = 1, length = values.size();
 
-            fileWrite.write("{\n\t\"EcoPillars\": [\n"); //to add the opening brace and property definition
-            for (EcoPillar jsonValue : jsonText) {
-                String input = new Gson().toJson(jsonValue);
+        jsObject += "[\n"; //to add the opening bracket
+            for (EcoPillar jsValue : values) {
+                String input = jsValue.toString();
 
                 if (i < length) {
-                    fileWrite.write("\t\t" + input + ",\n");
+                    jsObject += "\t\t" + input + ",\n";
                     i++;
                     //appends a comma at the end of the json object and increases the current count
                 } else {
-                    fileWrite.write("\t\t" + input); 
+                    jsObject += "\t\t" + input; 
                 }
             }
             
-            fileWrite.write("\n\t]\n}"); //to add the closing brace
-            fileWrite.close();
+            jsObject += "\n\t]"; //to add the closing bracket
             //closes open IO resources
-        } catch (IOException ioe) {
-            ioe.getStackTrace();
-        }
+            return jsObject;
     }
 
     /**

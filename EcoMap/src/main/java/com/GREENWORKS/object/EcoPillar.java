@@ -7,20 +7,20 @@ public class EcoPillar {
     private String address, descr;
     private int loc_id, sp_id, zip_code;
 
-	public int getLoc_id() {
-		return loc_id;
-	}
-
-	public void setLoc_id(int loc_id) {
-		this.loc_id = loc_id;
-	}
-
 	public int getSp_id() {
 		return sp_id;
 	}
 
 	public void setSp_id(int sp_id) {
 		this.sp_id = sp_id;
+	}
+
+	public int getLoc_id() {
+		return loc_id;
+	}
+
+	public void setLoc_id(int loc_id) {
+		this.loc_id = loc_id;
 	}
 
 	public String getAddress() {
@@ -49,7 +49,6 @@ public class EcoPillar {
 	
 	@Override
 	public String toString() {
-		return "EcoPillar [loc_id=" + loc_id + ", sp_id="+ sp_id + ", address=" + 
-		address + ", descr=" + descr + ", zip_code=" + zip_code + "]";
+		return "[" + sp_id + ", " + loc_id + ", \"" + address + "\", \"" + descr + "\", " + zip_code + "]";
 	}
 }

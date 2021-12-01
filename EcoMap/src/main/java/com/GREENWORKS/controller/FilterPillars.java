@@ -31,7 +31,7 @@ public class FilterPillars extends HttpServlet {
 		//adds a new query for each value pulled from pillar_name
 		
 		LinkedList<EcoPillar> markers = ServletController.returnFiltered(dataQuery);
-		ServletController.toJsonFile(markers);
+		request.setAttribute("markers", ServletController.toJsonFile(markers));
 
 		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 		rd.forward(request, response);
