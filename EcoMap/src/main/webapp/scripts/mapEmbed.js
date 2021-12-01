@@ -68,15 +68,26 @@ function initMap() {
     };
     //creates an enum of formatted custom markers 
         
+    markers = [
+        [31, 26489, "1000 W Buena Vista Dr", "Disney's Coronado Springs Resort | J-1772", 32830],
+        [31, 26574, "15651 Grove Resort Av", "The Grove Resort & Spa | J-1772", 34787],
+        [51, 72534, "100 Rosearden Drive", "Dickson Azalea Park", 32803],
+        [51, 72603, "300 S Summerlin Ave", "Constitution Green Park", 32801],
+        [62, 83226, "406 E. Amelia Street", "Lake Eola Heights Community Garden", 32803],
+        [62, 83246, "Mai Kai Condominium Garden", "1935 Conway Rd", 32812],
+        [71, 73114, "6123 La Costa Drive",	"Engelwood Neighborhood Center Drop-off", 32807],
+        [71, 73144, "2200 Lee Road", "Lake Fairview Park Drop-off", 32810]
+    ];
+    //test values only - list should be dynamically called from jsp
+
     for (let i=0; i < markers.length; i++) {
         addMarkers(markers[i]);
     } 
     //loops thru the markers array to add the values to the map
 
     function addMarkers(location) {
-        var spid = location[0], locid = location[1], address = location[2], descr = location[3, zip = 4];
+        var spid = location[0], locid = location[1], address = location[2], descr = location[3], zip = location[4];
         var Icon = iconSelect(spid), content = "<h3><b>" + descr + "</b></h3><p>" + address + " " + zip  + "</p>";
-
     
         geocoder.geocode({'address': address}, function(results, status) {
             var coords = results[0].geometry.location;
@@ -87,23 +98,23 @@ function initMap() {
                 position: coords,
                 icon: Icon
               });
+
+              var infoWindow = new google.maps.InfoWindow();
+              marker.addListener("click", function(){
+                  infoWindow.setContent(content);
+                  infoWindow.open(map,marker);
+              });
             } else {
               alert('Geocode was not successful for the following reason: ' + status);
             }
           });
 
-        //uncomment when the info window information is ready
-    	var infoWindow = new google.maps.InfoWindow();
-        marker.addListener("click", function(){
-            infoWindow.setContent(content);
-            infoWindow.open(map,marker);
-        });
     }
     //adds and renders the locations and custom markers to the map
 
     function iconSelect(pillar) {
-        var value = 0; //change so that the first digitis what is evaluated
-        switch (pillar.charAt(0)) {
+        var value = 0, test = pillar.toString()[0]; //change so that the first digit is what is evaluated
+        switch (test) { 
             case "1":
                 value = Icons.ENERGY;
                 break;
