@@ -49,6 +49,6 @@ public class EcoPillar {
 	
 	@Override
 	public String toString() {
-		return "[" + sp_id + ", " + loc_id + ", \"" + address + "\", \"" + descr + "\", " + zip_code + "]";
+		return sp_id + "," + loc_id + ",\"" + address + "\",\"" + descr + "\"," + zip_code;
 	}
 }

@@ -11,8 +11,9 @@
     https://stackoverflow.com/questions/46868703/google-maps-api-add-marker-by-address-javascript/46906152
 */
 
-let markers; //has to be let and not var otherwise the code breaks. 'markers' cannot read the markers stored in jsp
 function initMap() {
+    var markers = locations.split("   "); //splits each value into an array value using ', ' as a delimiter
+
     var orlando = {lat: 28.5384,lng:-81.3789};
     var settings = {
         zoom:10,
@@ -68,25 +69,34 @@ function initMap() {
     };
     //creates an enum of formatted custom markers 
         
-    markers = [
-        [31, 26489, "1000 W Buena Vista Dr", "Disney's Coronado Springs Resort | J-1772", 32830],
-        [31, 26574, "15651 Grove Resort Av", "The Grove Resort & Spa | J-1772", 34787],
-        [51, 72534, "100 Rosearden Drive", "Dickson Azalea Park", 32803],
-        [51, 72603, "300 S Summerlin Ave", "Constitution Green Park", 32801],
-        [62, 83226, "406 E. Amelia Street", "Lake Eola Heights Community Garden", 32803],
-        [62, 83246, "Mai Kai Condominium Garden", "1935 Conway Rd", 32812],
-        [71, 73114, "6123 La Costa Drive",	"Engelwood Neighborhood Center Drop-off", 32807],
-        [71, 73144, "2200 Lee Road", "Lake Fairview Park Drop-off", 32810]
-    ];
+    // markers = [
+    //     [31, 26489, "1000 W Buena Vista Dr", "Disney's Coronado Springs Resort | J-1772", 32830],
+    //     [31, 26574, "15651 Grove Resort Av", "The Grove Resort & Spa | J-1772", 34787],
+    //     [51, 72534, "100 Rosearden Drive", "Dickson Azalea Park", 32803],
+    //     [51, 72603, "300 S Summerlin Ave", "Constitution Green Park", 32801],
+    //     [62, 83226, "406 E. Amelia Street", "Lake Eola Heights Community Garden", 32803],
+    //     [62, 83246, "Mai Kai Condominium Garden", "1935 Conway Rd", 32812],
+    //     [71, 73114, "6123 La Costa Drive",	"Engelwood Neighborhood Center Drop-off", 32807],
+    //     [71, 73144, "2200 Lee Road", "Lake Fairview Park Drop-off", 32810]
+    // ];
     //test values only - list should be dynamically called from jsp
 
-    for (let i=0; i < markers.length; i++) {
-        addMarkers(markers[i]);
-    } 
+    if (markers.length > 0)  {
+        for (let i=0; i < markers.length; i++) {
+            array = markers[i].split(",");
+
+            spid = array[0];
+            locid = array[1];
+            address = array[2].substr(1, array[2].length - 2);
+            descr = array[3].substr(1, array[3].length - 2);
+            zip = array[4];
+
+            addMarkers(spid, locid, address, descr, zip);
+        }
+    }
     //loops thru the markers array to add the values to the map
 
-    function addMarkers(location) {
-        var spid = location[0], locid = location[1], address = location[2], descr = location[3], zip = location[4];
+    function addMarkers(spid, locid, address, descr, zip) {
         var Icon = iconSelect(spid), content = "<h3><b>" + descr + "</b></h3><p>" + address + " " + zip  + "</p>";
     
         geocoder.geocode({'address': address}, function(results, status) {

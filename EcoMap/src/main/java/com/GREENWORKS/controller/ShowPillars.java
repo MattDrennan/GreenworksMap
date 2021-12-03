@@ -21,7 +21,7 @@ public class ShowPillars extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		LinkedList<EcoPillar> markers = ServletController.returnAll();
-		ServletController.toJsonFile(markers);
+		request.setAttribute("all", ServletController.toJsonFile(markers));
 
 		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 		rd.forward(request, response);

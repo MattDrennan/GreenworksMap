@@ -39,23 +39,18 @@ public class ServletController {
      */
     public static String toJsonFile(LinkedList<EcoPillar> values) {
         String jsObject = "";
-        int i = 1, length = values.size();
+        int val = 0, length = values.size() - 1;
 
-        jsObject += "[\n"; //to add the opening bracket
             for (EcoPillar jsValue : values) {
                 String input = jsValue.toString();
 
-                if (i < length) {
-                    jsObject += "\t\t" + input + ",\n";
-                    i++;
-                    //appends a comma at the end of the json object and increases the current count
+                if (val < length) {
+                    jsObject += input + "   "; //adds a delimiter 
+                    val++;
                 } else {
-                    jsObject += "\t\t" + input; 
+                    jsObject += input;
                 }
             }
-            
-            jsObject += "\n\t]"; //to add the closing bracket
-            //closes open IO resources
             return jsObject;
     }
 
