@@ -26,6 +26,8 @@
                 document.getElementById("filter").style.display = "none";
             }
         </script>
+
+        <script src="cred.js"></script>
     </head>
 
     <body>
@@ -106,10 +108,11 @@
         
         <div id="map"></div> 
         <!--sets the parameters for the Google Maps API embed -->
-
-        <script	async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9nc7U6UPDjbOZUwgTn1pdDxBqX49zjI4&callback=initMap"
-        ></script>
+ 
+        <script>
+            document.write('<script async defer src="https://maps.googleapis.com/maps/api/js?key=' + googleMapKey + '&callback=initMap"><\/script>');
+        </script>
+        
         <!--script renders the map under the breadcrumb nav -->
         <script type="text/javascript">
             var locations = document.getElementById("values").innerHTML;
