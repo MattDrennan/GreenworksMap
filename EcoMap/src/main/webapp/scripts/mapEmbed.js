@@ -69,27 +69,27 @@ function initMap() {
     };
     //creates an enum of formatted custom markers 
         
-    // markers = [
-    //     [31, 26489, "1000 W Buena Vista Dr", "Disney's Coronado Springs Resort | J-1772", 32830],
-    //     [31, 26574, "15651 Grove Resort Av", "The Grove Resort & Spa | J-1772", 34787],
-    //     [51, 72534, "100 Rosearden Drive", "Dickson Azalea Park", 32803],
-    //     [51, 72603, "300 S Summerlin Ave", "Constitution Green Park", 32801],
-    //     [62, 83226, "406 E. Amelia Street", "Lake Eola Heights Community Garden", 32803],
-    //     [62, 83246, "Mai Kai Condominium Garden", "1935 Conway Rd", 32812],
-    //     [71, 73114, "6123 La Costa Drive",	"Engelwood Neighborhood Center Drop-off", 32807],
-    //     [71, 73144, "2200 Lee Road", "Lake Fairview Park Drop-off", 32810]
-    // ];
+    var markers = [
+         [31, 26489, "1000 W Buena Vista Dr", "Disney's Coronado Springs Resort | J-1772", 32830],
+         [31, 26574, "15651 Grove Resort Av", "The Grove Resort & Spa | J-1772", 34787],
+         [51, 72534, "100 Rosearden Drive", "Dickson Azalea Park", 32803],
+         [51, 72603, "300 S Summerlin Ave", "Constitution Green Park", 32801],
+         [62, 83226, "406 E. Amelia Street", "Lake Eola Heights Community Garden", 32803],
+         [62, 83246, "Mai Kai Condominium Garden", "1935 Conway Rd", 32812],
+         [71, 73114, "6123 La Costa Drive",	"Engelwood Neighborhood Center Drop-off", 32807],
+         [71, 73144, "2200 Lee Road", "Lake Fairview Park Drop-off", 32810]
+     ];
     //test values only - list should be dynamically called from jsp
 
     if (markers.length > 0)  {
         for (let i=0; i < markers.length; i++) {
-            array = markers[i].split(",");
+            //array = markers[i].split(",");
 
-            spid = array[0];
-            locid = array[1];
-            address = array[2].substr(1, array[2].length - 2);
-            descr = array[3].substr(1, array[3].length - 2);
-            zip = array[4];
+            spid = markers[i][0];
+            locid = markers[i][1];
+            address = String(markers[i][2]);
+            descr = markers[i][3];
+            zip = markers[i][4];
 
             addMarkers(spid, locid, address, descr, zip);
         }
