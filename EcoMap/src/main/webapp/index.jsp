@@ -1,4 +1,7 @@
 <%@ page import="com.GREENWORKS.eco.EcoMap" %>
+<%
+EcoMap e = new EcoMap();
+%>
 
 <html>
     <head>
@@ -27,10 +30,6 @@
     </head>
 
     <body>
-        <%
-        EcoMap e = new EcoMap();
-        %>
-
         <script>
         // Load array in from Java
         var array = [<% for (int i = 0; i < e.getLocations().size(); i++) { %>"<%= e.getLocations().get(i) %>"<%= i + 1 < e.getLocations().size() ? ",":"" %><% } %>];
@@ -52,7 +51,7 @@
             j++;
 
             // If on the fourth value (final)
-            if(j == 4)
+            if(j == 5)
             {
                 // Push to markers array
                 markers.push(tempArray);

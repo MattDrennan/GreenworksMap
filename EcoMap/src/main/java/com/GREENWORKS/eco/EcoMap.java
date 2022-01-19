@@ -34,6 +34,7 @@ public class EcoMap {
 				returnArray.add(rs.getString(2));
 				returnArray.add(rs.getString(3));
 				returnArray.add(rs.getString(4));
+				returnArray.add(rs.getString(5));
 			}
 		}
 		catch (SQLException e)
@@ -48,6 +49,31 @@ public class EcoMap {
 		}
 
 		return returnArray;
+	}
+
+	// addSlashes: Adds slashes to inputed text
+    public String addSlashes(String s)
+	{
+        s = s.replaceAll("\\\\", "\\\\\\\\");
+        s = s.replaceAll("\\n", "\\\\n");
+        s = s.replaceAll("\\r", "\\\\r");
+        s = s.replaceAll("\\00", "\\\\0");
+        s = s.replaceAll("'", "\\\\'");
+        return s;
+    }
+
+	// removeTags: Removes HTML tags from string
+	public String removeTags(String s)
+	{
+		String noHTMLString = s.replaceAll("\\<.*?\\>", "");
+		return noHTMLString;
+	}
+
+	// cleanInput: Combines removeTags and addSlashes to clean input
+	public String cleanInput(String s)
+	{
+		String returnS = addSlashes(removeTags(s));
+		return returnS;
 	}
 
 	// checkLogin: Checks the login credentials, and returns the username
@@ -73,7 +99,6 @@ public class EcoMap {
 			while(rs.next())
 			{
 				valid = true;
-				System.out.print("test");
 			}
 		}
 		catch (SQLException e)
