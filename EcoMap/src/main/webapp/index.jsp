@@ -11,14 +11,8 @@
         -->
         
         <meta charset="utf-8" />
-        <title>Eco-map - City of Orlando</title>
-
+        <title>Eco-Map - City of Orlando</title>
         <link href="stylesheets/ecomap_stylesheet.css" rel="stylesheet" />
-        <% 
-            String a_locations = String.valueOf(request.getAttribute("all")), 
-                f_locations = String.valueOf(request.getAttribute("filtered")); 
-        %>
-        <!-- reads the attribute values to a script variable -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
             function Filter_Open() {
@@ -39,7 +33,7 @@
 
         <script>
         // Load array in from Java
-        var array = [<% for (int i = 0; i < e.test().size(); i++) { %>"<%= e.test().get(i) %>"<%= i + 1 < e.test().size() ? ",":"" %><% } %>];
+        var array = [<% for (int i = 0; i < e.getLocations().size(); i++) { %>"<%= e.getLocations().get(i) %>"<%= i + 1 < e.getLocations().size() ? ",":"" %><% } %>];
         
         // Create set up variables
         var markers = [];
@@ -88,12 +82,11 @@
             <div>
                 <ul class="breadcrumb">
                     <li><a href="https://www.orlando.gov/Home">Home</a></li>
-                    <li>Eco-map</li>
+                    <li>Eco-Map</li>
                 </ul>
             </div>
             <!-- adds a static breadcrumb navigation to show the user the URL path taken to the current page -->
-            <p id="values" style="display: none;"><%= f_locations %></p>
-            <h1>Eco-map</h1>
+            <h1>Eco-Map</h1>
             <div class="map_options">
                 <div id="filter_items">
                     <figure>
@@ -157,10 +150,6 @@
             document.write('<script async defer src="https://maps.googleapis.com/maps/api/js?key=' + googleMapKey + '&callback=initMap"><\/script>');
         </script>
         
-        <!--script renders the map under the breadcrumb nav -->
-        <script type="text/javascript">
-            var locations = document.getElementById("values").innerHTML;
-        </script>
         <script src="scripts/mapEmbed.js"></script> 
         <!--references the init callback to the mapEmbed js file -->       
         
