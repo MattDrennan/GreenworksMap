@@ -35,7 +35,7 @@
             <div>
                 <ul class="breadcrumb">
                     <li><a href="https://www.orlando.gov/Home">Home</a></li>
-                    <li>Eco-Map</li>
+                    <li><a href="/webapp/">Eco-Map</a></li>
                 </ul>
             </div>
             <!-- adds a static breadcrumb navigation to show the user the URL path taken to the current page -->
