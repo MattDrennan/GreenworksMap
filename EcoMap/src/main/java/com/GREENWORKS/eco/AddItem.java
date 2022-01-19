@@ -34,8 +34,11 @@ public class AddItem extends HttpServlet {
             // Connect to MySQL
             MysqlConnect mysqlConnect = new MysqlConnect();
 
+            // Call EcoMap
+            EcoMap m = new EcoMap();
+
             // Statement to select all location data
-            String sql = "INSERT INTO locations (iconid, address, name, zip) VALUES ('" + icon + "', '" + location + "', '" + locationName + "', '" + zip + "')";
+            String sql = "INSERT INTO locations (iconid, address, name, zip) VALUES ('" + m.cleanInput(icon) + "', '" + m.cleanInput(location) + "', '" + m.cleanInput(locationName) + "', '" + m.cleanInput(zip) + "')";
 
             try
             {

@@ -1,5 +1,9 @@
 <%@ page import="com.GREENWORKS.eco.EcoMap" %>
+<%@page import="java.util.ArrayList" %>
 <%@ page isELIgnored="false"%>
+<%
+EcoMap e = new EcoMap();
+%>
 
 <html>
     <head>
@@ -18,10 +22,6 @@
     </head>
 
     <body>
-        <%
-        EcoMap e = new EcoMap();
-        %>
-
         <header>
             <a id="menu" href="">&#9776; Menu</a>
             <a id="logo" href="https://www.orlando.gov"><img src="icons/CityOfOrlando_logo.png" alt="City of Orlando logo"></a>
@@ -51,6 +51,8 @@
                     Welcome, ${username}.
                 </p>
 
+                <h1>Add Location</h1>
+
                 <p>
                     <form action="additem" method="POST">
                         Location Name: <input type="text" name="locationName" />
@@ -74,6 +76,98 @@
                         <input type="submit" value="Add!" name="submit" />
                     </form>
                 </p>
+
+                <h1>Edit Location</h1>
+
+                <%
+                // Check if second edit screen
+                if(request.getAttribute("id") != "" && request.getAttribute("id") != null)
+                {
+                %>
+                    <form action="editlocationsave" method="POST">
+                        <input type="hidden" name="id" value="${id}" />
+                        Location Name: <input type="text" name="locationName" value="${name}" />
+                        <br />
+                        Location Address: <input type="text" name="location" value="${address}" />
+                        <br />
+                        Zip Code: <input type="number" name="zip" value="${zip}" />
+                        <br />
+                        Icon:
+                        <br />
+                        <select name="icon">
+                            <option value="6" ${iconid == 6 ? 'selected' : ''}>Food</option>
+                            <option value="5" ${iconid == 5 ? 'selected' : ''}>Livability</option>
+                            <option value="7" ${iconid == 7 ? 'selected' : ''}>Waste</option>
+                            <option value="2" ${iconid == 2 ? 'selected' : ''}>Water</option>
+                            <option value="1" ${iconid == 1 ? 'selected' : ''}>Energy</option>
+                            <option value="4" ${iconid == 4 ? 'selected' : ''}>Buildings</option>
+                            <option value="3" ${iconid == 3 ? 'selected' : ''}>Transportation</option>
+                        </select>
+                        <br />
+                        <input type="submit" value="Edit!" name="submit" />
+                        <input type="submit" value="Cancel" onclick="window.open('admin.jsp');" />
+                    </form>
+                <%
+                }
+                else
+                {
+                %>
+                    <p>
+                        <form action="editlocation" method="POST">
+                            <select name="locationID">
+                                <%
+                                // Set up variables
+                                String id = "";
+                                String iconid = "";
+                                String address = "";
+                                String name = "";
+                                String zip = "";
+
+                                // Increment variable
+                                int j = 0;
+
+                                // Loop through array
+                                ArrayList<String> locations = (ArrayList<String>)  e.getLocations();
+                                for (String location : locations)
+                                {
+                                    if(j == 0)
+                                    {
+                                        id = location;
+                                    }
+                                    else if(j == 1)
+                                    {
+                                        iconid = location;
+                                    }
+                                    else if(j == 2)
+                                    {
+                                        address = location;
+                                    }
+                                    else if(j == 3)
+                                    {
+                                        name = location;
+                                    }
+                                    else if(j == 4)
+                                    {
+                                        zip = location;
+                                %>
+                                        <option value="<%=id%>"><%=name%> - <%=address%></option>
+                                <%
+                                        // Reset
+                                        j = -1;
+                                    }
+
+                                    // Increment
+                                    j++;
+                                }
+                                %>
+                            </select>
+                            <br />
+                            <input type="submit" name="editChoose" value="Edit" />
+                        </form>
+                    </p>
+                <%
+                }
+                %>
 
                 <p>
                     <a href="logout">Logout</a>
