@@ -12,8 +12,6 @@
 */
 
 function initMap() {
-    var markers = locations.split("   "); //splits each value into an array value using ', ' as a delimiter
-
     var orlando = {lat: 28.5384,lng:-81.3789};
     var settings = {
         zoom:10,
@@ -69,7 +67,7 @@ function initMap() {
     };
     //creates an enum of formatted custom markers 
         
-    var markers = [
+    /*var markers = [
          [31, 26489, "1000 W Buena Vista Dr", "Disney's Coronado Springs Resort | J-1772", 32830],
          [31, 26574, "15651 Grove Resort Av", "The Grove Resort & Spa | J-1772", 34787],
          [51, 72534, "100 Rosearden Drive", "Dickson Azalea Park", 32803],
@@ -78,7 +76,7 @@ function initMap() {
          [62, 83246, "Mai Kai Condominium Garden", "1935 Conway Rd", 32812],
          [71, 73114, "6123 La Costa Drive",	"Engelwood Neighborhood Center Drop-off", 32807],
          [71, 73144, "2200 Lee Road", "Lake Fairview Park Drop-off", 32810]
-     ];
+     ];*/
     //test values only - list should be dynamically called from jsp
 
     if (markers.length > 0)  {

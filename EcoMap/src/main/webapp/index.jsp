@@ -1,3 +1,5 @@
+<%@ page import="com.GREENWORKS.eco.EcoMap" %>
+
 <html>
     <head>
         <!--
@@ -31,6 +33,48 @@
     </head>
 
     <body>
+        <%
+        EcoMap e = new EcoMap();
+        %>
+
+        <script>
+        // Load array in from Java
+        var array = [<% for (int i = 0; i < e.test().size(); i++) { %>"<%= e.test().get(i) %>"<%= i + 1 < e.test().size() ? ",":"" %><% } %>];
+        
+        // Create set up variables
+        var markers = [];
+        var tempArray = [];
+
+        // Array iteration count
+        var j = 0;
+
+        // Loop through Java array
+        for(i = 0; i <= array.length - 1; i++)
+        {
+            // Push values to temporary array
+            tempArray.push(array[i]);
+
+            // Increment iteration count
+            j++;
+
+            // If on the fourth value (final)
+            if(j == 4)
+            {
+                // Push to markers array
+                markers.push(tempArray);
+
+                // Clear temp array
+                tempArray = [];
+
+                // Reset iteration count
+                j = 0;
+            }
+        }
+        
+        // Print to console
+        console.log(markers);
+        </script>
+
         <header>
             <a id="menu" href="">&#9776; Menu</a>
             <a id="logo" href="https://www.orlando.gov"><img src="icons/CityOfOrlando_logo.png" alt="City of Orlando logo"></a>
