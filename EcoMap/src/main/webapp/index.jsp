@@ -17,15 +17,6 @@ EcoMap e = new EcoMap();
         <title>Eco-Map - City of Orlando</title>
         <link href="stylesheets/ecomap_stylesheet.css" rel="stylesheet" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script>
-            function Filter_Open() {
-                document.getElementById("filter").style.display = "block";
-            }
-            function Filter_Close() {
-                document.getElementById("filter").style.display = "none";
-            }
-        </script>
-
         <script src="cred.js"></script>
     </head>
 
@@ -63,9 +54,6 @@ EcoMap e = new EcoMap();
                 j = 0;
             }
         }
-        
-        // Print to console
-        console.log(markers);
         </script>
 
         <header>
@@ -89,7 +77,7 @@ EcoMap e = new EcoMap();
             <div class="map_options">
                 <div id="filter_items">
                     <figure>
-                        <a href="javascript:void(0);" onclick="Filter_Open();">
+                        <a href="#/" name="openFilter">
                             <img id="filter_icon" src="icons/filter.png" alt=" ">
                             <div id="fc_background"><figcaption>Filter</figcaption></div>
                         </a>
@@ -113,31 +101,30 @@ EcoMap e = new EcoMap();
                     <h2>Filter</h2><hr>
                     <div class="pillars">
                         <div class="options">
-                            <input class="check" type="checkbox" name="pillar_name" value="Energy"></input><label class="label">Clean Energy</label>
+                            <input class="check" type="checkbox" name="pillar_name" value="1" CHECKED></input><label class="label">Clean Energy</label>
                         </div>
                         <div class="options">
-                            <input class="check" type="checkbox" name="pillar_name" value="Water"></input><label class="label">Clean Water</label>
+                            <input class="check" type="checkbox" name="pillar_name" value="2" CHECKED></input><label class="label">Clean Water</label>
                         </div>
                         <div class="options">
-                            <input class="check" type="checkbox" name="pillar_name" value="Transportation"></input><label class="label">Electic & Alt. Transportation</label>
+                            <input class="check" type="checkbox" name="pillar_name" value="3" CHECKED></input><label class="label">Electic & Alt. Transportation</label>
                         </div>
                         <div class="options">
-                            <input class="check" type="checkbox" name="pillar_name" value="Buildings"></input><label class="label">Green Buildings</label>
+                            <input class="check" type="checkbox" name="pillar_name" value="4" CHECKED></input><label class="label">Green Buildings</label>
                         </div>
                         <div class="options">
-                            <input class="check" type="checkbox" name="pillar_name" value="Livability"></input><label class="label">Livability</label>
+                            <input class="check" type="checkbox" name="pillar_name" value="5" CHECKED></input><label class="label">Livability</label>
                         </div>
                         <div class="options">
-                            <input class="check" type="checkbox" name="pillar_name" value="Food"></input><label class="label">Local Food Systems</label>
+                            <input class="check" type="checkbox" name="pillar_name" value="6" CHECKED></input><label class="label">Local Food Systems</label>
                         </div>
                         <div class="options">
-                            <input class="check" type="checkbox" name="pillar_name" value="Waste"></input><label class="label">Zero Waste</label>
+                            <input class="check" type="checkbox" name="pillar_name" value="7" CHECKED></input><label class="label">Zero Waste</label>
                         </div>
                     </div>
                     <hr>
                     <div class="action_controls">
-                        <button id="uncheck" type="reset" onclick="Filter_Close()">Close</button>
-                        <button type="submit">Save</button>
+                        <button name="closeFilter">Close</button>
                     </div>
                 </form>
         </div>
@@ -166,5 +153,6 @@ EcoMap e = new EcoMap();
               </footer>
         </div>
         <!-- simulates the footer as shown on the real CoO site -->
+        <script src="scripts/main.js"></script>
     </body>
 </html>

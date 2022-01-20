@@ -11,6 +11,9 @@
     https://stackoverflow.com/questions/46868703/google-maps-api-add-marker-by-address-javascript/46906152
 */
 
+// Set up global marker array
+var globalMarkers = [];
+
 function initMap() {
     var orlando = {lat: 28.5384,lng:-81.3789};
     var settings = {
@@ -81,7 +84,6 @@ function initMap() {
 
     if (markers.length > 0)  {
         for (let i=0; i < markers.length; i++) {
-            //array = markers[i].split(",");
 
             spid = markers[i][0];
             locid = markers[i][1];
@@ -94,29 +96,46 @@ function initMap() {
     }
     //loops thru the markers array to add the values to the map
 
-    function addMarkers(spid, locid, address, descr, zip) {
+    // addMarkers: Adds markers to the map
+    function addMarkers(spid, locid, address, descr, zip)
+    {
         var Icon = iconSelect(spid), content = "<h3><b>" + descr + "</b></h3><p>" + address + " " + zip  + "</p>";
     
-        geocoder.geocode({'address': address}, function(results, status) {
-            var coords = results[0].geometry.location;
-            if (status === 'OK') {
-              map.setCenter(results[0].geometry.location);
-              var marker = new google.maps.Marker({
-                map: map,
-                position: coords,
-                icon: Icon
-              });
+        geocoder.geocode({'address': address}, function(results, status)
+        {
+            try
+            {
+                var coords = results[0].geometry.location;
 
-              var infoWindow = new google.maps.InfoWindow();
-              marker.addListener("click", function(){
-                  infoWindow.setContent(content);
-                  infoWindow.open(map,marker);
-              });
-            } else {
-              alert('Geocode was not successful for the following reason: ' + status);
+                if (status === 'OK')
+                {
+                    map.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: coords,
+                        icon: Icon,
+                        type: spid
+                    });
+
+                    var infoWindow = new google.maps.InfoWindow();
+                    marker.addListener("click", function(){
+                        infoWindow.setContent(content);
+                        infoWindow.open(map,marker);
+                    });
+
+                    // Add to global array to call later
+                    globalMarkers.push(marker);
+                }
+                else
+                {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
             }
-          });
-
+            catch
+            {
+                // Catch errors here
+            }
+        });
     }
     //adds and renders the locations and custom markers to the map
 
@@ -149,9 +168,3 @@ function initMap() {
     }
     //selects the icons based on the corresponding pillar
 }
-
-/*
-function clearMap() {
-    marker.setMap(null);
-}*/
-// clears the map to properly update the markers when filtered
