@@ -20,7 +20,7 @@ public class MysqlConnect {
      * Database properties are assigned to the properties instance variable in this method. 
      * @return Returns the properties object with set properties. 
      */
-    private Properties getProperties()
+    private Properties assignProperties()
     {
         if (properties == null)
         {
@@ -46,7 +46,7 @@ public class MysqlConnect {
             try
             {
                 Class.forName(DatabaseConstants.DATABASE_DRIVER);
-                connection = DriverManager.getConnection(DatabaseConstants.DATABASE_URL, getProperties());
+                connection = DriverManager.getConnection(DatabaseConstants.DATABASE_URL, assignProperties());
             }
             catch (ClassNotFoundException | SQLException e)
             {
@@ -86,9 +86,18 @@ public class MysqlConnect {
     }
 
     /***
+     * This is an accessor method for the properties instance variable. This should not be used 
+     * outside of unit testing. 
+     * @return Returns the properties object. 
+     */
+    public Properties getProperties() {
+        return properties;
+    }
+
+    /***
      * This is a mutator method for the connection instance variable. This should not be used 
      * outside of unit testing. 
-     * @param connection
+     * @param connection Requires a connection to be assigned. 
      */
     public void setConnection(Connection connection) {
         this.connection = connection;
@@ -97,7 +106,7 @@ public class MysqlConnect {
     /***
      * This is a mutator method for the properties instance variable. This should not be used 
      * outside of unit testing. 
-     * @param properties
+     * @param properties Requires a properties to be assigned. 
      */
     public void setProperties(Properties properties) {
         this.properties = properties;
