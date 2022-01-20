@@ -163,6 +163,7 @@ EcoMap e = new EcoMap();
                             </select>
                             <br />
                             <input type="submit" name="editChoose" value="Edit" />
+                            <input type="submit" name="deleteChoose" value="Delete" />
                         </form>
                     </p>
                 <%
@@ -186,7 +187,7 @@ EcoMap e = new EcoMap();
                 </form>
             <%
             }
-            %>   
+            %>
         </section>
         
         <div>
