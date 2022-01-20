@@ -1,5 +1,11 @@
 $(document).ready(function()
 {
+    // Click events link
+    $("#openCalendar").click(function()
+    {
+        $("#datepicker").datepicker("show");
+    });
+
     // If a filter option is pressed
     $("[class=check]").click(function()
     {

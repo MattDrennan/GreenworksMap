@@ -417,3 +417,9 @@ footer {
         left: 65%;
     }   
 }
+
+/* Highlights Calendar Dates */
+.calendar-highlight a
+{
+    background: #FC0 !important;
+}
