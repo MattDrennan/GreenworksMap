@@ -8,6 +8,11 @@ import com.GREENWORKS.eco.MysqlConnect;
 
 import org.junit.jupiter.api.Test;
 
+/***
+ * These are the unit tests for MysqlConnect.java. This test file requires valid 
+ * database properties. If these tests are failing it will likely be necessary to
+ * modify the DatabaseConstants.java. 
+ */
 public class MysqlConnectTests {
 
     /***
