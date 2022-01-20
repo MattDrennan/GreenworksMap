@@ -35,6 +35,8 @@ public class EcoMap {
 				returnArray.add(rs.getString(3));
 				returnArray.add(rs.getString(4));
 				returnArray.add(rs.getString(5));
+				returnArray.add(rs.getString(6));
+				returnArray.add(rs.getString(7));
 			}
 		}
 		catch (SQLException e)

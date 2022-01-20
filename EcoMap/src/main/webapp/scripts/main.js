@@ -1,5 +1,45 @@
 $(document).ready(function()
 {
+    // If edit an event is pressed
+    $("input[name=eventEdit]").click(function()
+    {
+        // If no
+        if($("input[name=eventEdit]:checked").val() == 0)
+        {
+            // Hide
+            $("#eventDatesEdit").hide();
+
+            // Set null fields
+            $("#dateStartEdit").val("");
+            $("#dateEndEdit").val("");
+        }
+        else
+        {
+            // Show
+            $("#eventDatesEdit").show();
+        }
+    });
+
+    // If add an event is pressed
+    $("input[name=event]").click(function()
+    {
+        // If no
+        if($("input[name=event]:checked").val() == 0)
+        {
+            // Hide
+            $("#eventDates").hide();
+
+            // Set null fields
+            $("#dateStart").val("");
+            $("#dateEnd").val("");
+        }
+        else
+        {
+            // Show
+            $("#eventDates").show();
+        }
+    });
+
     // Click events link
     $("#openCalendar").click(function()
     {

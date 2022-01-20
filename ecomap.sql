@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Jan 19, 2022 at 06:21 AM
+-- Generation Time: Jan 20, 2022 at 06:33 PM
 -- Server version: 5.7.34
 -- PHP Version: 7.4.21
 
@@ -32,7 +32,9 @@ CREATE TABLE `locations` (
   `iconid` int(11) NOT NULL,
   `address` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `zip` int(11) NOT NULL
+  `zip` int(11) NOT NULL,
+  `dateStart` datetime DEFAULT NULL,
+  `dateEnd` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

@@ -55,6 +55,8 @@ public class EditLocation extends HttpServlet {
                     request.setAttribute("address", rs.getString(3));
                     request.setAttribute("name", rs.getString(4));
                     request.setAttribute("zip", rs.getString(5));
+                    request.setAttribute("dateStart", rs.getString(6));
+                    request.setAttribute("dateEnd", rs.getString(7));
                 }
             }
             else
