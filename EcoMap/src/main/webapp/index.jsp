@@ -16,8 +16,37 @@ EcoMap e = new EcoMap();
         <meta charset="utf-8" />
         <title>Eco-Map - City of Orlando</title>
         <link href="stylesheets/ecomap_stylesheet.css" rel="stylesheet" />
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
         <script src="cred.js"></script>
+        <script>
+        $(function()
+        {
+            // Dates to be highlighted
+            var eventDates = {};
+            eventDates[new Date('01/05/2022')] = new Date('01/05/2022');
+            eventDates[new Date('01/08/2022')] = new Date('01/08/2022');
+
+            $("#datepicker").datepicker({
+                beforeShowDay: function(d)
+                {
+                    // Get day
+                    var highlight = eventDates[d];
+
+                    // Do we need to highlight day
+                    if(highlight)
+                    {
+                        return [true, "calendar-highlight", "Tooltip Text Here"];
+                    }
+                    else
+                    {
+                        return [true, "", ""];
+                    }
+                }
+            });
+        });
+        </script>
     </head>
 
     <body>
@@ -85,9 +114,10 @@ EcoMap e = new EcoMap();
                 </div>
                 <!--solution found on StackOverflow: https://stackoverflow.com/questions/5003867/how-to-call-javascript-function-instead-of-href-in-html/5003904-->
 
+                <input type="text" id="datepicker" style="visibility:hidden;">
                 <div id="calendar_items">
                     <figure>
-                        <a href="javascript:void(0);" >
+                        <a href="#/" id="openCalendar">
                             <img id="calendar_icon" src="icons/calendar.png" alt=" ">
                             <div id="fc_background"><figcaption>Events</figcaption></div>
                         </a>
