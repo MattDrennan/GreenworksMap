@@ -66,38 +66,66 @@ function initMap() {
             scaledSize: new google.maps.Size(35, 35),
             origin: new google.maps.Point(0, 0),
             anchor: new google.maps.Point(0, 0)
+        },
+        CLEANEVENT: {
+            url: "https://maps.google.com/mapfiles/ms/icons/green-dot.png",
+            scaledSize: new google.maps.Size(35, 35),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(0, 0)
+        },
+        GREENEVENT: {
+            url: "https://maps.google.com/mapfiles/ms/icons/yellow-dot.png",
+            scaledSize: new google.maps.Size(35, 35),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(0, 0)
+        },
+        FOODEVENT: {
+            url: "https://maps.google.com/mapfiles/ms/icons/red-dot.png",
+            scaledSize: new google.maps.Size(35, 35),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(0, 0)
+        },
+        LIVEVENT: {
+            url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+            scaledSize: new google.maps.Size(35, 35),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(0, 0)
+        },
+        WASTEEVENT: {
+            url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+            scaledSize: new google.maps.Size(35, 35),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(0, 0)
+        },
+        TRANSPORTATIONEVENT: {
+            url: "icons/lightblue-dot.png",
+            scaledSize: new google.maps.Size(35, 35),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(0, 0)
         }
     };
     //creates an enum of formatted custom markers 
-        
-    /*var markers = [
-         [31, 26489, "1000 W Buena Vista Dr", "Disney's Coronado Springs Resort | J-1772", 32830],
-         [31, 26574, "15651 Grove Resort Av", "The Grove Resort & Spa | J-1772", 34787],
-         [51, 72534, "100 Rosearden Drive", "Dickson Azalea Park", 32803],
-         [51, 72603, "300 S Summerlin Ave", "Constitution Green Park", 32801],
-         [62, 83226, "406 E. Amelia Street", "Lake Eola Heights Community Garden", 32803],
-         [62, 83246, "Mai Kai Condominium Garden", "1935 Conway Rd", 32812],
-         [71, 73114, "6123 La Costa Drive",	"Engelwood Neighborhood Center Drop-off", 32807],
-         [71, 73144, "2200 Lee Road", "Lake Fairview Park Drop-off", 32810]
-     ];*/
-    //test values only - list should be dynamically called from jsp
 
+    // Loop through markers and add them
     if (markers.length > 0)  {
-        for (let i=0; i < markers.length; i++) {
-
-            spid = markers[i][0];
-            locid = markers[i][1];
+        for (let i = 0; i < markers.length; i++)
+        {
+            // Set up variables to add marker
+            spid = markers[i][1];
+            locid = markers[i][0];
             address = String(markers[i][2]);
             descr = markers[i][3];
             zip = markers[i][4];
+            dateStart = markers[i][5];
 
-            addMarkers(spid, locid, address, descr, zip);
+            // Add marker to map
+            addMarkers(spid, locid, address, descr, zip, dateStart.split(" ")[0]);
         }
     }
     //loops thru the markers array to add the values to the map
 
     // addMarkers: Adds markers to the map
-    function addMarkers(spid, locid, address, descr, zip)
+    function addMarkers(spid, locid, address, descr, zip, dateStart)
     {
         var Icon = iconSelect(spid), content = "<h3><b>" + descr + "</b></h3><p>" + address + " " + zip  + "</p>";
     
@@ -107,6 +135,34 @@ function initMap() {
             {
                 var coords = results[0].geometry.location;
 
+                // Convert events to another spid so they won't get hidden by filter
+                switch(spid)
+                {
+                    case "8":
+                        spid = "2";
+                        break;
+
+                    case "9":
+                        spid = "1";
+                        break;
+
+                    case "10":
+                        spid = "6";
+                        break;
+
+                    case "11":
+                        spid = "5";
+                        break;
+
+                    case "12":
+                        spid = "7";
+                        break;
+
+                    case "13":
+                        spid = "3";
+                        break;
+                }
+
                 if (status === 'OK')
                 {
                     map.setCenter(results[0].geometry.location);
@@ -114,7 +170,8 @@ function initMap() {
                         map: map,
                         position: coords,
                         icon: Icon,
-                        type: spid
+                        type: spid,
+                        dateStart: dateStart
                     });
 
                     var infoWindow = new google.maps.InfoWindow();
@@ -140,8 +197,11 @@ function initMap() {
     //adds and renders the locations and custom markers to the map
 
     function iconSelect(pillar) {
-        var value = 0, test = pillar.toString()[0]; //change so that the first digit is what is evaluated
-        switch (test) { 
+        // Set up value
+        var value = 1;
+
+        // Check which icon
+        switch (pillar) { 
             case "1":
                 value = Icons.ENERGY;
                 break;
@@ -162,6 +222,24 @@ function initMap() {
                 break;
             case "7":
                 value = Icons.WASTE;
+                break;
+            case "8":
+                value = Icons.CLEANEVENT;
+                break;
+            case "9":
+                value = Icons.GREENEVENT;
+                break;
+            case "10":
+                value = Icons.FOODEVENT;
+                break;
+            case "11":
+                value = Icons.LIVEVENT;
+                break;
+            case "12":
+                value = Icons.WASTEEVENT;
+                break;
+            case "13":
+                value = Icons.TRANSPORTATIONEVENT;
                 break;
         }
         return value;

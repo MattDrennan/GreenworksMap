@@ -1,4 +1,6 @@
 <%@ page import="com.GREENWORKS.eco.EcoMap" %>
+<%@page import="java.util.ArrayList" %>
+<%@ page isELIgnored="false"%>
 <%
 EcoMap e = new EcoMap();
 %>
@@ -20,14 +22,53 @@ EcoMap e = new EcoMap();
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
         <script src="cred.js"></script>
+        
+        <script>
+        // Dates to be highlighted
+        var eventDates = {};
+        <%
+        // Set up count
+        int j = 0;
+        
+        // Set temp dates
+        String tempDate1 = "";
+        String tempDate2 = "";
+
+        // Loop through array
+        ArrayList<String> locations = (ArrayList<String>)  e.getLocations();
+        for (String location : locations)
+        {
+            // Date Start
+            if(j == 5)
+            {
+                tempDate1 = location;
+            }
+            // Date End
+            else if(j == 6)
+            {
+                tempDate2 = location;
+
+                // Make sure this is an event
+                if(tempDate1 != null && tempDate2 != null)
+                {
+        %>
+                    eventDates[new Date("<%=tempDate1%>")] = new Date("<%=tempDate1%>");
+        <%
+                }
+
+                // Reset
+                j = -1;
+            }
+
+            // Increment count
+            j++;
+        }
+        %>
+        </script>
+
         <script>
         $(function()
         {
-            // Dates to be highlighted
-            var eventDates = {};
-            eventDates[new Date('01/05/2022')] = new Date('01/05/2022');
-            eventDates[new Date('01/08/2022')] = new Date('01/08/2022');
-
             $("#datepicker").datepicker({
                 beforeShowDay: function(d)
                 {
@@ -43,7 +84,25 @@ EcoMap e = new EcoMap();
                     {
                         return [true, "", ""];
                     }
-                }
+                },
+                onSelect: function(d, c)
+                {
+                    $(this).val(d);
+                    $(this).change();
+                    c.inline = true;
+                },
+                onClose: function(d, c)
+                {
+                    // Loop through all markers on map
+                    for(i = 0; i <= globalMarkers.length - 1; i++)
+                    {
+                        c.inline = false;
+                        
+                        // Show
+                        globalMarkers[i].setVisible(true);
+                    }
+                },
+                dateFormat: "yy-mm-dd",
             });
         });
         </script>
@@ -71,7 +130,7 @@ EcoMap e = new EcoMap();
             j++;
 
             // If on the fourth value (final)
-            if(j == 5)
+            if(j == 7)
             {
                 // Push to markers array
                 markers.push(tempArray);

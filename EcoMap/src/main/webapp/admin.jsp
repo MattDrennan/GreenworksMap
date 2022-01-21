@@ -18,7 +18,31 @@ EcoMap e = new EcoMap();
         <meta charset="utf-8" />
         <title>Eco-Map (Admin Panel) - City of Orlando</title>
         <link href="stylesheets/ecomap_stylesheet.css" rel="stylesheet" />
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js" integrity="sha512-s5u/JBtkPg+Ff2WEr49/cJsod95UgLHbC00N/GglqdQuLnYhALncz8ZHiW/LxDRGduijLKzeYb7Aal9h3codZA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" integrity="sha512-LT9fy1J8pE4Cy6ijbg96UkExgOjCqcxAC7xsnv+mLJxSvftGVmmc236jlPTZXPcBRQcVOWoK1IJhb1dAjtb4lQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script>
+        $(function()
+        {
+            // Add event
+            $("#dateStart").datetimepicker({
+                dateFormat: "yy-mm-dd"
+            });
+            $("#dateEnd").datetimepicker({
+                dateFormat: "yy-mm-dd"
+            });
+
+            // Edit event
+            $("#dateStartEdit").datetimepicker({
+                dateFormat: "yy-mm-dd"
+            });
+            $("#dateEndEdit").datetimepicker({
+                dateFormat: "yy-mm-dd"
+            });
+        });
+        </script>
     </head>
 
     <body>
@@ -61,6 +85,14 @@ EcoMap e = new EcoMap();
                         <br />
                         Zip Code: <input type="number" name="zip" />
                         <br />
+                        Is this an event: <input type="radio" name="event" value="1" /> Yes / <input type="radio" name="event" value="0" CHECKED /> No
+                        <span id="eventDates" style="display: none;">
+                            <br />
+                            Date / Time Start: <input type="text" id="dateStart" name="dateStart" readonly="true" />
+                            <br />
+                            Date / Time End: <input type="text" id="dateEnd" name="dateEnd" readonly="true" />
+                        </span>
+                        <br />
                         Icon:
                         <br />
                         <select name="icon">
@@ -92,16 +124,24 @@ EcoMap e = new EcoMap();
                         <br />
                         Zip Code: <input type="number" name="zip" value="${zip}" />
                         <br />
+                        Is this an event: <input type="radio" name="eventEdit" value="1" ${dateStart == null ? '' : 'CHECKED'} /> Yes / <input type="radio" name="eventEdit" value="0" ${dateStart == null ? 'CHECKED' : ''} /> No
+                        <span id="eventDatesEdit" ${dateStart == null ? 'style="display:none;"' : ''}>
+                            <br />
+                            Date / Time Start: <input type="text" id="dateStartEdit" name="dateStartEdit" readonly="true" value="${dateStart}" />
+                            <br />
+                            Date / Time End: <input type="text" id="dateEndEdit" name="dateEndEdit" readonly="true" value="${dateEnd}" />
+                        </span>
+                        <br />
                         Icon:
                         <br />
                         <select name="icon">
-                            <option value="6" ${iconid == 6 ? 'selected' : ''}>Food</option>
-                            <option value="5" ${iconid == 5 ? 'selected' : ''}>Livability</option>
-                            <option value="7" ${iconid == 7 ? 'selected' : ''}>Waste</option>
-                            <option value="2" ${iconid == 2 ? 'selected' : ''}>Water</option>
-                            <option value="1" ${iconid == 1 ? 'selected' : ''}>Energy</option>
-                            <option value="4" ${iconid == 4 ? 'selected' : ''}>Buildings</option>
-                            <option value="3" ${iconid == 3 ? 'selected' : ''}>Transportation</option>
+                            <option value="6" ${iconid == 6 || iconid == 10 ? 'selected' : ''}>Food</option>
+                            <option value="5" ${iconid == 5 || iconid == 11 ? 'selected' : ''}>Livability</option>
+                            <option value="7" ${iconid == 7 || iconid == 12 ? 'selected' : ''}>Waste</option>
+                            <option value="2" ${iconid == 2 || iconid == 8 ? 'selected' : ''}>Water</option>
+                            <option value="1" ${iconid == 1 || iconid == 9 ? 'selected' : ''}>Energy</option>
+                            <option value="4" ${iconid == 4 || iconid == 9 ? 'selected' : ''}>Buildings</option>
+                            <option value="3" ${iconid == 3 || iconid == 13 ? 'selected' : ''}>Transportation</option>
                         </select>
                         <br />
                         <input type="submit" value="Edit!" name="submit" />
@@ -149,6 +189,9 @@ EcoMap e = new EcoMap();
                                     else if(j == 4)
                                     {
                                         zip = location;
+                                    }
+                                    else if(j == 6)
+                                    {
                                 %>
                                         <option value="<%=id%>"><%=name%> - <%=address%></option>
                                 <%
@@ -204,5 +247,6 @@ EcoMap e = new EcoMap();
               </footer>
         </div>
         <!-- simulates the footer as shown on the real CoO site -->
+        <script src="scripts/main.js"></script>
     </body>
 </html>

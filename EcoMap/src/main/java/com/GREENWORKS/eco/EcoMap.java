@@ -22,6 +22,7 @@ public class EcoMap {
 	{
 		MysqlConnect mysqlConnect = new MysqlConnect();
 		ArrayList<String> returnArray = new ArrayList<String>();
+		
 		try
 		{
 			returnArray = retrieveLocations(mysqlConnect);
@@ -57,6 +58,8 @@ public class EcoMap {
 			returnArray.add(rs.getString(3));
 			returnArray.add(rs.getString(4));
 			returnArray.add(rs.getString(5));
+			returnArray.add(rs.getString(6));
+			returnArray.add(rs.getString(7));
 		}
 		mysqlConnect.disconnect();
 		return returnArray;		
