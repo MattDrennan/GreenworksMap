@@ -116,15 +116,16 @@ function initMap() {
             address = String(markers[i][2]);
             descr = markers[i][3];
             zip = markers[i][4];
+            dateStart = markers[i][5];
 
             // Add marker to map
-            addMarkers(spid, locid, address, descr, zip);
+            addMarkers(spid, locid, address, descr, zip, dateStart.split(" ")[0]);
         }
     }
     //loops thru the markers array to add the values to the map
 
     // addMarkers: Adds markers to the map
-    function addMarkers(spid, locid, address, descr, zip)
+    function addMarkers(spid, locid, address, descr, zip, dateStart)
     {
         var Icon = iconSelect(spid), content = "<h3><b>" + descr + "</b></h3><p>" + address + " " + zip  + "</p>";
     
@@ -134,6 +135,34 @@ function initMap() {
             {
                 var coords = results[0].geometry.location;
 
+                // Convert events to another spid so they won't get hidden by filter
+                switch(spid)
+                {
+                    case "8":
+                        spid = "2";
+                        break;
+
+                    case "9":
+                        spid = "1";
+                        break;
+
+                    case "10":
+                        spid = "6";
+                        break;
+
+                    case "11":
+                        spid = "5";
+                        break;
+
+                    case "12":
+                        spid = "7";
+                        break;
+
+                    case "13":
+                        spid = "3";
+                        break;
+                }
+
                 if (status === 'OK')
                 {
                     map.setCenter(results[0].geometry.location);
@@ -141,7 +170,8 @@ function initMap() {
                         map: map,
                         position: coords,
                         icon: Icon,
-                        type: spid
+                        type: spid,
+                        dateStart: dateStart
                     });
 
                     var infoWindow = new google.maps.InfoWindow();

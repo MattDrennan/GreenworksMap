@@ -84,7 +84,25 @@ EcoMap e = new EcoMap();
                     {
                         return [true, "", ""];
                     }
-                }
+                },
+                onSelect: function(d, c)
+                {
+                    $(this).val(d);
+                    $(this).change();
+                    c.inline = true;
+                },
+                onClose: function(d, c)
+                {
+                    // Loop through all markers on map
+                    for(i = 0; i <= globalMarkers.length - 1; i++)
+                    {
+                        c.inline = false;
+                        
+                        // Show
+                        globalMarkers[i].setVisible(true);
+                    }
+                },
+                dateFormat: "yy-mm-dd",
             });
         });
         </script>

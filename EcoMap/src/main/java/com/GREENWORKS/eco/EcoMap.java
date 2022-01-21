@@ -1,7 +1,5 @@
 package com.GREENWORKS.eco;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +16,7 @@ public class EcoMap {
 		ArrayList<String> returnArray = new ArrayList<String>();
 
 		// Statement to select all location data
-		String sql = "SELECT * FROM locations";
+		String sql = "SELECT * FROM locations ORDER BY name";
 
 		try
 		{

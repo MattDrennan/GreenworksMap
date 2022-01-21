@@ -1,5 +1,44 @@
 $(document).ready(function()
 {
+    // If date picker (first option) is changed
+    $("#datepicker").on("change", function()
+    {
+        // Loop through all markers on map
+        for(i = 0; i <= globalMarkers.length - 1; i++)
+        {
+            // Set up should hide variable
+            var shouldHide = true;
+
+            // If the option value matches the marker type
+            // Allow other locations to stay on map
+            if($(this).val() == globalMarkers[i].dateStart || globalMarkers[i].dateStart == "null")
+            {
+                // Don't hide
+                shouldHide = false;
+            }
+
+            // If should hide is true
+            if(shouldHide)
+            {
+                // Hide
+                globalMarkers[i].setVisible(false);
+            }
+            else
+            {
+                // Show
+                globalMarkers[i].setVisible(true);
+            }
+        }
+    });
+
+    // If date picker (first option) is changed
+    $("#dateStart, #dateStartEdit").on("change", function()
+    {
+        // Only allow one day option
+        $("#dateEnd, #dateEndEdit").datetimepicker("option", "minDate", $(this).val());
+        $("#dateEnd, #dateEndEdit").datetimepicker("option", "maxDate", $(this).val());
+    });
+
     // If edit an event is pressed
     $("input[name=eventEdit]").click(function()
     {
