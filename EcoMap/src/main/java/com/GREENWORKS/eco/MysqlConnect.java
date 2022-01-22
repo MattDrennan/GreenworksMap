@@ -4,16 +4,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
+import org.tinylog.Logger;
 
 /***
  * This class houses methods that handle database connection. 
  */
 public class MysqlConnect {
-    // Init database variables
 
-    // Init connection object
     private Connection connection;
-    // Init properties object
     private Properties properties;
 
     /***
@@ -28,6 +26,7 @@ public class MysqlConnect {
             properties.setProperty("user", DatabaseConstants.USERNAME);
             properties.setProperty("password", DatabaseConstants.PASSWORD);
             properties.setProperty("MaxPooledStatements", DatabaseConstants.MAX_POOL);
+            Logger.info("Properties assigned.");
         }
         return properties;
     }
@@ -47,6 +46,7 @@ public class MysqlConnect {
             {
                 Class.forName(DatabaseConstants.DATABASE_DRIVER);
                 connection = DriverManager.getConnection(DatabaseConstants.DATABASE_URL, assignProperties());
+                Logger.info("Connection object instantiated.");
             }
             catch (ClassNotFoundException | SQLException e)
             {
@@ -68,6 +68,7 @@ public class MysqlConnect {
             {
                 connection.close();
                 connection = null;
+                Logger.info("Connection object closed.");
             }
             catch (SQLException e)
             {
@@ -111,6 +112,5 @@ public class MysqlConnect {
     public void setProperties(Properties properties) {
         this.properties = properties;
     }
-
     
 }
