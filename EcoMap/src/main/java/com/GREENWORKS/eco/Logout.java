@@ -1,7 +1,9 @@
 package com.GREENWORKS.eco;
  
 import java.io.IOException;
- 
+
+import org.tinylog.Logger;
+
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -27,6 +29,7 @@ public class Logout extends HttpServlet {
             // Redirect user
             RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
             dispatcher.forward(request, response);
+            Logger.info("Admin was logged out.");
         }
     }
 }

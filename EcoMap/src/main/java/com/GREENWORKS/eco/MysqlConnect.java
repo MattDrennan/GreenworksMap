@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import org.tinylog.Logger;
+
 /***
  * This class houses methods that handle database connection. 
  */
@@ -47,6 +49,7 @@ public class MysqlConnect {
             {
                 Class.forName(DatabaseConstants.DATABASE_DRIVER);
                 connection = DriverManager.getConnection(DatabaseConstants.DATABASE_URL, assignProperties());
+                Logger.info("Database connection object created.");
             }
             catch (ClassNotFoundException | SQLException e)
             {
@@ -68,6 +71,7 @@ public class MysqlConnect {
             {
                 connection.close();
                 connection = null;
+                Logger.info("Database connection object has been disconnected.");
             }
             catch (SQLException e)
             {
