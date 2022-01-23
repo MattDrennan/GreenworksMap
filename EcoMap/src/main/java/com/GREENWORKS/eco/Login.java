@@ -5,6 +5,7 @@ import java.io.*;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+import org.tinylog.Logger;
  
 @WebServlet("/login")
 public class Login extends HttpServlet {
@@ -36,12 +37,14 @@ public class Login extends HttpServlet {
             {
                 HttpSession session = request.getSession();
                 session.setAttribute("username", username);
+                Logger.warn("Admin " + username + " successfully logged in."); 
             }
             else
             {
                 // Not valid
                 String message = "Invalid username and/or password.";
                 request.setAttribute("message", message);
+                Logger.warn("Failed login attempt! Username: " + username + " Password: " + password);
             }
              
             // Redirect user
