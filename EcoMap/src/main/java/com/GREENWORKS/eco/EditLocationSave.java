@@ -4,6 +4,8 @@ import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.tinylog.Logger;
+
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -15,65 +17,88 @@ public class EditLocationSave extends HttpServlet {
     {
         super();
     }
- 
+    
+    /***
+     * This method is a boolean check to identify if the input parameters are consistent 
+     * with not being an Event. If the data provided is consistent with an Event then the 
+     * method will return false. If the data provided is not consistent with an event then 
+     * it will return true. 
+     * @param startDate The String of the start date. 
+     * @param endDate The String of the end date. 
+     * @return Returns a boolean value. 
+     */
+    public boolean notAnEvent(String startDate, String endDate) 
+    {
+    	return (startDate == null || endDate == null || startDate == "" || endDate == "");
+    }
+    
+    /***
+     * This is method takes a String parameter and reassigns its contents. 
+     * @param iconId
+     * @return
+     */
+    public String assignEventIconId(String iconId) {
+		switch(iconId)
+		{
+			case "1":
+				iconId = "9";
+				break;
+			case "2":
+				iconId = "8";
+				break;
+			case "3":
+				iconId = "13";
+				break;
+			case "4":
+				iconId = "9";
+				break;
+			case "5":
+				iconId = "11";
+				break;
+			case "6":
+				iconId = "10";
+				break;
+			case "7":
+				iconId = "12";
+				break;
+		}
+		return iconId;
+    }
+    
+    /***
+     * TODO Documentation - Will finish during unit testing
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        // Get ID of location
         String locationID = request.getParameter("id");
-
-        // Call EcoMap
         EcoMap m = new EcoMap();
-
-		// Set up dates
-		String date1 = request.getParameter("dateStartEdit");
-		String date2 = request.getParameter("dateEndEdit");
-
-		// Set up icon
-		String iconid = request.getParameter("icon");
-
-		// Check dates
-		if(request.getParameter("dateStartEdit") == null || request.getParameter("dateEndEdit") == null || request.getParameter("dateStartEdit") == "" || request.getParameter("dateEndEdit") == "")
+		String startDate = request.getParameter("dateStartEdit");
+		String endDate = request.getParameter("dateEndEdit");
+		String iconId = request.getParameter("icon");
+		String locationAddress = m.cleanInput(request.getParameter("location"));
+		String locationName = m.cleanInput(request.getParameter("locationName"));
+		String zip = m.cleanInput(request.getParameter("zip"));
+		
+		if(notAnEvent(startDate, endDate)) // Returns true if it is not an event.
 		{
 			// Not an event
-			date1 = "DEFAULT";
-			date2 = "DEFAULT";
+			startDate = "DEFAULT";
+			endDate = "DEFAULT";
 		}
 		else
 		{
 			// Clean input - is an event
-			date1 =  "'" + m.cleanInput(date1) + "'";
-			date2 =  "'" + m.cleanInput(date2) + "'";
-
+			startDate =  "'" + m.cleanInput(startDate) + "'";
+			endDate =  "'" + m.cleanInput(endDate) + "'";
 			// Check icon ID values and convert to event icon
-			switch(iconid)
-			{
-				case "1":
-					iconid = "9";
-					break;
-				case "2":
-					iconid = "8";
-					break;
-				case "3":
-					iconid = "13";
-					break;
-				case "4":
-					iconid = "9";
-					break;
-				case "5":
-					iconid = "11";
-					break;
-				case "6":
-					iconid = "10";
-					break;
-				case "7":
-					iconid = "12";
-					break;
-			}
+			iconId = assignEventIconId(iconId);
 		}
 
         // Statement to select all location data
-		String sql = "UPDATE locations SET iconid = '" + iconid + "', address = '" + m.cleanInput(request.getParameter("location")) + "', name = '" + m.cleanInput(request.getParameter("locationName")) + "', zip = '" + m.cleanInput(request.getParameter("zip")) + "', dateStart = " + date1 + ", dateEnd = " + date2 + " WHERE id = '" + locationID + "'";
-
+		String sql = "UPDATE locations SET iconid = '" + iconId + "', address = '" + locationAddress + 
+													"', name = '" + locationName + "', zip = '" + zip + 
+													"', dateStart = " + startDate + ", dateEnd = " + endDate + 
+													" WHERE id = '" + locationID + "'";
         // Connect to MySQL
         MysqlConnect mysqlConnect = new MysqlConnect();
 
@@ -81,17 +106,16 @@ public class EditLocationSave extends HttpServlet {
 		{
 			// Try statement
 			PreparedStatement statement = mysqlConnect.connect().prepareStatement(sql);
-			
 			// Execute
 			statement.executeUpdate();
-
             // Redirect user
             RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
             dispatcher.forward(request, response);
+            Logger.info("Query executed: " + sql);
 		}
 		catch (SQLException e)
 		{
-			// Error
+			Logger.error("Error executing update! Query: " +  sql);
 			e.printStackTrace();
 		}
 		finally
