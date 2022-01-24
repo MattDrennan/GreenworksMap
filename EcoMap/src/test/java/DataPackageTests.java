@@ -1,7 +1,5 @@
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
@@ -11,10 +9,32 @@ import com.GREENWORKS.eco.data.PinDataAbstractFactory;
 
 /***
  * These are the unit tests for the data package. The classes that will be tested are
- * PinData.java and PinDataAbstractFactory.java. 
- * TODO Documentation
+ * PinData.java and PinDataAbstractFactory.java. If any of these tests fail then the 
+ * application will not function properly. 
  */
 public class DataPackageTests {
+
+    /***
+     * The static method .getFactory() should not throw an exception if called.
+     */
+	@Test
+	public void createPinData_getFactoryShouldNotThrowException() {
+        assertDoesNotThrow(() -> PinDataAbstractFactory.getFactory(null, null));
+	}
+
+    /***
+     * The non-static createPinData() method should thrown an exception if called. 
+     */
+    @Test
+	public void createPinData_createPinShouldNotThrowException() {
+    	PinDataAbstractFactory factory = PinDataAbstractFactory.getFactory(null, null);
+        assertDoesNotThrow(() -> factory.createPinData(null, null));
+	}
+
+    /***
+     * Verifies that when a PinData child object does not have data assignment to non-core instance variables 
+     * when it is instantiated through the PinDataAbstractFactory.
+     */
 	@Test
 	public void createPinData_variablesThatShouldBeNull() {
     	PinDataAbstractFactory factory = PinDataAbstractFactory.getFactory(null, null);
@@ -24,6 +44,11 @@ public class DataPackageTests {
     	assertNull(pinData.getLocationAddress());
     	assertNull(pinData.getLocationName());
 	}
+
+    /***
+     * Verifies that when a PinData child object does have data assignment to core instance variables 
+     * when it is instantiated through the PinDataAbstractFactory.
+     */
 	@Test
 	public void createPinData_variablesThatShouldBeNotBeNull() {
     	PinDataAbstractFactory factory = PinDataAbstractFactory.getFactory(null, null);
@@ -32,18 +57,57 @@ public class DataPackageTests {
     	assertNotNull(pinData.getStartDate());
     	assertNotNull(pinData.getEndDate());
 	}
+
+    /***
+     * Verifies that when null is provided as parameters to .getFactory() and when null is provided
+     * as parameters to .createPinData() that the dataType instance parameter has "Location" assigned 
+     * to it. 
+     */
     @Test
     public void createPinData_shouldAssignLocationToDataType() {
     	PinDataAbstractFactory factory = PinDataAbstractFactory.getFactory(null, null);
     	PinData pinData = factory.createPinData(null, null);
     	assertEquals("Location", pinData.getDataType());
 	}
+
+    /***
+     * Verifies that when null is provided as parameters to .getFactory() and when null is provided
+     * as parameters to .createPinData() that the object is of type "Location". 
+     */
+    @Test
+    public void createPinData_shouldBeALocation() {
+    	PinDataAbstractFactory factory = PinDataAbstractFactory.getFactory(null, null);
+    	PinData pinData = factory.createPinData(null, null);
+    	assertEquals("Location", pinData.getClass().getSimpleName());
+	}
+
+    /***
+     * Verifies that when null is provided as parameters to .getFactory() and when null is provided
+     * as parameters to .createPinData() that the dataType instance parameter has "Event" assigned 
+     * to it. 
+     */
     @Test
     public void createPinData_shouldAssignEventToDataType() {
     	PinDataAbstractFactory factory = PinDataAbstractFactory.getFactory("beginTest", "endTest");
     	PinData pinData = factory.createPinData("beginTest", "endTest");
     	assertEquals("Event", pinData.getDataType());
 	}
+
+    /***
+     * Verifies that when null is provided as parameters to .getFactory() and when null is provided
+     * as parameters to .createPinData() that the object is of type "Location". 
+     */
+    @Test
+    public void createPinData_shouldBeAnEvent() {
+    	PinDataAbstractFactory factory = PinDataAbstractFactory.getFactory("beginTest", "endTest");
+    	PinData pinData = factory.createPinData("beginTest", "endTest");
+    	assertEquals("Event", pinData.getClass().getSimpleName());
+	}
+
+    /***
+     * Verifies that the iconId instance variable has been correctly reassigned during the .setIconId()
+     * method call. 
+     */
     @Test
     public void createPinData_shouldAssignIcon1() {
     	PinDataAbstractFactory factory = PinDataAbstractFactory.getFactory("beginTest", "endTest");
@@ -51,6 +115,11 @@ public class DataPackageTests {
     	pinData.setIconId("1");
     	assertEquals("9", pinData.getIconId());
 	}
+
+    /***
+     * Verifies that the iconId instance variable has been correctly reassigned during the .setIconId()
+     * method call. 
+     */
     @Test
     public void createPinData_shouldAssignIcon2() {
     	PinDataAbstractFactory factory = PinDataAbstractFactory.getFactory("beginTest", "endTest");
@@ -58,6 +127,11 @@ public class DataPackageTests {
     	pinData.setIconId("2");
     	assertEquals("8", pinData.getIconId());
 	}
+
+    /***
+     * Verifies that the iconId instance variable has been correctly reassigned during the .setIconId()
+     * method call. 
+     */
     @Test
     public void createPinData_shouldAssignIcon3() {
     	PinDataAbstractFactory factory = PinDataAbstractFactory.getFactory("beginTest", "endTest");
@@ -65,6 +139,11 @@ public class DataPackageTests {
     	pinData.setIconId("3");
     	assertEquals("13", pinData.getIconId());
 	}
+
+    /***
+     * Verifies that the iconId instance variable has been correctly reassigned during the .setIconId()
+     * method call. 
+     */
     @Test
     public void createPinData_shouldAssignIcon4() {
     	PinDataAbstractFactory factory = PinDataAbstractFactory.getFactory("beginTest", "endTest");
@@ -72,6 +151,11 @@ public class DataPackageTests {
     	pinData.setIconId("4");
     	assertEquals("9", pinData.getIconId());
 	}
+    
+    /***
+     * Verifies that the iconId instance variable has been correctly reassigned during the .setIconId()
+     * method call. 
+     */
     @Test
     public void createPinData_shouldAssignIcon5() {
     	PinDataAbstractFactory factory = PinDataAbstractFactory.getFactory("beginTest", "endTest");
@@ -79,6 +163,11 @@ public class DataPackageTests {
     	pinData.setIconId("5");
     	assertEquals("11", pinData.getIconId());
 	}
+
+    /***
+     * Verifies that the iconId instance variable has been correctly reassigned during the .setIconId()
+     * method call. 
+     */
     @Test
     public void createPinData_shouldAssignIcon6() {
     	PinDataAbstractFactory factory = PinDataAbstractFactory.getFactory("beginTest", "endTest");
@@ -86,6 +175,11 @@ public class DataPackageTests {
     	pinData.setIconId("6");
     	assertEquals("10", pinData.getIconId());
 	}
+
+    /***
+     * Verifies that the iconId instance variable has been correctly reassigned during the .setIconId()
+     * method call. 
+     */
     @Test
     public void createPinData_shouldAssignIcon7() {
     	PinDataAbstractFactory factory = PinDataAbstractFactory.getFactory("beginTest", "endTest");
@@ -93,20 +187,36 @@ public class DataPackageTests {
     	pinData.setIconId("7");
     	assertEquals("12", pinData.getIconId());
 	}
+
+    /***
+     * Verifies that that the dates have been properly assigned and the proper modification have 
+     * taken place. The instance variables need to be surrounded by punctuation marks. This is 
+     * necessary for created a valid SQL String. 
+     */    
     @Test
     public void createPinData_shouldAssignDateStrings() {
     	PinDataAbstractFactory factory = PinDataAbstractFactory.getFactory("beginTest", "endTest");
-    	PinData pinData = factory.createPinData("beginTest", "endTest");
+    	PinData pinData = factory.createPinData("beginTest", "endTest"); // Location Object
     	assertEquals("'endTest'", pinData.getEndDate());
     	assertEquals("'beginTest'", pinData.getStartDate());
 	}
+
+    /***
+     * Verifies that that the dates have been properly assigned and the proper modification have 
+     * taken place. 
+     */    
     @Test
-    public void createPinData_shouldAssignNullDatesToBlank() {
+    public void createPinData_shouldAssignNullDatesToDEFAULT() {
     	PinDataAbstractFactory factory = PinDataAbstractFactory.getFactory(null, null);
-    	PinData pinData = factory.createPinData(null, null);
+    	PinData pinData = factory.createPinData(null, null); // Event Object
     	assertEquals("DEFAULT", pinData.getEndDate());
     	assertEquals("DEFAULT", pinData.getStartDate());
 	}
+
+    /***
+     * Verifies that when the PinDataAbstractFactory generateds a PinData that the Id is not 
+     * assgined upon object instantiation. 
+     */
     @Test
     public void createPinData_shouldAssignDateStrings8() {
     	PinDataAbstractFactory factory = PinDataAbstractFactory.getFactory("beginTest", "endTest");
@@ -236,4 +346,5 @@ public class DataPackageTests {
         String s = "<h1>\\n <p>Orlando</p>', \\nFL</h1>";
         assertEquals("\\n Orlando', \\nFL", pinData.removeTags(s));
     }
+
 }
