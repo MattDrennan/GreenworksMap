@@ -1,6 +1,5 @@
 package com.GREENWORKS.eco.data;
 
-
 /***
  * Child class definition of Location. Location is a child class of PinData. Location is 
  * a type of PinData. 
@@ -15,6 +14,17 @@ class Location extends PinData {
 		super.dataType = this.getClass().getSimpleName();
 	}
 	
+	// TODO Documentation
+	@Override
+	public void setStartDate(String startDate) { 
+		this.startDate = "DEFAULT";
+	}
+	
+	// TODO Documentation
+	@Override
+	public void setEndDate(String endDate) {
+		this.endDate = "DEFAULT";
+	}
 }
 
 /***
@@ -28,6 +38,16 @@ class Event extends PinData {
 	 */
 	public Event() {
 		super.dataType = this.getClass().getSimpleName();
+	}
+	
+	@Override
+	public void setStartDate(String startDate) {
+		this.startDate = "'" + cleanInput(startDate) + "'";
+	}
+	
+	@Override
+	public void setEndDate(String endDate) {
+		this.endDate = "'" + cleanInput(endDate) + "'";
 	}
 	
 	// TODO Documentation
@@ -58,7 +78,6 @@ class Event extends PinData {
 			}
 		this.iconId = iconId;
 	 }
-	
 }
 
 /***
@@ -76,7 +95,7 @@ class LocationToolkit extends PinDataAbstractFactory {
     public PinData createPinData(String startDate, String endDate) {
     	Location location = new Location();
     	location.setStartDate(startDate);
-    	location.setEndDate(endDate);
+		location.setEndDate(endDate);
         return location;
     }
 
@@ -96,8 +115,8 @@ class EventToolkit extends PinDataAbstractFactory {
 	@Override
     public PinData createPinData(String startDate, String endDate) {
     	Event event = new Event();
-    	event.setStartDate(startDate);
-    	event.setEndDate(endDate);
+	    event.setStartDate(startDate);
+	    event.setEndDate(endDate);
         return event;
     }
 
