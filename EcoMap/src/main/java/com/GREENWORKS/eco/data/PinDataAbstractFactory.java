@@ -3,7 +3,6 @@ package com.GREENWORKS.eco.data;
 /***
  * Child class definition of Location. Location is a child class of PinData. Location is 
  * a type of PinData. 
- * TODO Documentation
  */
 class Location extends PinData {
 
@@ -14,17 +13,26 @@ class Location extends PinData {
 		super.dataType = this.getClass().getSimpleName();
 	}
 	
-	// TODO Documentation
+	/***
+     * Overridden mutator method for the startDate instance variable. Conducts
+	 * cleaning on the parameter. 
+	 * @param startDate The begin date of the event. 
+     */
 	@Override
 	public void setStartDate(String startDate) { 
 		this.startDate = "DEFAULT";
 	}
 	
-	// TODO Documentation
+	/***
+     * Overridden mutator method for the endDate instance variable. Conducts
+	 * cleaning on the parameter. 
+	 * @param endDate The begin date of the event. 
+     */
 	@Override
 	public void setEndDate(String endDate) {
 		this.endDate = "DEFAULT";
 	}
+
 }
 
 /***
@@ -40,17 +48,30 @@ class Event extends PinData {
 		super.dataType = this.getClass().getSimpleName();
 	}
 	
+	/***
+     * Overridden mutator method for the startDate instance variable. Conducts
+	 * cleaning on the parameter. 
+	 * @param startDate The begin date of the event. 
+     */
 	@Override
 	public void setStartDate(String startDate) {
 		this.startDate = "'" + cleanInput(startDate) + "'";
 	}
-	
+
+	/***
+     * Overridden mutator method for the endDate instance variable. Conducts
+	 * cleaning on the parameter. 
+	 * @param endDate The end date of the event. 
+     */
 	@Override
 	public void setEndDate(String endDate) {
 		this.endDate = "'" + cleanInput(endDate) + "'";
 	}
 	
-	// TODO Documentation
+    /***
+     * Changes the iconId to match a location icon. 
+	 * @param iconId The iconId. 
+     */
 	@Override
 	public void setIconId(String iconId) {
 		switch(iconId) {
@@ -78,6 +99,7 @@ class Event extends PinData {
 			}
 		this.iconId = iconId;
 	 }
+	 
 }
 
 /***
@@ -88,8 +110,9 @@ class LocationToolkit extends PinDataAbstractFactory {
     /***
      * Method that returns a newly instantiated Location with the startDate
      * and endDate variables populated.
-     * 
-     * @return Returns a Location.
+	 * @param startDate The begin date. 
+	 * @param endDate The end date. 
+     * @return Returns an Event.
      */
 	@Override
     public PinData createPinData(String startDate, String endDate) {
@@ -109,7 +132,8 @@ class EventToolkit extends PinDataAbstractFactory {
     /***
      * Method that returns a newly instantiated Event with the startDate
      * and endDate variables populated.
-     * 
+	 * @param startDate The begin date. 
+	 * @param endDate The end date. 
      * @return Returns an Event.
      */
 	@Override
@@ -131,7 +155,12 @@ public abstract class PinDataAbstractFactory {
     private static final EventToolkit EVENT_TOOLKIT = new EventToolkit();
     private static boolean notAnEvent;
     
-    // TODO Documentation
+    /***
+	 * 
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
     protected static boolean notAnEvent(String startDate, String endDate) {
     	return (startDate == null || endDate == null || startDate == "" || endDate == "");
     }
@@ -151,9 +180,12 @@ public abstract class PinDataAbstractFactory {
         return factory;
     }
     
-    /**
+	/***
      * Child classes must implement their own method that is used to instantiate and return a PinData.
-     * @return Returns a newly instantiated PinData.
-     */
+	 * @param startDate The begin date. 
+	 * @param endDate The end date. 
+	 * @return Returns a newly instantiated PinData.
+	 */
     public abstract PinData createPinData(String startDate, String endDate);
+
 }
