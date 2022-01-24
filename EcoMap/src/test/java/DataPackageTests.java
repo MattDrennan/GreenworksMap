@@ -97,15 +97,15 @@ public class DataPackageTests {
     public void createPinData_shouldAssignDateStrings() {
     	PinDataAbstractFactory factory = PinDataAbstractFactory.getFactory("beginTest", "endTest");
     	PinData pinData = factory.createPinData("beginTest", "endTest");
-    	assertEquals("endTest", pinData.getEndDate());
-    	assertEquals("beginTest", pinData.getStartDate());
+    	assertEquals("'endTest'", pinData.getEndDate());
+    	assertEquals("'beginTest'", pinData.getStartDate());
 	}
     @Test
     public void createPinData_shouldAssignNullDatesToBlank() {
     	PinDataAbstractFactory factory = PinDataAbstractFactory.getFactory(null, null);
     	PinData pinData = factory.createPinData(null, null);
-    	assertEquals("", pinData.getEndDate());
-    	assertEquals("", pinData.getStartDate());
+    	assertEquals("DEFAULT", pinData.getEndDate());
+    	assertEquals("DEFAULT", pinData.getStartDate());
 	}
     @Test
     public void createPinData_shouldAssignDateStrings8() {

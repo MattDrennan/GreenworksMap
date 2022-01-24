@@ -12,8 +12,8 @@ public abstract class PinData {
 	
 	private String id;
 	protected String iconId;
-    private String startDate;
-    private String endDate;
+    protected String startDate;
+    protected String endDate;
     private String locationName;
     private String locationAddress;
     private String zipCode;
@@ -56,7 +56,13 @@ public abstract class PinData {
 			return returnS;
 		}
 		return "";
-	}    
+	}
+	public String getZipCode() {
+		return zipCode;
+	}
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
 	public String getId() {
 		return id;
 	}
@@ -72,15 +78,11 @@ public abstract class PinData {
 	public String getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(String startDate) {
-		this.startDate = cleanInput(startDate);
-	}
+	public void setStartDate(String startDate) {}
 	public String getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(String endDate) {
-		this.endDate = cleanInput(endDate);
-	}
+	public void setEndDate(String endDate) {}
 	public String getLocationName() {
 		return locationName;
 	}
