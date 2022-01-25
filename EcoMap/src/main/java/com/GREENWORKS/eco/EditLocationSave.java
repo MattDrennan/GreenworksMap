@@ -77,7 +77,7 @@ public class EditLocationSave extends HttpServlet {
 		String iconId = request.getParameter("icon");
 		String locationAddress = m.cleanInput(request.getParameter("location"));
 		String locationName = m.cleanInput(request.getParameter("locationName"));
-		String zip = m.cleanInput(request.getParameter("zip"));
+		String coord = m.cleanInput(request.getParameter("coord"));
 		
 		if(notAnEvent(startDate, endDate)) // Returns true if it is not an event.
 		{
@@ -96,7 +96,7 @@ public class EditLocationSave extends HttpServlet {
 
         // Statement to select all location data
 		String sql = "UPDATE locations SET iconid = '" + iconId + "', address = '" + locationAddress + 
-													"', name = '" + locationName + "', zip = '" + zip + 
+													"', name = '" + locationName + "', coord = '" + coord + 
 													"', dateStart = " + startDate + ", dateEnd = " + endDate + 
 													" WHERE id = '" + locationID + "'";
         // Connect to MySQL

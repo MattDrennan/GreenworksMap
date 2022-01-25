@@ -6,6 +6,13 @@
 1. Run “ecomap.sql” on the database.
 1. Run the webapp folder on TomCat 10. WARNING: Tomcat 9 will not work. 
 1. You may need to adjust the port number in “src->main->webapp->java->com->GREENWORKS->eco->MysqlConnect.java” from 8889 to 3306. The database user and password can be changed from that file as well.
+1. Create a file, 'cred.js', in the root directory of 'webmap' with the following:
+
+```
+var mapKey = 'MAP_KEY_HERE';
+```
+
+
 
 **ecomap.sql:**
 

@@ -78,12 +78,11 @@ EcoMap e = new EcoMap();
                 <h1>Add Location</h1>
 
                 <p>
-                    <form action="additem" method="POST">
+                    <form action="additem" method="POST" id="addItem">
+                        <input type="hidden" name="coord" />
                         Location Name: <input type="text" name="locationName" />
                         <br />
                         Location Address: <input type="text" name="location" />
-                        <br />
-                        Zip Code: <input type="number" name="zip" />
                         <br />
                         Is this an event: <input type="radio" name="event" value="1" /> Yes / <input type="radio" name="event" value="0" CHECKED /> No
                         <span id="eventDates" style="display: none;">

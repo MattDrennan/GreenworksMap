@@ -22,48 +22,50 @@ EcoMap e = new EcoMap();
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
         <script src="cred.js"></script>
+        <script	src="https://js.arcgis.com/4.21/"></script>
+        <script src="scripts/esri_api.js"></script>
         
         <script>
-        // Dates to be highlighted
-        var eventDates = {};
-        <%
-        // Set up count
-        int j = 0;
-        
-        // Set temp dates
-        String tempDate1 = "";
-        String tempDate2 = "";
-
-        // Loop through array
-        ArrayList<String> locations = (ArrayList<String>)  e.getLocations();
-        for (String location : locations)
-        {
-            // Date Start
-            if(j == 5)
+            // Dates to be highlighted
+            var eventDates = {};
+            <%
+            // Set up count
+            int j = 0;
+            
+            // Set temp dates
+            String tempDate1 = "";
+            String tempDate2 = "";
+    
+            // Loop through array
+            ArrayList<String> locations = (ArrayList<String>)  e.getLocations();
+            for (String location : locations)
             {
-                tempDate1 = location;
-            }
-            // Date End
-            else if(j == 6)
-            {
-                tempDate2 = location;
-
-                // Make sure this is an event
-                if(tempDate1 != null && tempDate2 != null)
+                // Date Start
+                if(j == 5)
                 {
-        %>
-                    eventDates[new Date("<%=tempDate1%>")] = new Date("<%=tempDate1%>");
-        <%
+                    tempDate1 = location;
                 }
-
-                // Reset
-                j = -1;
+                // Date End
+                else if(j == 6)
+                {
+                    tempDate2 = location;
+    
+                    // Make sure this is an event
+                    if(tempDate1 != null && tempDate2 != null)
+                    {
+            %>
+                        eventDates[new Date("<%=tempDate1%>")] = new Date("<%=tempDate1%>");
+            <%
+                    }
+    
+                    // Reset
+                    j = -1;
+                }
+    
+                // Increment count
+                j++;
             }
-
-            // Increment count
-            j++;
-        }
-        %>
+            %>
         </script>
 
         <script>
@@ -110,38 +112,49 @@ EcoMap e = new EcoMap();
 
     <body>
         <script>
-        // Load array in from Java
-        var array = [<% for (int i = 0; i < e.getLocations().size(); i++) { %>"<%= e.getLocations().get(i) %>"<%= i + 1 < e.getLocations().size() ? ",":"" %><% } %>];
+            // Load array in from Java
+            var array = [<% for (int i = 0; i < e.getLocations().size(); i++) { %>"<%= e.getLocations().get(i) %>"<%= i + 1 < e.getLocations().size() ? ",":"" %><% } %>];
+            
+            // Create set up variables
+            var points = [];
+            var tempArray = [];
         
-        // Create set up variables
-        var markers = [];
-        var tempArray = [];
-
-        // Array iteration count
-        var j = 0;
-
-        // Loop through Java array
-        for(i = 0; i <= array.length - 1; i++)
-        {
-            // Push values to temporary array
-            tempArray.push(array[i]);
-
-            // Increment iteration count
-            j++;
-
-            // If on the fourth value (final)
-            if(j == 7)
+            // Array iteration count
+            var j = 0;
+        
+            // Loop through Java array
+            for(i = 0; i <= array.length - 1; i++)
             {
-                // Push to markers array
-                markers.push(tempArray);
+                // Push values to temporary array
+                tempArray.push(array[i]);
+        
+                // Increment iteration count
+                j++;
+        
+                // If on the final value
+                if(j == 7)
+                {
+                    console.log(tempArray);
 
-                // Clear temp array
-                tempArray = [];
+                    var point = 
+                    {
+                        type: "point",
+                        longitude: tempArray[4].split(',')[0],
+                        latitude: tempArray[4].split(',')[1]
+                    };
+                    console.log(point);
 
-                // Reset iteration count
-                j = 0;
+                    // Push to points array
+
+                    points.push(point);
+        
+                    // Clear temp array
+                    tempArray = [];
+        
+                    // Reset iteration count
+                    j = 0;
+                }
             }
-        }
         </script>
 
         <header>
@@ -217,16 +230,9 @@ EcoMap e = new EcoMap();
                     </div>
                 </form>
         </div>
-        
-        <div id="map"></div> 
-        <!--sets the parameters for the Google Maps API embed -->
  
-        <script>
-            document.write('<script async defer src="https://maps.googleapis.com/maps/api/js?key=' + googleMapKey + '&callback=initMap"><\/script>');
-        </script>
-        
-        <script src="scripts/mapEmbed.js"></script> 
-        <!--references the init callback to the mapEmbed js file -->       
+        <!-- Map -->
+        <div id="viewDiv"></div>  
         
         <div>
             <footer>

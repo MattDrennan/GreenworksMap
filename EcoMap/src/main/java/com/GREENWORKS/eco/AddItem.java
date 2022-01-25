@@ -21,7 +21,7 @@ public class AddItem extends HttpServlet {
         // Get POST variables
         String locationName = request.getParameter("locationName");
         String location = request.getParameter("location");
-        String zip = request.getParameter("zip");
+        String coord = request.getParameter("coord");
         String icon = request.getParameter("icon");
         String dateStart = request.getParameter("dateStart");
         String dateEnd = request.getParameter("dateEnd");
@@ -29,6 +29,8 @@ public class AddItem extends HttpServlet {
         // Get session
         HttpSession session = request.getSession();
         String username = (String)session.getAttribute("username");
+
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!dafdsf");
 
         // Check if session active
         if(username != "" && username != null)
@@ -46,7 +48,7 @@ public class AddItem extends HttpServlet {
             if((dateStart == "" && dateEnd == "") || (dateStart == null && dateEnd == null))
             {
                 // Statement to select all location data - not an event
-                sql = "INSERT INTO locations (iconid, address, name, zip) VALUES ('" + m.cleanInput(icon) + "', '" + m.cleanInput(location) + "', '" + m.cleanInput(locationName) + "', '" + m.cleanInput(zip) + "')";
+                sql = "INSERT INTO locations (iconid, address, name, coord) VALUES ('" + m.cleanInput(icon) + "', '" + m.cleanInput(location) + "', '" + m.cleanInput(locationName) + "', '" + m.cleanInput(coord) + "')";
             }
             else
             {
@@ -80,7 +82,7 @@ public class AddItem extends HttpServlet {
                 }
 
                 // Statement to select all location data - is an event
-                sql = "INSERT INTO locations (iconid, address, name, zip, dateStart, dateEnd) VALUES ('" + iconid + "', '" + m.cleanInput(location) + "', '" + m.cleanInput(locationName) + "', '" + m.cleanInput(zip) + "', '" + m.cleanInput(dateStart) + "', '" + m.cleanInput(dateEnd) + "')";             
+                sql = "INSERT INTO locations (iconid, address, name, coord, dateStart, dateEnd) VALUES ('" + iconid + "', '" + m.cleanInput(location) + "', '" + m.cleanInput(locationName) + "', '" + m.cleanInput(coord) + "', '" + m.cleanInput(dateStart) + "', '" + m.cleanInput(dateEnd) + "')";             
             }
 
             try
