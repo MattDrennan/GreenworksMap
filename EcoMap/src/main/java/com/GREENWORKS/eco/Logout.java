@@ -19,7 +19,6 @@ public class Logout extends HttpServlet {
     {
         // Get session
         HttpSession session = request.getSession(false);
-
         // If session exists
         if (session != null)
         {
@@ -29,7 +28,7 @@ public class Logout extends HttpServlet {
             // Redirect user
             RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
             dispatcher.forward(request, response);
-            Logger.info("Admin was logged out.");
+            Logger.warn("An admin was logged out."); // Custom log
         }
     }
 }
