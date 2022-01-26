@@ -165,32 +165,36 @@ EcoMap e = new EcoMap();
             }
         </script>
 
-        <section>
-            <h1>Eco-Map</h1>
-            <div class="map_options">
-                <div id="filter_items">
-                    <figure>
-                        <a href="#/" name="openFilter">
-                            <img id="filter_icon" src="icons/filter.png" alt=" ">
-                            <div id="fc_background"><figcaption>Filter</figcaption></div>
-                        </a>
-                    </figure>
-                </div>
-                <!--solution found on StackOverflow: https://stackoverflow.com/questions/5003867/how-to-call-javascript-function-instead-of-href-in-html/5003904-->
+        <!-- Show List Button -->
+        <a href="#/" id="viewChange">[List View]</a>
 
-                <input type="text" id="datepicker" style="visibility:hidden;">
-                <div id="calendar_items">
-                    <figure>
-                        <a href="#/" id="openCalendar">
-                            <img id="calendar_icon" src="icons/calendar.png" alt=" ">
-                            <div id="fc_background"><figcaption>Events</figcaption></div>
-                        </a>
-                    </figure>
-                </div>
-            </div>
-        </section>
+        <div id="mapView">
+            <section>
+                <h1>Eco-Map</h1>
+                <div class="map_options">
+                    <div id="filter_items">
+                        <figure>
+                            <a href="#/" name="openFilter">
+                                <img id="filter_icon" src="icons/filter.png" alt=" ">
+                                <div id="fc_background"><figcaption>Filter</figcaption></div>
+                            </a>
+                        </figure>
+                    </div>
+                    <!--solution found on StackOverflow: https://stackoverflow.com/questions/5003867/how-to-call-javascript-function-instead-of-href-in-html/5003904-->
 
-        <div id="filter">
+                    <input type="text" id="datepicker" style="visibility:hidden;">
+                    <div id="calendar_items">
+                        <figure>
+                            <a href="#/" id="openCalendar">
+                                <img id="calendar_icon" src="icons/calendar.png" alt=" ">
+                                <div id="fc_background"><figcaption>Events</figcaption></div>
+                            </a>
+                        </figure>
+                    </div>
+                </div>
+            </section>
+
+            <div id="filter">
                 <form action="showFilter" name="filter" method="post" accept-charset="utf-8">
                     <h2>Filter</h2><hr>
                     <div class="pillars">
@@ -221,10 +225,24 @@ EcoMap e = new EcoMap();
                         <button name="closeFilter">Close</button>
                     </div>
                 </form>
+            </div>
+    
+            <!-- Map -->
+            <div id="viewDiv"></div>
+        </div> 
+
+        <!-- List View (Hidden by default) -->
+        <div id="listView" style="display: none; text-align: center;">
+            <script>
+                $.each(points, function(i, index)
+                {
+                    document.write('<img src="' + iconSelect(index['dbType'])['url'] + '" width="32px" height="32px" />');
+                    document.write(index['name']);
+                    document.write('<br />' + index['content']);
+                    document.write('<br /><br />');
+                });
+            </script>
         </div>
- 
-        <!-- Map -->
-        <div id="viewDiv"></div>  
         
         <!-- JQuery Code -->
         <script src="scripts/main.js"></script>

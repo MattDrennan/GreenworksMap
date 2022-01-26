@@ -1,5 +1,25 @@
 $(document).ready(function()
 {
+    // Change View Button
+    $("#viewChange").on("click", function(event)
+    {
+        // If hidden
+        if($("#listView").is(":hidden"))
+        {
+            // Show
+            $("#listView").show();
+            $("#mapView").hide();
+            $("#viewChange").text("[Map View]");
+        }
+        else
+        {
+            // Hide
+            $("#listView").hide();
+            $("#mapView").show();
+            $("#viewChange").text("[List View]");
+        }
+    });
+
     // Add Item - Form Submit
     $("#addItem input[type=submit]").on("click", function(event)
     {
