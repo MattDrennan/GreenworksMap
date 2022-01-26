@@ -6,68 +6,32 @@ import java.sql.SQLException;
 
 import org.tinylog.Logger;
 
+import com.GREENWORKS.eco.data.PinData;
+import com.GREENWORKS.eco.data.PinDataAbstractFactory;
+
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
- 
+
+/***
+ * This is the Servlet class that handles the update operations between the admin interface and the database. 
+ */
 @WebServlet("/editlocationsave")
 public class EditLocationSave extends HttpServlet {
     
+	/***
+	 * Constructor that makes a call to its parent constuctor. 
+	 */
     public EditLocationSave()
     {
         super();
     }
     
-    /***
-     * This method is a boolean check to identify if the input parameters are consistent 
-     * with not being an Event. If the data provided is consistent with an Event then the 
-     * method will return false. If the data provided is not consistent with an event then 
-     * it will return true. 
-     * @param startDate The String of the start date. 
-     * @param endDate The String of the end date. 
-     * @return Returns a boolean value. 
-     */
-    public boolean notAnEvent(String startDate, String endDate) 
-    {
-    	return (startDate == null || endDate == null || startDate == "" || endDate == "");
-    }
-    
-    /***
-     * This is method takes a String parameter and reassigns its contents. 
-     * @param iconId
-     * @return
-     */
-    public String assignEventIconId(String iconId) {
-		switch(iconId)
-		{
-			case "1":
-				iconId = "9";
-				break;
-			case "2":
-				iconId = "8";
-				break;
-			case "3":
-				iconId = "13";
-				break;
-			case "4":
-				iconId = "9";
-				break;
-			case "5":
-				iconId = "11";
-				break;
-			case "6":
-				iconId = "10";
-				break;
-			case "7":
-				iconId = "12";
-				break;
-		}
-		return iconId;
-    }
-    
-    /***
-     * TODO Documentation - Will finish during unit testing
-     */
+	/***
+	 * This handles the post request from the Jakarta Server Page. Within the method the HTTPServletRequest has its
+	 * parameters extracted and placed in a PinData. The contents of the PinData are then inserted into the database
+	 * through an update statement. 
+	 */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         String locationID = request.getParameter("id");
@@ -102,26 +66,23 @@ public class EditLocationSave extends HttpServlet {
 													", content = '" + content + "' WHERE id = '" + locationID + "'";
         // Connect to MySQL
         MysqlConnect mysqlConnect = new MysqlConnect();
-
 		try
 		{
-			// Try statement
-			PreparedStatement statement = mysqlConnect.connect().prepareStatement(sql);
-			// Execute
+			PreparedStatement statement = mysqlConnect.connect().prepareStatement(pinData.getUpdateQuery());
 			statement.executeUpdate();
-            // Redirect user
             RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
             dispatcher.forward(request, response);
-            Logger.info("Query executed: " + sql);
+            Logger.info("Executed Query: " + pinData.getUpdateQuery());
+            
 		}
 		catch (SQLException e)
 		{
-			Logger.error("Error executing update! Query: " +  sql);
+			Logger.error("An exception was thrown: ", e);
+			Logger.error("Error executing update! Query: " +  pinData.getUpdateQuery());
 			e.printStackTrace();
 		}
 		finally
 		{
-			// Disconnect when done
 			mysqlConnect.disconnect();
 		}
     }
