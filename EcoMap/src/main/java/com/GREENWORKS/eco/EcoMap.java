@@ -60,6 +60,7 @@ public class EcoMap {
 			returnArray.add(rs.getString(5));
 			returnArray.add(rs.getString(6));
 			returnArray.add(rs.getString(7));
+			returnArray.add(rs.getString(8));
 		}
 		mysqlConnect.disconnect();
 		return returnArray;		

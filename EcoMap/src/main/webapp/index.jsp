@@ -18,52 +18,58 @@ EcoMap e = new EcoMap();
         <meta charset="utf-8" />
         <title>Eco-Map - City of Orlando</title>
         <link href="stylesheets/ecomap_stylesheet.css" rel="stylesheet" />
+        <!-- JQUERY -->
         <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+        <!-- ARCGIS -->
+        <link rel="stylesheet" href="https://js.arcgis.com/4.22/esri/themes/light/main.css">
+        <script src="https://js.arcgis.com/4.22/"></script>
+        <script src="scripts/esri_api.js"></script>
+        <!-- CRED FILE -->
         <script src="cred.js"></script>
         
         <script>
-        // Dates to be highlighted
-        var eventDates = {};
-        <%
-        // Set up count
-        int j = 0;
-        
-        // Set temp dates
-        String tempDate1 = "";
-        String tempDate2 = "";
-
-        // Loop through array
-        ArrayList<String> locations = (ArrayList<String>)  e.getLocations();
-        for (String location : locations)
-        {
-            // Date Start
-            if(j == 5)
+            // Dates to be highlighted
+            var eventDates = {};
+            <%
+            // Set up count
+            int j = 0;
+            
+            // Set temp dates
+            String tempDate1 = "";
+            String tempDate2 = "";
+    
+            // Loop through array
+            ArrayList<String> locations = (ArrayList<String>)  e.getLocations();
+            for (String location : locations)
             {
-                tempDate1 = location;
-            }
-            // Date End
-            else if(j == 6)
-            {
-                tempDate2 = location;
-
-                // Make sure this is an event
-                if(tempDate1 != null && tempDate2 != null)
+                // Date Start
+                if(j == 5)
                 {
-        %>
-                    eventDates[new Date("<%=tempDate1%>")] = new Date("<%=tempDate1%>");
-        <%
+                    tempDate1 = location;
                 }
-
-                // Reset
-                j = -1;
+                // Date End
+                else if(j == 6)
+                {
+                    tempDate2 = location;
+    
+                    // Make sure this is an event
+                    if(tempDate1 != null && tempDate2 != null)
+                    {
+            %>
+                        eventDates[new Date("<%=tempDate1%>")] = new Date("<%=tempDate1%>");
+            <%
+                    }
+    
+                    // Reset
+                    j = -1;
+                }
+    
+                // Increment count
+                j++;
             }
-
-            // Increment count
-            j++;
-        }
-        %>
+            %>
         </script>
 
         <script>
@@ -99,7 +105,7 @@ EcoMap e = new EcoMap();
                         c.inline = false;
                         
                         // Show
-                        globalMarkers[i].setVisible(true);
+                        globalMarkers[i].visible = true;
                     }
                 },
                 dateFormat: "yy-mm-dd",
@@ -110,82 +116,85 @@ EcoMap e = new EcoMap();
 
     <body>
         <script>
-        // Load array in from Java
-        var array = [<% for (int i = 0; i < e.getLocations().size(); i++) { %>"<%= e.getLocations().get(i) %>"<%= i + 1 < e.getLocations().size() ? ",":"" %><% } %>];
+            // Load array in from Java
+            var array = [<% for (int i = 0; i < e.getLocations().size(); i++) { %>"<%= e.getLocations().get(i) %>"<%= i + 1 < e.getLocations().size() ? ",":"" %><% } %>];
+            
+            // Create set up variables
+            var points = [];
+            var tempArray = [];
         
-        // Create set up variables
-        var markers = [];
-        var tempArray = [];
-
-        // Array iteration count
-        var j = 0;
-
-        // Loop through Java array
-        for(i = 0; i <= array.length - 1; i++)
-        {
-            // Push values to temporary array
-            tempArray.push(array[i]);
-
-            // Increment iteration count
-            j++;
-
-            // If on the fourth value (final)
-            if(j == 7)
+            // Array iteration count
+            var j = 0;
+        
+            // Loop through Java array
+            for(i = 0; i <= array.length - 1; i++)
             {
-                // Push to markers array
-                markers.push(tempArray);
+                // Push values to temporary array
+                tempArray.push(array[i]);
+        
+                // Increment iteration count
+                j++;
+        
+                // If on the final value
+                if(j == 8)
+                {
+                    // Create point variable (Information for map)
+                    var point = 
+                    {
+                        type: "point",
+                        longitude: tempArray[4].split(',')[0],
+                        latitude: tempArray[4].split(',')[1],
+                        dbID: tempArray[0],
+                        dbType: tempArray[1],
+                        dbAddress: tempArray[2],
+                        name: tempArray[3],
+                        dateStart: tempArray[5],
+                        dateEnd: tempArray[6],
+                        content: tempArray[2] + '<br /><br />' + tempArray[7]
+                    };
 
-                // Clear temp array
-                tempArray = [];
-
-                // Reset iteration count
-                j = 0;
+                    // Push to points array for map to get
+                    points.push(point);
+        
+                    // Clear temp array
+                    tempArray = [];
+        
+                    // Reset iteration count
+                    j = 0;
+                }
             }
-        }
         </script>
 
-        <header>
-            <a id="menu" href="">&#9776; Menu</a>
-            <a id="logo" href="https://www.orlando.gov"><img src="icons/CityOfOrlando_logo.png" alt="City of Orlando logo"></a>
-            <input id="search" type="text" placeholder="Find almost anything on our website">
-            <input id="search_button" type="button" value="Search">
-            <a id="mobile_search" href=""><img src="icons/search_icon.png"></a>
-        </header>
-        <!-- adds the mock header for the page including the CoO logo, a search field, and a menu -->
+        <!-- Show List Button -->
+        <a href="#/" id="viewChange">[List View]</a>
 
-        <section>
-            <div>
-                <ul class="breadcrumb">
-                    <li><a href="https://www.orlando.gov/Home">Home</a></li>
-                    <li>Eco-Map</li>
-                </ul>
-            </div>
-            <!-- adds a static breadcrumb navigation to show the user the URL path taken to the current page -->
-            <h1>Eco-Map</h1>
-            <div class="map_options">
-                <div id="filter_items">
-                    <figure>
-                        <a href="#/" name="openFilter">
-                            <img id="filter_icon" src="icons/filter.png" alt=" ">
-                            <div id="fc_background"><figcaption>Filter</figcaption></div>
-                        </a>
-                    </figure>
+        <div id="mapView">
+            <section>
+                <h1>Eco-Map</h1>
+                <div class="map_options">
+                    <div id="filter_items">
+                        <figure>
+                            <a href="#/" name="openFilter">
+                                <img id="filter_icon" src="icons/filter.png" alt=" ">
+                                <div id="fc_background"><figcaption>Filter</figcaption></div>
+                            </a>
+                        </figure>
+                    </div>
+                    <!--solution found on StackOverflow: https://stackoverflow.com/questions/5003867/how-to-call-javascript-function-instead-of-href-in-html/5003904-->
+
+                    <input type="text" id="datepicker" style="visibility:hidden;">
+                    <div id="calendar_items">
+                        <figure>
+                            <a href="#/" id="openCalendar">
+                                <img id="calendar_icon" src="icons/calendar.png" alt=" ">
+                                <div id="fc_background"><figcaption>Events</figcaption></div>
+                            </a>
+                        </figure>
+                    </div>
                 </div>
-                <!--solution found on StackOverflow: https://stackoverflow.com/questions/5003867/how-to-call-javascript-function-instead-of-href-in-html/5003904-->
+            </section>
 
-                <input type="text" id="datepicker" style="visibility:hidden;">
-                <div id="calendar_items">
-                    <figure>
-                        <a href="#/" id="openCalendar">
-                            <img id="calendar_icon" src="icons/calendar.png" alt=" ">
-                            <div id="fc_background"><figcaption>Events</figcaption></div>
-                        </a>
-                    </figure>
-                </div>
-            </div>
-        </section>
-
-        <div id="filter">
+            <div id="filter">
                 <form action="showFilter" name="filter" method="post" accept-charset="utf-8">
                     <h2>Filter</h2><hr>
                     <div class="pillars">
@@ -216,32 +225,26 @@ EcoMap e = new EcoMap();
                         <button name="closeFilter">Close</button>
                     </div>
                 </form>
+            </div>
+    
+            <!-- Map -->
+            <div id="viewDiv"></div>
+        </div> 
+
+        <!-- List View (Hidden by default) -->
+        <div id="listView" style="display: none; text-align: center;">
+            <script>
+                $.each(points, function(i, index)
+                {
+                    document.write('<img src="' + iconSelect(index['dbType'])['url'] + '" width="32px" height="32px" />');
+                    document.write(index['name']);
+                    document.write('<br />' + index['content']);
+                    document.write('<br /><br />');
+                });
+            </script>
         </div>
         
-        <div id="map"></div> 
-        <!--sets the parameters for the Google Maps API embed -->
- 
-        <script>
-            document.write('<script async defer src="https://maps.googleapis.com/maps/api/js?key=' + googleMapKey + '&callback=initMap"><\/script>');
-        </script>
-        
-        <script src="scripts/mapEmbed.js"></script> 
-        <!--references the init callback to the mapEmbed js file -->       
-        
-        <div>
-            <footer>
-                <div id="left">
-                  <a href="https://www.orlando.gov/System-pages/Website-Legal-Notices">Website Legal Notice</a>  | 
-                  <a href="https://www.orlando.gov/General-Pages/Sitemap">Sitemap</a> | 
-                  <a href="https://www.orlando.gov/Our-Government/News-and-Information/City-Official-Assets">The City Beautiful</a>
-                </div>
-                <div id="right">
-                 &copy; 2021 City of Orlando | 
-                Powered by <a href="http://www.opencities.com/">OpenCities</a>
-                </div>                           
-              </footer>
-        </div>
-        <!-- simulates the footer as shown on the real CoO site -->
+        <!-- JQuery Code -->
         <script src="scripts/main.js"></script>
     </body>
 </html>
