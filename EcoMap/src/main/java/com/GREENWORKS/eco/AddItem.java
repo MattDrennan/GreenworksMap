@@ -21,10 +21,11 @@ public class AddItem extends HttpServlet {
         // Get POST variables
         String locationName = request.getParameter("locationName");
         String location = request.getParameter("location");
-        String zip = request.getParameter("zip");
+        String coord = request.getParameter("coord");
         String icon = request.getParameter("icon");
         String dateStart = request.getParameter("dateStart");
         String dateEnd = request.getParameter("dateEnd");
+        String content = request.getParameter("content");
 
         // Get session
         HttpSession session = request.getSession();
@@ -46,7 +47,7 @@ public class AddItem extends HttpServlet {
             if((dateStart == "" && dateEnd == "") || (dateStart == null && dateEnd == null))
             {
                 // Statement to select all location data - not an event
-                sql = "INSERT INTO locations (iconid, address, name, zip) VALUES ('" + m.cleanInput(icon) + "', '" + m.cleanInput(location) + "', '" + m.cleanInput(locationName) + "', '" + m.cleanInput(zip) + "')";
+                sql = "INSERT INTO locations (iconid, address, name, coord, content) VALUES ('" + m.cleanInput(icon) + "', '" + m.cleanInput(location) + "', '" + m.cleanInput(locationName) + "', '" + m.cleanInput(coord) + "', '" + m.cleanInput(content) + "')";
             }
             else
             {
@@ -80,7 +81,7 @@ public class AddItem extends HttpServlet {
                 }
 
                 // Statement to select all location data - is an event
-                sql = "INSERT INTO locations (iconid, address, name, zip, dateStart, dateEnd) VALUES ('" + iconid + "', '" + m.cleanInput(location) + "', '" + m.cleanInput(locationName) + "', '" + m.cleanInput(zip) + "', '" + m.cleanInput(dateStart) + "', '" + m.cleanInput(dateEnd) + "')";             
+                sql = "INSERT INTO locations (iconid, address, name, coord, dateStart, dateEnd) VALUES ('" + iconid + "', '" + m.cleanInput(location) + "', '" + m.cleanInput(locationName) + "', '" + m.cleanInput(coord) + "', '" + m.cleanInput(dateStart) + "', '" + m.cleanInput(dateEnd) + "')";             
             }
 
             try

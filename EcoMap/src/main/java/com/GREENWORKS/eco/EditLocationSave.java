@@ -34,13 +34,37 @@ public class EditLocationSave extends HttpServlet {
 	 */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-		PinDataAbstractFactory factory = PinDataAbstractFactory.getFactory(request.getParameter("dateStartEdit"), request.getParameter("dateEndEdit"));
-    	PinData pinData = factory.createPinData(request.getParameter("dateStartEdit"), request.getParameter("dateEndEdit"));
-    	pinData.setId(request.getParameter("id"));
-		pinData.setIconId(request.getParameter("icon"));
-		pinData.setLocationAddress(request.getParameter("location"));
-		pinData.setLocationName(request.getParameter("locationName"));
-		pinData.setZipCode(request.getParameter("zip"));
+        String locationID = request.getParameter("id");
+        EcoMap m = new EcoMap();
+		String startDate = request.getParameter("dateStartEdit");
+		String endDate = request.getParameter("dateEndEdit");
+		String iconId = request.getParameter("icon");
+		String locationAddress = m.cleanInput(request.getParameter("location"));
+		String locationName = m.cleanInput(request.getParameter("locationName"));
+		String coord = m.cleanInput(request.getParameter("coord"));
+		String content = m.cleanInput(request.getParameter("content"));
+		
+		if(notAnEvent(startDate, endDate)) // Returns true if it is not an event.
+		{
+			// Not an event
+			startDate = "DEFAULT";
+			endDate = "DEFAULT";
+		}
+		else
+		{
+			// Clean input - is an event
+			startDate =  "'" + m.cleanInput(startDate) + "'";
+			endDate =  "'" + m.cleanInput(endDate) + "'";
+			// Check icon ID values and convert to event icon
+			iconId = assignEventIconId(iconId);
+		}
+
+        // Statement to select all location data
+		String sql = "UPDATE locations SET iconid = '" + iconId + "', address = '" + locationAddress + 
+													"', name = '" + locationName + "', coord = '" + coord + 
+													"', dateStart = " + startDate + ", dateEnd = " + endDate + 
+													", content = '" + content + "' WHERE id = '" + locationID + "'";
+        // Connect to MySQL
         MysqlConnect mysqlConnect = new MysqlConnect();
 		try
 		{

@@ -4,35 +4,21 @@
 Filename: ecomap_stylesheet.css
 Date of creation: 27 Sep 2021
 Editor: Kashai Bingham
-Edited: 2 Nov 2021
+Edited: 7 Dec 2021
 */
 
-div.row {clear: both;}
-div.row::after {
-    clear: both;
-    content: "";
-    display: table;
-}
-div[class^="col-"] {float: left;}
-div.col-1-1 {width: 100%;}
-div.col-1-3 {width: 33.33%;}
-div.col-2-3 {width: 66.67%;}
-header {
-    background-color: rgb(138, 195, 66);
-    height: 4em;
-    display: flex;
-    font: white;
-}
+/*map scaling issues on mobile devices needs to be addressed*/
+
 a {
     text-decoration: none;
 }
 a:hover, a:focus {
-    color: blue;
-    font-style: italic;
-    text-decoration: underline;
+	color: blue;
+	font-style: italic;
+	text-decoration: underline;
 }
 a:visited, a:link {
-    text-decoration: none;
+	text-decoration: none;
 }
 figure {
     width: 48px;
@@ -51,101 +37,23 @@ figcaption {
     font-style: normal;
     color: blue;
 }
-footer {
-    background-color: rgb(65, 64, 66); 
-}
-#search {
-    flex: 1 1 23%;
-    position: sticky;
-    top: 50px;
-    width: 3em;
-}
-#search_button {
-    flex: 1 1 10%;
-    z-index: 5;
-    padding: 0em;
-}
-#menu {
-    flex: 1 1 33%;
-    text-align: center;
-    position: relative;
-    font-size: 1.5em;
-    color: white;
-}
-#menu:hover, #menu:focus {
-    font-style: normal;
-    color: rgb(0, 75, 144);
-}
-#logo {
-    flex: 1 1 33%;
-    height: 2.15em;
-    margin: 0em;
-}
 
 /*Desktop Style*/
 @media only screen and (min-width: 768px) {
-    html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
+    body {
+        font: black;
+        background-color: white;
+        width: inherit;
+        height: 95vh;
+        padding: 0px;
+        margin: 0px;
     }
-    ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    }
-    ul.breadcrumb li {
-        display: inline;
-    }
-    ul.breadcrumb li+li:before {
-        padding: 10px;
-        color: black;
-        content: "/\00a0";
-    }
-    footer {
-		position: fixed;
-		height: 2em;
-		bottom: 0;
-        width: 100%;
-        text-align: center;
-    }
-    footer, footer a{
-        color: white;
-    }
-    #map {
-        height: 60vh;
+    #viewDiv {
         width: 90%;
+        height: 100%;
         position: relative;
-        left: 5%;
-        flex: 1 1 100%
-    }
-    #menu {
-        flex: 1 1 10%;
-        font: 2em;
-        position: relative;
-    }
-    #logo {
-        flex: 1 1 60%;
-    }
-    #logo img {
-        position: relative;
-        top: 25%;
-    }
-    #search {
-        flex: 1 1 25%;
-        font: 2em;
-    }
-    #search_button {
-        flex: 1 1 5%;
-    }
-    #mobile_search {
-        display: none;
-    }
-    #left, #right {
-        width: 50%;
-        display: inline;
-        position: relative;
-        top: 15%;
+        left: 7%;
+
     }
     #filter {
         display: none;
@@ -172,7 +80,7 @@ footer {
         display: flex;
         flex-direction: column;
         position: absolute;
-        left: -2.5pc;
+        left: -1.5pc;
         z-index: 99;
     }
     .pillars {
@@ -190,6 +98,39 @@ footer {
         position: relative;
         left: 75%;
     }
+    .esri-ui-inner-container {
+        position: absolute;
+        bottom: 0;
+    }
+    .esri-ui-inner-container.esri-ui-corner-container {
+        width: 20%;
+    }
+    .esri-component.esri-zoom.esri-widget {
+        width: 100%;
+        height: 5%;
+    }
+    .esri-component.esri-zoom.esri-widget * {
+        width: 30%;
+    }
+    .esri-widget--button {
+        width: 5%;
+        background-color: rgba(85, 77, 77, 0.6);
+    }
+    .esri-ui-inner-container.esri-ui-manual-container, .esri-component.esri-attribution.esri-widget {
+        width: 100%;
+    }
+    .esri-attribution__sources {
+        display: flex;
+        float: left;
+        flex: 1 1 75%;
+        background-color: rgba(85, 77, 77, 0.6);
+    }
+    .esri-attribution__powered-by {
+        display: flex;
+        float: right;
+        flex: 1 1 25%;
+        background-color: rgba(85, 77, 77, 0.6);
+    }
 }
 
 /*Mobile Style */
@@ -198,58 +139,6 @@ footer {
         height: 100%;
         margin: 0;
         padding: 0;
-    }
-    header {
-        position: sticky;
-        top: 0;
-        z-index: 9;
-        width: 100%;
-    }
-    h1 {
-        display: table;
-        margin: 0em;
-        font-size: 2em;
-        position: relative;
-        left: 3%;
-        top: 15;
-        z-index: 10;
-    }
-    ul {
-        display: none;
-    }
-    footer {
-        position: fixed;
-        bottom: 0em;
-        height: 2em;
-        background-color: rgb(65, 64, 66);
-        width: 100%;
-        text-align: center;
-        height: 8%;
-    }
-    footer, footer a {
-        color: rgb(107, 168, 219);
-    }
-    #map {
-        height: 70%;
-        position: relative;
-        top: 5%;
-    }
-    #menu {
-        flex: 1 1 12.25%;
-    }
-    #logo {
-        flex: 1 1 75%;
-        position: relative;
-        top: 15%;
-    }
-    #search, #search_button {
-        display: none;
-    }
-    #mobile_search {
-        display: table;
-        flex: 1 1 12.5%;
-        position: relative;
-        top: 15%;
     }
     #filter {
         display: none;
@@ -309,75 +198,13 @@ footer {
     }
 }
 
-/*Small Device style*/
+/*Small Device style*/ 
 @media only screen and (min-width: 320px) and (max-width: 653.9px) {
     html, body {
         height: 100%;
         margin: 0;
         padding: 0;
         overflow-y: hidden;
-    }
-    header {
-        z-index: 9;
-        position: fixed;
-        width: 100%;
-    }
-    h1 {
-        display: table;
-        margin: 0em;
-        font-size: 2em;
-        position: relative;
-        left: 3%;
-        z-index: 9;
-        top: 75;
-    }
-    ul {
-        display: none;
-    }
-    footer {
-        position: fixed;
-        bottom: 0em;
-        height: 2em;
-        background-color: rgb(65, 64, 66);
-        width: 100%;
-        text-align: center;
-    }
-    footer, footer a {
-        color: rgb(107, 168, 219);
-    }
-    #map {
-        flex: 1 1 100%;
-        height: 50%;
-        position: relative;
-        top: 25%;
-    }
-    #menu {
-        position: relative;
-        flex: 1 1 7.5%;
-    }
-    #logo {
-        flex: 1 1 85%;
-    }
-    #logo img {
-        position: relative;
-        left: 4%;
-        top: 20%;
-    }
-    #search, #search_button {
-        display: none;
-    }
-    #search {
-        position: relative;
-        right: 95%;
-    }
-    #mobile_search {
-        display: table;
-        flex: 1 1 7.5%;
-        position: relative;
-        top: 15%;
-    }  
-    #left {
-        display: none;
     }
     #filter {
         display: none;

@@ -46,23 +46,7 @@ EcoMap e = new EcoMap();
     </head>
 
     <body>
-        <header>
-            <a id="menu" href="">&#9776; Menu</a>
-            <a id="logo" href="https://www.orlando.gov"><img src="icons/CityOfOrlando_logo.png" alt="City of Orlando logo"></a>
-            <input id="search" type="text" placeholder="Find almost anything on our website">
-            <input id="search_button" type="button" value="Search">
-            <a id="mobile_search" href=""><img src="icons/search_icon.png"></a>
-        </header>
-        <!-- adds the mock header for the page including the CoO logo, a search field, and a menu -->
-
         <section>
-            <div>
-                <ul class="breadcrumb">
-                    <li><a href="https://www.orlando.gov/Home">Home</a></li>
-                    <li><a href="/webapp/">Eco-Map</a></li>
-                </ul>
-            </div>
-            <!-- adds a static breadcrumb navigation to show the user the URL path taken to the current page -->
             <h1>Admin Panel</h1>
         </section>
         
@@ -78,12 +62,11 @@ EcoMap e = new EcoMap();
                 <h1>Add Location</h1>
 
                 <p>
-                    <form action="additem" method="POST">
+                    <form action="additem" method="POST" id="addItem">
+                        <input type="hidden" name="coord" />
                         Location Name: <input type="text" name="locationName" />
                         <br />
                         Location Address: <input type="text" name="location" />
-                        <br />
-                        Zip Code: <input type="number" name="zip" />
                         <br />
                         Is this an event: <input type="radio" name="event" value="1" /> Yes / <input type="radio" name="event" value="0" CHECKED /> No
                         <span id="eventDates" style="display: none;">
@@ -105,6 +88,10 @@ EcoMap e = new EcoMap();
                             <option value="3">Transportation</option>
                         </select>
                         <br />
+                        Content:
+                        <br />
+                        <textarea width="75%" rows="10" name="content"></textarea>
+                        <br />
                         <input type="submit" value="Add!" name="submit" />
                     </form>
                 </p>
@@ -116,13 +103,12 @@ EcoMap e = new EcoMap();
                 if(request.getAttribute("id") != "" && request.getAttribute("id") != null)
                 {
                 %>
-                    <form action="editlocationsave" method="POST">
+                    <form action="editlocationsave" method="POST" id="editLocation">
                         <input type="hidden" name="id" value="${id}" />
+                        <input type="hidden" name="coord" value="${coord}" />
                         Location Name: <input type="text" name="locationName" value="${name}" />
                         <br />
                         Location Address: <input type="text" name="location" value="${address}" />
-                        <br />
-                        Zip Code: <input type="number" name="zip" value="${zip}" />
                         <br />
                         Is this an event: <input type="radio" name="eventEdit" value="1" ${dateStart == null ? '' : 'CHECKED'} /> Yes / <input type="radio" name="eventEdit" value="0" ${dateStart == null ? 'CHECKED' : ''} /> No
                         <span id="eventDatesEdit" ${dateStart == null ? 'style="display:none;"' : ''}>
@@ -144,7 +130,11 @@ EcoMap e = new EcoMap();
                             <option value="3" ${iconid == 3 || iconid == 13 ? 'selected' : ''}>Transportation</option>
                         </select>
                         <br />
-                        <input type="submit" value="Edit!" name="submit" />
+                        Content:
+                        <br />
+                        <textarea width="75%" rows="10" name="content">${content}</textarea>
+                        <br />
+                        <input type="submit" value="Edit!" name="submit" id="editLocationSubmit" />
                         <input type="submit" value="Cancel" onclick="window.open('admin.jsp');" />
                     </form>
                 <%
@@ -161,7 +151,7 @@ EcoMap e = new EcoMap();
                                 String iconid = "";
                                 String address = "";
                                 String name = "";
-                                String zip = "";
+                                String coord = "";
 
                                 // Increment variable
                                 int j = 0;
@@ -188,9 +178,9 @@ EcoMap e = new EcoMap();
                                     }
                                     else if(j == 4)
                                     {
-                                        zip = location;
+                                        coord = location;
                                     }
-                                    else if(j == 6)
+                                    else if(j == 7)
                                     {
                                 %>
                                         <option value="<%=id%>"><%=name%> - <%=address%></option>
@@ -233,20 +223,7 @@ EcoMap e = new EcoMap();
             %>
         </section>
         
-        <div>
-            <footer>
-                <div id="left">
-                  <a href="https://www.orlando.gov/System-pages/Website-Legal-Notices">Website Legal Notice</a>  | 
-                  <a href="https://www.orlando.gov/General-Pages/Sitemap">Sitemap</a> | 
-                  <a href="https://www.orlando.gov/Our-Government/News-and-Information/City-Official-Assets">The City Beautiful</a>
-                </div>
-                <div id="right">
-                 &copy; 2021 City of Orlando | 
-                Powered by <a href="http://www.opencities.com/">OpenCities</a>
-                </div>                           
-              </footer>
-        </div>
-        <!-- simulates the footer as shown on the real CoO site -->
+        <!-- JQuery Code -->
         <script src="scripts/main.js"></script>
     </body>
 </html>
