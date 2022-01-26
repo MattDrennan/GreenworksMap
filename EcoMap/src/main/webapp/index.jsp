@@ -136,7 +136,7 @@ EcoMap e = new EcoMap();
                 j++;
         
                 // If on the final value
-                if(j == 7)
+                if(j == 8)
                 {
                     // Create point variable (Information for map)
                     var point = 
@@ -150,7 +150,7 @@ EcoMap e = new EcoMap();
                         name: tempArray[3],
                         dateStart: tempArray[5],
                         dateEnd: tempArray[6],
-                        content: tempArray[2] + '<br /><br /><img src="https://www.w3schools.com/images/w3lynx_200.png" />Text here.'
+                        content: tempArray[2] + '<br /><br />' + tempArray[7]
                     };
 
                     // Push to points array for map to get
@@ -226,6 +226,7 @@ EcoMap e = new EcoMap();
         <!-- Map -->
         <div id="viewDiv"></div>  
         
+        <!-- JQuery Code -->
         <script src="scripts/main.js"></script>
     </body>
 </html>

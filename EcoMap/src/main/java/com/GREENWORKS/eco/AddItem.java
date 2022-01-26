@@ -25,12 +25,11 @@ public class AddItem extends HttpServlet {
         String icon = request.getParameter("icon");
         String dateStart = request.getParameter("dateStart");
         String dateEnd = request.getParameter("dateEnd");
+        String content = request.getParameter("content");
 
         // Get session
         HttpSession session = request.getSession();
         String username = (String)session.getAttribute("username");
-
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!dafdsf");
 
         // Check if session active
         if(username != "" && username != null)
@@ -48,7 +47,7 @@ public class AddItem extends HttpServlet {
             if((dateStart == "" && dateEnd == "") || (dateStart == null && dateEnd == null))
             {
                 // Statement to select all location data - not an event
-                sql = "INSERT INTO locations (iconid, address, name, coord) VALUES ('" + m.cleanInput(icon) + "', '" + m.cleanInput(location) + "', '" + m.cleanInput(locationName) + "', '" + m.cleanInput(coord) + "')";
+                sql = "INSERT INTO locations (iconid, address, name, coord, content) VALUES ('" + m.cleanInput(icon) + "', '" + m.cleanInput(location) + "', '" + m.cleanInput(locationName) + "', '" + m.cleanInput(coord) + "', '" + m.cleanInput(content) + "')";
             }
             else
             {

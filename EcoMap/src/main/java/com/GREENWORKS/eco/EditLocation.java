@@ -57,6 +57,7 @@ public class EditLocation extends HttpServlet {
                     request.setAttribute("coord", rs.getString(5));
                     request.setAttribute("dateStart", rs.getString(6));
                     request.setAttribute("dateEnd", rs.getString(7));
+                    request.setAttribute("content", rs.getString(8));
                 }
             }
             else
