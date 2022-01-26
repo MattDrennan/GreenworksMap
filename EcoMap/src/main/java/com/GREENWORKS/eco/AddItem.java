@@ -4,9 +4,13 @@ import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import com.GREENWORKS.eco.constants.LoggerConstants;
+
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+
+import org.tinylog.Logger;
  
 @WebServlet("/additem")
 public class AddItem extends HttpServlet {
@@ -89,6 +93,7 @@ public class AddItem extends HttpServlet {
                 // Try statement
                 PreparedStatement statement = mysqlConnect.connect().prepareStatement(sql);
                 statement.executeUpdate();
+                Logger.info(LoggerConstants.QUERY_EXECUTED + sql);
             }
             catch (SQLException e)
             {

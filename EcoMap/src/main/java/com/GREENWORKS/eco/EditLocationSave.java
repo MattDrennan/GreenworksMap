@@ -4,36 +4,75 @@ import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import org.tinylog.Logger;
+import com.GREENWORKS.eco.constants.LoggerConstants;
 
-import com.GREENWORKS.eco.data.PinData;
-import com.GREENWORKS.eco.data.PinDataAbstractFactory;
+import org.tinylog.Logger;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-
-/***
- * This is the Servlet class that handles the update operations between the admin interface and the database. 
- */
+ 
 @WebServlet("/editlocationsave")
 public class EditLocationSave extends HttpServlet {
     
-	/***
-	 * Constructor that makes a call to its parent constuctor. 
-	 */
     public EditLocationSave()
     {
         super();
     }
     
-	/***
-	 * This handles the post request from the Jakarta Server Page. Within the method the HTTPServletRequest has its
-	 * parameters extracted and placed in a PinData. The contents of the PinData are then inserted into the database
-	 * through an update statement. 
-	 */
+    /***
+     * This method is a boolean check to identify if the input parameters are consistent 
+     * with not being an Event. If the data provided is consistent with an Event then the 
+     * method will return false. If the data provided is not consistent with an event then 
+     * it will return true. 
+     * @param startDate The String of the start date. 
+     * @param endDate The String of the end date. 
+     * @return Returns a boolean value. 
+     */
+    public boolean notAnEvent(String startDate, String endDate) 
+    {
+    	return (startDate == null || endDate == null || startDate == "" || endDate == "");
+    }
+    
+    /***
+     * This is method takes a String parameter and reassigns its contents. 
+     * @param iconId
+     * @return
+     */
+    public String assignEventIconId(String iconId) {
+		switch(iconId)
+		{
+			case "1":
+				iconId = "9";
+				break;
+			case "2":
+				iconId = "8";
+				break;
+			case "3":
+				iconId = "13";
+				break;
+			case "4":
+				iconId = "9";
+				break;
+			case "5":
+				iconId = "11";
+				break;
+			case "6":
+				iconId = "10";
+				break;
+			case "7":
+				iconId = "12";
+				break;
+		}
+		return iconId;
+    }
+    
+    /***
+     * TODO Documentation - Will finish during unit testing
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
+		Logger.info("Edit-save location request recieved from: " + request.getRemoteAddr());
         String locationID = request.getParameter("id");
         EcoMap m = new EcoMap();
 		String startDate = request.getParameter("dateStartEdit");
@@ -43,7 +82,6 @@ public class EditLocationSave extends HttpServlet {
 		String locationName = m.cleanInput(request.getParameter("locationName"));
 		String coord = m.cleanInput(request.getParameter("coord"));
 		String content = m.cleanInput(request.getParameter("content"));
-		
 		if(notAnEvent(startDate, endDate)) // Returns true if it is not an event.
 		{
 			// Not an event
@@ -66,23 +104,26 @@ public class EditLocationSave extends HttpServlet {
 													", content = '" + content + "' WHERE id = '" + locationID + "'";
         // Connect to MySQL
         MysqlConnect mysqlConnect = new MysqlConnect();
+
 		try
 		{
-			PreparedStatement statement = mysqlConnect.connect().prepareStatement(pinData.getUpdateQuery());
+			// Try statement
+			PreparedStatement statement = mysqlConnect.connect().prepareStatement(sql);
+			// Execute
 			statement.executeUpdate();
+            Logger.info(LoggerConstants.QUERY_UPDATE + sql);
+            // Redirect user
             RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
             dispatcher.forward(request, response);
-            Logger.info("Executed Query: " + pinData.getUpdateQuery());
-            
 		}
 		catch (SQLException e)
 		{
-			Logger.error("An exception was thrown: ", e);
-			Logger.error("Error executing update! Query: " +  pinData.getUpdateQuery());
+			Logger.info(LoggerConstants.QUERY_FAILED + sql);
 			e.printStackTrace();
 		}
 		finally
 		{
+			// Disconnect when done
 			mysqlConnect.disconnect();
 		}
     }

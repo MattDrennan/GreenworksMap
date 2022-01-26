@@ -5,6 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.GREENWORKS.eco.constants.LoggerConstants;
+
+import org.tinylog.Logger;
+
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -19,11 +23,13 @@ public class EditLocation extends HttpServlet {
  
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
+
         // Get ID of location
         String locationID = request.getParameter("locationID");
         String deleteChoose = request.getParameter("deleteChoose");
         String editChoose = request.getParameter("editChoose");
 
+        Logger.info("Edit location request recieved from: " + request.getRemoteAddr());
         // Statement to select all location data
 		String sql = "SELECT * FROM locations WHERE id = '" + locationID + "' LIMIT 1";
 
@@ -46,7 +52,7 @@ public class EditLocation extends HttpServlet {
             {
                 // Loop through statement
                 ResultSet rs = statement.executeQuery();
-
+                Logger.info(LoggerConstants.QUERY_EXECUTED + sql);
                 while(rs.next())
                 {
                     // Send data back
@@ -64,6 +70,7 @@ public class EditLocation extends HttpServlet {
             {
                 // Execute delete
 			    statement.executeUpdate();
+                Logger.info(LoggerConstants.QUERY_UPDATE + sql);
             }
 
             // Redirect user
@@ -73,6 +80,7 @@ public class EditLocation extends HttpServlet {
 		catch (SQLException e)
 		{
 			// Error
+            Logger.error(LoggerConstants.QUERY_FAILED + sql);
 			e.printStackTrace();
 		}
 		finally
