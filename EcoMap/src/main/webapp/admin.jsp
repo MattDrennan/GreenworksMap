@@ -115,13 +115,12 @@ EcoMap e = new EcoMap();
                 if(request.getAttribute("id") != "" && request.getAttribute("id") != null)
                 {
                 %>
-                    <form action="editlocationsave" method="POST">
+                    <form action="editlocationsave" method="POST" id="editLocation">
                         <input type="hidden" name="id" value="${id}" />
+                        <input type="hidden" name="coord" value="${coord}" />
                         Location Name: <input type="text" name="locationName" value="${name}" />
                         <br />
                         Location Address: <input type="text" name="location" value="${address}" />
-                        <br />
-                        Zip Code: <input type="number" name="zip" value="${zip}" />
                         <br />
                         Is this an event: <input type="radio" name="eventEdit" value="1" ${dateStart == null ? '' : 'CHECKED'} /> Yes / <input type="radio" name="eventEdit" value="0" ${dateStart == null ? 'CHECKED' : ''} /> No
                         <span id="eventDatesEdit" ${dateStart == null ? 'style="display:none;"' : ''}>
@@ -143,7 +142,7 @@ EcoMap e = new EcoMap();
                             <option value="3" ${iconid == 3 || iconid == 13 ? 'selected' : ''}>Transportation</option>
                         </select>
                         <br />
-                        <input type="submit" value="Edit!" name="submit" />
+                        <input type="submit" value="Edit!" name="submit" id="editLocationSubmit" />
                         <input type="submit" value="Cancel" onclick="window.open('admin.jsp');" />
                     </form>
                 <%

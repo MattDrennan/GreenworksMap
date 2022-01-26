@@ -6,7 +6,7 @@ $(document).ready(function()
         event.preventDefault();
 
         // Get coords for address
-        var addressInfo = getAddress($("input[name=location]").val()).done(function(returndata)
+        var addressInfo = getAddress($("#addItem input[name=location]").val()).done(function(returndata)
         {
             // Get coord data and put in hidden field
             $("input[name=coord]").val(returndata.x + "," + returndata.y);
@@ -18,7 +18,31 @@ $(document).ready(function()
                 url: "additem",   
                 success: function(data)
                 {
-                    location.reload();                 
+                    window.location.replace("admin.jsp");                
+                }   
+            });
+        });
+    });
+
+    // Edit Item - Form Submit
+    $("#editLocationSubmit").on("click", function(event)
+    {
+        event.preventDefault();
+
+        // Get coords for address
+        var addressInfo = getAddress($("#editLocation input[name=location]").val()).done(function(returndata)
+        {
+            // Get coord data and put in hidden field
+            $("input[name=coord]").val(returndata.x + "," + returndata.y);
+
+            // Send form data
+            $.ajax({   
+                type: "POST",
+                data : $("#editLocation").serialize(),
+                url: "editlocationsave",   
+                success: function(data)
+                {
+                    window.location.replace("admin.jsp");               
                 }   
             });
         });
@@ -35,7 +59,7 @@ $(document).ready(function()
 
             // If the option value matches the marker type
             // Allow other locations to stay on map
-            if($(this).val() == globalMarkers[i].dateStart || globalMarkers[i].dateStart == "null")
+            if($(this).val() == globalMarkers[i].attr.dateStart.split(" ")[0] || globalMarkers[i].attr.dateStart == "null")
             {
                 // Don't hide
                 shouldHide = false;
@@ -45,12 +69,12 @@ $(document).ready(function()
             if(shouldHide)
             {
                 // Hide
-                globalMarkers[i].setVisible(false);
+                globalMarkers[i].visible = false;
             }
             else
             {
                 // Show
-                globalMarkers[i].setVisible(true);
+                globalMarkers[i].visible = true;
             }
         }
     });
@@ -125,7 +149,7 @@ $(document).ready(function()
                 if($(this).is(':checked'))
                 {
                     // If the option value matches the marker type
-                    if($(this).val() == globalMarkers[i].type)
+                    if($(this).val() == globalMarkers[i].attr.dbType)
                     {
                         // Don't hide
                         shouldHide = false;
@@ -137,12 +161,12 @@ $(document).ready(function()
             if(shouldHide)
             {
                 // Hide
-                globalMarkers[i].setVisible(false);
+                globalMarkers[i].visible = false;
             }
             else
             {
                 // Show
-                globalMarkers[i].setVisible(true);
+                globalMarkers[i].visible = true;
             }
         }
     });

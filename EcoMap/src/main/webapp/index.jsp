@@ -18,12 +18,16 @@ EcoMap e = new EcoMap();
         <meta charset="utf-8" />
         <title>Eco-Map - City of Orlando</title>
         <link href="stylesheets/ecomap_stylesheet.css" rel="stylesheet" />
+        <!-- JQUERY -->
         <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-        <script src="cred.js"></script>
-        <script	src="https://js.arcgis.com/4.21/"></script>
+        <!-- ARCGIS -->
+        <link rel="stylesheet" href="https://js.arcgis.com/4.22/esri/themes/light/main.css">
+        <script src="https://js.arcgis.com/4.22/"></script>
         <script src="scripts/esri_api.js"></script>
+        <!-- CRED FILE -->
+        <script src="cred.js"></script>
         
         <script>
             // Dates to be highlighted
@@ -101,7 +105,7 @@ EcoMap e = new EcoMap();
                         c.inline = false;
                         
                         // Show
-                        globalMarkers[i].setVisible(true);
+                        globalMarkers[i].visible = true;
                     }
                 },
                 dateFormat: "yy-mm-dd",
@@ -134,18 +138,22 @@ EcoMap e = new EcoMap();
                 // If on the final value
                 if(j == 7)
                 {
-                    console.log(tempArray);
-
+                    // Create point variable (Information for map)
                     var point = 
                     {
                         type: "point",
                         longitude: tempArray[4].split(',')[0],
-                        latitude: tempArray[4].split(',')[1]
+                        latitude: tempArray[4].split(',')[1],
+                        dbID: tempArray[0],
+                        dbType: tempArray[1],
+                        dbAddress: tempArray[2],
+                        name: tempArray[3],
+                        dateStart: tempArray[5],
+                        dateEnd: tempArray[6],
+                        content: tempArray[2] + '<br /><br /><img src="https://www.w3schools.com/images/w3lynx_200.png" />Text here.'
                     };
-                    console.log(point);
 
-                    // Push to points array
-
+                    // Push to points array for map to get
                     points.push(point);
         
                     // Clear temp array
@@ -157,23 +165,7 @@ EcoMap e = new EcoMap();
             }
         </script>
 
-        <header>
-            <a id="menu" href="">&#9776; Menu</a>
-            <a id="logo" href="https://www.orlando.gov"><img src="icons/CityOfOrlando_logo.png" alt="City of Orlando logo"></a>
-            <input id="search" type="text" placeholder="Find almost anything on our website">
-            <input id="search_button" type="button" value="Search">
-            <a id="mobile_search" href=""><img src="icons/search_icon.png"></a>
-        </header>
-        <!-- adds the mock header for the page including the CoO logo, a search field, and a menu -->
-
         <section>
-            <div>
-                <ul class="breadcrumb">
-                    <li><a href="https://www.orlando.gov/Home">Home</a></li>
-                    <li>Eco-Map</li>
-                </ul>
-            </div>
-            <!-- adds a static breadcrumb navigation to show the user the URL path taken to the current page -->
             <h1>Eco-Map</h1>
             <div class="map_options">
                 <div id="filter_items">
@@ -234,20 +226,6 @@ EcoMap e = new EcoMap();
         <!-- Map -->
         <div id="viewDiv"></div>  
         
-        <div>
-            <footer>
-                <div id="left">
-                  <a href="https://www.orlando.gov/System-pages/Website-Legal-Notices">Website Legal Notice</a>  | 
-                  <a href="https://www.orlando.gov/General-Pages/Sitemap">Sitemap</a> | 
-                  <a href="https://www.orlando.gov/Our-Government/News-and-Information/City-Official-Assets">The City Beautiful</a>
-                </div>
-                <div id="right">
-                 &copy; 2021 City of Orlando | 
-                Powered by <a href="http://www.opencities.com/">OpenCities</a>
-                </div>                           
-              </footer>
-        </div>
-        <!-- simulates the footer as shown on the real CoO site -->
         <script src="scripts/main.js"></script>
     </body>
 </html>
