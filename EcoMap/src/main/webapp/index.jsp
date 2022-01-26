@@ -53,6 +53,9 @@ EcoMap e = new EcoMap();
                 else if(j == 6)
                 {
                     tempDate2 = location;
+                }
+                else if(j == 7)
+                {
     
                     // Make sure this is an event
                     if(tempDate1 != null && tempDate2 != null)
