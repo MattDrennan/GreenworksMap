@@ -32,6 +32,11 @@ class Location extends PinData {
 	public void setEndDate(String endDate) {
 		this.endDate = "DEFAULT";
 	}
+	
+	@Override
+	public String getInsertQuery() {
+		return "INSERT INTO locations (iconid, address, name, coord, content) VALUES ('" + iconId + "', '" + locationAddress + "', '" + locationName + "', '" + coordinates + "', '" + content + "')";
+	}
 
 }
 
@@ -99,6 +104,12 @@ class Event extends PinData {
 			}
 		this.iconId = iconId;
 	 }
+	
+	@Override
+	public String getInsertQuery() {
+		return "INSERT INTO locations (iconid, address, name, coord, dateStart, dateEnd) VALUES ('" + iconId + "', '" + locationAddress + "', '" + locationName + "', '" + coordinates + "', '" + startDate + "', '" + endDate + "')";             
+
+	}
 	 
 }
 
@@ -115,10 +126,8 @@ class LocationToolkit extends PinDataAbstractFactory {
      * @return Returns an Event.
      */
 	@Override
-    public PinData createPinData(String startDate, String endDate) {
+    public PinData createPinData() {
     	Location location = new Location();
-    	location.setStartDate(startDate);
-		location.setEndDate(endDate);
         return location;
     }
 
@@ -137,10 +146,8 @@ class EventToolkit extends PinDataAbstractFactory {
      * @return Returns an Event.
      */
 	@Override
-    public PinData createPinData(String startDate, String endDate) {
+    public PinData createPinData() {
     	Event event = new Event();
-	    event.setStartDate(startDate);
-	    event.setEndDate(endDate);
         return event;
     }
 
@@ -186,6 +193,6 @@ public abstract class PinDataAbstractFactory {
 	 * @param endDate The end date. 
 	 * @return Returns a newly instantiated PinData.
 	 */
-    public abstract PinData createPinData(String startDate, String endDate);
+    public abstract PinData createPinData();
 
 }
