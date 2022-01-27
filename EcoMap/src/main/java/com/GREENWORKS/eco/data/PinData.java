@@ -9,14 +9,15 @@ package com.GREENWORKS.eco.data;
  */
 public abstract class PinData {
 	
-	private String id;
+	protected String id;
 	protected String iconId;
     protected String startDate;
     protected String endDate;
-    private String locationName;
-    private String locationAddress;
-    private String zipCode;
+    protected String locationName;
+    protected String locationAddress;
     protected String dataType;
+    protected String coordinates; 
+    protected String content; 
     
 	/***
 	 * This method adds slashes to a String to preserve the backslashes in textual entries. 
@@ -58,22 +59,6 @@ public abstract class PinData {
 			return returnS;
 		}
 		return "";
-	}
-
-	/***
-	 * Accessor method for the zipCode instance variable. 
-	 * @return Returns the contents of the instance variable. 
-	 */
-	public String getZipCode() {
-		return zipCode;
-	}
-
-	/***
-	 * Mutator method for assigning to to the zipCode instance variable. 
-	 * @param zipCode The value to be assigned. 
-	 */
-	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
 	}
 
 	/***
@@ -192,15 +177,65 @@ public abstract class PinData {
 	}
 
 	/***
+	 * Accessor method for the coordinates instance variable. 
+	 * @return Returns the contents of the instance variable. 
+	 */	
+	public String getCoordinates() {
+		return coordinates;
+	}
+
+	/***
+	 * Mutator method for assigning to to the coordinates instance variable. Conducts
+	 * cleaning on the parameter. 
+	 * @param coordinates The value to be assigned. 
+	 */
+	public void setCoordinates(String coordinates) {
+		this.coordinates = cleanInput(coordinates);
+	}
+	
+	/***
+	 * Accessor method for the content instance variable. 
+	 * @return Returns the contents of the instance variable. 
+	 */		
+	public String getContent() {
+		return content;
+	}
+	
+	/***
+	 * Mutator method for assigning to to the content instance variable. Conducts
+	 * cleaning on the parameter. 
+	 * @param coordinates The value to be assigned. 
+	 */
+	public void setContent(String content) {
+		this.content = cleanInput(content);
+	}
+
+	/***
 	 * This methods generates an update SQL query that is populated with the 
 	 * instance variables. 
-	 * @return Returns the generated SQL query. 
+	 * @return Returns the generated update SQL query. 
 	 */	
 	public String getUpdateQuery() {
 		return "UPDATE locations SET iconid = '" + iconId + "', address = '" + locationAddress + 
-				"', name = '" + locationName + "', zip = '" + zipCode + 
-				"', dateStart = " + startDate + ", dateEnd = " + endDate + 
-				" WHERE id = '" + id + "'";
+											  "', name = '" + locationName + "', coord = '" + coordinates + 
+											  "', dateStart = " + startDate + ", dateEnd = " + endDate + 
+											  ", content = '" + content + "' WHERE id = '" + id + "'";
+	}
+	
+	/***
+	 * This method is meant to be overridden in each of it's child classes. 
+	 * @return Returns a string. 
+	 */
+	public String getInsertQuery() {
+		return "";
+	}
+	
+	/***
+	 * This method generates a delete query based on the id of the PinData. 
+	 * @return Returns the generated delete SQL query. 
+	 */
+	public String getDeleteQuery() {
+		return "DELETE FROM locations WHERE id = '" + id + "'";
 	}
 	
 }
