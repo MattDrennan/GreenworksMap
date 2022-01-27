@@ -3,6 +3,7 @@
 <%@ page isELIgnored="false"%>
 <%
 EcoMap e = new EcoMap();
+ArrayList<String> locationsArrayList = e.getLocations();
 %>
 
 <html>
@@ -41,8 +42,7 @@ EcoMap e = new EcoMap();
             String tempDate2 = "";
     
             // Loop through array
-            ArrayList<String> locations = (ArrayList<String>)  e.getLocations();
-            for (String location : locations)
+            for (String location : locationsArrayList)
             {
                 // Date Start
                 if(j == 5)
@@ -120,7 +120,7 @@ EcoMap e = new EcoMap();
     <body>
         <script>
             // Load array in from Java
-            var array = [<% for (int i = 0; i < e.getLocations().size(); i++) { %>"<%= e.getLocations().get(i) %>"<%= i + 1 < e.getLocations().size() ? ",":"" %><% } %>];
+            var array = [<% for (int i = 0; i < locationsArrayList.size(); i++) { %>"<%= locationsArrayList.get(i) %>"<%= i + 1 < locationsArrayList.size() ? ",":"" %><% } %>];
             
             // Create set up variables
             var points = [];
