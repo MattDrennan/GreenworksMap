@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import com.google.gson.Gson;
 
@@ -13,9 +16,29 @@ public class OpenCharge {
     private static final String USER_AGENT = "Mozilla/5.0";
 
     // Where we will get data from the API
-    private static final String GET_URL = "https://api.openchargemap.io/v3/poi?key=" + Cred.OPENCHARGEKEY + "&latitude=28.5384&longitude=-81.3789&distance=0.5";
+    private static final String GET_URL = "https://api.openchargemap.io/v3/poi?key=" + Cred.OPENCHARGEKEY + "&latitude=28.5384&longitude=-81.3789&distance=25";
 
     public static void main(String args[]) {
+
+        // Include MYSQL
+        MysqlConnect mysqlConnect = new MysqlConnect();
+
+        // Delete all API items from DB
+        String sql = "DELETE FROM locations WHERE api = 1";
+        try
+        {
+            PreparedStatement statement = mysqlConnect.connect().prepareStatement(sql);
+            statement.executeUpdate();
+            
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            mysqlConnect.disconnect();
+        }
 
         // Set up the JSON String
         String jsonString = "";
@@ -48,7 +71,7 @@ public class OpenCharge {
                 // Data to string
                 jsonString = response.toString();
             } else {
-                System.out.println("GET request not worked");
+                System.out.println("GET request not working.");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,10 +81,10 @@ public class OpenCharge {
         Gson gson = new Gson();
 
         // Load JSON data to mainData[] object
-        mainData[] myTypes = gson.fromJson(jsonString, mainData[].class);
+        mainData[] data = gson.fromJson(jsonString, mainData[].class);
         
         // Loop through all the data
-        for(int i = 0; i <= myTypes.length; i++)
+        for(int i = 0; i <= data.length; i++)
         {
             // This needs to be here, or you can have errors
             try
@@ -69,12 +92,34 @@ public class OpenCharge {
                 /*
                     Get data from JSON like this:
 
-                    System.out.println(mainData.ID);
-                    System.out.println(mainData.DataProvider.Title);
+                    System.out.println(data.ID);
+                    System.out.println(data.DataProvider.Title);
 
                     Objects are matched to JSON data for readabiliy
                 */
-                System.out.println(myTypes[i].SubmissionStatus.ID);
+
+                // Set variables
+                String address = data[i].AddressInfo.AddressLine1;
+                String name = data[i].Connections[0].ConnectionType.FormalName;
+                String coord = data[i].AddressInfo.Longitude.toString() + "," + data[i].AddressInfo.Latitude.toString();
+                String content = "API";
+
+                // Insert into database
+                String sql2 = "INSERT INTO locations (iconid, address, name, coord, content, api) VALUES (1, '" + address + "', '" + name + "', '" + coord + "', '" + content + "', 1)";
+                try
+                {
+                    PreparedStatement statement = mysqlConnect.connect().prepareStatement(sql2);
+                    statement.executeUpdate();
+                    
+                }
+                catch (SQLException e)
+                {
+                    e.printStackTrace();
+                }
+                finally
+                {
+                    mysqlConnect.disconnect();
+                }
             }
             catch(Exception e)
             {
@@ -164,5 +209,6 @@ class Level
 
 class ConnectionType
 {
+    String FormalName;
     String Description; 
 }
