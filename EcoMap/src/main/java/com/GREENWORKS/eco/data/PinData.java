@@ -1,24 +1,61 @@
 package com.GREENWORKS.eco.data;
 
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+
 /***
  * The parent abstract class for PinData. This class will not be directly instantiated
  * but rather its behavior will be instantiated through its children. This is a data 
  * class that is meant to be the representatation of the map pins that are displayed
  * on the UI. 
  */
+@MappedSuperclass
 public abstract class PinData {
 	
-	protected String id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	protected int id;
+	@Column(name="icon_id")
 	protected String iconId;
-    protected String startDate;
-    protected String endDate;
+	@Column(name="location_name")
     protected String locationName;
+	@Column(name="location_address")
     protected String locationAddress;
-    protected String dataType;
-    protected String coordinates; 
+	@Column(name="coordinates")
+    protected String coordinates;
+	@Column(name="content")
     protected String content; 
+	@Column(name="start_date")
+    protected String startDate;
+	@Column(name="end_date")
+    protected String endDate;
     
+    /***
+     * Zero parameter constructor. 
+     */
+    public PinData() { }
+    
+    
+    
+	public PinData(int id, String iconId, String startDate, String endDate, String locationName,
+			String locationAddress, String coordinates, String content) {
+		super();
+		this.id = id;
+		this.iconId = iconId;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.locationName = locationName;
+		this.locationAddress = locationAddress;
+		this.coordinates = coordinates;
+		this.content = content;
+	}
+
+
+
 	/***
 	 * This method adds slashes to a String to preserve the backslashes in textual entries. 
 	 * @param s The String that will be modified. 
@@ -65,7 +102,7 @@ public abstract class PinData {
 	 * Accessor method for the id instance variable. 
 	 * @return Returns the contents of the instance variable. 
 	 */
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
@@ -74,8 +111,8 @@ public abstract class PinData {
 	 * cleaning on the parameter. 
 	 * @param id The value to be assigned. 
 	 */
-	public void setId(String id) {
-		this.id = cleanInput(id);
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	/***
@@ -157,23 +194,6 @@ public abstract class PinData {
 	 */
 	public void setLocationAddress(String locationAddress) {
 		this.locationAddress = cleanInput(locationAddress);
-	}
-
-	/***
-	 * Accessor method for the dataType instance variable. 
-	 * @return Returns the contents of the instance variable. 
-	 */	
-	public String getDataType() {
-		return dataType;
-	}
-
-	/***
-	 * Mutator method for assigning to to the locationAddress instance variable. Conducts
-	 * cleaning on the parameter. 
-	 * @param dataType The value to be assigned. 
-	 */
-	public void setDataType(String dataType) {
-		this.dataType = dataType;
 	}
 
 	/***
