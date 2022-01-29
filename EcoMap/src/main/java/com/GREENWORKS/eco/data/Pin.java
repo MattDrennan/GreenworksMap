@@ -35,15 +35,17 @@ public abstract class Pin implements Serializable {
     protected String startDate;
 	@Column(name="end_date")
     protected String endDate;
+	@Column(name="website_URL")
+	protected String websiteURL;
     
 	private static final long serialVersionUID = 1L;
 	
     /***
      * Zero parameter constructor. 
      */
-    public Pin() { }
-    
-    
+    public Pin() { 
+    	
+    }
     
 	public Pin(int id, String iconId, String startDate, String endDate, String locationName,
 			String locationAddress, String coordinates, String content) {
@@ -111,7 +113,7 @@ public abstract class Pin implements Serializable {
 	}
 
 	/***
-	 * Mutator method for assigning to to the id instance variable. Conducts
+	 * Mutator method for assigning to the id instance variable. Conducts
 	 * cleaning on the parameter. 
 	 * @param id The value to be assigned. 
 	 */
@@ -128,7 +130,7 @@ public abstract class Pin implements Serializable {
 	}
 
 	/***
-	 * Mutator method for assigning to to the iconId instance variable. Conducts
+	 * Mutator method for assigning to the iconId instance variable. Conducts
 	 * cleaning on the parameter. 
 	 * @param iconId The value to be assigned. 
 	 */
@@ -175,7 +177,7 @@ public abstract class Pin implements Serializable {
 	}
 
 	/***
-	 * Mutator method for assigning to to the locationName instance variable. Conducts
+	 * Mutator method for assigning to the locationName instance variable. Conducts
 	 * cleaning on the parameter. 
 	 * @param locationName The value to be assigned. 
 	 */
@@ -192,7 +194,7 @@ public abstract class Pin implements Serializable {
 	}
 
 	/***
-	 * Mutator method for assigning to to the locationAddress instance variable. Conducts
+	 * Mutator method for assigning to the locationAddress instance variable. Conducts
 	 * cleaning on the parameter. 
 	 * @param locationAddress The value to be assigned. 
 	 */
@@ -209,7 +211,7 @@ public abstract class Pin implements Serializable {
 	}
 
 	/***
-	 * Mutator method for assigning to to the coordinates instance variable. Conducts
+	 * Mutator method for assigning to the coordinates instance variable. Conducts
 	 * cleaning on the parameter. 
 	 * @param coordinates The value to be assigned. 
 	 */
@@ -226,13 +228,34 @@ public abstract class Pin implements Serializable {
 	}
 	
 	/***
-	 * Mutator method for assigning to to the content instance variable. Conducts
+	 * Mutator method for assigning to the content instance variable. Conducts
 	 * cleaning on the parameter. 
 	 * @param coordinates The value to be assigned. 
 	 */
 	public void setContent(String content) {
 		this.content = cleanInput(content);
 	}
+	
+	
+	/***
+	 * Accessor method for the websiteURL instance variable. 
+	 * @return Returns the contents of the instance variable. 
+	 */		
+	public String getWebsiteURL() {
+		return websiteURL;
+	}
+
+
+	/***
+	 * Mutator method for assigning to the websiteURL instance variable. Conducts
+	 * cleaning on the parameter. 
+	 * @param websiteURL The value to be assigned. 
+	 */
+	public void setWebsiteURL(String websiteURL) {
+		this.websiteURL = websiteURL;
+	}
+
+
 
 	/***
 	 * This methods generates an update SQL query that is populated with the 
@@ -251,7 +274,9 @@ public abstract class Pin implements Serializable {
 	 * @return Returns a string. 
 	 */
 	public String getInsertQuery() {
-		return "";
+		return "INSERT INTO locations (iconid, address, name, coord, dateStart, dateEnd) VALUES ('" 
+										+ iconId + "', '" + locationAddress + "', '" + locationName + "', '" 
+										+ coordinates + "', '" + startDate + "', '" + endDate + "')";             
 	}
 	
 	/***
@@ -262,15 +287,14 @@ public abstract class Pin implements Serializable {
 		return "DELETE FROM locations WHERE id = '" + id + "'";
 	}
 
-
-
+	/***
+	 * Overridden toString() method.
+	 */
 	@Override
 	public String toString() {
 		return "PinData [id=" + id + ", iconId=" + iconId + ", locationName=" + locationName + ", locationAddress="
 				+ locationAddress + ", coordinates=" + coordinates + ", content=" + content + ", startDate=" + startDate
 				+ ", endDate=" + endDate + "]";
 	}
-	
-	
 	
 }

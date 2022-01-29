@@ -152,7 +152,8 @@ require([
 
         // Custom Layer
         const layer = new FeatureLayer({
-            url: "https://services2.arcgis.com/zjuHsgZRm0zT5o41/arcgis/rest/services/orlando_city/FeatureServer/0"
+            url: "https://services2.arcgis.com/zjuHsgZRm0zT5o41/arcgis/rest/services/orlando_city/FeatureServer/0",
+            "opacity" : 0.25
         });
 
         map.add(layer);
