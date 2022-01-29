@@ -10,9 +10,11 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
-import com.GREENWORKS.eco.data.Location;
-import com.GREENWORKS.eco.data.PinData;
-import com.GREENWORKS.eco.data.PinDataFactory;
+import com.GREENWORKS.eco.data.EventPin;
+import com.GREENWORKS.eco.data.GenericPin;
+import com.GREENWORKS.eco.data.LocationPin;
+import com.GREENWORKS.eco.data.Pin;
+import com.GREENWORKS.eco.data.PinFactory;
 
 /***
  * These are the unit tests for the data package. The classes that will be tested are
@@ -26,7 +28,7 @@ public class DataPackageTests {
      */
 	@Test
 	public void createPinData_getFactoryShouldNotThrowException() {
-        assertDoesNotThrow(() -> PinDataFactory.getFactory(null, null));
+        assertDoesNotThrow(() -> PinFactory.getFactory(null, null));
 	}
 
     /***
@@ -34,7 +36,7 @@ public class DataPackageTests {
      */
     @Test
 	public void createPinData_createPinShouldNotThrowException() {
-    	PinDataFactory factory = PinDataFactory.getFactory(null, null);
+    	PinFactory factory = PinFactory.getFactory(null, null);
         assertDoesNotThrow(() -> factory.createPinData());
 	}
 
@@ -44,8 +46,8 @@ public class DataPackageTests {
      */
 	@Test
 	public void createPinData_variablesThatShouldBeNull() {
-    	PinDataFactory factory = PinDataFactory.getFactory(null, null);
-    	PinData pinData = factory.createPinData();
+    	PinFactory factory = PinFactory.getFactory(null, null);
+    	Pin pinData = factory.createPinData();
     	assertNull(pinData.getIconId());
     	assertNull(pinData.getLocationAddress());
     	assertNull(pinData.getLocationName());
@@ -57,8 +59,8 @@ public class DataPackageTests {
      */
 	@Test
 	public void createPinData_idShouldNotBeNullLocation() {
-    	PinDataFactory factory = PinDataFactory.getFactory(null, null);
-    	PinData pinData = factory.createPinData();
+    	PinFactory factory = PinFactory.getFactory(null, null);
+    	Pin pinData = factory.createPinData();
     	assertNotNull(pinData.getId());
 	}
 	
@@ -68,8 +70,8 @@ public class DataPackageTests {
      */
     @Test
     public void createPinData_idShouldNotBeNullEvent() {
-    	PinDataFactory factory = PinDataFactory.getFactory("beginTest", "endTest");
-    	PinData pinData = factory.createPinData();
+    	PinFactory factory = PinFactory.getFactory("beginTest", "endTest");
+    	Pin pinData = factory.createPinData();
     	assertNotNull(pinData.getId());
 	}
 
@@ -79,8 +81,8 @@ public class DataPackageTests {
      */
 	@Test
 	public void createPinData_variablesThatShouldBeNotBeNull() {
-    	PinDataFactory factory = PinDataFactory.getFactory(null, null);
-    	PinData pinData = factory.createPinData();
+    	PinFactory factory = PinFactory.getFactory(null, null);
+    	Pin pinData = factory.createPinData();
     	assertNotNull(pinData.getClass().getSimpleName());
 	}
 
@@ -91,8 +93,8 @@ public class DataPackageTests {
      */
     @Test
     public void createPinData_shouldAssignLocationToDataType() {
-    	PinDataFactory factory = PinDataFactory.getFactory(null, null);
-    	PinData pinData = factory.createPinData();
+    	PinFactory factory = PinFactory.getFactory(null, null);
+    	Pin pinData = factory.createPinData();
     	assertEquals("Location", pinData.getClass().getSimpleName());
 	}
 
@@ -102,8 +104,8 @@ public class DataPackageTests {
      */
     @Test
     public void createPinData_shouldBeALocation() {
-    	PinDataFactory factory = PinDataFactory.getFactory(null, null);
-    	PinData pinData = factory.createPinData();
+    	PinFactory factory = PinFactory.getFactory(null, null);
+    	Pin pinData = factory.createPinData();
     	assertEquals("Location", pinData.getClass().getSimpleName());
 	}
 
@@ -114,8 +116,8 @@ public class DataPackageTests {
      */
     @Test
     public void createPinData_shouldAssignEventToDataType() {
-    	PinDataFactory factory = PinDataFactory.getFactory("beginTest", "endTest");
-    	PinData pinData = factory.createPinData();
+    	PinFactory factory = PinFactory.getFactory("beginTest", "endTest");
+    	Pin pinData = factory.createPinData();
     	assertEquals("Event", pinData.getClass().getSimpleName());
 	}
 
@@ -125,8 +127,8 @@ public class DataPackageTests {
      */
     @Test
     public void createPinData_shouldBeAnEvent() {
-    	PinDataFactory factory = PinDataFactory.getFactory("beginTest", "endTest");
-    	PinData pinData = factory.createPinData();
+    	PinFactory factory = PinFactory.getFactory("beginTest", "endTest");
+    	Pin pinData = factory.createPinData();
     	assertEquals("Event", pinData.getClass().getSimpleName());
 	}
 
@@ -136,8 +138,8 @@ public class DataPackageTests {
      */
     @Test
     public void createPinData_shouldAssignIcon1() {
-    	PinDataFactory factory = PinDataFactory.getFactory("beginTest", "endTest");
-    	PinData pinData = factory.createPinData();
+    	PinFactory factory = PinFactory.getFactory("beginTest", "endTest");
+    	Pin pinData = factory.createPinData();
     	pinData.setIconId("1");
     	assertEquals("9", pinData.getIconId());
 	}
@@ -148,8 +150,8 @@ public class DataPackageTests {
      */
     @Test
     public void createPinData_shouldAssignIcon2() {
-    	PinDataFactory factory = PinDataFactory.getFactory("beginTest", "endTest");
-    	PinData pinData = factory.createPinData();
+    	PinFactory factory = PinFactory.getFactory("beginTest", "endTest");
+    	Pin pinData = factory.createPinData();
     	pinData.setIconId("2");
     	assertEquals("8", pinData.getIconId());
 	}
@@ -160,8 +162,8 @@ public class DataPackageTests {
      */
     @Test
     public void createPinData_shouldAssignIcon3() {
-    	PinDataFactory factory = PinDataFactory.getFactory("beginTest", "endTest");
-    	PinData pinData = factory.createPinData();
+    	PinFactory factory = PinFactory.getFactory("beginTest", "endTest");
+    	Pin pinData = factory.createPinData();
     	pinData.setIconId("3");
     	assertEquals("13", pinData.getIconId());
 	}
@@ -172,8 +174,8 @@ public class DataPackageTests {
      */
     @Test
     public void createPinData_shouldAssignIcon4() {
-    	PinDataFactory factory = PinDataFactory.getFactory("beginTest", "endTest");
-    	PinData pinData = factory.createPinData();
+    	PinFactory factory = PinFactory.getFactory("beginTest", "endTest");
+    	Pin pinData = factory.createPinData();
     	pinData.setIconId("4");
     	assertEquals("9", pinData.getIconId());
 	}
@@ -184,8 +186,8 @@ public class DataPackageTests {
      */
     @Test
     public void createPinData_shouldAssignIcon5() {
-    	PinDataFactory factory = PinDataFactory.getFactory("beginTest", "endTest");
-    	PinData pinData = factory.createPinData();
+    	PinFactory factory = PinFactory.getFactory("beginTest", "endTest");
+    	Pin pinData = factory.createPinData();
     	pinData.setIconId("5");
     	assertEquals("11", pinData.getIconId());
 	}
@@ -196,8 +198,8 @@ public class DataPackageTests {
      */
     @Test
     public void createPinData_shouldAssignIcon6() {
-    	PinDataFactory factory = PinDataFactory.getFactory("beginTest", "endTest");
-    	PinData pinData = factory.createPinData();
+    	PinFactory factory = PinFactory.getFactory("beginTest", "endTest");
+    	Pin pinData = factory.createPinData();
     	pinData.setIconId("6");
     	assertEquals("10", pinData.getIconId());
 	}
@@ -208,8 +210,8 @@ public class DataPackageTests {
      */
     @Test
     public void createPinData_shouldAssignIcon7() {
-    	PinDataFactory factory = PinDataFactory.getFactory("beginTest", "endTest");
-    	PinData pinData = factory.createPinData();
+    	PinFactory factory = PinFactory.getFactory("beginTest", "endTest");
+    	Pin pinData = factory.createPinData();
     	pinData.setIconId("7");
     	assertEquals("12", pinData.getIconId());
 	}
@@ -223,8 +225,8 @@ public class DataPackageTests {
     public void createPinData_shouldAssignDateStrings() {
     	String startDate = "startTest";
     	String endDate = "endTest";
-    	PinDataFactory factory = PinDataFactory.getFactory(startDate, endDate);
-    	PinData pinData = factory.createPinData(); // Location Object
+    	PinFactory factory = PinFactory.getFactory(startDate, endDate);
+    	Pin pinData = factory.createPinData(); // Location Object
     	pinData.setStartDate(startDate);
     	pinData.setEndDate(endDate);
     	assertEquals("'endTest'", pinData.getEndDate());
@@ -237,8 +239,8 @@ public class DataPackageTests {
      */    
     @Test
     public void createPinData_shouldAssignNullDatesToDEFAULT() {
-    	PinDataFactory factory = PinDataFactory.getFactory(null, null);
-    	PinData pinData = factory.createPinData(); // Event Object
+    	PinFactory factory = PinFactory.getFactory(null, null);
+    	Pin pinData = factory.createPinData(); // Event Object
     	pinData.setEndDate(null);
     	pinData.setStartDate(null);
     	assertEquals("DEFAULT", pinData.getEndDate());
@@ -250,8 +252,8 @@ public class DataPackageTests {
      */
     @Test
     public void addSlashes_shouldAddTwoSlashes1() {
-    	PinDataFactory factory = PinDataFactory.getFactory(null, null);
-    	PinData pinData = factory.createPinData();
+    	PinFactory factory = PinFactory.getFactory(null, null);
+    	Pin pinData = factory.createPinData();
         String s = "\\\\";
         assertEquals("\\\\\\\\", pinData.addSlashes(s));
     }
@@ -261,8 +263,8 @@ public class DataPackageTests {
      */
     @Test
     public void addSlashes_shouldAddTwoSlashes2() {
-    	PinDataFactory factory = PinDataFactory.getFactory(null, null);
-    	PinData pinData = factory.createPinData();
+    	PinFactory factory = PinFactory.getFactory(null, null);
+    	Pin pinData = factory.createPinData();
         String s = "\\n";
         assertEquals("\\\\n", pinData.addSlashes(s));
     }
@@ -272,8 +274,8 @@ public class DataPackageTests {
      */
     @Test
     public void addSlashes_shouldAddTwoSlashes3() {
-    	PinDataFactory factory = PinDataFactory.getFactory(null, null);
-    	PinData pinData = factory.createPinData();
+    	PinFactory factory = PinFactory.getFactory(null, null);
+    	Pin pinData = factory.createPinData();
         String s = "\\r";
         assertEquals("\\\\r", pinData.addSlashes(s));
     }
@@ -283,8 +285,8 @@ public class DataPackageTests {
      */
     @Test
     public void addSlashes_shouldAddTwoSlashes4() {
-    	PinDataFactory factory = PinDataFactory.getFactory(null, null);
-    	PinData pinData = factory.createPinData();
+    	PinFactory factory = PinFactory.getFactory(null, null);
+    	Pin pinData = factory.createPinData();
         String s = "\\00";
         assertEquals("\\\\00", pinData.addSlashes(s));
     }
@@ -294,8 +296,8 @@ public class DataPackageTests {
      */
     @Test
     public void addSlashes_shouldAddTwoSlashes5() {
-    	PinDataFactory factory = PinDataFactory.getFactory(null, null);
-    	PinData pinData = factory.createPinData();
+    	PinFactory factory = PinFactory.getFactory(null, null);
+    	Pin pinData = factory.createPinData();
         String s = "'";
         assertEquals("\\\'", pinData.addSlashes(s));
     }
@@ -306,8 +308,8 @@ public class DataPackageTests {
      */
     @Test
     public void addSlashes_shouldMakeNoChanges() {
-    	PinDataFactory factory = PinDataFactory.getFactory(null, null);
-    	PinData pinData = factory.createPinData();
+    	PinFactory factory = PinFactory.getFactory(null, null);
+    	Pin pinData = factory.createPinData();
         String s = "4000 Central Florida Blvd, Orlando, FL";
         assertEquals("4000 Central Florida Blvd, Orlando, FL", pinData.addSlashes(s));
     }
@@ -318,8 +320,8 @@ public class DataPackageTests {
      */
     @Test
     public void addSlashes_shouldMakeNoCha634nges() {
-    	PinDataFactory factory = PinDataFactory.getFactory(null, null);
-    	PinData pinData = factory.createPinData();
+    	PinFactory factory = PinFactory.getFactory(null, null);
+    	Pin pinData = factory.createPinData();
         String s = "\\nOrlando', \\nFL";
         assertEquals("\\\\nOrlando\\\', \\\\nFL", pinData.addSlashes(s));
     }
@@ -329,8 +331,8 @@ public class DataPackageTests {
      */
     @Test
     public void remoteTags_shouldRemoveHTMLTags1(){
-    	PinDataFactory factory = PinDataFactory.getFactory(null, null);
-    	PinData pinData = factory.createPinData();
+    	PinFactory factory = PinFactory.getFactory(null, null);
+    	Pin pinData = factory.createPinData();
         String s = "<html>test<html><p>";
         assertEquals("test", pinData.removeTags(s));
     }
@@ -340,8 +342,8 @@ public class DataPackageTests {
      */
     @Test
     public void remoteTags_shouldRemoveHTMLTags2(){
-    	PinDataFactory factory = PinDataFactory.getFactory(null, null);
-    	PinData pinData = factory.createPinData();
+    	PinFactory factory = PinFactory.getFactory(null, null);
+    	Pin pinData = factory.createPinData();
         String s = "<test>4000 Central <test>Florida </h1>Blvd, <test>Orlando, FL";
         assertEquals("4000 Central Florida Blvd, Orlando, FL", pinData.removeTags(s));
     }
@@ -351,8 +353,8 @@ public class DataPackageTests {
      */
     @Test
     public void remoteTags_shouldRemoveHTMLTags3(){
-    	PinDataFactory factory = PinDataFactory.getFactory(null, null);
-    	PinData pinData = factory.createPinData();
+    	PinFactory factory = PinFactory.getFactory(null, null);
+    	Pin pinData = factory.createPinData();
         String s = "<*>";
         assertEquals("", pinData.removeTags(s));
     }
@@ -363,8 +365,8 @@ public class DataPackageTests {
      */
     @Test
     public void remoteTags_shouldRemoveHTMLTagsAndAddSlashes(){
-    	PinDataFactory factory = PinDataFactory.getFactory(null, null);
-    	PinData pinData = factory.createPinData();
+    	PinFactory factory = PinFactory.getFactory(null, null);
+    	Pin pinData = factory.createPinData();
         String s = "<h1>\\n <p>Orlando</p>', \\nFL</h1>";
         assertEquals("\\n Orlando', \\nFL", pinData.removeTags(s));
     }
@@ -372,8 +374,8 @@ public class DataPackageTests {
     
     @Test
     public void hibernateConfiguration_shouldAddLocationEntryToTable() {
-    	PinDataFactory dataFactory = PinDataFactory.getFactory(null, null);
-    	PinData pinData = dataFactory.createPinData(); // Create location
+    	PinFactory dataFactory = PinFactory.getFactory(null, null);
+    	Pin pinData = dataFactory.createPinData(); // Create location
     	pinData.setIconId("4");
     	pinData.setLocationAddress("820 Balmy Beach Dr, Apopka, FL 32703");
     	pinData.setLocationName("Publix");
@@ -382,7 +384,7 @@ public class DataPackageTests {
     	pinData.setEndDate("");
     	pinData.setStartDate("");
     	Configuration config = new Configuration().configure();
-    	config.addAnnotatedClass(com.GREENWORKS.eco.data.Location.class);
+    	config.addAnnotatedClass(LocationPin.class);
     	StandardServiceRegistryBuilder builder = 
     			new StandardServiceRegistryBuilder().applySettings(config.getProperties());
     	SessionFactory factory = config.buildSessionFactory(builder.build());
@@ -395,9 +397,8 @@ public class DataPackageTests {
     
     @Test
     public void hibernateConfiguration_shouldAddEventEntryToTable() {
-    	
-    	PinDataFactory dataFactory = PinDataFactory.getFactory("2022-01-29 06:00", "2022-01-29 05:00");
-    	PinData pinData = dataFactory.createPinData(); // Create event
+    	PinFactory dataFactory = PinFactory.getFactory("2022-01-29 06:00", "2022-01-29 05:00");
+    	Pin pinData = dataFactory.createPinData(); // Create event
     	pinData.setIconId("4");
     	pinData.setStartDate("2022-01-29 06:00");
     	pinData.setEndDate("2022-01-29 05:00");
@@ -407,19 +408,32 @@ public class DataPackageTests {
     	pinData.setContent("Shopping Center");
     	pinData.setEndDate("");
     	pinData.setStartDate("");
-    	
-    	
     	Configuration config = new Configuration().configure();
-    	config.addAnnotatedClass(com.GREENWORKS.eco.data.Event.class);
+    	config.addAnnotatedClass(EventPin.class);
     	StandardServiceRegistryBuilder builder = 
     			new StandardServiceRegistryBuilder().applySettings(config.getProperties());
     	SessionFactory factory = config.buildSessionFactory(builder.build());
     	Session session = factory.openSession();
     	Transaction transaction = session.beginTransaction();
-
     	session.save(pinData);
     	transaction.commit();
     	session.close();
     }
+    
+    @Test
+    public void hibernateConfiguration_should() {
+    	Configuration config = new Configuration().configure();
+    	config.addAnnotatedClass(GenericPin.class);
+    	StandardServiceRegistryBuilder builder = 
+    			new StandardServiceRegistryBuilder().applySettings(config.getProperties());
+    	SessionFactory factory = config.buildSessionFactory(builder.build());
+    	Session session = factory.openSession();
+    	Transaction transaction = session.beginTransaction();
+    	Pin pinData = session.get(GenericPin.class, 1444);
+    	transaction.commit();
+    	session.close();
+    	System.out.println(pinData.toString());
+    }
+    
 
 }
