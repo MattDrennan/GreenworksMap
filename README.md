@@ -12,6 +12,16 @@
 var mapKey = 'MAP_KEY_HERE';
 ```
 
+1. Create a "Cred.java" file in "com/GREENWORKS/eco" with the following:
+
+```
+package com.GREENWORKS.eco;
+
+public class Cred {
+    // Put all data you want hidden here
+    public static final String OPENCHARGEKEY = "OPEN_CHARGE_API_KEY_HERE";
+}
+```
 
 
 **ecomap.sql:**
