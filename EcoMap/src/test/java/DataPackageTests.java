@@ -2,7 +2,6 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
 
 import org.hibernate.Session;
@@ -365,7 +364,7 @@ public class DataPackageTests {
     	pin.setStartDate("");
     	
 	    Configuration config = new Configuration().configure();
-	    config.addAnnotatedClass(LocationPin.class);
+	    config.addAnnotatedClass(pin.getClass());
 	    StandardServiceRegistryBuilder builder = 
 	    		new StandardServiceRegistryBuilder().applySettings(config.getProperties());
 	    SessionFactory factory = config.buildSessionFactory(builder.build());
@@ -399,7 +398,7 @@ public class DataPackageTests {
     	pin.setContent("UNITTEST");
     	
 	    Configuration config = new Configuration().configure();
-	    config.addAnnotatedClass(EventPin.class);
+	    config.addAnnotatedClass(pin.getClass());
 	    StandardServiceRegistryBuilder builder = 
 	    		new StandardServiceRegistryBuilder().applySettings(config.getProperties());
 	    SessionFactory factory = config.buildSessionFactory(builder.build());
@@ -436,6 +435,5 @@ public class DataPackageTests {
     	transaction.commit();
     	session.close();
     }
-    
 
 }
