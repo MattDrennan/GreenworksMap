@@ -89,37 +89,13 @@ public class DataPackageTests {
 
     /***
      * Verifies that when null is provided as parameters to .getFactory() and when null is provided
-     * as parameters to .createPinData() that the dataType instance parameter has "Location" assigned 
-     * to it. 
-     */
-    @Test
-    public void createPinData_shouldAssignLocationToDataType() {
-    	PinFactory factory = PinFactory.getFactory(null, null);
-    	Pin pin = factory.createPinData();
-    	assertEquals("Location", pin.getClass().getSimpleName());
-	}
-
-    /***
-     * Verifies that when null is provided as parameters to .getFactory() and when null is provided
      * as parameters to .createPinData() that the object is of type "Location". 
      */
     @Test
     public void createPinData_shouldBeALocation() {
     	PinFactory factory = PinFactory.getFactory(null, null);
     	Pin pin = factory.createPinData();
-    	assertEquals("Location", pin.getClass().getSimpleName());
-	}
-
-    /***
-     * Verifies that when null is provided as parameters to .getFactory() and when null is provided
-     * as parameters to .createPinData() that the dataType instance parameter has "Event" assigned 
-     * to it. 
-     */
-    @Test
-    public void createPinData_shouldAssignEventToDataType() {
-    	PinFactory factory = PinFactory.getFactory("beginTest", "endTest");
-    	Pin pin = factory.createPinData();
-    	assertEquals("Event", pin.getClass().getSimpleName());
+    	assertEquals("LocationPin", pin.getClass().getSimpleName());
 	}
 
     /***
@@ -130,7 +106,7 @@ public class DataPackageTests {
     public void createPinData_shouldBeAnEvent() {
     	PinFactory factory = PinFactory.getFactory("beginTest", "endTest");
     	Pin pin = factory.createPinData();
-    	assertEquals("Event", pin.getClass().getSimpleName());
+    	assertEquals("EventPin", pin.getClass().getSimpleName());
 	}
 
     /***
@@ -388,35 +364,22 @@ public class DataPackageTests {
     	pin.setEndDate("");
     	pin.setStartDate("");
     	
-    	try {
-	    	Configuration config = new Configuration().configure();
-	    	config.addAnnotatedClass(LocationPin.class);
-	    	StandardServiceRegistryBuilder builder = 
-	    			new StandardServiceRegistryBuilder().applySettings(config.getProperties());
-	    	SessionFactory factory = config.buildSessionFactory(builder.build());
-	    	Session session = factory.openSession();
-	    	Transaction transaction = session.beginTransaction();
-	    	session.save(pin);
-	    	transaction.commit();
-	    	session.close();
-    	} catch (Exception e) {
-    		fail("An exception was thrown in the hibernateConfiguration_shouldAddEventEntryToTable() unit test.");
-    	}
-    	
-    	try {
-	    	Configuration config = new Configuration().configure();
-	    	config.addAnnotatedClass(LocationPin.class);
-	    	StandardServiceRegistryBuilder builder = 
-	    			new StandardServiceRegistryBuilder().applySettings(config.getProperties());
-	    	SessionFactory factory = config.buildSessionFactory(builder.build());
-	    	Session session = factory.openSession();
-	    	Transaction transaction = session.beginTransaction();
-	    	session.delete(pin);
-	    	transaction.commit();
-	    	session.close();
-    	} catch (Exception e) {
-    		fail("An exception was thrown in the hibernateConfiguration_shouldAddEventEntryToTable() unit test.");
-    	}
+	    Configuration config = new Configuration().configure();
+	    config.addAnnotatedClass(LocationPin.class);
+	    StandardServiceRegistryBuilder builder = 
+	    		new StandardServiceRegistryBuilder().applySettings(config.getProperties());
+	    SessionFactory factory = config.buildSessionFactory(builder.build());
+	    Session session = factory.openSession();
+	    Transaction transaction = session.beginTransaction();
+	    session.save(pin);
+	    transaction.commit();
+	    session.close();
+	    
+	    session = factory.openSession();
+	    transaction = session.beginTransaction();
+	    session.delete(pin);
+	    transaction.commit();
+	    session.close();
     }
     
     /***
@@ -434,38 +397,24 @@ public class DataPackageTests {
     	pin.setLocationName("Publix");
     	pin.setCoordinates("35,45");
     	pin.setContent("UNITTEST");
-    	pin.setEndDate("");
-    	pin.setStartDate("");
     	
-    	try {
-	    	Configuration config = new Configuration().configure();
-	    	config.addAnnotatedClass(EventPin.class);
-	    	StandardServiceRegistryBuilder builder = 
-	    			new StandardServiceRegistryBuilder().applySettings(config.getProperties());
-	    	SessionFactory factory = config.buildSessionFactory(builder.build());
-	    	Session session = factory.openSession();
-	    	Transaction transaction = session.beginTransaction();
-	    	session.save(pin);
-	    	transaction.commit();
-	    	session.close();
-    	} catch (Exception e) {
-    		fail("An exception was thrown in the hibernateConfiguration_shouldAddEventEntryToTable() unit test.");
-    	}
-    	
-    	try {
-	    	Configuration config = new Configuration().configure();
-	    	config.addAnnotatedClass(EventPin.class);
-	    	StandardServiceRegistryBuilder builder = 
-	    			new StandardServiceRegistryBuilder().applySettings(config.getProperties());
-	    	SessionFactory factory = config.buildSessionFactory(builder.build());
-	    	Session session = factory.openSession();
-	    	Transaction transaction = session.beginTransaction();
-	    	session.delete(pin);
-	    	transaction.commit();
-	    	session.close();
-    	} catch (Exception e) {
-    		fail("An exception was thrown in the hibernateConfiguration_shouldAddEventEntryToTable() unit test.");
-    	}
+	    Configuration config = new Configuration().configure();
+	    config.addAnnotatedClass(EventPin.class);
+	    StandardServiceRegistryBuilder builder = 
+	    		new StandardServiceRegistryBuilder().applySettings(config.getProperties());
+	    SessionFactory factory = config.buildSessionFactory(builder.build());
+	    Session session = factory.openSession();
+	    Transaction transaction = session.beginTransaction();
+	    session.save(pin);
+	    transaction.commit();
+	    session.close();
+	    
+	    session = factory.openSession();
+	    transaction = session.beginTransaction();
+	    session.delete(pin);
+	    transaction.commit();
+	    session.close();
+	    
     }
     
     /***
