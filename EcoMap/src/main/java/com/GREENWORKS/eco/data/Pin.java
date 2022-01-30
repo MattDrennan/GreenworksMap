@@ -20,22 +20,23 @@ public abstract class Pin implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected int id;
-	@Column(name="icon_id")
+	@Column(name = "ID", unique = true, nullable = false)
+	protected long id;
+	@Column(name="icon_id", unique = true, nullable = true, length = 1)
 	protected String iconId;
-	@Column(name="location_name")
+	@Column(name="location_name", unique = true, nullable = true, length = 120)
     protected String locationName;
-	@Column(name="location_address")
+	@Column(name="location_address", unique = true, nullable = true, length = 120)
     protected String locationAddress;
-	@Column(name="coordinates")
+	@Column(name="coordinates", unique = true, nullable = true, length = 80)
     protected String coordinates;
-	@Column(name="content")
+	@Column(name="content", unique = true, nullable = true, length = 100)
     protected String content; 
-	@Column(name="start_date")
+	@Column(name="start_date", unique = true, nullable = true, length = 100)
     protected String startDate;
-	@Column(name="end_date")
+	@Column(name="end_date", unique = true, nullable = true, length = 100)
     protected String endDate;
-	@Column(name="website_URL")
+	@Column(name="website_URL", unique = true, nullable = true, length = 100)
 	protected String websiteURL;
     
 	private static final long serialVersionUID = 1L;
@@ -108,7 +109,7 @@ public abstract class Pin implements Serializable {
 	 * Accessor method for the id instance variable. 
 	 * @return Returns the contents of the instance variable. 
 	 */
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -117,7 +118,7 @@ public abstract class Pin implements Serializable {
 	 * cleaning on the parameter. 
 	 * @param id The value to be assigned. 
 	 */
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

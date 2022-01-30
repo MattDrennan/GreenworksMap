@@ -1,6 +1,9 @@
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
 
@@ -10,11 +13,11 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
-import com.GREENWORKS.eco.data.EventPin;
+import com.GREENWORKS.eco.data.Admin;
 import com.GREENWORKS.eco.data.GenericPin;
-import com.GREENWORKS.eco.data.LocationPin;
 import com.GREENWORKS.eco.data.Pin;
 import com.GREENWORKS.eco.data.PinFactory;
+import com.GREENWORKS.eco.data.SessionAssistant;
 
 /***
  * These are the unit tests for the data package. The classes that will be tested are
@@ -352,7 +355,7 @@ public class DataPackageTests {
      * functioning correctly. 
      */
     @Test
-    public void hibernateConfiguration_shouldAddLocationEntryToTable() {
+    public void test_RenameMe1() {
     	PinFactory dataFactory = PinFactory.getFactory(null, null);
     	Pin pin = dataFactory.createPinData(); // Create LocationPin
     	pin.setIconId("4");
@@ -386,7 +389,7 @@ public class DataPackageTests {
      * functioning correctly. 
      */    
     @Test
-    public void hibernateConfiguration_shouldAddEventEntryToTable() {
+    public void test_RenameMe2() {
     	PinFactory dataFactory = PinFactory.getFactory("2022-01-29 06:00", "2022-01-29 05:00");
     	Pin pin = dataFactory.createPinData(); // Create event
     	pin.setIconId("4");
@@ -413,7 +416,6 @@ public class DataPackageTests {
 	    session.delete(pin);
 	    transaction.commit();
 	    session.close();
-	    
     }
     
     /***
@@ -422,7 +424,7 @@ public class DataPackageTests {
      * database. 
      */
     @Test
-    public void hibernateConfiguration_shouldNotThrowAnException() {
+    public void test_RenameMe3() {
     	Configuration config = new Configuration().configure();
     	config.addAnnotatedClass(GenericPin.class);
     	StandardServiceRegistryBuilder builder = 
@@ -434,6 +436,39 @@ public class DataPackageTests {
 		Pin pin = session.get(GenericPin.class, 1);
     	transaction.commit();
     	session.close();
+    }
+    
+    @Test
+    public void test_RenameMe4() {
+    	List<GenericPin> pinList = PinFactory.getAllPins();
+    }
+    
+    @Test
+    public void sessionAssistant_shouldInsertAdminAndThenDeleteTheSameAdmin() {
+    	Admin admin = new Admin("Testusername9102", "Testpassword9120");
+    	SessionAssistant sessionAssistant = new SessionAssistant();
+    	sessionAssistant.insert(admin);
+    	GenericPin genericPin = new GenericPin();
+    	genericPin.setId(admin.getId());
+    	sessionAssistant.delete(genericPin);
+    }
+    
+    @Test
+    public void sessionAssistant_shouldInsertPinAndThenDeleteTheSamePin() {
+    	PinFactory dataFactory = PinFactory.getFactory("2022-01-29 06:00", "2022-01-29 05:00");
+    	Pin pin = dataFactory.createPinData(); // Create event
+    	pin.setIconId("4");
+    	pin.setStartDate("2022-01-29 06:00");
+    	pin.setEndDate("2022-01-29 05:00");
+    	pin.setLocationAddress("Test");
+    	pin.setLocationName("Test");
+    	pin.setCoordinates("35,45");
+    	pin.setContent("Test");
+    	SessionAssistant sessionAssistant = new SessionAssistant();
+    	sessionAssistant.insert(pin);
+    	GenericPin genericPin = new GenericPin();
+    	genericPin.setId(pin.getId());
+    	sessionAssistant.delete(genericPin);
     }
 
 }
