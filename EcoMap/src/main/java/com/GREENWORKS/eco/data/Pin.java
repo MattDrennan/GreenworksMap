@@ -21,7 +21,7 @@ public abstract class Pin implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", unique = true, nullable = false)
-	protected long id;
+	protected Integer id;
 	@Column(name="icon_id", unique = true, nullable = true, length = 1)
 	protected String iconId;
 	@Column(name="location_name", unique = true, nullable = true, length = 120)
@@ -109,7 +109,7 @@ public abstract class Pin implements Serializable {
 	 * Accessor method for the id instance variable. 
 	 * @return Returns the contents of the instance variable. 
 	 */
-	public long getId() {
+	public Integer getId() {
 		return id;
 	}
 
@@ -118,7 +118,7 @@ public abstract class Pin implements Serializable {
 	 * cleaning on the parameter. 
 	 * @param id The value to be assigned. 
 	 */
-	public void setId(long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -255,9 +255,7 @@ public abstract class Pin implements Serializable {
 	public void setWebsiteURL(String websiteURL) {
 		this.websiteURL = websiteURL;
 	}
-
-
-
+	
 	/***
 	 * This methods generates an update SQL query that is populated with the 
 	 * instance variables. 
@@ -298,4 +296,23 @@ public abstract class Pin implements Serializable {
 				+ ", endDate=" + endDate + "]";
 	}
 	
+	@Override
+	public int hashCode() {
+		int result = getId() != null ? getId().hashCode() : 0;
+		result = 31 * result;
+		return result;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(this == o) 
+			return true; // Are equal
+		
+		Pin otherPin = (GenericPin) o;
+		
+		if(this.getId() != null ? !this.getId().equals(otherPin.getId()) : otherPin.getId() != null)
+			return false;
+		
+		return true;
+	}
 }

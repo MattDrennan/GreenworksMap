@@ -1,6 +1,7 @@
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
@@ -57,25 +58,23 @@ public class DataPackageTests {
 	}
 	
     /***
-     * Hibernate should declare an id for the Location upon instantiation. If this test fails then 
-     * there is likely a problem with Hibernate. 
+     * Null check for pin id. 
      */
 	@Test
-	public void createPinData_idShouldNotBeNullLocation() {
+	public void createPinData_idShouldBeNullLocation() {
     	PinFactory factory = PinFactory.getFactory(null, null);
     	Pin pin = factory.createPinData();
-    	assertNotNull(pin.getId());
+    	assertNull(pin.getId());
 	}
 	
-    /***
-     * Hibernate should declare an id for the Event upon instantiation. If this test fails then 
-     * there is likely a problem with Hibernate. 
+	/***
+     * Null check for pin id. 
      */
     @Test
-    public void createPinData_idShouldNotBeNullEvent() {
+    public void createPinData_idShouldBeNullEvent() {
     	PinFactory factory = PinFactory.getFactory("beginTest", "endTest");
     	Pin pin = factory.createPinData();
-    	assertNotNull(pin.getId());
+    	assertNull(pin.getId());
 	}
 
     /***
@@ -448,9 +447,11 @@ public class DataPackageTests {
     	Admin admin = new Admin("Testusername9102", "Testpassword9120");
     	SessionAssistant sessionAssistant = new SessionAssistant();
     	sessionAssistant.insert(admin);
-    	GenericPin genericPin = new GenericPin();
-    	genericPin.setId(admin.getId());
-    	sessionAssistant.delete(genericPin);
+    	Admin admin1 = sessionAssistant.get(admin);
+    	Admin admin2 = sessionAssistant.get(admin);
+    	sessionAssistant.delete(admin);
+    	sessionAssistant.shutdown();
+    	assertTrue(admin1.equals(admin2));
     }
     
     @Test
@@ -466,9 +467,13 @@ public class DataPackageTests {
     	pin.setContent("Test");
     	SessionAssistant sessionAssistant = new SessionAssistant();
     	sessionAssistant.insert(pin);
-    	GenericPin genericPin = new GenericPin();
-    	genericPin.setId(pin.getId());
-    	sessionAssistant.delete(genericPin);
+    	GenericPin genericPin1 = (GenericPin) sessionAssistant.get(pin);
+    	GenericPin genericPin2 = (GenericPin) sessionAssistant.get(pin);
+    	sessionAssistant.delete(genericPin2);
+    	sessionAssistant.shutdown();
+    	assertTrue(genericPin1.equals(genericPin2));
     }
+    
+    
 
 }
