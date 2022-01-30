@@ -1,5 +1,13 @@
 package com.GREENWORKS.eco.data;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+
 /***
  * The toolkit that creates a Location PinData object.
  */
@@ -48,6 +56,16 @@ public abstract class PinFactory {
     private static final LocationToolkit LOCATION_TOOLKIT = new LocationToolkit();
     private static final EventToolkit EVENT_TOOLKIT = new EventToolkit();
     private static boolean notAnEvent;
+    
+    public static List<GenericPin> getAllPins() {
+    	Configuration config = new Configuration().configure();
+	    config.addAnnotatedClass(GenericPin.class);
+	    StandardServiceRegistryBuilder builder = 
+	    		new StandardServiceRegistryBuilder().applySettings(config.getProperties());
+    	SessionFactory factory = config.buildSessionFactory(builder.build());
+	    Session session = factory.openSession();
+        return session.createQuery("SELECT a FROM GenericPin a", GenericPin.class).getResultList();      
+    }
     
     /***
 	 * 
