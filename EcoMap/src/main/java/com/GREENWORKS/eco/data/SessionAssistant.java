@@ -1,12 +1,14 @@
 package com.GREENWORKS.eco.data;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.tinylog.Logger;
 
-public class SessionAssistant {
+public class SessionAssistant { // TODO: After you get this class working make its methods generic. 
 	
     private static SessionFactory sessionFactory = null;
     
@@ -31,7 +33,7 @@ public class SessionAssistant {
     	return getSessionFactory().openSession();
     }
     
-    public static void shutdown() {
+    public void shutdown() {
         // Close caches and connection pools
         getSessionFactory().close();
     }
@@ -49,26 +51,43 @@ public class SessionAssistant {
     	session.beginTransaction();
     	session.save(pin);
     	session.getTransaction().commit();
-    	shutdown();
     	Logger.info("Pin inserted: " + pin);
+    	session.close();
     }
     
-    public void insert(Admin admin) {
+	public void insert(Admin admin) {
+		Session session = openSession();
+	 	session.beginTransaction();
+	 	session.save(admin);
+	 	session.getTransaction().commit();
+	 	Logger.info("Admin inserted: " + admin);
+	    session.close();
+	}
+    public void update(Admin admin) {
     	Session session = openSession();
    	 	session.beginTransaction();
    	 	session.save(admin);
    	 	session.getTransaction().commit();
-   	 	shutdown();
-   	 	Logger.info("Admin inserted: " + admin);
+   	 	Logger.info("Admin update: " + admin);
+    	session.close();
    }
+    
+    public void update(Pin pin) {
+    	Session session = openSession();
+    	session.beginTransaction();
+    	session.save(pin);
+    	session.getTransaction().commit();
+    	Logger.info("Pin update: " + pin);
+    	session.close();
+    }    
 
    public void delete(Pin pin) {
 	   Session session = openSession();
 	   session.beginTransaction();
 	   session.delete(pin);
 	   session.getTransaction().commit();
-	   shutdown();
 	   Logger.info("Pin deleted: " + pin);
+	   session.close();
    }
    
    public void delete(Admin admin) {
@@ -76,8 +95,49 @@ public class SessionAssistant {
        session.beginTransaction();
        session.delete(admin);
        session.getTransaction().commit();
-       shutdown();
-       Logger.info("Admin deleted: " + admin);  	 
+       Logger.info("Admin deleted: " + admin);
+       session.close();
     }
+   
+   public GenericPin get(Pin pin) {
+	   Session session = getSessionFactory().openSession();
+	   session.beginTransaction();
+       GenericPin genericPin = session.find(GenericPin.class, pin.getId());
+       Logger.info("Returned pin: " + genericPin);
+       session.close();
+       return genericPin;
+    }
+   
+   public Admin get(Admin admin) {
+	   Session session = getSessionFactory().openSession();
+	   session.beginTransaction();
+       Admin adminDb = session.find(Admin.class, admin.getId());
+       Logger.info("Returned pin: " + adminDb);
+       session.close();
+       return adminDb;
+    }
+   
+   public GenericPin load(Pin pin) {
+	   Session session = getSessionFactory().openSession();
+	   session.beginTransaction();
+       GenericPin genericPin = session.load(GenericPin.class, pin.getId());
+       Logger.info("Returned pin: " + genericPin);
+       session.close();
+       return genericPin;
+    }
+   
+   public Admin load(Admin admin) {
+	   Session session = getSessionFactory().openSession();
+	   session.beginTransaction();
+       Admin adminDb = session.load(Admin.class, admin.getId());
+       Logger.info("Returned pin: " + adminDb);
+       session.close();
+       return adminDb;
+    }
+   
+   public static List<GenericPin> getAllPins() {
+	   Session session = getSessionFactory().openSession();
+       return session.createQuery("SELECT a FROM GenericPin a", GenericPin.class).getResultList();      
+   }
     
 }

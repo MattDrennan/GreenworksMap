@@ -27,6 +27,9 @@ public class Admin {
 		this.username = username;
 		this.password = password;
 	}
+	public Admin(Integer id) {
+		this.id = id;
+	}
 	public Integer getId() {
 		return id;
 	}

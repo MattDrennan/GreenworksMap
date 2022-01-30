@@ -57,16 +57,6 @@ public abstract class PinFactory {
     private static final EventToolkit EVENT_TOOLKIT = new EventToolkit();
     private static boolean notAnEvent;
     
-    public static List<GenericPin> getAllPins() {
-    	Configuration config = new Configuration().configure();
-	    config.addAnnotatedClass(GenericPin.class);
-	    StandardServiceRegistryBuilder builder = 
-	    		new StandardServiceRegistryBuilder().applySettings(config.getProperties());
-    	SessionFactory factory = config.buildSessionFactory(builder.build());
-	    Session session = factory.openSession();
-        return session.createQuery("SELECT a FROM GenericPin a", GenericPin.class).getResultList();      
-    }
-    
     /***
 	 * 
 	 * @param startDate
