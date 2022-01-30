@@ -21,4 +21,11 @@ public class GenericPin extends Pin {
 	public GenericPin() {
 		
 	}
+	
+	/***
+	 * Constructor for GenericPin. Assigns the class name to the superclass name variable. 
+	 */
+	public GenericPin(Integer id) {
+		this.id = id;
+	}
 }

@@ -1,25 +1,24 @@
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-
-import com.GREENWORKS.eco.data.EventPin;
+import com.GREENWORKS.eco.data.Admin;
 import com.GREENWORKS.eco.data.GenericPin;
-import com.GREENWORKS.eco.data.LocationPin;
 import com.GREENWORKS.eco.data.Pin;
 import com.GREENWORKS.eco.data.PinFactory;
+import com.GREENWORKS.eco.data.SessionAssistant;
 
 /***
  * These are the unit tests for the data package. The classes that will be tested are
- * pin.java and PinDataAbstractFactory.java. If any of these tests fail then the 
- * application will not function properly. 
+ * Pin.java, PinFactory.java, GenericPin.java, LocationPin.java, GenericPin.java, and 
+ * Admin.java. If any of these tests fail then the application will not function properly. 
  */
 public class DataPackageTests {
 
@@ -54,25 +53,23 @@ public class DataPackageTests {
 	}
 	
     /***
-     * Hibernate should declare an id for the Location upon instantiation. If this test fails then 
-     * there is likely a problem with Hibernate. 
+     * Null check for pin id. 
      */
 	@Test
-	public void createPinData_idShouldNotBeNullLocation() {
+	public void createPinData_idShouldBeNullLocation() {
     	PinFactory factory = PinFactory.getFactory(null, null);
     	Pin pin = factory.createPinData();
-    	assertNotNull(pin.getId());
+    	assertNull(pin.getId());
 	}
 	
-    /***
-     * Hibernate should declare an id for the Event upon instantiation. If this test fails then 
-     * there is likely a problem with Hibernate. 
+	/***
+     * Null check for pin id. 
      */
     @Test
-    public void createPinData_idShouldNotBeNullEvent() {
+    public void createPinData_idShouldBeNullEvent() {
     	PinFactory factory = PinFactory.getFactory("beginTest", "endTest");
     	Pin pin = factory.createPinData();
-    	assertNotNull(pin.getId());
+    	assertNull(pin.getId());
 	}
 
     /***
@@ -347,93 +344,100 @@ public class DataPackageTests {
         assertEquals("\\n Orlando', \\nFL", pin.removeTags(s));
     }
     
-    /***
-     * Verifies that the database insertion and deletion for the LocationPin is
-     * functioning correctly. 
-     */
-    @Test
-    public void hibernateConfiguration_shouldAddLocationEntryToTable() {
-    	PinFactory dataFactory = PinFactory.getFactory(null, null);
-    	Pin pin = dataFactory.createPinData(); // Create LocationPin
-    	pin.setIconId("4");
-    	pin.setLocationAddress("820 Balmy Beach Dr, Apopka, FL 32703");
-    	pin.setLocationName("Publix");
-    	pin.setCoordinates("35,45");
-    	pin.setContent("UNITTEST");
-    	pin.setEndDate("");
-    	pin.setStartDate("");
-    	
-	    Configuration config = new Configuration().configure();
-	    config.addAnnotatedClass(pin.getClass());
-	    StandardServiceRegistryBuilder builder = 
-	    		new StandardServiceRegistryBuilder().applySettings(config.getProperties());
-	    SessionFactory factory = config.buildSessionFactory(builder.build());
-	    Session session = factory.openSession();
-	    Transaction transaction = session.beginTransaction();
-	    session.save(pin);
-	    transaction.commit();
-	    session.close();
-	    
-	    session = factory.openSession();
-	    transaction = session.beginTransaction();
-	    session.delete(pin);
-	    transaction.commit();
-	    session.close();
-    }
+    // These are the test ids that are generated for the Hibernate CRUD tests. 
+    private static Integer pinTestId = 0;
+    private static Integer adminTestId = 0;
     
     /***
-     * Verifies that the database insertion and deletion for the EventPin is
-     * functioning correctly. 
-     */    
-    @Test
-    public void hibernateConfiguration_shouldAddEventEntryToTable() {
+     * This will insert the test data sets into the database. 
+     */
+    @BeforeAll
+    public static void sessionAssistant_insertTestData() {
     	PinFactory dataFactory = PinFactory.getFactory("2022-01-29 06:00", "2022-01-29 05:00");
     	Pin pin = dataFactory.createPinData(); // Create event
-    	pin.setIconId("4");
+    	pin.setIconId("4"); // Because this is an event the IconId will be assigned to 9. 
     	pin.setStartDate("2022-01-29 06:00");
     	pin.setEndDate("2022-01-29 05:00");
-    	pin.setLocationAddress("820 Balmy Beach Dr, Apopka, FL 32703");
-    	pin.setLocationName("Publix");
+    	pin.setLocationAddress("Test");
+    	pin.setLocationName("Test");
     	pin.setCoordinates("35,45");
-    	pin.setContent("UNITTEST");
-    	
-	    Configuration config = new Configuration().configure();
-	    config.addAnnotatedClass(pin.getClass());
-	    StandardServiceRegistryBuilder builder = 
-	    		new StandardServiceRegistryBuilder().applySettings(config.getProperties());
-	    SessionFactory factory = config.buildSessionFactory(builder.build());
-	    Session session = factory.openSession();
-	    Transaction transaction = session.beginTransaction();
-	    session.save(pin);
-	    transaction.commit();
-	    session.close();
-	    
-	    session = factory.openSession();
-	    transaction = session.beginTransaction();
-	    session.delete(pin);
-	    transaction.commit();
-	    session.close();
-	    
+    	pin.setContent("Test");
+    	Admin admin = new Admin("Testusername9102", "Testpassword9120");
+    	SessionAssistant sessionAssistant = new SessionAssistant();
+    	sessionAssistant.insert(pin);
+    	sessionAssistant.insert(admin);
+    	pinTestId = pin.getId();
+    	adminTestId = admin.getId();
     }
     
     /***
-     * Verifies that conducting select statement will not throw an exception. It is difficult
-     * to make assertions on the returned Pin because to do so depends on the state of the 
-     * database. 
+     * This will delete the test data sets from the database. 
+     */
+    @AfterAll
+    public static void sessionAssistant_deleteTestData() {
+    	SessionAssistant sessionAssistant = new SessionAssistant();
+    	Admin admin = new Admin();
+    	admin.setId(adminTestId);
+    	Pin pin = new GenericPin();
+    	pin.setId(pinTestId);
+    	sessionAssistant.delete(admin);
+    	sessionAssistant.delete(pin);
+    	sessionAssistant.shutdown();
+    }
+    
+    /***
+     * 
      */
     @Test
-    public void hibernateConfiguration_shouldNotThrowAnException() {
-    	Configuration config = new Configuration().configure();
-    	config.addAnnotatedClass(GenericPin.class);
-    	StandardServiceRegistryBuilder builder = 
-    			new StandardServiceRegistryBuilder().applySettings(config.getProperties());
-    	SessionFactory factory = config.buildSessionFactory(builder.build());
-    	Session session = factory.openSession();
-    	Transaction transaction = session.beginTransaction();
-    	@SuppressWarnings("unused") 
-		Pin pin = session.get(GenericPin.class, 1);
-    	transaction.commit();
-    	session.close();
+    public void sessionAssistant_shouldEqualAdminEntries() {
+    	SessionAssistant sessionAssistant = new SessionAssistant();
+    	Admin admin = sessionAssistant.get(new Admin(adminTestId));
+    	assertEquals("Testusername9102", admin.getUsername());
+    	assertEquals("Testpassword9120", admin.getPassword());
     }
-
+    
+    /***
+     * 
+     */
+    @Test
+    public void sessionAssistant_shouldReturnAdminBasedOnLoginCreds() {
+    	SessionAssistant sessionAssistant = new SessionAssistant();
+    	Admin admin = sessionAssistant.getByLoginCredentials("Testusername9102", "Testpassword9120");
+    	assertEquals("Testusername9102", admin.getUsername());
+    	assertEquals("Testpassword9120", admin.getPassword());
+    	assertNotNull(admin.getId());
+    }
+    
+    /***
+     * 
+     */
+    @Test
+    public void sessionAssistant_should() {
+    	SessionAssistant sessionAssistant = new SessionAssistant(); 
+    	Admin admin = sessionAssistant.getByLoginCredentials("notinthedatabase29123", "notinthedatabase29123");
+    	assertNull(admin);
+    }
+    
+    /***
+     * 
+     */
+    @Test
+    public void sessionAssistant_pinsShouldEqualEachOther() {
+    	SessionAssistant sessionAssistant = new SessionAssistant();
+    	GenericPin pin1 = sessionAssistant.get(new GenericPin(pinTestId));
+    	GenericPin pin2 = sessionAssistant.get(new GenericPin(pinTestId));
+    	assertTrue(pin1.equals(pin2));
+    }
+    
+    /***
+     * 
+     */
+    @Test
+    public void sessionAssistant_adminsShouldEqualEachOther() {
+    	SessionAssistant sessionAssistant = new SessionAssistant();
+    	Admin admin1 = sessionAssistant.get(new Admin(adminTestId));
+    	Admin admin2 = sessionAssistant.get(new Admin(adminTestId));
+    	assertTrue(admin1.equals(admin2));
+    }
+   
 }
