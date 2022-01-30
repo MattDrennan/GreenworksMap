@@ -20,23 +20,23 @@ public abstract class Pin implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID", unique = true, nullable = false)
+	@Column(name = "pin_id", unique = true, nullable = false)
 	protected Integer id;
-	@Column(name="icon_id", unique = true, nullable = true, length = 1)
+	@Column(name="icon_id", unique = false, nullable = true, length = 1)
 	protected String iconId;
-	@Column(name="location_name", unique = true, nullable = true, length = 120)
+	@Column(name="location_name", unique = false, nullable = true, length = 120)
     protected String locationName;
-	@Column(name="location_address", unique = true, nullable = true, length = 120)
+	@Column(name="location_address", unique = false, nullable = true, length = 120)
     protected String locationAddress;
-	@Column(name="coordinates", unique = true, nullable = true, length = 80)
+	@Column(name="coordinates", unique = false, nullable = true, length = 80)
     protected String coordinates;
-	@Column(name="content", unique = true, nullable = true, length = 100)
+	@Column(name="content", unique = false, nullable = true, length = 100)
     protected String content; 
-	@Column(name="start_date", unique = true, nullable = true, length = 100)
+	@Column(name="start_date", unique = false, nullable = true, length = 30)
     protected String startDate;
-	@Column(name="end_date", unique = true, nullable = true, length = 100)
+	@Column(name="end_date", unique = false, nullable = true, length = 30)
     protected String endDate;
-	@Column(name="website_URL", unique = true, nullable = true, length = 100)
+	@Column(name="website_URL", unique = false, nullable = true, length = 120)
 	protected String websiteURL;
     
 	private static final long serialVersionUID = 1L;
@@ -48,6 +48,17 @@ public abstract class Pin implements Serializable {
     	
     }
     
+    /***
+     * This is a full parameter constructor for the Pin abstract class. 
+     * @param id Value to be assigned to the id variable. 
+     * @param iconId Value to be assigned to the iconId variable. 
+     * @param startDate Value to be assigned to the startDate variable. 
+     * @param endDate Value to be assigned to the endDate variable. 
+     * @param locationName Value to be assigned to the locationName variable. 
+     * @param locationAddress Value to be assigned to the locationAddress variable. 
+     * @param coordinates Value to be assigned to the coordinates variable. 
+     * @param content Value to be assigned to the content variable. 
+     */
 	public Pin(int id, String iconId, String startDate, String endDate, String locationName,
 			String locationAddress, String coordinates, String content) {
 		super();
@@ -60,8 +71,6 @@ public abstract class Pin implements Serializable {
 		this.coordinates = coordinates;
 		this.content = content;
 	}
-
-
 
 	/***
 	 * This method adds slashes to a String to preserve the backslashes in textual entries. 

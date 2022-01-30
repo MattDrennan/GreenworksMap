@@ -108,14 +108,22 @@ public class SessionAssistant { // TODO: After you get this class working make i
        return genericPin;
     }
    
-   public Admin get(Admin admin) {
+  public Admin get(Admin admin) {
 	   Session session = getSessionFactory().openSession();
 	   session.beginTransaction();
        Admin adminDb = session.find(Admin.class, admin.getId());
        Logger.info("Returned pin: " + adminDb);
        session.close();
        return adminDb;
-    }
+   }
+   
+   public Admin getByLoginCredentials(String username, String password) {
+	   Session session = openSession();
+	   Admin admin = (Admin) session.createQuery("FROM Admin WHERE password = :password AND username = :username").
+			   					setParameter("password", password).setParameter("username", username).uniqueResult();
+	   session.close();
+	   return admin;
+   }
    
    public GenericPin load(Pin pin) {
 	   Session session = getSessionFactory().openSession();

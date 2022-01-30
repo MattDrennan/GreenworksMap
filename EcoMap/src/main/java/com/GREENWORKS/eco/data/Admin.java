@@ -8,22 +8,22 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tbl_admin")
+@Table(name = "users")
 public class Admin {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "admin_id", unique = true, nullable = false)
 	protected Integer id;
-	@Column(name="username")
+	@Column(name="username", unique = false, nullable = true, length = 30)
 	protected String username;
-	@Column(name="password")
+	@Column(name="password", unique = false, nullable = true, length = 30)
     protected String password;
 	
 	public Admin() {
 		
 	}
 	public Admin(String username, String password) {
-		super();
 		this.username = username;
 		this.password = password;
 	}

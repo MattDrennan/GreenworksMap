@@ -349,7 +349,7 @@ public class DataPackageTests {
     private static Integer adminTestId = 0;
     
     /***
-     * This will insert the data sets into the database. 
+     * This will insert the test data sets into the database. 
      */
     @BeforeAll
     public static void sessionAssistant_insertTestData() {
@@ -371,7 +371,7 @@ public class DataPackageTests {
     }
     
     /***
-     * This will delete the data sets from the database. 
+     * This will delete the test data sets from the database. 
      */
     @AfterAll
     public static void sessionAssistant_deleteTestData() {
@@ -394,6 +394,28 @@ public class DataPackageTests {
     	Admin admin = sessionAssistant.get(new Admin(adminTestId));
     	assertEquals("Testusername9102", admin.getUsername());
     	assertEquals("Testpassword9120", admin.getPassword());
+    }
+    
+    /***
+     * 
+     */
+    @Test
+    public void sessionAssistant_shouldReturnAdminBasedOnLoginCreds() {
+    	SessionAssistant sessionAssistant = new SessionAssistant();
+    	Admin admin = sessionAssistant.getByLoginCredentials("Testusername9102", "Testpassword9120");
+    	assertEquals("Testusername9102", admin.getUsername());
+    	assertEquals("Testpassword9120", admin.getPassword());
+    	assertNotNull(admin.getId());
+    }
+    
+    /***
+     * 
+     */
+    @Test
+    public void sessionAssistant_should() {
+    	SessionAssistant sessionAssistant = new SessionAssistant(); 
+    	Admin admin = sessionAssistant.getByLoginCredentials("notinthedatabase29123", "notinthedatabase29123");
+    	assertNull(admin);
     }
     
     /***
