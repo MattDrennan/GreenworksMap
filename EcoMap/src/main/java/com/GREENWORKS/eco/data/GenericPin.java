@@ -10,7 +10,7 @@ import javax.persistence.Table;
  * than identifying the data. 
  */
 @Entity
-@Table(name = "tbl_locations")
+@Table(name = "locations")
 public class GenericPin extends Pin {
 
 	private static final long serialVersionUID = 1L;

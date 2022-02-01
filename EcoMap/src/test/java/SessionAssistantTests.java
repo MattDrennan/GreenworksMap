@@ -24,11 +24,11 @@ public class SessionAssistantTests {
      */
     @BeforeAll
     public static void sessionAssistant_insertTestData() {
-    	PinFactory dataFactory = PinFactory.getFactory("2022-01-29 06:00", "2022-01-29 05:00");
+    	PinFactory dataFactory = PinFactory.getFactory("2022-01-31 15:00:00", "2022-01-31 15:00:00");
     	Pin pin = dataFactory.createPinData(); // Create event
     	pin.setIconId(4); // Because this is an event the IconId will be assigned to 9. 
-    	pin.setStartDate("2022-01-29 06:00");
-    	pin.setEndDate("2022-01-29 05:00");
+    	pin.setStartDate("2022-01-31 15:00:00");
+    	pin.setEndDate("2022-01-31 15:00:00");
     	pin.setLocationAddress("Test");
     	pin.setLocationName("Test");
     	pin.setCoordinates("35,45");

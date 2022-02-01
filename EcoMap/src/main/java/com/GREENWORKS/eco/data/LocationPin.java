@@ -8,7 +8,7 @@ import javax.persistence.Table;
  * a type of PinData. 
  */
 @Entity
-@Table(name = "tbl_locations")
+@Table(name = "locations")
 public class LocationPin extends Pin {
 
 	private static final long serialVersionUID = 1L;
