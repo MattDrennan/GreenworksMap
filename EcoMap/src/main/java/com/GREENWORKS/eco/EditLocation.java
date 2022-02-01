@@ -1,11 +1,10 @@
 package com.GREENWORKS.eco;
  
 import java.io.*;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
-import com.GREENWORKS.eco.constants.LoggerConstants;
+import com.GREENWORKS.eco.data.GenericPin;
+import com.GREENWORKS.eco.data.Pin;
+import com.GREENWORKS.eco.data.SessionAssistant;
 
 import org.tinylog.Logger;
 
@@ -25,68 +24,31 @@ public class EditLocation extends HttpServlet {
     {
 
         // Get ID of location
-        String locationID = request.getParameter("locationID");
         String deleteChoose = request.getParameter("deleteChoose");
         String editChoose = request.getParameter("editChoose");
-
-        Logger.info("Edit location request recieved from: " + request.getRemoteAddr());
-        // Statement to select all location data
-		String sql = "SELECT * FROM locations WHERE id = '" + locationID + "' LIMIT 1";
-
-        // If selected delete
-        if(deleteChoose != "" && deleteChoose != null)
-        {
-            sql = "DELETE FROM locations WHERE id = '" + locationID + "'";
+        Integer location = Integer.parseInt(request.getParameter("locationID"));
+        Logger.info("Edit location request recieved from: " + request.getRemoteAddr() + " LocationID: " + location);
+        
+		SessionAssistant sessionAssistant = new SessionAssistant();
+		Pin pin = sessionAssistant.load(new GenericPin(location)); // Generates a populated pin from the db. 
+		Logger.info("Pin generated: " + pin);
+		
+        
+        if(deleteChoose != "" && deleteChoose != null) { // If something is in deleteChoose. 
+            sessionAssistant.delete(pin);
+            Logger.info("Pin deleted: " + pin);
+        } else if(editChoose != "" && editChoose != null) { // Else if something is in editChoose.
+        	request.setAttribute("id", pin.getId());
+            request.setAttribute("iconid", pin.getIconId());
+            request.setAttribute("address", pin.getLocationAddress());
+            request.setAttribute("name", pin.getLocationName());
+            request.setAttribute("coord", pin.getCoordinates());
+            request.setAttribute("dateStart", pin.getStartDate());
+            request.setAttribute("dateEnd", pin.getEndDate());
+            request.setAttribute("content", pin.getContent());
         }
-
-        // Connect to MySQL
-        MysqlConnect mysqlConnect = new MysqlConnect();
-
-		try
-		{
-			// Try statement
-			PreparedStatement statement = mysqlConnect.connect().prepareStatement(sql);
-
-            // If selected edit
-            if(editChoose != "" && editChoose != null)
-            {
-                // Loop through statement
-                ResultSet rs = statement.executeQuery();
-                Logger.info(LoggerConstants.QUERY_EXECUTED + sql);
-                while(rs.next())
-                {
-                    // Send data back
-                    request.setAttribute("id", rs.getString(1));
-                    request.setAttribute("iconid", rs.getString(2));
-                    request.setAttribute("address", rs.getString(3));
-                    request.setAttribute("name", rs.getString(4));
-                    request.setAttribute("coord", rs.getString(5));
-                    request.setAttribute("dateStart", rs.getString(6));
-                    request.setAttribute("dateEnd", rs.getString(7));
-                    request.setAttribute("content", rs.getString(8));
-                }
-            }
-            else
-            {
-                // Execute delete
-			    statement.executeUpdate();
-                Logger.info(LoggerConstants.QUERY_UPDATE + sql);
-            }
-
-            // Redirect user
-            RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
-            dispatcher.forward(request, response);
-		}
-		catch (SQLException e)
-		{
-			// Error
-            Logger.error(LoggerConstants.QUERY_FAILED + sql);
-			e.printStackTrace();
-		}
-		finally
-		{
-			// Disconnect when done
-			mysqlConnect.disconnect();
-		}
+        
+        RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
+        dispatcher.forward(request, response);
     }
 }

@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import com.GREENWORKS.eco.constants.LoggerConstants;
+import com.GREENWORKS.eco.data.Pin;
+import com.GREENWORKS.eco.data.PinFactory;
+import com.GREENWORKS.eco.data.SessionAssistant;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
@@ -22,90 +25,29 @@ public class AddItem extends HttpServlet {
  
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        // Get POST variables
-        String locationName = request.getParameter("locationName");
-        String location = request.getParameter("location");
-        String coord = request.getParameter("coord");
-        String icon = request.getParameter("icon");
-        String dateStart = request.getParameter("dateStart");
-        String dateEnd = request.getParameter("dateEnd");
-        String content = request.getParameter("content");
-
         // Get session
         HttpSession session = request.getSession();
         String username = (String)session.getAttribute("username");
-
+        
         // Check if session active
-        if(username != "" && username != null)
-        {
-            // Connect to MySQL
-            MysqlConnect mysqlConnect = new MysqlConnect();
+        if(username != "" && username != null) {
+            String startDate = request.getParameter("dateStartEdit");
+    		String endDate = request.getParameter("dateEndEdit");
 
-            // Call EcoMap
-            EcoMap m = new EcoMap();
+        	PinFactory dataFactory = PinFactory.getFactory(startDate, endDate);
+        	Pin pin = dataFactory.createPinData();
+    		pin.setStartDate(startDate);
+    		pin.setEndDate(endDate);
+    		pin.setIconId(Integer.parseInt(request.getParameter("icon")));
+    		pin.setLocationAddress(request.getParameter("location"));
+    		pin.setLocationName(request.getParameter("locationName"));
+    		pin.setCoordinates(request.getParameter("coord"));
+    		pin.setContent(request.getParameter("content"));
+    		Logger.info(LoggerConstants.QUERY_UPDATE + pin);
 
-            // Set up sql
-            String sql;
-
-            // Check if an event
-            if((dateStart == "" && dateEnd == "") || (dateStart == null && dateEnd == null))
-            {
-                // Statement to select all location data - not an event
-                sql = "INSERT INTO locations (iconid, address, name, coord, content) VALUES ('" + m.cleanInput(icon) + "', '" + m.cleanInput(location) + "', '" + m.cleanInput(locationName) + "', '" + m.cleanInput(coord) + "', '" + m.cleanInput(content) + "')";
-            }
-            else
-            {
-                // Set up iconid
-                String iconid = m.cleanInput(icon);
-
-                // Check icon ID values and convert to event icon
-                switch(iconid)
-                {
-                    case "1":
-                        iconid = "9";
-                        break;
-                    case "2":
-                        iconid = "8";
-                        break;
-                    case "3":
-                        iconid = "13";
-                        break;
-                    case "4":
-                        iconid = "9";
-                        break;
-                    case "5":
-                        iconid = "11";
-                        break;
-                    case "6":
-                        iconid = "10";
-                        break;
-                    case "7":
-                        iconid = "12";
-                        break;
-                }
-
-                // Statement to select all location data - is an event
-                sql = "INSERT INTO locations (iconid, address, name, coord, dateStart, dateEnd) VALUES ('" + iconid + "', '" + m.cleanInput(location) + "', '" + m.cleanInput(locationName) + "', '" + m.cleanInput(coord) + "', '" + m.cleanInput(dateStart) + "', '" + m.cleanInput(dateEnd) + "')";             
-            }
-
-            try
-            {
-                // Try statement
-                PreparedStatement statement = mysqlConnect.connect().prepareStatement(sql);
-                statement.executeUpdate();
-                Logger.info(LoggerConstants.QUERY_EXECUTED + sql);
-            }
-            catch (SQLException e)
-            {
-                // Error
-                e.printStackTrace();
-            }
-            finally
-            {
-                // Disconnect when done
-                mysqlConnect.disconnect();
-            }
-
+    		SessionAssistant sessionAssistant = new SessionAssistant();
+        	sessionAssistant.insert(pin); // Database updated
+        	
             // Redirect user
             RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
             dispatcher.forward(request, response);

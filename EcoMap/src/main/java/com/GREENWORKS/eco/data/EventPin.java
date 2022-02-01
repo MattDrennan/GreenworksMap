@@ -10,9 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "locations")
 public class EventPin extends Pin {
-	// "2022-01-31 15:00"
-	private static final long serialVersionUID = 1L;
-	
+		
 	/***
 	 * Constructor for Event.  
 	 */

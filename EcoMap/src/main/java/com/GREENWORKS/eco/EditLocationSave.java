@@ -5,12 +5,16 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import com.GREENWORKS.eco.constants.LoggerConstants;
+import com.GREENWORKS.eco.data.Pin;
+import com.GREENWORKS.eco.data.PinFactory;
+import com.GREENWORKS.eco.data.SessionAssistant;
 
 import org.tinylog.Logger;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+import jakarta.servlet.RequestDispatcher;
  
 @WebServlet("/editlocationsave")
 public class EditLocationSave extends HttpServlet {
@@ -21,110 +25,30 @@ public class EditLocationSave extends HttpServlet {
     }
     
     /***
-     * This method is a boolean check to identify if the input parameters are consistent 
-     * with not being an Event. If the data provided is consistent with an Event then the 
-     * method will return false. If the data provided is not consistent with an event then 
-     * it will return true. 
-     * @param startDate The String of the start date. 
-     * @param endDate The String of the end date. 
-     * @return Returns a boolean value. 
-     */
-    public boolean notAnEvent(String startDate, String endDate) 
-    {
-    	return (startDate == null || endDate == null || startDate == "" || endDate == "");
-    }
-    
-    /***
-     * This is method takes a String parameter and reassigns its contents. 
-     * @param iconId
-     * @return
-     */
-    public String assignEventIconId(String iconId) {
-		switch(iconId)
-		{
-			case "1":
-				iconId = "9";
-				break;
-			case "2":
-				iconId = "8";
-				break;
-			case "3":
-				iconId = "13";
-				break;
-			case "4":
-				iconId = "9";
-				break;
-			case "5":
-				iconId = "11";
-				break;
-			case "6":
-				iconId = "10";
-				break;
-			case "7":
-				iconId = "12";
-				break;
-		}
-		return iconId;
-    }
-    
-    /***
      * TODO Documentation - Will finish during unit testing
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
 		Logger.info("Edit-save location request recieved from: " + request.getRemoteAddr());
-        String locationID = request.getParameter("id");
-        EcoMap m = new EcoMap();
-		String startDate = request.getParameter("dateStartEdit");
+
+        String startDate = request.getParameter("dateStartEdit");
 		String endDate = request.getParameter("dateEndEdit");
-		String iconId = request.getParameter("icon");
-		String locationAddress = m.cleanInput(request.getParameter("location"));
-		String locationName = m.cleanInput(request.getParameter("locationName"));
-		String coord = m.cleanInput(request.getParameter("coord"));
-		String content = m.cleanInput(request.getParameter("content"));
-		if(notAnEvent(startDate, endDate)) // Returns true if it is not an event.
-		{
-			// Not an event
-			startDate = "DEFAULT";
-			endDate = "DEFAULT";
-		}
-		else
-		{
-			// Clean input - is an event
-			startDate =  "'" + m.cleanInput(startDate) + "'";
-			endDate =  "'" + m.cleanInput(endDate) + "'";
-			// Check icon ID values and convert to event icon
-			iconId = assignEventIconId(iconId);
-		}
 
-        // Statement to select all location data
-		String sql = "UPDATE locations SET iconid = '" + iconId + "', address = '" + locationAddress + 
-													"', name = '" + locationName + "', coord = '" + coord + 
-													"', dateStart = " + startDate + ", dateEnd = " + endDate + 
-													", content = '" + content + "' WHERE id = '" + locationID + "'";
-        // Connect to MySQL
-        MysqlConnect mysqlConnect = new MysqlConnect();
+    	PinFactory dataFactory = PinFactory.getFactory(startDate, endDate);
+    	Pin pin = dataFactory.createPinData();
+    	pin.setId(Integer.parseInt(request.getParameter("id")));
+		pin.setStartDate(startDate);
+		pin.setEndDate(endDate);
+		pin.setIconId(Integer.parseInt(request.getParameter("icon")));
+		pin.setLocationAddress(request.getParameter("location"));
+		pin.setLocationName(request.getParameter("locationName"));
+		pin.setCoordinates(request.getParameter("coord"));
+		pin.setContent(request.getParameter("content"));
+		Logger.info(LoggerConstants.QUERY_UPDATE + pin);
 
-		try
-		{
-			// Try statement
-			PreparedStatement statement = mysqlConnect.connect().prepareStatement(sql);
-			// Execute
-			statement.executeUpdate();
-            Logger.info(LoggerConstants.QUERY_UPDATE + sql);
-            // Redirect user
-            RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
-            dispatcher.forward(request, response);
-		}
-		catch (SQLException e)
-		{
-			Logger.info(LoggerConstants.QUERY_FAILED + sql);
-			e.printStackTrace();
-		}
-		finally
-		{
-			// Disconnect when done
-			mysqlConnect.disconnect();
-		}
+		SessionAssistant sessionAssistant = new SessionAssistant();
+    	sessionAssistant.update(pin); // Database updated
+		RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
+		dispatcher.forward(request, response);
     }
 }
