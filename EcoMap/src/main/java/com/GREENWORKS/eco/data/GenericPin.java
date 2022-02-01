@@ -12,8 +12,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "locations")
 public class GenericPin extends Pin {
-
-	private static final long serialVersionUID = 1L;
 	
 	/***
 	 * Constructor for GenericPin. Assigns the class name to the superclass name variable. 
