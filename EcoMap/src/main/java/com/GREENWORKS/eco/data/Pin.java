@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import org.hibernate.annotations.ColumnDefault;
+
 /***
  * The parent abstract class for PinData. This class will not be directly instantiated
  * but rather its behavior will be instantiated through its children. This is a data 
@@ -29,13 +31,13 @@ public abstract class Pin {
     protected String locationName;
 	@Column(name="address", unique = false, nullable = true, length = 120)
     protected String locationAddress;
-	@Column(name="cord", unique = false, nullable = true, length = 80)
+	@Column(name="coord", unique = false, nullable = true, length = 80)
     protected String coordinates;
 	@Column(name="content", unique = false, nullable = true, columnDefinition="TEXT")
     protected String content; 
-	@Column(name="dateStart", unique = false, nullable = true, columnDefinition="TIMESTAMP")
+	@Column(name="dateStart", unique = false, nullable = true, columnDefinition="DATETIME")
     protected Date startDate;
-	@Column(name="dateEnd", unique = false, nullable = true, columnDefinition="TIMESTAMP")
+	@Column(name="dateEnd", unique = false, nullable = true, columnDefinition="DATETIME")
     protected Date endDate;
 	@Column(name="website", unique = false, nullable = true, length = 120)
 	protected String websiteURL;
