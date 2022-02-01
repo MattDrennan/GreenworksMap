@@ -1,7 +1,8 @@
 package com.GREENWORKS.eco.data;
 
 
-import java.io.Serializable;
+
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -16,30 +17,31 @@ import javax.persistence.MappedSuperclass;
  * on the UI. 
  */
 @MappedSuperclass
-public abstract class Pin implements Serializable {
+public abstract class Pin {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "pin_id", unique = true, nullable = false)
+	@Column(name = "id", unique = true, nullable = false)
 	protected Integer id;
-	@Column(name="icon_id", unique = false, nullable = true, length = 1)
-	protected String iconId;
-	@Column(name="location_name", unique = false, nullable = true, length = 120)
+	@Column(name="iconid", unique = false, nullable = true)
+	protected Integer iconId;
+	@Column(name="name", unique = false, nullable = true, length = 120)
     protected String locationName;
-	@Column(name="location_address", unique = false, nullable = true, length = 120)
+	@Column(name="address", unique = false, nullable = true, length = 120)
     protected String locationAddress;
-	@Column(name="coordinates", unique = false, nullable = true, length = 80)
+	@Column(name="cord", unique = false, nullable = true, length = 80)
     protected String coordinates;
-	@Column(name="content", unique = false, nullable = true, length = 100)
+	@Column(name="content", unique = false, nullable = true, columnDefinition="TEXT")
     protected String content; 
-	@Column(name="start_date", unique = false, nullable = true, length = 30)
-    protected String startDate;
-	@Column(name="end_date", unique = false, nullable = true, length = 30)
-    protected String endDate;
-	@Column(name="website_URL", unique = false, nullable = true, length = 120)
+	@Column(name="dateStart", unique = false, nullable = true, columnDefinition="TIMESTAMP")
+    protected Date startDate;
+	@Column(name="dateEnd", unique = false, nullable = true, columnDefinition="TIMESTAMP")
+    protected Date endDate;
+	@Column(name="website", unique = false, nullable = true, length = 120)
 	protected String websiteURL;
+	@Column(name="api", unique = false, nullable = true)
+	protected byte api;
     
-	private static final long serialVersionUID = 1L;
 	
     /***
      * Zero parameter constructor. 
@@ -59,13 +61,11 @@ public abstract class Pin implements Serializable {
      * @param coordinates Value to be assigned to the coordinates variable. 
      * @param content Value to be assigned to the content variable. 
      */
-	public Pin(int id, String iconId, String startDate, String endDate, String locationName,
+	public Pin(int id, Integer iconId, String locationName,
 			String locationAddress, String coordinates, String content) {
 		super();
 		this.id = id;
 		this.iconId = iconId;
-		this.startDate = startDate;
-		this.endDate = endDate;
 		this.locationName = locationName;
 		this.locationAddress = locationAddress;
 		this.coordinates = coordinates;
@@ -135,7 +135,7 @@ public abstract class Pin implements Serializable {
 	 * Accessor method for the iconId instance variable. 
 	 * @return Returns the contents of the instance variable. 
 	 */
-	public String getIconId() {
+	public Integer getIconId() {
 		return iconId;
 	}
 
@@ -144,15 +144,15 @@ public abstract class Pin implements Serializable {
 	 * cleaning on the parameter. 
 	 * @param iconId The value to be assigned. 
 	 */
-	public void setIconId(String iconId) {
-		this.iconId = cleanInput(iconId);
+	public void setIconId(Integer iconId) {
+		this.iconId = iconId;
 	}
 
 	/***
 	 * Accessor method for the startDate instance variable. 
 	 * @return Returns the contents of the instance variable. 
 	 */	
-	public String getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
@@ -167,7 +167,7 @@ public abstract class Pin implements Serializable {
 	 * Accessor method for the endDate instance variable. 
 	 * @return Returns the contents of the instance variable. 
 	 */	
-	public String getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
 
