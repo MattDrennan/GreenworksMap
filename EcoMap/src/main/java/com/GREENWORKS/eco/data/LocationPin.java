@@ -27,7 +27,7 @@ public class LocationPin extends Pin {
      */
 	@Override
 	public void setStartDate(String startDate) { 
-		this.startDate = "DEFAULT";
+		this.startDate = null;
 	}
 	
 	/***
@@ -37,7 +37,7 @@ public class LocationPin extends Pin {
      */
 	@Override
 	public void setEndDate(String endDate) {
-		this.endDate = "DEFAULT";
+		this.endDate = null;
 	}
 	
 	@Override
