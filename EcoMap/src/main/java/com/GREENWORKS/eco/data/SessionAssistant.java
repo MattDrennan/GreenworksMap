@@ -66,7 +66,7 @@ public class SessionAssistant { // TODO: After you get this class working make i
     public void update(Admin admin) {
     	Session session = openSession();
    	 	session.beginTransaction();
-   	 	session.save(admin);
+   	 	session.update(admin);
    	 	session.getTransaction().commit();
    	 	Logger.info("Admin update: " + admin);
     	session.close();
@@ -75,7 +75,7 @@ public class SessionAssistant { // TODO: After you get this class working make i
     public void update(Pin pin) {
     	Session session = openSession();
     	session.beginTransaction();
-    	session.save(pin);
+    	session.update(pin);
     	session.getTransaction().commit();
     	Logger.info("Pin update: " + pin);
     	session.close();

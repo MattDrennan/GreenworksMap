@@ -30,7 +30,7 @@ public class EditLocation extends HttpServlet {
         Logger.info("Edit location request recieved from: " + request.getRemoteAddr() + " LocationID: " + location);
         
 		SessionAssistant sessionAssistant = new SessionAssistant();
-		Pin pin = sessionAssistant.get(new GenericPin(location)); // Generates a populated pin from the db. 
+		Pin pin = sessionAssistant.load(new GenericPin(location)); // Generates a populated pin from the db. 
 		Logger.info("Pin generated: " + pin);
 		
         
