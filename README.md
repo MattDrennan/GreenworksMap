@@ -23,6 +23,15 @@ public class Cred {
 }
 ```
 
+1. Create a "hibernate.properties" file in "src/main/java" with the following:
+
+```
+hibernate.connection.driver_class = com.mysql.jdbc.Driver
+hibernate.connection.url = jdbc:mysql://localhost:PORT NUMBER/ecomap
+hibernate.connection.username = MYSQL USERNAME
+hibernate.connection.password = MYSQL PASSWORD
+```
+
 
 **ecomap.sql:**
 
