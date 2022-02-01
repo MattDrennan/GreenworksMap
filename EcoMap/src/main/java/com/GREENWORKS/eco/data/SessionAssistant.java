@@ -1,16 +1,22 @@
 package com.GREENWORKS.eco.data;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Projections;
+import org.hibernate.query.Query;
 import org.tinylog.Logger;
 
 public class SessionAssistant { // TODO: After you get this class working make its methods generic. 
 	
     private static SessionFactory sessionFactory = null;
+    
+    private Number databaseSize;
     
     private static SessionFactory buildSessionFactory() {
         try {
@@ -91,7 +97,7 @@ public class SessionAssistant { // TODO: After you get this class working make i
    }
    
    public void delete(Admin admin) {
-	   Session session = getSessionFactory().openSession();
+	   Session session = openSession();
        session.beginTransaction();
        session.delete(admin);
        session.getTransaction().commit();
@@ -100,7 +106,7 @@ public class SessionAssistant { // TODO: After you get this class working make i
     }
    
    public Pin get(Pin pin) {
-	   Session session = getSessionFactory().openSession();
+	   Session session = openSession();
 	   session.beginTransaction();
        GenericPin genericPin = session.find(GenericPin.class, pin.getId());
        Logger.info("Returned pin: " + genericPin);
@@ -109,7 +115,7 @@ public class SessionAssistant { // TODO: After you get this class working make i
     }
    
   public Admin get(Admin admin) {
-	   Session session = getSessionFactory().openSession();
+	   Session session = openSession();
 	   session.beginTransaction();
        Admin adminDb = session.find(Admin.class, admin.getId());
        Logger.info("Returned pin: " + adminDb);
@@ -126,7 +132,7 @@ public class SessionAssistant { // TODO: After you get this class working make i
    }
    
    public Pin load(Pin pin) {
-	   Session session = getSessionFactory().openSession();
+	   Session session = openSession();
 	   session.beginTransaction();
        GenericPin genericPin = session.load(GenericPin.class, pin.getId());
        Logger.info("Returned pin: " + genericPin);
@@ -135,7 +141,7 @@ public class SessionAssistant { // TODO: After you get this class working make i
     }
    
    public Admin load(Admin admin) {
-	   Session session = getSessionFactory().openSession();
+	   Session session = openSession();
 	   session.beginTransaction();
        Admin adminDb = session.load(Admin.class, admin.getId());
        Logger.info("Returned pin: " + adminDb);
@@ -143,9 +149,23 @@ public class SessionAssistant { // TODO: After you get this class working make i
        return adminDb;
     }
    
-   public static List<GenericPin> getAllPins() {
-	   Session session = getSessionFactory().openSession();
-       return session.createQuery("SELECT a FROM GenericPin a", GenericPin.class).getResultList();      
+   public ArrayList<String> getAllPins() {
+	   Session session = openSession();
+	   List<GenericPin> genericPinList = session.createQuery("SELECT p FROM GenericPin p", GenericPin.class).getResultList();
+	   ArrayList<String> genericPinToString = new ArrayList<>();
+	   for(Pin pin : genericPinList) {
+		   genericPinToString.add(pin.getIndexString());
+	   }
+       return genericPinToString;
+   }
+   
+   /***
+    * This returns the total number of entries in the locations table. 
+    * @return The total number as a long. 
+    */
+   public long getLocationsTableSize() {
+	   Session session = openSession();
+	   return (long)session.createQuery("SELECT COUNT(p) FROM GenericPin p").getSingleResult();
    }
     
 }

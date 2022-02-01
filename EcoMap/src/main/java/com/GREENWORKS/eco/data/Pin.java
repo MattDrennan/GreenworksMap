@@ -1,22 +1,19 @@
 package com.GREENWORKS.eco.data;
 
-
-
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import org.hibernate.annotations.ColumnDefault;
-
 /***
- * The parent abstract class for PinData. This class will not be directly instantiated
- * but rather its behavior will be instantiated through its children. This is a data 
- * class that is meant to be the representatation of the map pins that are displayed
- * on the UI. 
+ * The parent abstract class for all Pin related data. This class will not be directly 
+ * instantiated but rather its behavior will be instantiated through its children. This 
+ * is a data class that is meant to be the representatation of the map pins that are 
+ * displayed on the UI. 
+ * 
+ * If there is a behavior that all Pins must have then this is the class where that 
+ * behavior should be implemented. 
  */
 @MappedSuperclass
 public abstract class Pin {
@@ -268,6 +265,15 @@ public abstract class Pin {
 	}
 	
 	/***
+	 * This method is meant to generate a String that will be useful for front-end
+	 * purposes. 
+	 * @return Returns the string that will be used in the front-end. 
+	 */
+	public String getIndexString() {
+		return id + ", " + iconId + ", " + locationAddress + ", " + locationName + ", " + coordinates + ", " + startDate + ", " + endDate + ", " + content;
+	}
+	
+	/***
 	 * This methods generates an update SQL query that is populated with the 
 	 * instance variables. 
 	 * @return Returns the generated update SQL query. 
@@ -307,6 +313,9 @@ public abstract class Pin {
 				+ ", endDate=" + endDate + "]";
 	}
 	
+	/***
+	 * Overridden hashCode() method. This is necessary for conducting object comparisons. 
+	 */
 	@Override
 	public int hashCode() {
 		int result = getId() != null ? getId().hashCode() : 0;
@@ -314,6 +323,9 @@ public abstract class Pin {
 		return result;
 	}
 	
+	/***
+	 * Overridden equals() method. This is necessary for conducting object comparisons. 
+	 */
 	@Override
 	public boolean equals(Object o) {
 		if(this == o) 
