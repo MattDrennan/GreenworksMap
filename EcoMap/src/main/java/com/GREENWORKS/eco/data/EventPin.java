@@ -1,10 +1,5 @@
 package com.GREENWORKS.eco.data;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -32,14 +27,7 @@ public class EventPin extends Pin {
      */
 	@Override
 	public void setStartDate(String startDate) {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		Date date;
-		try {
-			date = (Date) formatter.parse(startDate);
-			this.startDate = date;
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		this.startDate = startDate;
 	}
 	// this.startDate = "'" + cleanInput(startDate) + "'";
 
@@ -50,14 +38,7 @@ public class EventPin extends Pin {
      */
 	@Override
 	public void setEndDate(String endDate) {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		Date date;
-		try {
-			date = (Date) formatter.parse(endDate);
-			this.endDate = date;
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		this.endDate = endDate;
 	}
 	// this.endDate = "'" + cleanInput(endDate) + "'";
 	

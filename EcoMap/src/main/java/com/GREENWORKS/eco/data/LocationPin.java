@@ -11,8 +11,6 @@ import javax.persistence.Table;
 @Table(name = "locations")
 public class LocationPin extends Pin {
 
-	private static final long serialVersionUID = 1L;
-
 	/***
 	 * Constructor for Location. Assigns the class name to the superclass name variable. 
 	 */

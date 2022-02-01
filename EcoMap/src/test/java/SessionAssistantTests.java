@@ -42,6 +42,27 @@ public class SessionAssistantTests {
     }
     
     /***
+     * 
+     */
+    @Test
+    public void sessionAssistant_dateShouldBeEqual() {
+    	SessionAssistant sessionAssistant = new SessionAssistant();
+    	Pin pin = sessionAssistant.get(new GenericPin(pinTestId));
+    	assertEquals("2022-01-31 15:00:00", pin.getStartDate());
+    	assertEquals("2022-01-31 15:00:00", pin.getEndDate());
+    }
+    
+    /***
+     * 
+     */
+    @Test
+    public void sessionAssistant_dateShouldBeNull() {
+    	SessionAssistant sessionAssistant = new SessionAssistant();
+    	Pin pin = sessionAssistant.get(new GenericPin(999999999)); // This data point should not exist. 
+    	assertNull(pin);
+    }
+    
+    /***
      * This will delete the test data sets from the database. 
      */
     @AfterAll
@@ -52,7 +73,7 @@ public class SessionAssistantTests {
     	Pin pin = new GenericPin();
     	pin.setId(pinTestId);
     	sessionAssistant.delete(admin);
-    	//sessionAssistant.delete(pin);
+    	sessionAssistant.delete(pin);
     	sessionAssistant.shutdown();
     }
     
@@ -95,8 +116,8 @@ public class SessionAssistantTests {
     @Test
     public void sessionAssistant_pinsShouldEqualEachOther() {
     	SessionAssistant sessionAssistant = new SessionAssistant();
-    	GenericPin pin1 = sessionAssistant.get(new GenericPin(pinTestId));
-    	GenericPin pin2 = sessionAssistant.get(new GenericPin(pinTestId));
+    	Pin pin1 = sessionAssistant.get(new GenericPin(pinTestId));
+    	Pin pin2 = sessionAssistant.get(new GenericPin(pinTestId));
     	assertTrue(pin1.equals(pin2));
     }
     

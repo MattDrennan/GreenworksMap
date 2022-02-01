@@ -36,13 +36,13 @@ public abstract class Pin {
 	@Column(name="content", unique = false, nullable = true, columnDefinition="TEXT")
     protected String content; 
 	@Column(name="dateStart", unique = false, nullable = true, columnDefinition="DATETIME")
-    protected Date startDate;
+    protected String startDate;
 	@Column(name="dateEnd", unique = false, nullable = true, columnDefinition="DATETIME")
-    protected Date endDate;
+    protected String endDate;
 	@Column(name="website", unique = false, nullable = true, length = 120)
 	protected String websiteURL;
 	@Column(name="api", unique = false, nullable = true)
-	protected byte api;
+	protected Byte api;
     
 	
     /***
@@ -154,7 +154,7 @@ public abstract class Pin {
 	 * Accessor method for the startDate instance variable. 
 	 * @return Returns the contents of the instance variable. 
 	 */	
-	public Date getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
 
@@ -169,7 +169,7 @@ public abstract class Pin {
 	 * Accessor method for the endDate instance variable. 
 	 * @return Returns the contents of the instance variable. 
 	 */	
-	public Date getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
 

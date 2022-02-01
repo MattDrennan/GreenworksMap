@@ -99,7 +99,7 @@ public class SessionAssistant { // TODO: After you get this class working make i
        session.close();
     }
    
-   public GenericPin get(Pin pin) {
+   public Pin get(Pin pin) {
 	   Session session = getSessionFactory().openSession();
 	   session.beginTransaction();
        GenericPin genericPin = session.find(GenericPin.class, pin.getId());
@@ -125,7 +125,7 @@ public class SessionAssistant { // TODO: After you get this class working make i
 	   return admin;
    }
    
-   public GenericPin load(Pin pin) {
+   public Pin load(Pin pin) {
 	   Session session = getSessionFactory().openSession();
 	   session.beginTransaction();
        GenericPin genericPin = session.load(GenericPin.class, pin.getId());
