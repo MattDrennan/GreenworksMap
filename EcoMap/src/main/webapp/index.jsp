@@ -24,6 +24,7 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
         <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
         <!-- ARCGIS -->
         <link rel="stylesheet" href="https://js.arcgis.com/4.22/esri/themes/light/main.css">
         <script src="https://js.arcgis.com/4.22/"></script>
@@ -192,13 +193,28 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
 
         <!-- List View (Hidden by default) -->
         <div id="listView" style="display: none; text-align: center;">
+            <a href="#/" id="showAll">[All]</a> <a href="#/" id="showEvents">[Show Events]</a>    <a href="#/" id="showLocations">[Show Locations]</a>
             <script>
                 $.each(points, function(i, index)
                 {
-                    document.write('<img src="' + iconSelect(index['dbType'])['url'] + '" width="32px" height="32px" />');
-                    document.write(index['name']);
-                    document.write('<br />' + index['content']);
-                    document.write('<br /><br />');
+                    if(index['dateStart'] != null && index['dateStart'] != null && index['dateStart'] != "null" && index['dateStart'] != "null")
+                    {
+                        // Convert dates
+                        var dateStart = index['dateStart'];
+                        var dateEnd = index['dateEnd'];
+
+                        var momentStart = moment(dateStart);
+                        var momentEnd = moment(dateEnd);
+
+                        momentStart = momentStart.format("MMMM Do YYYY, h:mm a");
+                        momentEnd = momentEnd.format("MMMM Do YYYY, h:mm a");
+
+                        document.write('<div name="eventList"><img src="' + iconSelect(index['dbType'])['url'] + '" width="32px" height="32px" />' + index['name'] + '<br />' + momentStart + ' - ' + momentEnd + '<br />' + index['content'] + '<br /><br /></div>');
+                    }
+                    else
+                    {
+                        document.write('<div name="locationList"><img src="' + iconSelect(index['dbType'])['url'] + '" width="32px" height="32px" />' + index['name'] + '<br />' + index['content'] + '<br /><br /></div>');
+                    }
                 });
             </script>
         </div>

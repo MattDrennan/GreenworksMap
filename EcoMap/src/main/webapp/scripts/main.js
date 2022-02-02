@@ -1,5 +1,26 @@
 $(document).ready(function()
 {
+    // List View - Filter Events
+    $("#showEvents").on("click", function(event)
+    {
+        $("[name=eventList]").show();
+        $("[name=locationList]").hide();
+    });
+
+    // List View - Filter Locations
+    $("#showLocations").on("click", function(event)
+    {
+        $("[name=locationList]").show();
+        $("[name=eventList]").hide();
+    });
+
+    // List View - Filter All
+    $("#showAll").on("click", function(event)
+    {
+        $("[name=eventList]").show();
+        $("[name=locationList]").show();
+    });
+
     // Change View Button
     $("#viewChange").on("click", function(event)
     {
