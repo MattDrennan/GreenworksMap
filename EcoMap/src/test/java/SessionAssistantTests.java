@@ -136,7 +136,7 @@ public class SessionAssistantTests {
     @Test
     public void sessionAssistant_shouldBeTheTableSize() {
     	SessionAssistant sessionAssistant = new SessionAssistant();
-    	List<String> list = sessionAssistant.getAllPins();
+    	List<Pin> list = sessionAssistant.getAllPins();
     	assertEquals(databaseSize, list.size());
     }
     
