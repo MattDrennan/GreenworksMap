@@ -107,6 +107,7 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
             {
             %>
                 points[<%=j%>] = {
+                    index: <%=j%>,
                     type: "point",
                     longitude: "<%=location.getCoordinates().split(",")[0]%>",
                     latitude: "<%=location.getCoordinates().split(",")[1]%>",
@@ -209,14 +210,15 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
                         momentStart = momentStart.format("MMMM Do YYYY, h:mm a");
                         momentEnd = momentEnd.format("MMMM Do YYYY, h:mm a");
 
-                        document.write('<div name="eventList"><img src="' + iconSelect(index['dbType'])['url'] + '" width="32px" height="32px" />' + index['name'] + '<br />' + momentStart + ' - ' + momentEnd + '<br />' + index['content'] + '<br /><br /></div>');
+                        document.write('<div name="eventList" id="list_' + index['index'] + '"><img src="' + iconSelect(index['dbType'])['url'] + '" width="32px" height="32px" />' + index['name'] + '<br />' + momentStart + ' - ' + momentEnd + '<br />' + index['content'] + '<br /><br /></div>');
                     }
                     else
                     {
-                        document.write('<div name="locationList"><img src="' + iconSelect(index['dbType'])['url'] + '" width="32px" height="32px" />' + index['name'] + '<br />' + index['content'] + '<br /><br /></div>');
+                        document.write('<div name="locationList" id="list_' + index['index'] + '"><img src="' + iconSelect(index['dbType'])['url'] + '" width="32px" height="32px" />' + index['name'] + '<br />' + index['content'] + '<br /><br /></div>');
                     }
                 });
             </script>
+            <div id="listViewMessage"></div>
         </div>
         
         <!-- JQuery Code -->

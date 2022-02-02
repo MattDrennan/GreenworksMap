@@ -3,22 +3,43 @@ $(document).ready(function()
     // List View - Filter Events
     $("#showEvents").on("click", function(event)
     {
+        $("#listViewMessage").text("");
         $("[name=eventList]").show();
         $("[name=locationList]").hide();
+
+        // Show message if none
+        if($("[name=eventList]").length == 0)
+        {
+            $("#listViewMessage").text("Nothing to show.");
+        }
     });
 
     // List View - Filter Locations
     $("#showLocations").on("click", function(event)
     {
+        $("#listViewMessage").text("");
         $("[name=locationList]").show();
         $("[name=eventList]").hide();
+
+        // Show message if none
+        if($("[name=locationList]").length == 0)
+        {
+            $("#listViewMessage").text("Nothing to show.");
+        }
     });
 
     // List View - Filter All
     $("#showAll").on("click", function(event)
     {
+        $("#listViewMessage").text("");
         $("[name=eventList]").show();
         $("[name=locationList]").show();
+
+        // Show message if none
+        if($("[name=locationList]").length == 0 && $("[name=eventList]").length == 0)
+        {
+            $("#listViewMessage").text("Nothing to show.");
+        }
     });
 
     // Change View Button
@@ -31,6 +52,12 @@ $(document).ready(function()
             $("#listView").show();
             $("#mapView").hide();
             $("#viewChange").text("[Map View]");
+
+            // Show message if none
+            if($("[name=locationList]").length == 0 && $("[name=eventList]").length == 0)
+            {
+                $("#listViewMessage").text("Nothing to show.");
+            }
         }
         else
         {

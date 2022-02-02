@@ -261,7 +261,10 @@ require([
                             featureLayerView.queryFeatures(query).then(function (result) {
                                 // If not on polygon, hide
                                 if (result.features.length == 0) {
-                                    globalMarkers[tempPoint].visible = false;
+                                    //globalMarkers[tempPoint].visible = false;
+                                    gL.remove(globalMarkers[tempPoint]);
+                                    $("#list_" + globalMarkers[tempPoint].attr.index).remove();
+                                    points.splice(globalMarkers[tempPoint].attr.index, 1);
                                 }
                             });
                             handle.remove();
@@ -272,7 +275,10 @@ require([
                     featureLayerView.queryFeatures(query).then(function (result) {
                         // If not on polygon, hide
                         if (result.features.length == 0) {
-                            globalMarkers[tempPoint].visible = false;
+                            //globalMarkers[tempPoint].visible = false;
+                            gL.remove(globalMarkers[tempPoint]);
+                            $("#list_" + globalMarkers[tempPoint].attr.index).remove();
+                            points.splice(globalMarkers[tempPoint].attr.index, 1);
                         }
                     });
                 }
