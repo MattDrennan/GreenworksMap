@@ -270,7 +270,7 @@ public abstract class Pin {
 	 * @return Returns the string that will be used in the front-end. 
 	 */
 	public String getIndexString() {
-		return id + ", " + iconId + ", " + locationAddress + ", " + locationName + ", " + coordinates + ", " + startDate + ", " + endDate + ", " + content;
+		return id + "," + iconId + "," + locationAddress + "," + locationName + "," + coordinates + "," + startDate + "," + endDate + "," + content;
 	}
 	
 	/***

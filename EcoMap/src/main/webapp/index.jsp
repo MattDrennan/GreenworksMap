@@ -1,9 +1,10 @@
-<%@ page import="com.GREENWORKS.eco.EcoMap" %>
+<%@ page import="com.GREENWORKS.eco.data.*" %>
 <%@page import="java.util.ArrayList" %>
 <%@ page isELIgnored="false"%>
 <%
-EcoMap e = new EcoMap();
-ArrayList<String> locationsArrayList = e.getLocations();
+// Get pin data
+SessionAssistant sa = new SessionAssistant();
+ArrayList<Pin> locationsArrayList = sa.getAllPins();
 %>
 
 <html>
@@ -34,43 +35,17 @@ ArrayList<String> locationsArrayList = e.getLocations();
             // Dates to be highlighted
             var eventDates = {};
             <%
-            // Set up count
-            int j = 0;
-            
-            // Set temp dates
-            String tempDate1 = "";
-            String tempDate2 = "";
-    
             // Loop through array
-            for (String location : locationsArrayList)
+            for (Pin location : locationsArrayList)
             {
-                // Date Start
-                if(j == 5)
+                // Is an event - check to make sure dates are not set to null
+                if(location.getStartDate() != null && location.getEndDate() != null)
                 {
-                    tempDate1 = location;
-                }
-                // Date End
-                else if(j == 6)
-                {
-                    tempDate2 = location;
-                }
-                else if(j == 7)
-                {
-    
-                    // Make sure this is an event
-                    if(tempDate1 != null && tempDate2 != null)
-                    {
             %>
-                        eventDates[new Date("<%=tempDate1%>")] = new Date("<%=tempDate1%>");
+
+                     eventDates[new Date("<%=location.getStartDate()%>")] = new Date("<%=location.getEndDate()%>");
             <%
-                    }
-    
-                    // Reset
-                    j = -1;
                 }
-    
-                // Increment count
-                j++;
             }
             %>
         </script>
@@ -119,53 +94,34 @@ ArrayList<String> locationsArrayList = e.getLocations();
 
     <body>
         <script>
-            // Load array in from Java
-            var array = [<% for (int i = 0; i < locationsArrayList.size(); i++) { %>"<%= locationsArrayList.get(i) %>"<%= i + 1 < locationsArrayList.size() ? ",":"" %><% } %>];
-            
             // Create set up variables
             var points = [];
-            var tempArray = [];
-        
-            // Array iteration count
-            var j = 0;
-        
-            // Loop through Java array
-            for(i = 0; i <= array.length - 1; i++)
-            {
-                // Push values to temporary array
-                tempArray.push(array[i]);
-        
-                // Increment iteration count
-                j++;
-        
-                // If on the final value
-                if(j == 8)
-                {
-                    // Create point variable (Information for map)
-                    var point = 
-                    {
-                        type: "point",
-                        longitude: tempArray[4].split(',')[0],
-                        latitude: tempArray[4].split(',')[1],
-                        dbID: tempArray[0],
-                        dbType: tempArray[1],
-                        dbAddress: tempArray[2],
-                        name: tempArray[3],
-                        dateStart: tempArray[5],
-                        dateEnd: tempArray[6],
-                        content: tempArray[2] + '<br /><br />' + tempArray[7]
-                    };
 
-                    // Push to points array for map to get
-                    points.push(point);
-        
-                    // Clear temp array
-                    tempArray = [];
-        
-                    // Reset iteration count
-                    j = 0;
-                }
+            <%
+            // Set up point object count
+            int j = 0;
+
+            // Loop through array
+            for (Pin location : locationsArrayList)
+            {
+            %>
+                points[<%=j%>] = {
+                    type: "point",
+                    longitude: "<%=location.getCoordinates().split(",")[0]%>",
+                    latitude: "<%=location.getCoordinates().split(",")[1]%>",
+                    dbID: "<%=location.getId()%>",
+                    dbType: "<%=location.getIconId()%>",
+                    dbAddress: "<%=location.getLocationAddress()%>",
+                    name: "<%=location.getLocationName()%>",
+                    dateStart: "<%=location.getStartDate()%>",
+                    dateEnd: "<%=location.getEndDate()%>",
+                    content: "<%=location.getLocationAddress()%><br /><br /><%=location.getContent()%>"
+                };
+            <%
+                // Increment object count
+                j++;
             }
+            %>
         </script>
 
         <!-- Show List Button -->

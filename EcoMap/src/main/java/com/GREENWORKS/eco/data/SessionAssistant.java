@@ -1,7 +1,9 @@
 package com.GREENWORKS.eco.data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -149,14 +151,14 @@ public class SessionAssistant { // TODO: After you get this class working make i
        return adminDb;
     }
    
-   public ArrayList<String> getAllPins() {
+   public ArrayList<Pin> getAllPins() {
 	   Session session = openSession();
 	   List<GenericPin> genericPinList = session.createQuery("SELECT p FROM GenericPin p", GenericPin.class).getResultList();
-	   ArrayList<String> genericPinToString = new ArrayList<>();
+	   ArrayList<Pin> pinList = new ArrayList<Pin>();
 	   for(Pin pin : genericPinList) {
-		   genericPinToString.add(pin.getIndexString());
+		   pinList.add(pin);
 	   }
-       return genericPinToString;
+       return pinList;
    }
    
    /***
