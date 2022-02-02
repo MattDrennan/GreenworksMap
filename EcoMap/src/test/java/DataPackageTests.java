@@ -1,12 +1,16 @@
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
 import com.GREENWORKS.eco.data.Pin;
 import com.GREENWORKS.eco.data.PinFactory;
+import com.GREENWORKS.eco.data.SessionAssistant;
 
 /***
  * These are the unit tests for the data package. The classes that will be tested are
@@ -337,5 +341,23 @@ public class DataPackageTests {
         assertEquals("\\n Orlando', \\nFL", pin.removeTags(s));
     }
     
+    /***
+     * The getIndexString() method is used to generate a string that will useful for displaying
+     * pins on the map. 
+     */
+    @Test
+    public void remoteTags_shouldProduceTheIndexPageString(){
+    	PinFactory dataFactory = PinFactory.getFactory("2022-01-31 15:00:00", "2022-01-31 20:00:00");
+    	Pin pin = dataFactory.createPinData(); // Create event
+    	pin.setId(2);
+    	pin.setIconId(11); // Because this is an event the IconId will be assigned to 9. 
+    	pin.setStartDate("2022-01-31 15:00:00");
+    	pin.setEndDate("2022-01-31 20:00:00");
+    	pin.setLocationAddress("400 W Livingston St, Orlando, FL 32801");
+    	pin.setLocationName("Marriot Edit");
+    	pin.setCoordinates("-81.38423598435905,28.546908012845975");
+    	pin.setContent("");
+    	assertEquals("2, 11, 400 W Livingston St, Orlando, FL 32801, Marriot Edit, -81.38423598435905,28.546908012845975, 2022-01-31 15:00:00, 2022-01-31 20:00:00, ", pin.getIndexString());
+    }
    
 }
