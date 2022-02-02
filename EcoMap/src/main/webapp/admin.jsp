@@ -1,8 +1,10 @@
-<%@ page import="com.GREENWORKS.eco.EcoMap" %>
+<%@ page import="com.GREENWORKS.eco.data.*" %>
 <%@page import="java.util.ArrayList" %>
 <%@ page isELIgnored="false"%>
 <%
-EcoMap e = new EcoMap();
+// Get pin data
+SessionAssistant sa = new SessionAssistant();
+ArrayList<Pin> locationsArrayList = sa.getAllPins();
 %>
 
 <html>
@@ -146,51 +148,12 @@ EcoMap e = new EcoMap();
                         <form action="editlocation" method="POST">
                             <select name="locationID">
                                 <%
-                                // Set up variables
-                                String id = "";
-                                String iconid = "";
-                                String address = "";
-                                String name = "";
-                                String coord = "";
-
-                                // Increment variable
-                                int j = 0;
-
                                 // Loop through array
-                                ArrayList<String> locations = (ArrayList<String>)  e.getLocations();
-                                for (String location : locations)
+                                for (Pin location : locationsArrayList)
                                 {
-                                    if(j == 0)
-                                    {
-                                        id = location;
-                                    }
-                                    else if(j == 1)
-                                    {
-                                        iconid = location;
-                                    }
-                                    else if(j == 2)
-                                    {
-                                        address = location;
-                                    }
-                                    else if(j == 3)
-                                    {
-                                        name = location;
-                                    }
-                                    else if(j == 4)
-                                    {
-                                        coord = location;
-                                    }
-                                    else if(j == 7)
-                                    {
                                 %>
-                                        <option value="<%=id%>"><%=name%> - <%=address%></option>
+                                    <option value="<%=location.getId()%>"><%=location.getLocationName()%> - <%=location.getLocationAddress()%></option>
                                 <%
-                                        // Reset
-                                        j = -1;
-                                    }
-
-                                    // Increment
-                                    j++;
                                 }
                                 %>
                             </select>
