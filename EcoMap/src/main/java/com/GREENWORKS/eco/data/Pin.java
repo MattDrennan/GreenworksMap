@@ -76,8 +76,7 @@ public abstract class Pin {
 	 * @param s The String that will be modified. 
 	 * @return A String that has had additional backslashes added. 
 	 */
-    public String addSlashes(String s)
-	{
+    public String addSlashes(String s) {
         s = s.replaceAll("\\\\", "\\\\\\\\");
         s = s.replaceAll("\\n", "\\\\n");
         s = s.replaceAll("\\r", "\\\\r");
@@ -93,8 +92,7 @@ public abstract class Pin {
 	 * @return A modified String that will have no HTML tags. 
 	 */
 
-	public String removeTags(String s)
-	{
+	public String removeTags(String s) {
 		String noHTMLString = s.replaceAll("\\<.*?\\>", "");
 		return noHTMLString;
 	}
@@ -104,8 +102,7 @@ public abstract class Pin {
 	 * @param s The String that will be modified.
 	 * @return A modified String that will have no HTML tags and its backslashes preserved. 
 	 */
-	public String cleanInput(String s)
-	{
+	public String cleanInput(String s) {
 		if(s != null) {
 			String returnS = addSlashes(removeTags(s));
 			return returnS;
@@ -160,7 +157,9 @@ public abstract class Pin {
 	 * in the child classes: Location and Event. 
 	 * @param startDate The value to be assigned. 
 	 */
-	public void setStartDate(String startDate) {}
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
 
 	/***
 	 * Accessor method for the endDate instance variable. 
@@ -175,7 +174,9 @@ public abstract class Pin {
 	 * in the child classes: Location and Event. 
 	 * @param endDate The value to be assigned. 
 	 */
-	public void setEndDate(String endDate) {}
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
 
 	/***
 	 * Accessor method for the locationName instance variable. 

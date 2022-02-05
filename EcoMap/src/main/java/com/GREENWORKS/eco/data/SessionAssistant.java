@@ -18,8 +18,8 @@ import com.GREENWORKS.eco.constants.DatabaseConstants;
 public class SessionAssistant { // TODO: After you get this class working make its methods generic. 
 	
     private static SessionFactory sessionFactory = null;
-    private long locationsSize; // I want the SessionAssistant to know the size of the database tables. 
-    private long adminSize; 
+    private long locationsSize = 0; // I want the SessionAssistant to know the size of the database tables. 
+    private long adminSize = 0; 
     
     /***
      * This method returns the configured builder for the SessionFactory. 
