@@ -26,17 +26,6 @@ public class MysqlConnectTests {
     }
 
     /***
-     * After the the connect() method is called the instance Connection variable should
-     * not be null. 
-     */
-    @Test
-    public void connection_shouldNotBeNull() {
-        MysqlConnect mysqlConnect = new MysqlConnect();
-        mysqlConnect.connect();
-        assertNotNull(mysqlConnect.getConnection());
-    }
-
-    /***
      * Upon instantiation of the MysqlConnect object the instance Properties variable 
      * should be null. 
      */
