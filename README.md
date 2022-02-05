@@ -2,6 +2,8 @@
 
 **How to setup project:**
 
+This project currently relies on two API keys. The first is ArcGIS and the second is OpenCharge. 
+
 1. Create a database named “ecomap.”
 1. Run “ecomap.sql” on the database.
 1. Run the webapp folder on TomCat 10. WARNING: Tomcat 9 will not work. 
