@@ -18,8 +18,8 @@ import com.GREENWORKS.eco.constants.DatabaseConstants;
 public class SessionAssistant { // TODO: After you get this class working make its methods generic. 
 	
     private static SessionFactory sessionFactory = null;
-    private Number locationsSize; // I want the SessionAssistant to know the size of the database tables. 
-    private Number adminSize; 
+    private long locationsSize; // I want the SessionAssistant to know the size of the database tables. 
+    private long adminSize; 
     
     /***
      * This method returns the configured builder for the SessionFactory. 
@@ -210,11 +210,29 @@ public class SessionAssistant { // TODO: After you get this class working make i
    
     /***
      * This method returns the total number of entries in the locations table. 
-     * @return The total number as a long. 
+     * @return The total of locations. 
      */
     public long getLocationsTableSize() {
     	Session session = openSession();
     	return (long)session.createQuery("SELECT COUNT(p) FROM GenericPin p").getSingleResult();
+    }
+    
+
+    /***
+     * This method returns the total number of entries in the admin table. 
+     * @return The total of admins. 
+     */
+    public long getAdminsTableSize() {
+    	Session session = openSession();
+    	return (long)session.createQuery("SELECT COUNT(a) FROM Admin a").getSingleResult();
+    }
+    
+    /***
+     * This method populates the locationSize and the adminSize instance variables. 
+     */
+    public void getDatabaseCounts() {
+    	locationsSize = getLocationsTableSize();
+    	adminSize = getAdminsTableSize();
     }
     
 }
