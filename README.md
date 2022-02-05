@@ -76,7 +76,7 @@ This folder contains all the class files and files needed to run project.
 
 **src->main->webapp->java->com->GREENWORKS->eco->MysqlConnect.java**
 
-This file handles all the MySQL connections. We are phasing out MysqlConnect in favor of Hibernate. MysqlConnect will remain in the project because it can help facilitate quick feature development. 
+This file handles all the MySQL connections. We are phasing out MysqlConnect in favor of Hibernate. MysqlConnect will remain in the project because it can help facilitate streamlined feature development. 
 
 **src->main->webapp->java->com->GREENWORKS->eco->servlets**
 
@@ -104,8 +104,8 @@ This Servlet handles logging in a user.
 
 **src->main->webapp->java->com->GREENWORKS->eco->EcoMap.java**
 
-This file handled the main functions of the project. This was essential for project during feature development. EcoMap will remain in the project because it can help facilitate quick feature development. 
+This file handled the main functions of the project. This was essential for project during feature development. EcoMap will remain in the project because it can help facilitate streamlined feature development. 
 
 **src->main->webapp->java->com->GREENWORKS->eco->data**
 
-The data package handles all data related operations. This is where Hibernate ORM is located. 
+The data package handles all database related operations. This is where Hibernate ORM is located. 
