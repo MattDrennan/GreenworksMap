@@ -4,3 +4,4 @@ workspace.code-workspace
 *.class
 Cred.java
 hibernate.properties
+DatabaseConstants.java
