@@ -2,9 +2,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.List;
 
+import org.hibernate.ObjectNotFoundException;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -20,7 +22,7 @@ public class SessionAssistantTests {
     // These are the test values that are generated for the Hibernate CRUD tests. 
     private static Integer pinTestId = 0;
     private static Integer adminTestId = 0;
-    private static long databaseSize = 0;
+    private static long locationDatabaseSize = 0;
     
     /***
      * This will insert the test data sets into the database. It runs before all other tests in 
@@ -43,7 +45,7 @@ public class SessionAssistantTests {
     	sessionAssistant.insert(admin);
     	pinTestId = pin.getId();
     	adminTestId = admin.getId();
-    	databaseSize = sessionAssistant.getLocationsTableSize();
+    	locationDatabaseSize = sessionAssistant.getLocationsTableSize();
     }
     
     /***
@@ -51,7 +53,7 @@ public class SessionAssistantTests {
      * null. 
      */
     @Test
-    public void sessionAssistant_dateShouldBeNull() {
+    public void sessionAssistant_pinShouldBeNull() {
     	SessionAssistant sessionAssistant = new SessionAssistant();
     	Pin pin = sessionAssistant.get(new GenericPin(999999999)); // This data point should not exist. 
     	assertNull(pin);
@@ -76,11 +78,39 @@ public class SessionAssistantTests {
      * side Pin constructor. 
      */
     @Test
-    public void sessionAssistant_dateShouldBeEqual() {
+    public void sessionAssistant_pinDatesShouldEqualTestDates() {
     	SessionAssistant sessionAssistant = new SessionAssistant();
     	Pin pin = sessionAssistant.get(new GenericPin(pinTestId));
     	assertEquals("2022-01-31 15:00:00", pin.getStartDate());
     	assertEquals("2022-01-31 15:00:00", pin.getEndDate());
+    }
+    
+    /***
+     * Verifies that that updating the content instance variable to "" for the pin and
+     * then executing a database update statement will change the content entry
+     * in the database to "". 
+     */
+    @Test
+    public void sessionAssistant_pinDataShouldUpdateAndBeEmpty() {
+    	SessionAssistant sessionAssistant = new SessionAssistant();
+    	Pin pin = sessionAssistant.get(new GenericPin(pinTestId));
+    	pin.setContent("");
+    	sessionAssistant.update(pin);
+    	pin = null; // Set pin to null. 
+    	pin = sessionAssistant.get(new GenericPin(pinTestId)); // Get pin. 
+    	assertEquals("", pin.getContent());
+    }
+    
+    /***
+     * The entry with the specified id should successfully load and the address instance 
+     * variable should be "Test". 
+     */
+    @Test
+    public void sessionAssistant_pinShouldLoadPin() {
+    	SessionAssistant sessionAssistant = new SessionAssistant();
+    	Pin pin = sessionAssistant.load(new GenericPin(pinTestId));
+    	assertEquals("Test", pin.getLocationAddress());
+    	assertEquals("2022-01-31 15:00:00", pin.getEndDate()); 
     }
     
     /***
@@ -94,6 +124,46 @@ public class SessionAssistantTests {
     	assertEquals("Testusername9102", admin.getUsername());
     	assertEquals("Testpassword9120", admin.getPassword());
     	assertNotNull(admin.getId());
+    }
+    
+    /***
+     * Verifies that loading an Admin that exists will function correctly. 
+     */
+    @Test
+    public void sessionAssistant_shouldLoadAdmin() {
+    	SessionAssistant sessionAssistant = new SessionAssistant();
+    	Admin admin = sessionAssistant.load(new Admin(adminTestId));
+    	assertEquals("Testusername9102", admin.getUsername());
+    	assertEquals("Testpassword9120", admin.getPassword());
+    	assertNotNull(admin.getId());
+    }
+    
+    /***
+     * Verifies that attempting to load a piece of non-existent data will throw an exception. 
+     */
+    @Test
+    public void sessionAssistant_loadNonexistentPinShouldThrowException() {
+    	SessionAssistant sessionAssistant = new SessionAssistant();
+    	try {
+    		sessionAssistant.load(new GenericPin(9999999)); // This should throw an exception. 
+    		fail(); // If this line is reached then the test fails. 
+    	} catch (ObjectNotFoundException onfe) {
+    		// Test pass.
+    	}
+    }
+    
+    /***
+     * Verifies that attempting to load a piece of non-existent data will throw an exception. 
+     */
+    @Test
+    public void sessionAssistant_loadNonexistentAdminShouldThrowException() {
+    	SessionAssistant sessionAssistant = new SessionAssistant();
+    	try {
+    		sessionAssistant.load(new Admin(9999999)); // This should throw an exception. 
+    		fail(); // If this line is reached then the test fails. 
+    	} catch (ObjectNotFoundException onfe) {
+    		// Test pass.
+    	}
     }
     
     /***
@@ -134,10 +204,10 @@ public class SessionAssistantTests {
      * The size of the list should be the size of the entries in the table. 
      */
     @Test
-    public void sessionAssistant_shouldBeTheTableSize() {
+    public void sessionAssistant_shouldBeTheCorrectTableSize() {
     	SessionAssistant sessionAssistant = new SessionAssistant();
     	List<Pin> list = sessionAssistant.getAllPins();
-    	assertEquals(databaseSize, list.size());
+    	assertEquals(locationDatabaseSize, list.size());
     }
     
     /***
