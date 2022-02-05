@@ -7,12 +7,11 @@ This project currently relies on two API keys. The first is [ArcGIS](https://dev
 1. Create a database named “ecomap.”
 1. Run “ecomap.sql” on the database.
 1. Run the webapp folder on TomCat 10. WARNING: Tomcat 9 will not work. 
-1. You may need to adjust the port number in “src->main->webapp->java->com->GREENWORKS->eco->constants->DatabaseConstants.java” from 8889 to 3306. You will probably need to change the USERNAME and PASSWORD as well. DatabaseConstants.java is where the Connector and Hibenate recieve their properties. 
 1. Create a file, 'cred.js', in the root directory of 'webmap' with the following:
 ```
 var mapKey = 'MAP_KEY_HERE';
 ```
-6. Create a "Cred.java" file in "com/GREENWORKS/eco" with the following:
+5. Create a "Cred.java" file in "com/GREENWORKS/eco" with the following:
 ```
 package com.GREENWORKS.eco;
 
@@ -21,7 +20,7 @@ public class Cred {
     public static final String OPENCHARGEKEY = "OPEN_CHARGE_API_KEY_HERE";
 }
 ```
-7. Create a "DatabaseConstants.java" file in "com/greenworks/eco/constants" with the following: 
+6. Create a "DatabaseConstants.java" file in "com/greenworks/eco/constants" with the following: 
 ```
 package com.GREENWORKS.eco.constants;
 
@@ -56,6 +55,7 @@ public class DatabaseConstants {
     public static final String UPDATE = "update";
 }
 ```
+7. You may need to adjust the port number in “src->main->webapp->java->com->GREENWORKS->eco->constants->DatabaseConstants.java” from 8889 to 3306. You will probably need to change the USERNAME and PASSWORD as well. DatabaseConstants.java is where the Connector and Hibenate recieve their properties. 
 
 **ecomap.sql:**
 
