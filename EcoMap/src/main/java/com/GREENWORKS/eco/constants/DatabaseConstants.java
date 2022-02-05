@@ -29,4 +29,5 @@ public class DatabaseConstants {
     public static final String TRUE = "true";
     public static final String HBM = "hbm2ddl.auto";
     public static final String UPDATE = "update";
+	// test
 }
