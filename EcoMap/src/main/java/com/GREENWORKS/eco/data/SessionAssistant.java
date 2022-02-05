@@ -79,87 +79,48 @@ public class SessionAssistant { // TODO: After you get this class working make i
     }
     
     /***
-     * This method is used to insert a new dataset into the table. 
-     * @param pin The Pin that will be inserted into the table. 
+     * This method is used to insert a new item into the table. 
+     * @param dataSet At the time of the documentation Admin and Pin are valid object types. 
      */
-    public void insert(Pin pin) {
-    	Session session = openSession();
-    	session.beginTransaction();
-    	session.save(pin);
-    	session.getTransaction().commit();
-    	Logger.info("Pin inserted: " + pin);
-    	session.close();
-    }
-    
-    /***
-     * This method is used to insert a new dataset into the table. 
-     * @param admin The Admin that will be inserted into the table. 
-     */
-	public void insert(Admin admin) {
+	public <T> void insert(T item) {
 		Session session = openSession();
 	 	session.beginTransaction();
-	 	session.save(admin);
+	 	session.save(item);
 	 	session.getTransaction().commit();
-	 	Logger.info("Admin inserted: " + admin);
+	 	Logger.info("Item saved: " + item);
 	    session.close();
 	}
 	
 	/***
 	 * This is the update method. This method will update existing entries in the database. 
-	 * @param admin The updated Admin. 
+	 * @param admin At the time of the documentation Admin and Pin are valid object types. 
 	 */
-	public void update(Admin admin) {
+	public <T> void update(T item) {
     	Session session = openSession();
    	 	session.beginTransaction();
-   	 	session.update(admin);
+   	 	session.update(item);
    	 	session.getTransaction().commit();
-   	 	Logger.info("Admin update: " + admin);
+   	 	Logger.info("Item updated: " + item);
    	 	session.close();
-    }
-    
-	/***
-	 * This is the update method. This method will update existing entries in the database. 
-	 * @param pin The updated Pin. 
-	 */
-    public void update(Pin pin) {
-    	Session session = openSession();
-    	session.beginTransaction();
-    	session.update(pin);
-    	session.getTransaction().commit();
-    	Logger.info("Pin update: " + pin);
-    	session.close();
     }
     
     /***
      * This method will delete the Pin entry that contains an identical image to its own. 
      * @param pin Requires the Pin object that will be deleted in the database. 
      */
-    public void delete(Pin pin) {
+    public <T> void delete(T item) {
     	Session session = openSession();
     	session.beginTransaction();
-    	session.delete(pin);
+    	session.delete(item);
     	session.getTransaction().commit();
-    	Logger.info("Pin deleted: " + pin);
-    	session.close();
-    }
-   
-    /***
-     * This method will delete the Admin entry that contains an identical image to its own. 
-     * @param admin Requires the Admin object that will be deleted in the database. 
-     */
-    public void delete(Admin admin) {
-    	Session session = openSession();
-    	session.beginTransaction();
-    	session.delete(admin);
-    	session.getTransaction().commit();
-    	Logger.info("Admin deleted: " + admin);
+    	Logger.info("Item deleted: " + item);
     	session.close();
     }
    
     /***
      * This method is used to get a GenericPin by id. 
      * @param pin Requires a Pin object that has a populated id instance variable. 
-     * @return
+     * @return Returns a populated Pin. 
      */
     public Pin get(Pin pin) {
     	Session session = openSession();
@@ -174,13 +135,13 @@ public class SessionAssistant { // TODO: After you get this class working make i
      * This method can be viewed as an accessor method for finding objects of type Admin that
      * exist in the database or the cache. Correlation is established by id. 
      * @param admin Requires an Admin as a paramter. 
-     * @return Returns the Admin. 
+     * @return Returns a populated Admin. 
      */
     public Admin get(Admin admin) {
     	Session session = openSession();
     	session.beginTransaction();
     	Admin adminDb = session.find(Admin.class, admin.getId());
-    	Logger.info("Returned pin: " + adminDb);
+    	Logger.info("Returned admin: " + adminDb);
     	session.close();
     	return adminDb;
     }
