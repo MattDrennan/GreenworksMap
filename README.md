@@ -7,7 +7,7 @@ This project currently relies on two API keys. The first is [ArcGIS](https://dev
 1. Create a database named “ecomap.”
 1. Run “ecomap.sql” on the database.
 1. Run the webapp folder on TomCat 10. WARNING: Tomcat 9 will not work. 
-1. You may need to adjust the port number in “src->main->webapp->java->com->GREENWORKS->eco->constants->DatabaseConstants.java” from 8889 to 3306. The MySQL Connector user and password can be changed from that file as well.
+1. You may need to adjust the port number in “src->main->webapp->java->com->GREENWORKS->eco->constants->DatabaseConstants.java” from 8889 to 3306. You will probably need to change the USERNAME and PASSWORD as well. DatabaseConstants.java is where the Connector and Hibenate recieve their properties. 
 1. Create a file, 'cred.js', in the root directory of 'webmap' with the following:
 ```
 var mapKey = 'MAP_KEY_HERE';
@@ -21,14 +21,6 @@ public class Cred {
     public static final String OPENCHARGEKEY = "OPEN_CHARGE_API_KEY_HERE";
 }
 ```
-7. Create a "hibernate.properties" file in "src/main/java" with the following:
-```
-hibernate.connection.driver_class = com.mysql.jdbc.Driver
-hibernate.connection.url = jdbc:mysql://localhost:YOUR-PORT-NUMBER/ecomap
-hibernate.connection.username = YOUR-MYSQL-USERNAME
-hibernate.connection.password = YOUR-MYSQL-PASSWORD
-```
-Note: Alternatively, you can modify the hibernate.cfg.xml. Uncomment the JDBC block and add your specifications. 
 
 **ecomap.sql:**
 
