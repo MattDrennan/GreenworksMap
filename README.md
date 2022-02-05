@@ -10,7 +10,7 @@
 ```
 var mapKey = 'MAP_KEY_HERE';
 ```
-1. Create a "Cred.java" file in "com/GREENWORKS/eco" with the following:
+6. Create a "Cred.java" file in "com/GREENWORKS/eco" with the following:
 ```
 package com.GREENWORKS.eco;
 
@@ -19,7 +19,7 @@ public class Cred {
     public static final String OPENCHARGEKEY = "OPEN_CHARGE_API_KEY_HERE";
 }
 ```
-1. Create a "hibernate.properties" file in "src/main/java" with the following:
+7. Create a "hibernate.properties" file in "src/main/java" with the following:
 ```
 hibernate.connection.driver_class = com.mysql.jdbc.Driver
 hibernate.connection.url = jdbc:mysql://localhost:YOUR-PORT-NUMBER/ecomap
