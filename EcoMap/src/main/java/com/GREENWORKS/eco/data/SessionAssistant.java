@@ -188,7 +188,7 @@ public class SessionAssistant { // TODO: After you get this class working make i
     	Session session = openSession();
     	session.beginTransaction();
     	Admin adminDb = session.load(Admin.class, admin.getId());
-    	Logger.info("Loaded pin: " + adminDb);
+    	Logger.info("Loaded admin: " + adminDb);
     	session.close();
     	return adminDb;
     }
