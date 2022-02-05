@@ -2,7 +2,7 @@
 
 **How to setup project:**
 
-This project currently relies on two API keys. The first is [ArcGIS](https://developers.arcgis.com/documentation/mapping-apis-and-services/security/api-keys/) and the second is [OpenCharge](https://community.openchargemap.org/t/api-keys-are-now-required/161). 
+This project currently relies on two API keys. The first is [ArcGIS](https://developers.arcgis.com/documentation/mapping-apis-and-services/security/api-keys/) and the second is [OpenCharge](https://community.openchargemap.org/t/api-keys-are-now-required/161). In addition, it is necessary to create three files: cred.js, Cred.java, and DatabaseConstants.java. The steps for creating these files are below. 
 
 1. Create a database named “ecomap.”
 1. Run “ecomap.sql” on the database.
@@ -20,7 +20,7 @@ public class Cred {
     public static final String OPENCHARGEKEY = "OPEN_CHARGE_API_KEY_HERE";
 }
 ```
-6. Create a "DatabaseConstants.java" file in "com/greenworks/eco/constants" with the following: 
+6. Create a "DatabaseConstants.java" file in "com/GREENWORKS/eco/constants" with the following: 
 ```
 package com.GREENWORKS.eco.constants;
 
