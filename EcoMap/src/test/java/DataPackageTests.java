@@ -2,15 +2,12 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
 import com.GREENWORKS.eco.data.Pin;
 import com.GREENWORKS.eco.data.PinFactory;
-import com.GREENWORKS.eco.data.SessionAssistant;
 
 /***
  * These are the unit tests for the data package. The classes that will be tested are
@@ -357,7 +354,7 @@ public class DataPackageTests {
     	pin.setLocationName("Marriot Edit");
     	pin.setCoordinates("-81.38423598435905,28.546908012845975");
     	pin.setContent("");
-    	assertEquals("2, 11, 400 W Livingston St, Orlando, FL 32801, Marriot Edit, -81.38423598435905,28.546908012845975, 2022-01-31 15:00:00, 2022-01-31 20:00:00, ", pin.getIndexString());
+    	assertEquals("2,11,400 W Livingston St, Orlando, FL 32801,Marriot Edit,-81.38423598435905,28.546908012845975,2022-01-31 15:00:00,2022-01-31 20:00:00,", pin.getIndexString());
     }
    
 }

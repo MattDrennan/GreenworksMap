@@ -3,8 +3,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import com.GREENWORKS.eco.DatabaseConstants;
 import com.GREENWORKS.eco.MysqlConnect;
+import com.GREENWORKS.eco.constants.DatabaseConstants;
 
 import org.junit.jupiter.api.Test;
 
@@ -23,17 +23,6 @@ public class MysqlConnectTests {
     public void connection_shouldBeNull() {
         MysqlConnect mysqlConnect = new MysqlConnect();
         assertNull(mysqlConnect.getConnection());
-    }
-
-    /***
-     * After the the connect() method is called the instance Connection variable should
-     * not be null. 
-     */
-    @Test
-    public void connection_shouldNotBeNull() {
-        MysqlConnect mysqlConnect = new MysqlConnect();
-        mysqlConnect.connect();
-        assertNotNull(mysqlConnect.getConnection());
     }
 
     /***

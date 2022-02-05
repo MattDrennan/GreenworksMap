@@ -7,6 +7,8 @@ import java.util.Properties;
 
 import org.tinylog.Logger;
 
+import com.GREENWORKS.eco.constants.DatabaseConstants;
+
 /***
  * This class houses methods that handle database connection. 
  */
