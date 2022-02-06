@@ -20,7 +20,7 @@ import com.google.gson.Gson;
 public class OrlandoWebScraper {
 	
 	private static final String GEOCODING_RESOURCE = "https://maps.googleapis.com/maps/api/geocode/json?address=";
-    private static final String API_KEY = Cred.GEOCODINGKEY;
+    private static final String API_KEY = Cred.GOOGLEKEY;
     private static final String ANDKEY = "&key=";
     private static ArrayList<GenericPin> pinList = new ArrayList<GenericPin>();
 	
