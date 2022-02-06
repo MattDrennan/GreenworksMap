@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
+import com.GREENWORKS.eco.data.GenericPin;
 import com.GREENWORKS.eco.data.Pin;
 import com.GREENWORKS.eco.data.PinFactory;
 
@@ -71,7 +72,7 @@ public class DataPackageTests {
      * when it is instantiated through the PinDataAbstractFactory.
      */
 	@Test
-	public void createPinData_variablesThatShouldBeNotBeNull() {
+	public void createPinData_objectShouldNotBeNull() {
     	PinFactory factory = PinFactory.getFactory(null, null);
     	Pin pin = factory.createPinData();
     	assertNotNull(pin.getClass().getSimpleName());
@@ -94,9 +95,31 @@ public class DataPackageTests {
      */
     @Test
     public void createPinData_shouldBeAnEvent() {
-    	PinFactory factory = PinFactory.getFactory("beginTest", "endTest");
+    	PinFactory factory = PinFactory.getFactory("2022-01-31 15:00:00", "2022-01-31 17:00:00");
     	Pin pin = factory.createPinData();
     	assertEquals("EventPin", pin.getClass().getSimpleName());
+	}
+    
+    /***
+     * Verifies that overloaded setStartDate() method in EventPin is functioning properly. 
+     */
+    @Test
+    public void createEventPin_startDateShouldBeEqual() {
+    	PinFactory factory = PinFactory.getFactory("2022-01-31 15:00:00", "2022-01-31 17:00:00");
+    	Pin pin = factory.createPinData();
+    	pin.setStartDate("2022-01-31 15:00:00");  	
+    	assertEquals("2022-01-31 15:00:00", pin.getStartDate());
+	}
+
+    /***
+     * Verifies that overloaded setEndDate() method in EventPin is functioning properly. 
+     */
+    @Test
+    public void createEventPin_endDateShouldBeEqual() {
+    	PinFactory factory = PinFactory.getFactory("2022-01-31 15:00:00", "2022-01-31 17:00:00");
+    	Pin pin = factory.createPinData();
+    	pin.setEndDate("2022-01-31 17:00:00");  	
+    	assertEquals("2022-01-31 17:00:00", pin.getEndDate());
 	}
 
     /***
@@ -190,14 +213,25 @@ public class DataPackageTests {
      */    
     @Test
     public void createPinData_shouldAssignDateStrings() {
-    	String startDate = "2022-01-29 06:00";
-    	String endDate = "2022-01-29 08:00";
-    	PinFactory factory = PinFactory.getFactory(startDate, endDate);
+    	PinFactory factory = PinFactory.getFactory("2022-01-29 06:00", "2022-01-29 08:00");
     	Pin pin = factory.createPinData(); // Location Object
-    	pin.setStartDate(startDate);
-    	pin.setEndDate(endDate);
+    	pin.setStartDate("2022-01-29 06:00");
+    	pin.setEndDate("2022-01-29 08:00");
     	assertNotNull(pin.getStartDate());
     	assertNotNull(pin.getEndDate());
+	}
+    
+    /***
+     * This test enforces the logic that locations do not event dates. 
+     */    
+    @Test
+    public void createLocationPin_shouldAssignDateStrings() {
+    	PinFactory factory = PinFactory.getFactory(null, null);
+    	Pin pin = factory.createPinData(); // Location Object
+    	pin.setStartDate("2022-01-29 06:00");
+    	pin.setEndDate("2022-01-29 08:00");
+    	assertNull(pin.getStartDate());
+    	assertNull(pin.getEndDate());
 	}
 
     /***
@@ -207,7 +241,7 @@ public class DataPackageTests {
     @Test
     public void createPinData_shouldAssignNullDatesToDEFAULT() {
     	PinFactory factory = PinFactory.getFactory(null, null);
-    	Pin pin = factory.createPinData(); // Event Object
+    	Pin pin = factory.createPinData(); // Location Object
     	pin.setEndDate(null);
     	pin.setStartDate(null);
     	assertEquals(null, pin.getEndDate());
@@ -336,6 +370,35 @@ public class DataPackageTests {
     	Pin pin = factory.createPinData();
         String s = "<h1>\\n <p>Orlando</p>', \\nFL</h1>";
         assertEquals("\\n Orlando', \\nFL", pin.removeTags(s));
+    }
+    
+    /***
+     * Verifies the operation of a parameterized GenericPin constructor. 
+     */
+    @Test
+    public void genericPin_idShouldEqual() {
+    	GenericPin pin = new GenericPin(5);
+    	assertEquals(5, pin.getId());
+    }
+    
+    /***
+     * Verifies the operation of .setCoordinates() and .getCoordinates(). 
+     */
+    @Test
+    public void genericPin_coordinatesShouldEqual() {
+    	GenericPin pin = new GenericPin();
+    	pin.setCoordinates("91,81<html>");
+    	assertEquals("91,81", pin.getCoordinates());
+    }
+    
+    /***
+     * Verifies the operation of .setContent() and .getContent(). 
+     */
+    @Test
+    public void genericPin_contentShouldEqual() {
+    	GenericPin pin = new GenericPin();
+    	pin.setContent("This is a generic pin.");
+    	assertEquals("This is a generic pin.", pin.getContent());
     }
     
     /***
