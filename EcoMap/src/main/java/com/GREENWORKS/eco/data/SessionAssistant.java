@@ -27,17 +27,7 @@ public class SessionAssistant { // TODO: After you get this class working make i
      */
     private static SessionFactory buildSessionFactory() {
     	try {
-    		Properties properties = new Properties();
-    		properties.setProperty(DatabaseConstants.HIBERNATE_URL, DatabaseConstants.DATABASE_URL);
-    		properties.setProperty(DatabaseConstants.HIBERNATE_USERNAME, DatabaseConstants.USERNAME);
-    		properties.setProperty(DatabaseConstants.HIBERNATE_PASSWORD, DatabaseConstants.PASSWORD);
-    		properties.setProperty(DatabaseConstants.HIBERNATE_DIALECT, DatabaseConstants.DIALECT);
-    		properties.setProperty(DatabaseConstants.HIBERNATE_POOL, DatabaseConstants.MAX_POOL);
-    		properties.setProperty(DatabaseConstants.HIBERNATE_THREAD, DatabaseConstants.THREAD);
-    		properties.setProperty(DatabaseConstants.HIBERNATE_SHOW, DatabaseConstants.TRUE);
-    		properties.setProperty(DatabaseConstants.HBM, DatabaseConstants.UPDATE);
-    		Configuration config = new Configuration();
-    		config.setProperties(properties); 
+    		Configuration config = new Configuration().configure();
         	config.addAnnotatedClass(Admin.class);
         	config.addAnnotatedClass(EventPin.class);
         	config.addAnnotatedClass(LocationPin.class);
@@ -88,6 +78,21 @@ public class SessionAssistant { // TODO: After you get this class working make i
 	 	session.save(item);
 	 	session.getTransaction().commit();
 	 	Logger.info("Item saved: " + item);
+	    session.close();
+	}
+	
+	/***
+     * This method is used to insert a new item into the table. 
+     * @param dataSet At the time of the documentation Admin and Pin are valid object types. 
+     */
+	public <T> void saveList(ArrayList<T> items) {
+		Session session = openSession();
+	 	session.beginTransaction();
+	 	for(T item : items) {
+	 		session.save(item);
+	 		Logger.info("Item saved: " + item);
+	 	}
+	 	session.getTransaction().commit();
 	    session.close();
 	}
 	
