@@ -18,7 +18,7 @@ package com.GREENWORKS.eco;
 public class Cred {
     // Put all data you want hidden here
     public static final String OPENCHARGEKEY = "OPEN_CHARGE_API_KEY_HERE";
-    public static final String GEOCODINGKEY = "GEOCODE_API_KEY_HERE";
+    public static final String GOOGLEKEY = "GEOCODE_API_KEY_HERE";
 }
 ```
 6. Create a "DatabaseConstants.java" file in "com/GREENWORKS/eco/constants" with the following: 
