@@ -15,60 +15,64 @@ import com.GREENWORKS.eco.data.SessionAssistant;
 import com.google.gson.Gson;
 
 /***
- * This is a webscraper for the City of Orlando website. Rather crude but it gets the job done. 
+ * This is a webscraper for the City of Orlando website. This is an example of how webscraping can be done. 
  */
+@Deprecated
 public class OrlandoWebScraper {
 	
 	private static final String GEOCODING_RESOURCE = "https://maps.googleapis.com/maps/api/geocode/json?address=";
-    private static final String API_KEY = Cred.GOOGLEKEY;
+    private static final String API_KEY = "Cred.GOOGLEKEY";
     private static final String ANDKEY = "&key=";
     private static ArrayList<GenericPin> pinList = new ArrayList<GenericPin>();
+    private static final boolean run = false;
 	
 	public static void main(String[] args) throws IOException {
-		EcoMap ecomap = new EcoMap();
-		GenericPin pin = new GenericPin();
-		int pageNum = 0;
-		String websiteURL = "";
-		String address = "";
-		String content = "";
-		for(int i = 1; i <= 13; i++) {
-			pageNum = i;
-			websiteURL = "https://www.orlando.gov/Parks-the-Environment/Directory?dlv_OC%20CL%20Public%20Parks%20Reserves%20Listing=(pageindex=" + pageNum + ")&_ga=2.33517054.1180830333.1644162848-812513583.1643140795";
-	        URL url;
-			url = new URL(websiteURL);
-			String scannedLine = "";
-			Scanner scan = new Scanner(url.openStream());
-			while(scan.hasNextLine()) {
-				scannedLine = scan.nextLine();
-				if(scannedLine.contains("<h2 class=\"list-item-title\">")) {
-					pin = new GenericPin();
-					pin.setLocationName(scan.nextLine().trim());
-				}
-				if(scannedLine.contains("<p class=\"list-item-address\">")) {
-					address = ecomap.removeTags(scannedLine).trim();
-					pin.setLocationAddress(address);
-					content = ecomap.removeTags(scan.nextLine()).trim();
-					pin.setContent(content);
-					pin.setApi((byte) 2);
-					pin.setIconId(5);
-					pinList.add(pin);
+		if(run) {
+			EcoMap ecomap = new EcoMap();
+			GenericPin pin = new GenericPin();
+			int pageNum = 0;
+			String websiteURL = "";
+			String address = "";
+			String content = "";
+			for(int i = 1; i <= 13; i++) {
+				pageNum = i;
+				websiteURL = "https://www.orlando.gov/Parks-the-Environment/Directory?dlv_OC%20CL%20Public%20Parks%20Reserves%20Listing=(pageindex=" + pageNum + ")&_ga=2.33517054.1180830333.1644162848-812513583.1643140795";
+		        URL url;
+				url = new URL(websiteURL);
+				String scannedLine = "";
+				Scanner scan = new Scanner(url.openStream());
+				while(scan.hasNextLine()) {
+					scannedLine = scan.nextLine();
+					if(scannedLine.contains("<h2 class=\"list-item-title\">")) {
+						pin = new GenericPin();
+						pin.setLocationName(scan.nextLine().trim());
+					}
+					if(scannedLine.contains("<p class=\"list-item-address\">")) {
+						address = ecomap.removeTags(scannedLine).trim();
+						pin.setLocationAddress(address);
+						content = ecomap.removeTags(scan.nextLine()).trim();
+						pin.setContent(content);
+						pin.setApi((byte) 2);
+						pin.setIconId(5);
+						pinList.add(pin);
+					}
 				}
 			}
-		}
-		SessionAssistant sessionAssistant = new SessionAssistant();
-		for(GenericPin pins : pinList) {
-			String body = "";
-	        try {
-				body = geocodeSync(pins.getLocationAddress());
-			} catch (IOException | InterruptedException e) {
-				e.printStackTrace();
+			SessionAssistant sessionAssistant = new SessionAssistant();
+			for(GenericPin pins : pinList) {
+				String body = "";
+		        try {
+					body = geocodeSync(pins.getLocationAddress());
+				} catch (IOException | InterruptedException e) {
+					e.printStackTrace();
+				}
+		        Gson gson = new Gson();
+		        root data = gson.fromJson(body, root.class);
+		        String coordinates = data.results.get(0).geometry.location.lng + "," + data.results.get(0).geometry.location.lat;
+				pins.setCoordinates(coordinates);
 			}
-	        Gson gson = new Gson();
-	        root data = gson.fromJson(body, root.class);
-	        String coordinates = data.results.get(0).geometry.location.lng + "," + data.results.get(0).geometry.location.lat;
-			pins.setCoordinates(coordinates);
+			sessionAssistant.saveList(pinList);
 		}
-		sessionAssistant.saveList(pinList);
 	}
 	
 	public static String geocodeSync(String query) throws IOException, InterruptedException {
