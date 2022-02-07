@@ -15,7 +15,8 @@ import com.GREENWORKS.eco.data.SessionAssistant;
 import com.google.gson.Gson;
 
 /***
- * This is a webscraper for the City of Orlando website. This is an example of how webscraping can be done. 
+ * This is a webscraper for the City of Orlando website. This is an example of how webscraping can be done. This will not
+ * run in its current state. It requires a Google Geocoding API key and the run variable must be true. 
  */
 @Deprecated
 public class OrlandoWebScraper {
