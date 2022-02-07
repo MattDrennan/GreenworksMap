@@ -2,7 +2,7 @@
 
 **How to setup project:**
 
-This project currently relies on three API keys. The first is [ArcGIS](https://developers.arcgis.com/documentation/mapping-apis-and-services/security/api-keys/), the second is [OpenCharge](https://community.openchargemap.org/t/api-keys-are-now-required/161), and the third is [Geocoding](https://developers.google.com/maps/documentation/geocoding/get-api-key). In addition, it is necessary to create three files: cred.js, Cred.java, DatabaseConstants.java, and hibernate.cfg.xml. The steps for creating these files are below. 
+This project currently relies on two API keys. The first is [ArcGIS](https://developers.arcgis.com/documentation/mapping-apis-and-services/security/api-keys/) and the second is [OpenCharge](https://community.openchargemap.org/t/api-keys-are-now-required/161). In addition, it is necessary to create three files: cred.js, Cred.java, DatabaseConstants.java, and hibernate.cfg.xml. The steps for creating these files are below. 
 
 1. Create a database named “ecomap.”
 1. Run “ecomap.sql” on the database.
@@ -18,7 +18,6 @@ package com.GREENWORKS.eco;
 public class Cred {
     // Put all data you want hidden here
     public static final String OPENCHARGEKEY = "OPEN_CHARGE_API_KEY_HERE";
-    public static final String GOOGLEKEY = "GEOCODE_API_KEY_HERE";
 }
 ```
 6. Create a "DatabaseConstants.java" file in "com/GREENWORKS/eco/constants" with the following: 
