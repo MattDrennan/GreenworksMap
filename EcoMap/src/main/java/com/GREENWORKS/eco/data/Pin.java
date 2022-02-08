@@ -41,8 +41,23 @@ public abstract class Pin {
 	@Column(name="api", unique = false, nullable = true)
 	protected Byte api;
     
-	
+	/***
+	 * 
+	 * @return
+	 */
+    public Byte getApi() {
+		return api;
+	}
+    
     /***
+     * 
+     * @param api
+     */
+	public void setApi(Byte api) {
+		this.api = api;
+	}
+
+	/***
      * Zero parameter constructor. 
      */
     public Pin() { 
