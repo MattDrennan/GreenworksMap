@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import com.GREENWORKS.eco.Cred;
+
 /***
  * The parent abstract class for all Pin related data. This class will not be directly 
  * instantiated but rather its behavior will be instantiated through its children. This 
@@ -271,6 +273,22 @@ public abstract class Pin {
 		return thumbnail;
 	}
 
+	/***
+	 * Returns the thumbnail variable, formatted as an HTML string
+	 * @return Returns the variable as an HTML string
+	 */		
+	public String getThumbnailHTML() {
+		// Make sure it has a value
+		if(thumbnail != "" && thumbnail != "null" && thumbnail != null)
+		{
+			return "<img src='" + Cred.BASE_URL + "/images/" + thumbnail + "' width='100px' height='100px' /><br /><br />";
+		}
+		else
+		{
+			return "";
+		}
+	}
+
 
 	/***
 	 * Mutator method for assigning to the thumbnail instance variable. Conducts
@@ -279,6 +297,22 @@ public abstract class Pin {
 	 */
 	public void setThumbnail(String thumbnail) {
 		this.thumbnail = thumbnail;
+	}
+
+	/***
+	 * Returns the link variable, formatted as an HTML string
+	 * @return Returns the variable as an HTML string
+	 */		
+	public String getLinkHTML() {
+		// Make sure it has a value
+		if(link != "" && link != "null" && link != null)
+		{
+			return "<br /><br /><a href='http://" + link + "' target='_blank'>[View Website]</a>";
+		}
+		else
+		{
+			return "";
+		}
 	}
 
 	/***
@@ -296,24 +330,6 @@ public abstract class Pin {
 	 */
 	public void setLink(String link) {
 		this.link = link;
-	}
-	
-	/***
-	 * Accessor method for the websiteURL instance variable. 
-	 * @return Returns the contents of the instance variable. 
-	 */		
-	public String getWebsiteURL() {
-		return websiteURL;
-	}
-
-
-	/***
-	 * Mutator method for assigning to the websiteURL instance variable. Conducts
-	 * cleaning on the parameter. 
-	 * @param websiteURL The value to be assigned. 
-	 */
-	public void setWebsiteURL(String websiteURL) {
-		this.websiteURL = websiteURL;
 	}
 	
 	/***

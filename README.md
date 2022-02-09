@@ -18,6 +18,8 @@ package com.GREENWORKS.eco;
 public class Cred {
     // Put all data you want hidden here
     public static final String OPENCHARGEKEY = "OPEN_CHARGE_API_KEY_HERE";
+
+    public static final String BASE_URL = "BASE_URL_OF_WEBSITE_HERE";
 }
 ```
 6. Create a "DatabaseConstants.java" file in "com/GREENWORKS/eco/constants" with the following: 
