@@ -50,10 +50,13 @@ public abstract class PinFactory {
     private static boolean notAnEvent;
     
     /***
-	 * 
-	 * @param startDate
-	 * @param endDate
-	 * @return
+	 * This method is used to determine if the provided dataset conforms to the nature of
+	 * an EventPin or to that of a LocationPin. The simple distinction between an EventPin and a
+	 * LocationPin is that an EventPin will have a begin data and an end date. If the dataset does 
+	 * not have a begin date or an end date then the method concludes that it is not an EventPin. 
+	 * @param startDate The begin date. 
+	 * @param endDate The end date. 
+	 * @return Returns true if the data is not an EventPin. Return false if the data is an EventPin.  
 	 */
     protected static boolean notAnEvent(String startDate, String endDate) {
     	return (startDate == null || endDate == null || startDate == "" || endDate == "");

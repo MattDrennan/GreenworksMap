@@ -2,7 +2,6 @@ package com.GREENWORKS.eco.data;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,7 +9,6 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.tinylog.Logger;
 
-import com.GREENWORKS.eco.constants.DatabaseConstants;
 
 /***
  * This class is intended to assist the Servlets by performing all the backend database functions. 
@@ -32,6 +30,7 @@ public class SessionAssistant { // TODO: After you get this class working make i
         	config.addAnnotatedClass(EventPin.class);
         	config.addAnnotatedClass(LocationPin.class);
         	config.addAnnotatedClass(GenericPin.class);
+        	config.addAnnotatedClass(ProblemPin.class);
             StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(config.getProperties());
             return config.buildSessionFactory(builder.build());
         }
@@ -130,10 +129,10 @@ public class SessionAssistant { // TODO: After you get this class working make i
     public Pin get(Pin pin) {
     	Session session = openSession();
     	session.beginTransaction();
-    	GenericPin genericPin = session.find(GenericPin.class, pin.getId());
-    	Logger.info("Returned pin: " + genericPin);
+    	Pin data = session.find(pin.getClass(), pin.getId());
+    	Logger.info("Returned pin: " + data);
     	session.close();
-    	return genericPin;
+    	return data;
     }
    
     /***
@@ -210,6 +209,17 @@ public class SessionAssistant { // TODO: After you get this class working make i
     	for(Pin pin : genericPinList) {
     		pinList.add(pin);
     	}
+    	return pinList;
+    }
+    
+    /***
+     * This method returns all pins that are stored in the database. It stores all the Pins in an ArrayList. This
+     * method is used in the front-end of the application. 
+     * @return Returns an ArrayList of all the Pins. 
+     */
+    public List<Pin> getAllPinsList() {
+    	Session session = openSession();
+    	List<Pin> pinList = session.createQuery("SELECT p FROM GenericPin p", Pin.class).getResultList();
     	return pinList;
     }
    
