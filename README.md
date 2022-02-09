@@ -4,25 +4,21 @@
 
 This project currently relies on two API keys. The first is [ArcGIS](https://developers.arcgis.com/documentation/mapping-apis-and-services/security/api-keys/) and the second is [OpenCharge](https://community.openchargemap.org/t/api-keys-are-now-required/161). In addition, it is necessary to create three files: cred.js, Cred.java, DatabaseConstants.java, and hibernate.cfg.xml. The steps for creating these files are below. 
 
-1. Create a database named “ecomap.”
-1. Run “ecomap.sql” on the database.
-1. Run the webapp folder on TomCat 10. WARNING: Tomcat 9 will not work. 
 1. Create a file, 'cred.js', in the root directory of 'webmap' with the following:
 ```
 var mapKey = 'MAP_KEY_HERE';
 ```
-5. Create a "Cred.java" file in "com/GREENWORKS/eco" with the following:
+2. Create a "Cred.java" file in the "com->GREENWORKS->eco->" folder with the following:
 ```
 package com.GREENWORKS.eco;
 
 public class Cred {
     // Put all data you want hidden here
     public static final String OPENCHARGEKEY = "OPEN_CHARGE_API_KEY_HERE";
-
     public static final String BASE_URL = "BASE_URL_OF_WEBSITE_HERE";
 }
 ```
-6. Create a "DatabaseConstants.java" file in "com/GREENWORKS/eco/constants" with the following: 
+3. Create a "DatabaseConstants.java" file in the "com->GREENWORKS->eco->constants->" folder with the following: 
 ```
 package com.GREENWORKS.eco.constants;
 
@@ -45,9 +41,9 @@ public class DatabaseConstants {
     public static final String MAX_POOL = "250";
 }
 ```
-7. You may need to adjust the port number in “src->main->webapp->java->com->GREENWORKS->eco->constants->DatabaseConstants.java” from 8889 to 3306. You will probably need to change the USERNAME and PASSWORD as well. DatabaseConstants.java is where the Connector recieves its properties. 
+4. You may need to adjust the port number in “src->main->webapp->java->com->GREENWORKS->eco->constants->DatabaseConstants.java” from 8889 to 3306. You will probably need to change the USERNAME and PASSWORD as well. DatabaseConstants.java is where the Connector recieves its properties. 
 
-8. You will need to create a file in the “EcoMap->src->main->resources“ folder. The file must be named “hibernate.cfg.xml“. There is a readme.txt file in this same location. 
+5. You will need to create a file in the “EcoMap->src->main->resources“ folder. The file must be named “hibernate.cfg.xml“. There is a readme.txt file in this same location. 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-configuration PUBLIC
@@ -57,7 +53,7 @@ public class DatabaseConstants {
     <session-factory>
 		<!-- JDBC Database Connection Settings -->
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:8889/ecomap</property> <!-- Adjust -->
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:8889/ecomap?createDatabaseIfNotExist=true</property> <!-- Adjust -->
         <property name="hibernate.connection.username">root</property> <!-- Adjust -->
         <property name="hibernate.connection.password">root</property> <!-- Adjust -->
         
@@ -81,11 +77,13 @@ public class DatabaseConstants {
     </session-factory>
 </hibernate-configuration>
 ```
-9. You may need to adjust the port number in “EcoMap->src->main->resources” from 8889 to 3306. You will probably need to adjust the hibernate.connection.username property, the hibernate.connection.password property, and the hibernate.connection.driver_class property. 
+6. You may need to adjust the port number in “EcoMap->src->main->resources” from 8889 to 3306. You will probably need to adjust the hibernate.connection.username property, the hibernate.connection.password property, and the hibernate.connection.driver_class property. 
+7. Run all the unit tests in the "EcoMap->src->test->java->" folder. **All of the unit tests must pass.** 
+8. Run the webapp folder on TomCat 10. WARNING: Tomcat 9 will not work. 
 
-**ecomap.sql:**
+**ecomap.sql: & altecomap.sql:**
 
-Contains the SQL needed to run the project
+These are deprecated. They contain SQL statements for table creation. 
 
 **locations.csv:**
 
