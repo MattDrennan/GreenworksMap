@@ -53,6 +53,8 @@ public class EditLocationSave extends HttpServlet {
 		pin.setLocationName(request.getParameter("locationName"));
 		pin.setCoordinates(request.getParameter("coord"));
 		pin.setContent(request.getParameter("content"));
+		pin.setThumbnail(request.getParameter("thumbnail"));
+		pin.setLink(request.getParameter("link"));
 		SessionAssistant sessionAssistant = new SessionAssistant();
     	sessionAssistant.update(pin); // Database updated
     	Logger.info(LoggerConstants.QUERY_UPDATE + pin);

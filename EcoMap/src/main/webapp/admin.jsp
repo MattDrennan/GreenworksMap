@@ -70,6 +70,10 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
                         <br />
                         Location Address: <input type="text" name="location" />
                         <br />
+                        Thumbnail: <input type="text" name="thumbnail" />
+                        <br />
+                        Website Link: <input type="text" name="link" />
+                        <br />
                         Is this an event: <input type="radio" name="event" value="1" /> Yes / <input type="radio" name="event" value="0" CHECKED /> No
                         <span id="eventDates" style="display: none;">
                             <br />
@@ -111,6 +115,10 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
                         Location Name: <input type="text" name="locationName" value="${name}" />
                         <br />
                         Location Address: <input type="text" name="location" value="${address}" />
+                        <br />
+                        Thumbnail: <input type="text" name="thumbnail" value="${thumbnail}" />
+                        <br />
+                        Website Link: <input type="text" name="link" value="${link}" />
                         <br />
                         Is this an event: <input type="radio" name="eventEdit" value="1" ${dateStart == null ? '' : 'CHECKED'} /> Yes / <input type="radio" name="eventEdit" value="0" ${dateStart == null ? 'CHECKED' : ''} /> No
                         <span id="eventDatesEdit" ${dateStart == null ? 'style="display:none;"' : ''}>
