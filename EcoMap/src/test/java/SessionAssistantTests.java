@@ -15,12 +15,14 @@ import com.GREENWORKS.eco.data.Admin;
 import com.GREENWORKS.eco.data.GenericPin;
 import com.GREENWORKS.eco.data.Pin;
 import com.GREENWORKS.eco.data.PinFactory;
+import com.GREENWORKS.eco.data.ProblemPin;
 import com.GREENWORKS.eco.data.SessionAssistant;
 
 public class SessionAssistantTests {
 	
-    // These are the test values that are generated for the Hibernate CRUD tests. 
+    /* These are the test values that are generated for the Hibernate CRUD tests. */
     private static Integer pinTestId = 0;
+    private static Integer problemPinTestId = 0;
     private static Integer adminTestId = 0;
     private static long locationDatabaseSize = 0;
     
@@ -30,21 +32,35 @@ public class SessionAssistantTests {
      */
     @BeforeAll
     public static void sessionAssistant_insertTestData() {
-    	PinFactory dataFactory = PinFactory.getFactory("2022-01-31 15:00:00", "2022-01-31 15:00:00");
-    	Pin pin = dataFactory.createPinData(); // Create event
-    	pin.setIconId(4); // Because this is an event the IconId will be assigned to 9. 
-    	pin.setStartDate("2022-01-31 15:00:00");
-    	pin.setEndDate("2022-01-31 15:00:00");
-    	pin.setLocationAddress("Test");
-    	pin.setLocationName("Test");
-    	pin.setCoordinates("35,45");
-    	pin.setContent("Test");
-    	Admin admin = new Admin("Testusername9102", "Testpassword9120");
     	SessionAssistant sessionAssistant = new SessionAssistant();
-    	sessionAssistant.insert(pin);
-    	sessionAssistant.insert(admin);
+    	Pin pin = null;
+    	Admin admin = null;
+    	ProblemPin problemPin = null;
+    	
+    	/* pin of type Pin object instantiation */
+	    PinFactory dataFactory = PinFactory.getFactory("2022-01-31 15:00:00", "2022-01-31 15:00:00");
+	    pin = dataFactory.createPinData(); // Create event
+	    pin.setIconId(4); // Because this is an event the IconId will be assigned to 9. 
+	    pin.setStartDate("2022-01-31 15:00:00");
+	    pin.setEndDate("2022-01-31 15:00:00");
+	    pin.setLocationAddress("Test");
+	    pin.setLocationName("Test");
+	    pin.setCoordinates("35,45");
+	    pin.setContent("Test");
+	    sessionAssistant.insert(pin); // pin inserted. 
+    	
+	    /* admin of type Admin object instantiation */
+	    admin = new Admin("Testusername9102", "Testpassword9120");
+	    sessionAssistant.insert(admin); // admin inserted. 
+	    
+	    /* problemPin of type ProblemPin object instantiation */
+    	problemPin = new ProblemPin();
+    	problemPin.copyPin(pin);
+    	sessionAssistant.insert(problemPin); // problemPin inserted. 
+    	
     	pinTestId = pin.getId();
     	adminTestId = admin.getId();
+    	problemPinTestId = problemPin.getId();
     	locationDatabaseSize = sessionAssistant.getLocationsTableSize();
     }
     
@@ -206,23 +222,42 @@ public class SessionAssistantTests {
     @Test
     public void sessionAssistant_shouldBeTheCorrectTableSize() {
     	SessionAssistant sessionAssistant = new SessionAssistant();
-    	List<Pin> list = sessionAssistant.getAllPins();
+    	List<Pin> list = sessionAssistant.getAllPins(); // This can be a large resultset depending on db size. 
     	assertEquals(locationDatabaseSize, list.size());
     }
     
     /***
+     * This tests the core functionality of the ProblemPin and the copyPin() method. 
+     */
+    @Test
+    public void sessionAssistant_createProblemPinEntry() {
+    	SessionAssistant sessionAssistant = new SessionAssistant();
+    	ProblemPin problemPinOne = new ProblemPin();
+    	ProblemPin problemPinTwo = new ProblemPin();
+    	problemPinOne = (ProblemPin) sessionAssistant.get(new ProblemPin(problemPinTestId));
+    	problemPinTwo.copyPin(problemPinOne);
+    	assertTrue(problemPinOne.equals(problemPinTwo)); 
+    }
+    
+    /***
      * This will delete the test data sets from the database. It wil run after all
-     * other tests in this class have been run.  
+     * other tests in this test class have been run.  
      */
     @AfterAll
     public static void sessionAssistant_deleteTestData() {
     	SessionAssistant sessionAssistant = new SessionAssistant();
     	Admin admin = new Admin();
     	admin.setId(adminTestId);
+    	sessionAssistant.delete(admin);
+    	
     	Pin pin = new GenericPin();
     	pin.setId(pinTestId);
-    	sessionAssistant.delete(admin);
     	sessionAssistant.delete(pin);
+    	
+    	ProblemPin problemPin = new ProblemPin();
+    	problemPin.setId(problemPinTestId);
+    	sessionAssistant.delete(problemPin);
+    	
     	sessionAssistant.shutdown();
     }
     
