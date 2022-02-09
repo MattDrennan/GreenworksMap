@@ -40,7 +40,7 @@ public class LocationPin extends Pin {
 	
 	@Override
 	public String getInsertQuery() {
-		return "INSERT INTO locations (iconid, address, name, coord, content) VALUES ('" + iconId + "', '" + locationAddress + "', '" + locationName + "', '" + coordinates + "', '" + content + "')";
+		return "INSERT INTO locations (iconid, address, name, coord, content, thumbnail, link) VALUES ('" + iconId + "', '" + locationAddress + "', '" + locationName + "', '" + coordinates + "', '" + content + "', '" + thumbnail + "', '" + link + "')";
 	}
 
 }

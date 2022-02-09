@@ -74,7 +74,7 @@ public class EventPin extends Pin {
 	
 	@Override
 	public String getInsertQuery() {
-		return "INSERT INTO locations (iconid, address, name, coord, dateStart, dateEnd) VALUES ('" + iconId + "', '" + locationAddress + "', '" + locationName + "', '" + coordinates + "', '" + startDate + "', '" + endDate + "')";             
+		return "INSERT INTO locations (iconid, address, name, coord, dateStart, dateEnd, thumbnail, link) VALUES ('" + iconId + "', '" + locationAddress + "', '" + locationName + "', '" + coordinates + "', '" + startDate + "', '" + endDate + "', '" + thumbnail + "', '" + link + "')";             
 
 	}
 	 

@@ -36,8 +36,10 @@ public abstract class Pin {
     protected String startDate;
 	@Column(name="dateEnd", unique = false, nullable = true, columnDefinition="DATETIME")
     protected String endDate;
-	@Column(name="website", unique = false, nullable = true, length = 120)
-	protected String websiteURL;
+	@Column(name="thumbnail", unique = false, nullable = true, length = 255)
+	protected String thumbnail;
+	@Column(name="link", unique = false, nullable = true, length = 255)
+	protected String link;
 	@Column(name="api", unique = false, nullable = true)
 	protected Byte api;
     
@@ -260,7 +262,41 @@ public abstract class Pin {
 	public void setContent(String content) {
 		this.content = cleanInput(content);
 	}
-	
+
+	/***
+	 * Accessor method for the thumbnail instance variable. 
+	 * @return Returns the contents of the instance variable. 
+	 */		
+	public String getThumbnail() {
+		return thumbnail;
+	}
+
+
+	/***
+	 * Mutator method for assigning to the thumbnail instance variable. Conducts
+	 * cleaning on the parameter. 
+	 * @param thumbnail The value to be assigned. 
+	 */
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
+
+	/***
+	 * Accessor method for the link instance variable. 
+	 * @return Returns the contents of the instance variable. 
+	 */		
+	public String getLink() {
+		return link;
+	}
+
+	/***
+	 * Mutator method for assigning to the thumbnail instance variable. Conducts
+	 * cleaning on the parameter. 
+	 * @param link The value to be assigned. 
+	 */
+	public void setLink(String link) {
+		this.link = link;
+	}
 	
 	/***
 	 * Accessor method for the websiteURL instance variable. 
@@ -286,7 +322,7 @@ public abstract class Pin {
 	 * @return Returns the string that will be used in the front-end. 
 	 */
 	public String getIndexString() {
-		return id + "," + iconId + "," + locationAddress + "," + locationName + "," + coordinates + "," + startDate + "," + endDate + "," + content;
+		return id + "," + iconId + "," + locationAddress + "," + locationName + "," + coordinates + "," + startDate + "," + endDate + "," + content + "," + thumbnail + "," + link;
 	}
 	
 	/***
@@ -298,7 +334,7 @@ public abstract class Pin {
 		return "UPDATE locations SET iconid = '" + iconId + "', address = '" + locationAddress + 
 											  "', name = '" + locationName + "', coord = '" + coordinates + 
 											  "', dateStart = " + startDate + ", dateEnd = " + endDate + 
-											  ", content = '" + content + "' WHERE id = '" + id + "'";
+											  ", content = '" + content + "', thumbnail = '" + thumbnail + "', link = '" + link + "' WHERE id = '" + id + "'";
 	}
 	
 	/***
@@ -306,9 +342,9 @@ public abstract class Pin {
 	 * @return Returns a string. 
 	 */
 	public String getInsertQuery() {
-		return "INSERT INTO locations (iconid, address, name, coord, dateStart, dateEnd) VALUES ('" 
+		return "INSERT INTO locations (iconid, address, name, coord, dateStart, dateEnd, content, thumbnail, link) VALUES ('" 
 										+ iconId + "', '" + locationAddress + "', '" + locationName + "', '" 
-										+ coordinates + "', '" + startDate + "', '" + endDate + "')";             
+										+ coordinates + "', '" + startDate + "', '" + endDate + "', '" + content + "', '" + thumbnail + "', '" + link + "')";             
 	}
 	
 	/***
@@ -326,7 +362,7 @@ public abstract class Pin {
 	public String toString() {
 		return "PinData [id=" + id + ", iconId=" + iconId + ", locationName=" + locationName + ", locationAddress="
 				+ locationAddress + ", coordinates=" + coordinates + ", content=" + content + ", startDate=" + startDate
-				+ ", endDate=" + endDate + "]";
+				+ ", endDate=" + endDate + ", thumbnail=" + thumbnail + ", link=" + link + "]";
 	}
 	
 	/***

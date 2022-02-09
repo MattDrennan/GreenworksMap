@@ -117,7 +117,9 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
                     name: "<%=location.getLocationName()%>",
                     dateStart: "<%=location.getStartDate()%>",
                     dateEnd: "<%=location.getEndDate()%>",
-                    content: "<%=location.getLocationAddress()%><br /><br /><%=location.getContent()%>"
+                    content: "<%=location.getLocationAddress()%><br /><br /><%=location.getContent()%>",
+                    thumbnail: "<%=location.getThumbnail()%>",
+                    link: "<%=location.getLink()%>"
                 };
             <%
                 // Increment object count

@@ -61,6 +61,8 @@ public class EditLocation extends HttpServlet {
             request.setAttribute("dateStart", pin.getStartDate());
             request.setAttribute("dateEnd", pin.getEndDate());
             request.setAttribute("content", pin.getContent());
+            request.setAttribute("thumbnail", pin.getThumbnail());
+            request.setAttribute("link", pin.getLink());
         }       
         RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp"); // Redirect. 
         dispatcher.forward(request, response);
