@@ -417,7 +417,7 @@ public class DataPackageTests {
     	pin.setLocationName("Marriot Edit");
     	pin.setCoordinates("-81.38423598435905,28.546908012845975");
     	pin.setContent("");
-    	assertEquals("2,11,400 W Livingston St, Orlando, FL 32801,Marriot Edit,-81.38423598435905,28.546908012845975,2022-01-31 15:00:00,2022-01-31 20:00:00,", pin.getIndexString());
+    	assertEquals("2,11,400 W Livingston St, Orlando, FL 32801,Marriot Edit,-81.38423598435905,28.546908012845975,2022-01-31 15:00:00,2022-01-31 20:00:00,,null,null", pin.getIndexString());
     }
    
 }
