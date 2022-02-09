@@ -40,22 +40,6 @@ public abstract class Pin {
 	protected String websiteURL;
 	@Column(name="api", unique = false, nullable = true)
 	protected Byte api;
-    
-	/***
-	 * 
-	 * @return
-	 */
-    public Byte getApi() {
-		return api;
-	}
-    
-    /***
-     * 
-     * @param api
-     */
-	public void setApi(Byte api) {
-		this.api = api;
-	}
 
 	/***
      * Zero parameter constructor. 
@@ -281,10 +265,27 @@ public abstract class Pin {
 	}
 	
 	/***
+	 * Accessor method for the api instance variable. 
+	 * @return Returns the contents of the instance variable.
+	 */
+    public Byte getApi() {
+		return api;
+	}
+    
+    /***
+     * Mutator method for assigning to the api instance variable.
+     * @param api The value to be assigned. 
+     */
+	public void setApi(Byte api) {
+		this.api = api;
+	}
+	
+	/***
 	 * This method is meant to generate a String that will be useful for front-end
 	 * purposes. 
 	 * @return Returns the string that will be used in the front-end. 
 	 */
+	@Deprecated
 	public String getIndexString() {
 		return id + "," + iconId + "," + locationAddress + "," + locationName + "," + coordinates + "," + startDate + "," + endDate + "," + content;
 	}
@@ -294,6 +295,7 @@ public abstract class Pin {
 	 * instance variables. 
 	 * @return Returns the generated update SQL query. 
 	 */	
+	@Deprecated
 	public String getUpdateQuery() {
 		return "UPDATE locations SET iconid = '" + iconId + "', address = '" + locationAddress + 
 											  "', name = '" + locationName + "', coord = '" + coordinates + 
@@ -305,6 +307,7 @@ public abstract class Pin {
 	 * This method is meant to be overridden in each of it's child classes. 
 	 * @return Returns a string. 
 	 */
+	@Deprecated
 	public String getInsertQuery() {
 		return "INSERT INTO locations (iconid, address, name, coord, dateStart, dateEnd) VALUES ('" 
 										+ iconId + "', '" + locationAddress + "', '" + locationName + "', '" 
@@ -315,6 +318,7 @@ public abstract class Pin {
 	 * This method generates a delete query based on the id of the PinData. 
 	 * @return Returns the generated delete SQL query. 
 	 */
+	@Deprecated
 	public String getDeleteQuery() {
 		return "DELETE FROM locations WHERE id = '" + id + "'";
 	}
@@ -347,7 +351,7 @@ public abstract class Pin {
 		if(this == o) 
 			return true; // Are equal
 		
-		Pin otherPin = (GenericPin) o;
+		Pin otherPin = (Pin) o;
 		
 		if(this.getId() != null ? !this.getId().equals(otherPin.getId()) : otherPin.getId() != null)
 			return false;
