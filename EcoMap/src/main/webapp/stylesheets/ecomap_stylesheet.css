@@ -98,20 +98,28 @@ figcaption {
         position: relative;
         left: 75%;
     }
-    .esri-ui-inner-container {
-        position: absolute;
-        bottom: 0;
-    }
+   
     .esri-ui-inner-container.esri-ui-corner-container {
-        width: 20%;
+        width: 20%;        
     }
+
     .esri-component.esri-zoom.esri-widget {
+        width: 25px;
+        
+        margin-left: 82vw;
+        transform: rotate(90deg);
+    }
+    .esri-component.esri-zoom.esri-widget div:first-child{
+        width: 100%;    
+    }
+    .esri-component.esri-zoom.esri-widget div:last-child{
         width: 100%;
-        height: 5%;
     }
-    .esri-component.esri-zoom.esri-widget * {
-        width: 30%;
+    .esri-component.esri-zoom.esri-widget div:last-child span{
+        transform: rotate(90deg);
     }
+    
+    
     .esri-widget--button {
         width: 5%;
         background-color: rgba(85, 77, 77, 0.6);
