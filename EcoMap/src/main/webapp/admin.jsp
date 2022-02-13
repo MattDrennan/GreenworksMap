@@ -18,8 +18,10 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
         -->
         
         <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Eco-Map (Admin Panel) - City of Orlando</title>
         <link href="stylesheets/ecomap_stylesheet.css" rel="stylesheet" />
+        <link href="stylesheets/admin-login.css" rel="stylesheet" />
         <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
@@ -48,7 +50,7 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
     </head>
 
     <body>
-        <section>
+        <section id="app-header">
             <h1>Admin Panel</h1>
         </section>
         
@@ -174,13 +176,22 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
             else
             {
             %>
+            <div id="admin-login-container">
+
                 <form action="login" method="POST">
-                    Username: <input type="text" name="username" />
-                    <br />
-                    Password: <input type="password" name="password" />
-                    <br />
-                    <input type="submit" name="submit" value="Login" />
+                    <div class="input-container">
+                        <label for="username">Username:</label>
+                        <input type="text" name="username" />
+                    </div>
+                    <div class="input-container">
+                        <label for="password">Password:</label>
+                        <input type="password" name="password" />
+                    </div>
+                    <div class="button-container">
+                        <input class="form-submit-btn" type="submit" name="submit" value="Login" />
+                    </div>
                 </form>
+            </div>
             <%
             }
             %>
