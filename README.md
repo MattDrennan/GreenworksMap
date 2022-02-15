@@ -79,7 +79,8 @@ public class DatabaseConstants {
 ```
 6. You may need to adjust the port number in “EcoMap->src->main->resources” from 8889 to 3306. You will probably need to adjust the hibernate.connection.username property, the hibernate.connection.password property, and the hibernate.connection.driver_class property. 
 7. Run all the unit tests in the "EcoMap->src->test->java->" folder. **All of the unit tests must pass.** 
-8. Run the webapp folder on TomCat 10. WARNING: Tomcat 9 will not work. 
+	1. Optional: Run datainsert.sql to populate database with entries.  
+9. Run the webapp folder on TomCat 10. WARNING: Tomcat 9 will not work. 
 
 **ecomap.sql: & altecomap.sql:**
 
