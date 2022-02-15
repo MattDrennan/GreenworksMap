@@ -4,7 +4,7 @@
 
 This project currently relies on two API keys. The first is [ArcGIS](https://developers.arcgis.com/documentation/mapping-apis-and-services/security/api-keys/) and the second is [OpenCharge](https://community.openchargemap.org/t/api-keys-are-now-required/161). In addition, it is necessary to create three files: cred.js, Cred.java, DatabaseConstants.java, and hibernate.cfg.xml. The steps for creating these files are below. 
 
-1. Create a file, 'cred.js', in the root directory of 'webmap' with the following:
+1. Create a file, 'cred.js', in the root directory of 'webapp' with the following:
 ```
 var mapKey = 'MAP_KEY_HERE';
 ```
