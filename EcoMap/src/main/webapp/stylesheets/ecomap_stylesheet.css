@@ -105,9 +105,8 @@ figcaption {
 
     .esri-component.esri-zoom.esri-widget {
         width: 25px;
-        
         margin-left: 82vw;
-        transform: rotate(90deg);
+        transform: rotate(-90deg);
     }
     .esri-component.esri-zoom.esri-widget div:first-child{
         width: 100%;    

@@ -204,7 +204,7 @@ public class SessionAssistant { // TODO: After you get this class working make i
      */
     public ArrayList<Pin> getAllPins() {
     	Session session = openSession();
-    	List<GenericPin> genericPinList = session.createQuery("SELECT p FROM GenericPin p", GenericPin.class).getResultList();
+    	List<GenericPin> genericPinList = session.createQuery("SELECT p FROM GenericPin p ORDER BY p.locationName", GenericPin.class).getResultList();
     	ArrayList<Pin> pinList = new ArrayList<Pin>();
     	for(Pin pin : genericPinList) {
     		pinList.add(pin);

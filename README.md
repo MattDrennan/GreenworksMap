@@ -4,7 +4,7 @@
 
 This project currently relies on two API keys. The first is [ArcGIS](https://developers.arcgis.com/documentation/mapping-apis-and-services/security/api-keys/) and the second is [OpenCharge](https://community.openchargemap.org/t/api-keys-are-now-required/161). In addition, it is necessary to create three files: cred.js, Cred.java, DatabaseConstants.java, and hibernate.cfg.xml. The steps for creating these files are below. 
 
-1. Create a file, 'cred.js', in the root directory of 'webmap' with the following:
+1. Create a file, 'cred.js', in the root directory of 'webapp' with the following:
 ```
 var mapKey = 'MAP_KEY_HERE';
 ```
@@ -79,7 +79,8 @@ public class DatabaseConstants {
 ```
 6. You may need to adjust the port number in “EcoMap->src->main->resources” from 8889 to 3306. You will probably need to adjust the hibernate.connection.username property, the hibernate.connection.password property, and the hibernate.connection.driver_class property. 
 7. Run all the unit tests in the "EcoMap->src->test->java->" folder. **All of the unit tests must pass.** 
-8. Run the webapp folder on TomCat 10. WARNING: Tomcat 9 will not work. 
+	1. Optional: Run datainsert.sql to populate database with entries.  
+9. Run the webapp folder on TomCat 10. WARNING: Tomcat 9 will not work. 
 
 **ecomap.sql: & altecomap.sql:**
 

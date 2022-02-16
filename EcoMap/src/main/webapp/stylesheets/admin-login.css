@@ -1,0 +1,46 @@
+/*
+Filename: admin-login.css
+Date of creation: 12 Feb 2022
+Editor: James Rolon
+*/
+
+#app-header {
+  padding: 0.5px 0 0 1rem;
+}
+
+#admin-login-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 20%;
+  box-shadow: 0 1px 6px rgb(32 33 36 / 28%);
+  border: 1px solid rgba(223, 225, 229, 1);
+  border-radius: 6px;
+}
+
+.input-container {
+  padding: 1rem;
+}
+
+.input-container input {
+  padding: 3;
+}
+
+.button-container {
+  display: flex;
+  justify-content: end;
+  padding-right: 1rem;
+}
+
+.button-container .form-submit-btn {
+  padding: 5px;
+  background: white;
+  border: 1px solid gray;
+  border-radius: 3px;
+}
+
+.button-container .form-submit-btn:hover {
+  background-color: gray;
+  color: #fff;
+  cursor: pointer;
+}
