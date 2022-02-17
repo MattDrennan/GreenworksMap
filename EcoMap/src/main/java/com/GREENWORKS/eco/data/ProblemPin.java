@@ -40,6 +40,8 @@ public class ProblemPin extends Pin {
 		this.locationAddress = pin.getLocationAddress();
 		this.coordinates = pin.getCoordinates();
 		this.content = pin.getContent();
+		this.thumbnail = pin.getThumbnail();
+		this.link = pin.getLink();
 		// this.websiteURL = pin.getWebsiteURL();
 		this.api = pin.getApi();
 	}

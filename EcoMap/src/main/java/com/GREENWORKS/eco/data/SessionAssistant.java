@@ -94,6 +94,16 @@ public class SessionAssistant { // TODO: After you get this class working make i
 	 	session.getTransaction().commit();
 	    session.close();
 	}
+
+    public <T> void deleteList(ArrayList<T> arrayList) {
+        Session session = openSession();
+        session.beginTransaction();
+        for(T t : arrayList){
+            session.delete(t);
+        }
+        session.getTransaction().commit();
+        session.close();
+    }
 	
 	/***
 	 * This is the update method. This method will update existing entries in the database. 
@@ -213,9 +223,8 @@ public class SessionAssistant { // TODO: After you get this class working make i
     }
     
     /***
-     * This method returns all pins that are stored in the database. It stores all the Pins in an ArrayList. This
-     * method is used in the front-end of the application. 
-     * @return Returns an ArrayList of all the Pins. 
+     * This method returns all pins that are stored in the database. It stores all the Pins in a List. 
+     * @return Returns a List of all the Pins. 
      */
     public List<Pin> getAllPinsList() {
     	Session session = openSession();
