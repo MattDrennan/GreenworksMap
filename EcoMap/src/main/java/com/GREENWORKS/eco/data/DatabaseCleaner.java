@@ -2,10 +2,12 @@ package com.GREENWORKS.eco.data;
 
 import java.util.List;
 import java.util.Set;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-
 
 /***
  * This class will remove redundant points from the locations table and put them in the problem_locations 
@@ -15,7 +17,8 @@ import java.util.HashSet;
 public class DatabaseCleaner {
 	
 	private Set<Integer> zipMap = new HashSet<Integer>(); 
-	
+	private ArrayList<Pin> pastDatePinList = new ArrayList<Pin>();
+
 	/***
 	 * For now, this is how this tool will be run, however, it would be good to integrate it into the
 	 * work-flow later on. 
@@ -25,11 +28,29 @@ public class DatabaseCleaner {
 		List<Pin> pinList = sessionAssistant.getAllPinsList();
 		DatabaseCleaner databaseCleaner = new DatabaseCleaner();
 		HashMap<String, ArrayList<Pin>> addressPinMap = databaseCleaner.findRedundantAddress(pinList);
+		ArrayList<OldEventPin> oldEvents = databaseCleaner.convertOldEvents();
 		pinList.clear(); // Release memory.
 		ArrayList<Pin> deleteList = databaseCleaner.solveConflicts(addressPinMap);
 		ArrayList<ProblemPin> problemPinList = databaseCleaner.convertToProblemPinList(deleteList);
+		ArrayList<Pin> pastDatePinList = databaseCleaner.getPastDatePinList();
 		sessionAssistant.saveList(problemPinList);
 		sessionAssistant.deleteList(deleteList);
+		sessionAssistant.saveList(oldEvents);
+		sessionAssistant.deleteList(pastDatePinList);
+	}
+
+	/***
+	 * This converts the ArrayList<Pin> to an ArrayList<OldEventPin>. 
+	 * @return Return the converted ArrayList. 
+	 */
+	public ArrayList<OldEventPin> convertOldEvents(){
+		ArrayList<OldEventPin> oldEventList = new ArrayList<OldEventPin>();
+		for(Pin pin : pastDatePinList){
+			OldEventPin oldEventPin = new OldEventPin();
+			oldEventPin.copyPin(pin);
+			oldEventList.add(oldEventPin);
+		}
+		return oldEventList;
 	}
 	
 	/***
@@ -67,7 +88,7 @@ public class DatabaseCleaner {
 	 */
 	public ArrayList<ProblemPin> convertToProblemPinList(ArrayList<Pin> deleteList){
 		ArrayList<ProblemPin> problemPinList = new ArrayList<>();
-		for(Pin pin : deleteList){
+		for(Pin pin : deleteList) {
 			ProblemPin problemPin = new ProblemPin();
 			problemPin.copyPin(pin);
 			problemPinList.add(problemPin);
@@ -77,9 +98,9 @@ public class DatabaseCleaner {
 
 	/***
 	 * I used this method to print out the entire contents of the database by iconId. It is
-	 * useful for data extraction. The String printed String is formatted to be compatible 
-	 * with a SQL insertion statement. 
-	 * 		Note: This might be better placed in the SessionAssistant.  
+	 * useful for data extraction. The printed String is formatted to be compatible with a SQL 
+	 * insertion statement. 
+	 * Note: This might be better placed in the SessionAssistant.  
 	 * @param pinList Requires the list of Pins to be printed. 
 	 */
 	public static void printPinDataByIconId(List<Pin> pinList, int iconId) {
@@ -96,13 +117,17 @@ public class DatabaseCleaner {
 	
 	/***
 	 * This method goes through the pinList that is provided to it and isolates Pins that
-	 * have the same address. 
+	 * have the same address. It also adds pins that have addresses earlier than the present
+	 * day to an ArrayList that holds pins with old dates. 
 	 * @param pinList The List<Pin> that will be analyzed. 
 	 */
 	public HashMap<String, ArrayList<Pin>> findRedundantAddress(List<Pin> pinList) {
 		HashMap<String, ArrayList<Pin>> pinMap = new HashMap<String, ArrayList<Pin>>();
 		HashMap<String, ArrayList<Pin>> addressPinMap = new HashMap<String, ArrayList<Pin>>();
 		for(Pin pin : pinList) {
+			if(pin.getStartDate() != null && pin.getEndDate() != null) {
+				addOldEvent(pin);
+			}
 			String address = pin.getLocationAddress();
 			Integer zip = getZip(address);
 			if(!zipMap.contains(zip)) { 
@@ -121,6 +146,21 @@ public class DatabaseCleaner {
 			pinMap.put(address, list); 
 		}
 		return addressPinMap;
+	}
+
+	/***
+	 * This will add the Pin to the oldEventArrayList. 
+	 * @param pin The Pin to be added to the ArrayList. 
+	 */
+	public void addOldEvent(Pin pin) {
+		try {
+			if(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(pin.getStartDate()).before(new Date()) && new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(pin.getEndDate()).before(new Date())){
+				pastDatePinList.add(pin);
+			}
+		} catch (ParseException e) {
+			
+			e.printStackTrace();
+		}
 	}
 	
 	/***
@@ -158,6 +198,22 @@ public class DatabaseCleaner {
 			}
 		}
 		return deleteList;
+	}
+
+	public Set<Integer> getZipMap() {
+		return zipMap;
+	}
+
+	public void setZipMap(Set<Integer> zipMap) {
+		this.zipMap = zipMap;
+	}
+
+	public ArrayList<Pin> getPastDatePinList() {
+		return pastDatePinList;
+	}
+
+	public void setPastDatePinList(ArrayList<Pin> pastDatePinList) {
+		this.pastDatePinList = pastDatePinList;
 	}
 
 }

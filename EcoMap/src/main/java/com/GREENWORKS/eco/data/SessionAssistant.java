@@ -9,7 +9,6 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.tinylog.Logger;
 
-
 /***
  * This class is intended to assist the Servlets by performing all the backend database functions. 
  */
@@ -31,6 +30,7 @@ public class SessionAssistant { // TODO: After you get this class working make i
         	config.addAnnotatedClass(LocationPin.class);
         	config.addAnnotatedClass(GenericPin.class);
         	config.addAnnotatedClass(ProblemPin.class);
+            config.addAnnotatedClass(OldEventPin.class);
             StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(config.getProperties());
             return config.buildSessionFactory(builder.build());
         }
