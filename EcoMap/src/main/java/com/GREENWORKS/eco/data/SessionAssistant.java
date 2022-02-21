@@ -9,15 +9,14 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.tinylog.Logger;
 
-
 /***
  * This class is intended to assist the Servlets by performing all the backend database functions. 
  */
 public class SessionAssistant { // TODO: After you get this class working make its methods generic. 
 	
     private static SessionFactory sessionFactory = null;
-    private long locationsSize = 0; // I want the SessionAssistant to know the size of the database tables. 
-    private long adminSize = 0; 
+    // private long locationsSize = 0; // I want the SessionAssistant to know the size of the database tables. 
+    // private long adminSize = 0; // I am commenting these instance variables out, for now. 
     
     /***
      * This method returns the configured builder for the SessionFactory. 
@@ -31,6 +30,7 @@ public class SessionAssistant { // TODO: After you get this class working make i
         	config.addAnnotatedClass(LocationPin.class);
         	config.addAnnotatedClass(GenericPin.class);
         	config.addAnnotatedClass(ProblemPin.class);
+            config.addAnnotatedClass(OldEventPin.class);
             StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(config.getProperties());
             return config.buildSessionFactory(builder.build());
         }
@@ -94,6 +94,16 @@ public class SessionAssistant { // TODO: After you get this class working make i
 	 	session.getTransaction().commit();
 	    session.close();
 	}
+
+    public <T> void deleteList(ArrayList<T> arrayList) {
+        Session session = openSession();
+        session.beginTransaction();
+        for(T t : arrayList){
+            session.delete(t);
+        }
+        session.getTransaction().commit();
+        session.close();
+    }
 	
 	/***
 	 * This is the update method. This method will update existing entries in the database. 
@@ -213,9 +223,8 @@ public class SessionAssistant { // TODO: After you get this class working make i
     }
     
     /***
-     * This method returns all pins that are stored in the database. It stores all the Pins in an ArrayList. This
-     * method is used in the front-end of the application. 
-     * @return Returns an ArrayList of all the Pins. 
+     * This method returns all pins that are stored in the database. It stores all the Pins in a List. 
+     * @return Returns a List of all the Pins. 
      */
     public List<Pin> getAllPinsList() {
     	Session session = openSession();
@@ -244,10 +253,10 @@ public class SessionAssistant { // TODO: After you get this class working make i
     
     /***
      * This method populates the locationSize and the adminSize instance variables. 
-     */
+     */ /*
     public void getDatabaseCounts() {
     	locationsSize = getLocationsTableSize();
     	adminSize = getAdminsTableSize();
-    }
-    
+    } */
+
 }
