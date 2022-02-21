@@ -1,5 +1,45 @@
 $(document).ready(function()
 {
+    // Filter - Options Pressed
+    $(".options").on("click", function(event)
+    {
+        $(this).find("img").toggleClass("grayscale");
+
+        // Loop through all markers on map
+        for(i = 0; i <= globalMarkers.length - 1; i++)
+        {
+            // Set up should hide variable
+            var shouldHide = false;
+
+            // Loop through all options
+            $(".options").each(function()
+            {
+                // If option is checked
+                if($(this).find("img").hasClass("grayscale"))
+                {
+                    // If the option value matches the marker type
+                    if($(this).attr("value") == globalMarkers[i].attr.dbType)
+                    {
+                        // Don't hide
+                        shouldHide = true;
+                    }
+                }
+            });
+
+            // If should hide is true
+            if(shouldHide)
+            {
+                // Hide
+                globalMarkers[i].visible = false;
+            }
+            else
+            {
+                // Show
+                globalMarkers[i].visible = true;
+            }
+        }
+    });
+
     // List View - Filter Events
     $("#showEvents").on("click", function(event)
     {
@@ -199,44 +239,6 @@ $(document).ready(function()
     $("#openCalendar").click(function()
     {
         $("#datepicker").datepicker("show");
-    });
-
-    // If a filter option is pressed
-    $("[class=check]").click(function()
-    {
-        // Loop through all markers on map
-        for(i = 0; i <= globalMarkers.length - 1; i++)
-        {
-            // Set up should hide variable
-            var shouldHide = true;
-
-            // Loop through all options
-            $("[class=check]").each(function()
-            {
-                // If option is checked
-                if($(this).is(':checked'))
-                {
-                    // If the option value matches the marker type
-                    if($(this).val() == globalMarkers[i].attr.dbType)
-                    {
-                        // Don't hide
-                        shouldHide = false;
-                    }
-                }
-            });
-
-            // If should hide is true
-            if(shouldHide)
-            {
-                // Hide
-                globalMarkers[i].visible = false;
-            }
-            else
-            {
-                // Show
-                globalMarkers[i].visible = true;
-            }
-        }
     });
 
     // Click filter menu button

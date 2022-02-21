@@ -159,33 +159,28 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
 
             <div id="filter">
                 <form action="showFilter" name="filter" method="post" accept-charset="utf-8">
-                    <h2>Filter</h2><hr>
                     <div class="pillars">
-                        <div class="options">
-                            <input class="check" type="checkbox" name="pillar_name" value="1" CHECKED></input><label class="label">Clean Energy</label>
+                        <div class="options" name="filterEnergy" value="1">
+                            <img src="icons/energy.png" width="64px" height="64px" /> <label class="label">Clean Energy</label>
                         </div>
-                        <div class="options">
-                            <input class="check" type="checkbox" name="pillar_name" value="2" CHECKED></input><label class="label">Clean Water</label>
+                        <div class="options" name="filterWater" value="2">
+                            <img src="icons/water.png" width="64px" height="64px" /> <label class="label">Clean Water</label>
                         </div>
-                        <div class="options">
-                            <input class="check" type="checkbox" name="pillar_name" value="3" CHECKED></input><label class="label">Electic & Alt. Transportation</label>
+                        <div class="options" name="filterTransportation" value="3">
+                            <img src="icons/transportation.png" width="64px" height="64px" /> <label class="label">Electic & Alt. Transportation</label>
                         </div>
-                        <div class="options">
-                            <input class="check" type="checkbox" name="pillar_name" value="4" CHECKED></input><label class="label">Green Buildings</label>
+                        <div class="options" name="filterBuildings" value="4">
+                            <img src="icons/buildings.png" width="64px" height="64px" /> <label class="label">Green Buildings</label>
                         </div>
-                        <div class="options">
-                            <input class="check" type="checkbox" name="pillar_name" value="5" CHECKED></input><label class="label">Livability</label>
+                        <div class="options" name="filterLivability" value="5">
+                            <img src="icons/livability.png" width="64px" height="64px" /> <label class="label">Livability</label>
                         </div>
-                        <div class="options">
-                            <input class="check" type="checkbox" name="pillar_name" value="6" CHECKED></input><label class="label">Local Food Systems</label>
+                        <div class="options" name="filterFood" value="6">
+                            <img src="icons/food.png" width="64px" height="64px" /> <label class="label">Local Food Systems</label>
                         </div>
-                        <div class="options">
-                            <input class="check" type="checkbox" name="pillar_name" value="7" CHECKED></input><label class="label">Zero Waste</label>
+                        <div class="options" name="filterWaste" value="7">
+                            <img src="icons/waste.png" width="64px" height="64px" /> <label class="label">Zero Waste</label>
                         </div>
-                    </div>
-                    <hr>
-                    <div class="action_controls">
-                        <button name="closeFilter">Close</button>
                     </div>
                 </form>
             </div>

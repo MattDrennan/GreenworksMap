@@ -38,218 +38,97 @@ figcaption {
     color: blue;
 }
 
-/*Desktop Style*/
-@media only screen and (min-width: 768px) {
-    body {
-        font: black;
-        background-color: white;
-        width: inherit;
-        height: 95vh;
-        padding: 0px;
-        margin: 0px;
-    }
-    #viewDiv {
-        width: 90%;
-        height: 100%;
-        position: relative;
-        left: 7%;
+body {
+    font: black;
+    background-color: white;
+    width: inherit;
+    height: 95vh;
+    padding: 0px;
+    margin: 0px;
+}
+#viewDiv {
+    width: 90%;
+    height: 100%;
+    position: relative;
+    left: 7%;
 
-    }
-    #filter {
-        display: none;
-        position: absolute;
-        width: 40%;
-        height: 280px;
-        left: 20pc;
-        top: 12pc;
-        z-index: 99;
-        background-color: white;
-        border: 2px black groove;
-        border-radius: 8px;
-    }
-    #filter h2 {
-        position: relative;
-        left: 8px;
-    }
-    #filter_settings { /*subject to change*/
-        display: none;
-    }
-    .map_options {
-        width: 5%;
-        float: left;
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        left: -1.5pc;
-        z-index: 99;
-    }
-    .pillars {
-        outline: 2px solid rgb(0, 75, 144);
-        width: 40%;
-        position: relative;
-        left: 2%;
-        display: flex;
-        flex-direction: column;
-    }
-    .check, .label {
-        flex: 1 1 50%;
-    }
-    .action_controls {
-        position: relative;
-        left: 75%;
-    }
-   
-    .esri-ui-inner-container.esri-ui-corner-container {
-        width: 20%;        
-    }
-
-    .esri-component.esri-zoom.esri-widget {
-        width: 25px;
-        margin-left: 82vw;
-        transform: rotate(-90deg);
-    }
-    .esri-component.esri-zoom.esri-widget div:first-child{
-        width: 100%;    
-    }
-    .esri-component.esri-zoom.esri-widget div:last-child{
-        width: 100%;
-    }
-    .esri-component.esri-zoom.esri-widget div:last-child span{
-        transform: rotate(90deg);
-    }
-    
-    
-    .esri-widget--button {
-        width: 5%;
-        background-color: rgba(85, 77, 77, 0.6);
-    }
-    .esri-ui-inner-container.esri-ui-manual-container, .esri-component.esri-attribution.esri-widget {
-        width: 100%;
-    }
-    .esri-attribution__sources {
-        display: flex;
-        float: left;
-        flex: 1 1 75%;
-        background-color: rgba(85, 77, 77, 0.6);
-    }
-    .esri-attribution__powered-by {
-        display: flex;
-        float: right;
-        flex: 1 1 25%;
-        background-color: rgba(85, 77, 77, 0.6);
-    }
+}
+#filter {
+    display: none;
+    position: absolute;
+    width: 300px;
+    height: 480px;
+    left: 20pc;
+    top: 12pc;
+    z-index: 99;
+    background-color: white;
+    border: 2px black groove;
+    border-radius: 8px;
+}
+#filter h2 {
+    position: relative;
+    left: 8px;
+}
+#filter_settings { /*subject to change*/
+    display: none;
+}
+.map_options {
+    width: 5%;
+    float: left;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: -1.5pc;
+    z-index: 99;
 }
 
-/*Mobile Style */
-@media only screen and (min-width: 654px) and (max-width: 767.9px) {
-    html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-    }
-    #filter {
-        display: none;
-        position: absolute;
-        width: 40%;
-        height: 320px;
-        left: 260px;
-        top: 200px;
-        z-index: 99;
-        background-color: white;
-        border: 2px black groove;
-        border-radius: 8px;
-    }
-    #filter h2 {
-        position: relative;
-        left: 8px;
-    }
-    #filter_settings {
-        position: absolute;
-        top: 43%;
-        left: 1%;
-        z-index: 12;
-    }
-    #fc_background {
-        background-color: black;
-    }
-    .map_options {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: 42%;
-        left: -5%;
-    }
-    .map_options a:hover, .map_options a:focus {
-        color: rgb(107, 168, 219);
-        text-decoration: underline;
-    }
-    .map_options a:link, .map_options a:visited {
-        color: #8BC53F;
-        text-decoration: none;
-        font-weight: bold;
-    }
-    .pillars {
-        outline: 2px solid rgb(0, 75, 144);
-        width: 40%;
-        position: relative;
-        left: 2%;
-        display: flex;
-        flex-direction: column;
-    }
-    .check, .label {
-        flex: 1 1 50%;
-    }
-    .action_controls {
-        position: relative;
-        left: 65%;
-    }
+.pillars {
+    width: 100%;
+}
+.pillars .label {
+    position: relative;
+    left: 10px;
+    bottom: 25px;
 }
 
-/*Small Device style*/ 
-@media only screen and (min-width: 320px) and (max-width: 653.9px) {
-    html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        overflow-y: hidden;
-    }
-    #filter {
-        display: none;
-        position: absolute;
-        width: 80%;
-        height: 300px;
-        left: 30px;
-        top: 220px;
-        z-index: 99;
-        background-color: white;
-        border: 2px black groove;
-        border-radius: 8px;
-    }
-    #filter h2 {
-        position: relative;
-        left: 8px;
-    }
-    #filter_settings {
-        display: none;
-    }
-    .map_options {
-        display: none;
-    }
-    .pillars {
-        outline: 2px solid rgb(0, 75, 144);
-        width: 50%;
-        position: relative;
-        left: 2%;
-        display: flex;
-        flex-direction: column;
-    }
-    .check, .label {
-        flex: 1 1 50%;
-    }
-    .action_controls {
-        position: relative;
-        left: 65%;
-    }   
+.esri-ui-inner-container.esri-ui-corner-container {
+    width: 20%;        
+}
+
+.esri-component.esri-zoom.esri-widget {
+    width: 25px;
+    margin-left: 82vw;
+    transform: rotate(-90deg);
+}
+.esri-component.esri-zoom.esri-widget div:first-child{
+    width: 100%;    
+}
+.esri-component.esri-zoom.esri-widget div:last-child{
+    width: 100%;
+}
+.esri-component.esri-zoom.esri-widget div:last-child span{
+    transform: rotate(90deg);
+}
+
+
+.esri-widget--button {
+    width: 5%;
+    background-color: rgba(85, 77, 77, 0.6);
+}
+.esri-ui-inner-container.esri-ui-manual-container, .esri-component.esri-attribution.esri-widget {
+    width: 100%;
+}
+.esri-attribution__sources {
+    display: flex;
+    float: left;
+    flex: 1 1 75%;
+    background-color: rgba(85, 77, 77, 0.6);
+}
+.esri-attribution__powered-by {
+    display: flex;
+    float: right;
+    flex: 1 1 25%;
+    background-color: rgba(85, 77, 77, 0.6);
 }
 
 /* Highlights Calendar Dates */
@@ -257,3 +136,8 @@ figcaption {
 {
     background: #FC0 !important;
 }
+
+/* Make image gray */
+.grayscale {
+    filter: grayscale(100%);
+  }
