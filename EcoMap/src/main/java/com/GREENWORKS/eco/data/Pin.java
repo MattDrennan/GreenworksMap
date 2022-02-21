@@ -273,7 +273,6 @@ public abstract class Pin {
 		}
 	}
 
-
 	/***
 	 * Mutator method for assigning to the thumbnail instance variable. Conducts
 	 * cleaning on the parameter. 
@@ -308,8 +307,7 @@ public abstract class Pin {
 	}
 
 	/***
-	 * Mutator method for assigning to the thumbnail instance variable. Conducts
-	 * cleaning on the parameter. 
+	 * Mutator method for assigning to the thumbnail instance variable. 
 	 * @param link The value to be assigned. 
 	 */
 	public void setLink(String link) {
@@ -331,10 +329,29 @@ public abstract class Pin {
 	public void setApi(Byte api) {
 		this.api = api;
 	}
+
+	/***
+	 * This is used for copying one pin to another pin. Useful for when it is desirable to copy one
+	 * pin type to a different pin type. 
+	 * @param pin The Pin object to be copied. 
+	 */
+	public void copyPin(Pin pin) {
+		this.id = pin.getId();
+		this.iconId = pin.getIconId();
+		this.locationName = pin.getLocationName();
+		this.startDate = pin.getStartDate();
+		this.endDate = pin.getEndDate();
+		this.locationAddress = pin.getLocationAddress();
+		this.coordinates = pin.getCoordinates();
+		this.content = pin.getContent();
+		this.thumbnail = pin.getThumbnail();
+		this.link = pin.getLink();
+		// this.websiteURL = pin.getWebsiteURL();
+		this.api = pin.getApi();
+	}
 	
 	/***
-	 * This method is meant to generate a String that will be useful for front-end
-	 * purposes. 
+	 * This method is meant to generate a String. 
 	 * @return Returns the string that will be used in the front-end. 
 	 */
 	@Deprecated
@@ -343,8 +360,7 @@ public abstract class Pin {
 	}
 	
 	/***
-	 * This methods generates an update SQL query that is populated with the 
-	 * instance variables. 
+	 * This methods generates an update SQL query that is populated with the instance variables. 
 	 * @return Returns the generated update SQL query. 
 	 */	
 	@Deprecated

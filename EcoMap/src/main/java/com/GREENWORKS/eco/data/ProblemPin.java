@@ -26,24 +26,4 @@ public class ProblemPin extends Pin {
 		this.id = id;
 	}
 	
-	/***
-	 * This is a ProblemPin constructor that takes a Pin as an argument. It will copy all of the
-	 * parameters of the provided Pin to it. 
-	 * @param pin The Pin object to be copied. 
-	 */
-	public void copyPin(Pin pin) {
-		this.id = pin.getId();
-		this.iconId = pin.getIconId();
-		this.locationName = pin.getLocationName();
-		this.startDate = pin.getStartDate();
-		this.endDate = pin.getEndDate();
-		this.locationAddress = pin.getLocationAddress();
-		this.coordinates = pin.getCoordinates();
-		this.content = pin.getContent();
-		this.thumbnail = pin.getThumbnail();
-		this.link = pin.getLink();
-		// this.websiteURL = pin.getWebsiteURL();
-		this.api = pin.getApi();
-	}
-	
 }
