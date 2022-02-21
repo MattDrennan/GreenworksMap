@@ -15,8 +15,8 @@ import org.tinylog.Logger;
 public class SessionAssistant { // TODO: After you get this class working make its methods generic. 
 	
     private static SessionFactory sessionFactory = null;
-    private long locationsSize = 0; // I want the SessionAssistant to know the size of the database tables. 
-    private long adminSize = 0; 
+    // private long locationsSize = 0; // I want the SessionAssistant to know the size of the database tables. 
+    // private long adminSize = 0; // I am commenting these instance variables out, for now. 
     
     /***
      * This method returns the configured builder for the SessionFactory. 
@@ -253,10 +253,10 @@ public class SessionAssistant { // TODO: After you get this class working make i
     
     /***
      * This method populates the locationSize and the adminSize instance variables. 
-     */
+     */ /*
     public void getDatabaseCounts() {
     	locationsSize = getLocationsTableSize();
     	adminSize = getAdminsTableSize();
-    }
-    
+    } */
+
 }

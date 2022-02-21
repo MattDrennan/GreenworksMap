@@ -16,12 +16,13 @@ import java.util.HashSet;
  */
 public class DatabaseCleaner {
 	
-	private Set<Integer> zipMap = new HashSet<Integer>(); 
+	private Set<Integer> zipSet = new HashSet<Integer>(); 
 	private ArrayList<Pin> pastDatePinList = new ArrayList<Pin>();
 
 	/***
 	 * For now, this is how this tool will be run, however, it would be good to integrate it into the
 	 * work-flow later on. 
+	 * Edit: Created a Servlet for this called CleanDatabase.java. 
 	 */
 	public static void main(String[] args) {
 		SessionAssistant sessionAssistant = new SessionAssistant(); 
@@ -130,11 +131,11 @@ public class DatabaseCleaner {
 			}
 			String address = pin.getLocationAddress();
 			Integer zip = getZip(address);
-			if(!zipMap.contains(zip)) { 
+			if(!zipSet.contains(zip)) { 
 				if(address.substring(address.length() - 5).trim().length() != 5) {
 					System.out.println("Zip code error: " + address);
 				} else
-					zipMap.add(zip);
+					zipSet.add(zip);
 			}
 			if(pinMap.containsKey(address)) {
 				ArrayList<Pin> list = pinMap.get(address);
@@ -180,8 +181,10 @@ public class DatabaseCleaner {
 	}
 	
 	/***
-	 * This method solves the conflicted pins by removing the 
-	 * @return 
+	 * This method solves the conflicted pin address by removing pins that have typical markers
+	 * for invalid data entries. If a new marker is identified this is where it should be added. 
+	 * @param addressPinMap The HashMap of conflicted addresses and their pins. 
+	 * @return Returns the solution ArrayList. 
 	 */
 	public ArrayList<Pin> solveConflicts(HashMap<String, ArrayList<Pin>> addressPinMap) {
 		ArrayList<Pin> deleteList = new ArrayList<Pin>();
@@ -190,7 +193,7 @@ public class DatabaseCleaner {
 			ArrayList<Pin> conflictedPins = addressPinMap.get(key);
 			Pin firstPin = conflictedPins.get(0);
 			for(int i = 1; i < conflictedPins.size(); i++) {
-				if(zipMap.contains(getZip(conflictedPins.get(i).getContent()))) {
+				if(zipSet.contains(getZip(conflictedPins.get(i).getContent()))) {
 					deleteList.add(conflictedPins.get(i));
 				} else if (firstPin.getContent().equals(conflictedPins.get(i).getContent())) {
 					deleteList.add(conflictedPins.get(i));
@@ -200,18 +203,34 @@ public class DatabaseCleaner {
 		return deleteList;
 	}
 
-	public Set<Integer> getZipMap() {
-		return zipMap;
+	/***
+	 * Accessor method for the zipcode Set.  
+	 * @return Returns the Set. 
+	 */
+	public Set<Integer> getZipSet() {
+		return zipSet;
 	}
 
-	public void setZipMap(Set<Integer> zipMap) {
-		this.zipMap = zipMap;
+	/***
+	 * Mutator method for the zipcode Set.
+	 * @param zipMap The Set to be assigned. 
+	 */
+	public void setZipSet(Set<Integer> zipMap) {
+		this.zipSet = zipMap;
 	}
 
+	/***
+	 * Accessor method for the past date ArrayList.  
+	 * @return Returns the ArrayList. 
+	 */
 	public ArrayList<Pin> getPastDatePinList() {
 		return pastDatePinList;
 	}
 
+	/***
+	 * Mutator method for the past date ArrayList.
+	 * @param pastDatePinList The ArrayList to be assigned. 
+	 */
 	public void setPastDatePinList(ArrayList<Pin> pastDatePinList) {
 		this.pastDatePinList = pastDatePinList;
 	}
