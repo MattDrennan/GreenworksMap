@@ -3,6 +3,7 @@ $(document).ready(function()
     // If window is resized
     $(window).resize(function()
     {
+        // Prevent mobile responsive glitch
         if($(window).width() >= 768)
         {
             $("#filter").hide();
