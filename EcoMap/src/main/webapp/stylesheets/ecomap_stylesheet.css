@@ -47,11 +47,9 @@ body {
     margin: 0px;
 }
 #viewDiv {
-    width: 90%;
+    width: 100%;
     height: 100%;
     position: relative;
-    left: 7%;
-
 }
 #filter {
     display: none;
@@ -78,21 +76,6 @@ body {
     position: absolute;
     left: -1.5pc;
     z-index: 99;
-}
-
-.pillars {
-    width: 100%;
-}
-
-.pillars .options {
-    display: block;
-    width: 100%;
-}
-
-.pillars .label {
-    position: relative;
-    left: 10px;
-    bottom: 25px;
 }
 
 .esri-ui-inner-container.esri-ui-corner-container {
@@ -199,4 +182,58 @@ body {
     border-color:#f9f9f9 transparent transparent transparent;
     border-width:10px;
     border-style:solid;
+ }
+
+ /* Desktop */
+ @media only screen and (min-width: 768px) {
+    #viewDiv {
+        left: 0;
+    }
+
+    .map_options {
+        display: none;
+    }
+
+    #filterDesktop {
+        position: absolute;
+        z-index: 99;
+        bottom: -25px;
+    }
+
+    #calendar_itemsDesktop {
+        position: absolute;
+        right: 10px;
+        bottom: -25px;
+        z-index: 99;
+    }
+ }
+
+ /* Mobile */
+ @media only screen and (min-width: 0px) and (max-width: 767.9px) {
+    #viewDiv {
+        left: 7%;
+    }
+
+    #filterDesktop {
+        display: none;
+    }
+
+    .pillars {
+        width: 100%;
+    }
+    
+    .pillars .options {
+        display: block;
+        width: 100%;
+    }
+    
+    .pillars .label {
+        position: relative;
+        left: 10px;
+        bottom: 25px;
+    }
+    
+    #calendar_itemsDesktop {
+        display: none;
+    }
  }

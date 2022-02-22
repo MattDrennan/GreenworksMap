@@ -236,8 +236,20 @@ $(document).ready(function()
     });
 
     // Click events link
-    $("#openCalendar").click(function()
+    $("[name=openCalendar]").click(function()
     {
+        // If mobile
+        if($(this).attr("type") == "mobile")
+        {
+            // Move datepicker near filter button
+            $("#datepicker").css({left: 90, top: 120, position: 'relative'});
+        }
+        else
+        {
+            // Move datepicker near filter button
+            $("#datepicker").css({right: 0, bottom: 40, position: 'absolute'});
+        }
+
         $("#datepicker").datepicker("show");
     });
 

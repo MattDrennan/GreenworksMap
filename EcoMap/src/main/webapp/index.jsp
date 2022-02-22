@@ -29,7 +29,6 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
         <link rel="stylesheet" href="https://js.arcgis.com/4.22/esri/themes/light/main.css">
         <script src="https://js.arcgis.com/4.22/"></script>
         <script src="scripts/esri_api.js"></script>
-        <script src="scripts/jquery.grayscale.js"></script>
         <!-- CRED FILE -->
         <script src="cred.js"></script>
         
@@ -135,6 +134,9 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
         <div id="mapView">
             <section>
                 <h1>Eco-Map</h1>
+                <!-- Calendar Field -->
+                <input type="text" id="datepicker" style="visibility:hidden;">
+
                 <div class="map_options">
                     <div id="filter_items">
                         <figure>
@@ -144,12 +146,10 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
                             </a>
                         </figure>
                     </div>
-                    <!--solution found on StackOverflow: https://stackoverflow.com/questions/5003867/how-to-call-javascript-function-instead-of-href-in-html/5003904-->
 
-                    <input type="text" id="datepicker" style="visibility:hidden; margin-left: 100px;">
                     <div id="calendar_items">
                         <figure>
-                            <a href="#/" id="openCalendar">
+                            <a href="#/" name="openCalendar" type="mobile">
                                 <img id="calendar_icon" src="icons/calendar.png" alt=" ">
                                 <div id="fc_background"><figcaption>Events</figcaption></div>
                             </a>
@@ -190,7 +190,40 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
                     <div id="tail2"></div> 
                 </div> 
             </div>
-    
+
+            <div id="filterDesktop">
+                <span class="pillars">
+                    <span class="options" id="filterEnergy" value="1">
+                        <img src="icons/energy.png" width="64px" height="64px" />
+                    </span>
+                    <span class="options" id="filterWater" value="2">
+                        <img src="icons/water.png" width="64px" height="64px" />
+                    </span>
+                    <span class="options" id="filterTransportation" value="3">
+                        <img src="icons/transportation.png" width="64px" height="64px" />
+                    </span>
+                    <span class="options" id="filterBuildings" value="4">
+                        <img src="icons/buildings.png" width="64px" height="64px" />
+                    </span>
+                    <span class="options" id="filterLivability" value="5">
+                        <img src="icons/livability.png" width="64px" height="64px" />
+                    </span>
+                    <span class="options" id="filterFood" value="6">
+                        <img src="icons/food.png" width="64px" height="64px" />
+                    </span>
+                    <span class="options" id="filterWaste" value="7">
+                        <img src="icons/waste.png" width="64px" height="64px" />
+                    </span>
+                </span>
+            </div>
+
+            <span id="calendar_itemsDesktop">
+                <a href="#/" name="openCalendar" type="desktop">
+                    <img id="calendar_icon" src="icons/calendar.png" alt=" ">
+                    <div id="fc_background"><figcaption>Events</figcaption></div>
+                </a>
+            </span>
+            
             <!-- Map -->
             <div id="viewDiv"></div>
         </div> 
