@@ -4,7 +4,8 @@
 Filename: ecomap_stylesheet.css
 Date of creation: 27 Sep 2021
 Editor: Kashai Bingham
-Edited: 7 Dec 2021
+Editor: Matthew Drennan
+Edited: 22 Feb 2022
 */
 
 /*map scaling issues on mobile devices needs to be addressed*/
@@ -76,46 +77,6 @@ body {
     position: absolute;
     left: -1.5pc;
     z-index: 99;
-}
-
-.esri-ui-inner-container.esri-ui-corner-container {
-    width: 20%;        
-}
-
-.esri-component.esri-zoom.esri-widget {
-    width: 25px;
-    margin-left: 82vw;
-    transform: rotate(-90deg);
-}
-.esri-component.esri-zoom.esri-widget div:first-child{
-    width: 100%;    
-}
-.esri-component.esri-zoom.esri-widget div:last-child{
-    width: 100%;
-}
-.esri-component.esri-zoom.esri-widget div:last-child span{
-    transform: rotate(90deg);
-}
-
-
-.esri-widget--button {
-    width: 5%;
-    background-color: rgba(85, 77, 77, 0.6);
-}
-.esri-ui-inner-container.esri-ui-manual-container, .esri-component.esri-attribution.esri-widget {
-    width: 100%;
-}
-.esri-attribution__sources {
-    display: flex;
-    float: left;
-    flex: 1 1 75%;
-    background-color: rgba(85, 77, 77, 0.6);
-}
-.esri-attribution__powered-by {
-    display: flex;
-    float: right;
-    flex: 1 1 25%;
-    background-color: rgba(85, 77, 77, 0.6);
 }
 
 /* Highlights Calendar Dates */
@@ -197,13 +158,13 @@ body {
     #filterDesktop {
         position: absolute;
         z-index: 99;
-        bottom: -25px;
+        bottom: -50px;
     }
 
     #calendar_itemsDesktop {
         position: absolute;
         right: 10px;
-        bottom: -25px;
+        bottom: -50px;
         z-index: 99;
     }
  }

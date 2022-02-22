@@ -139,10 +139,11 @@ require([
     "esri/layers/FeatureLayer",
     "esri/Graphic",
     "esri/layers/GraphicsLayer",
+    "esri/widgets/Zoom",
     "esri/symbols/PictureMarkerSymbol",
     "esri/rest/locator"
 ],
-    function (esriConfig, Map, MapView, FeatureLayer, Graphic, GraphicsLayer, PictureMarkerSymbol) {
+    function (esriConfig, Map, MapView, FeatureLayer, Graphic, GraphicsLayer, Zoom, PictureMarkerSymbol) {
 
         // Map Key
         esriConfig.apiKey = mapKey;
@@ -164,8 +165,19 @@ require([
             //Orlando: -81.3789, 28.5384
             center: [-81.3789, 28.5384], // Longitude, latitude of Orlando, FL
             zoom: 9, // Zoom level
-            container: "viewDiv" // Div element
+            container: "viewDiv", // Div element
+            ui: {
+                components: ["attribution"] // removes default widgets except for attribution
+             }
         });
+
+        // Zoom Controls
+        var zoom = new Zoom({
+            view: view,
+            layout: "horizontal"
+         });
+         
+        view.ui.add(zoom, "top-right");
 
         //to add a GraphicsLayer instead of a FeatureLayer for marker population
         var gL = new GraphicsLayer();
