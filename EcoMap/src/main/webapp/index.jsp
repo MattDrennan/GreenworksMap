@@ -29,6 +29,7 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
         <link rel="stylesheet" href="https://js.arcgis.com/4.22/esri/themes/light/main.css">
         <script src="https://js.arcgis.com/4.22/"></script>
         <script src="scripts/esri_api.js"></script>
+        <script src="scripts/jquery.grayscale.js"></script>
         <!-- CRED FILE -->
         <script src="cred.js"></script>
         
@@ -158,31 +159,36 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
             </section>
 
             <div id="filter">
-                <form action="showFilter" name="filter" method="post" accept-charset="utf-8">
-                    <div class="pillars">
-                        <div class="options" name="filterEnergy" value="1">
-                            <img src="icons/energy.png" width="64px" height="64px" /> <label class="label">Clean Energy</label>
-                        </div>
-                        <div class="options" name="filterWater" value="2">
-                            <img src="icons/water.png" width="64px" height="64px" /> <label class="label">Clean Water</label>
-                        </div>
-                        <div class="options" name="filterTransportation" value="3">
-                            <img src="icons/transportation.png" width="64px" height="64px" /> <label class="label">Electic & Alt. Transportation</label>
-                        </div>
-                        <div class="options" name="filterBuildings" value="4">
-                            <img src="icons/buildings.png" width="64px" height="64px" /> <label class="label">Green Buildings</label>
-                        </div>
-                        <div class="options" name="filterLivability" value="5">
-                            <img src="icons/livability.png" width="64px" height="64px" /> <label class="label">Livability</label>
-                        </div>
-                        <div class="options" name="filterFood" value="6">
-                            <img src="icons/food.png" width="64px" height="64px" /> <label class="label">Local Food Systems</label>
-                        </div>
-                        <div class="options" name="filterWaste" value="7">
-                            <img src="icons/waste.png" width="64px" height="64px" /> <label class="label">Zero Waste</label>
-                        </div>
-                    </div>
-                </form>
+                <div id="toolTip"> 
+                    <p>
+                        <span class="pillars">
+                            <span class="options" name="filterEnergy" value="1">
+                                <img src="icons/energy.png" width="64px" height="64px" /> <label class="label">Clean Energy</label>
+                            </span>
+                            <span class="options" name="filterWater" value="2">
+                                <img src="icons/water.png" width="64px" height="64px" /> <label class="label">Clean Water</label>
+                            </span>
+                            <span class="options" name="filterTransportation" value="3">
+                                <img src="icons/transportation.png" width="64px" height="64px" /> <label class="label">Electic & Alt. Transportation</label>
+                            </span>
+                            <span class="options" name="filterBuildings" value="4">
+                                <img src="icons/buildings.png" width="64px" height="64px" /> <label class="label">Green Buildings</label>
+                            </span>
+                            <span class="options" name="filterLivability" value="5">
+                                <img src="icons/livability.png" width="64px" height="64px" /> <label class="label">Livability</label>
+                            </span>
+                            <span class="options" name="filterFood" value="6">
+                                <img src="icons/food.png" width="64px" height="64px" /> <label class="label">Local Food Systems</label>
+                            </span>
+                            <span class="options" name="filterWaste" value="7">
+                                <img src="icons/waste.png" width="64px" height="64px" /> <label class="label">Zero Waste</label>
+                            </span>
+                        </span>
+                    </p>
+                    <div id="tailShadow"></div> 
+                    <div id="tail1"></div> 
+                    <div id="tail2"></div> 
+                </div> 
             </div>
     
             <!-- Map -->
