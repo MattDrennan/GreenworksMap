@@ -1,5 +1,14 @@
 $(document).ready(function()
 {
+    // If window is resized
+    $(window).resize(function()
+    {
+        if($(window).width() >= 768)
+        {
+            $("#filter").hide();
+        }
+    });
+
     // Filter - Options Pressed
     $(".options").on("click", function(event)
     {
