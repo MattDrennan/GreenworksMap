@@ -146,7 +146,7 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
                     </div>
                     <!--solution found on StackOverflow: https://stackoverflow.com/questions/5003867/how-to-call-javascript-function-instead-of-href-in-html/5003904-->
 
-                    <input type="text" id="datepicker" style="visibility:hidden;">
+                    <input type="text" id="datepicker" style="visibility:hidden; margin-left: 100px;">
                     <div id="calendar_items">
                         <figure>
                             <a href="#/" id="openCalendar">
