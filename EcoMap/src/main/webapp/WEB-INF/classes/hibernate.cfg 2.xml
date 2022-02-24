@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+		<!-- JDBC Database Connection Settings -->
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:8889/ecomap</property> <!-- Adjust -->
+        <property name="hibernate.connection.username">root</property> <!-- Adjust -->
+        <property name="hibernate.connection.password">root</property> <!-- Adjust -->
+        
+        <!-- JDBC Connection Pool Settings -->
+        <property name="connection.pool_size">10</property>
+        
+        <!-- Select SQL Dialect -->
+    	<property name="hibernate.dialect">org.hibernate.dialect.MySQL57Dialect</property>
+        
+        <!-- Session Thread Safe -->
+        <property name="current_session_context_class">thread</property>
+        
+    	<!-- Echo the SQL to sysout -->
+		<property name="show_sql">true</property>
+		
+		<!-- Set Current Session Content -->
+		<property name="hibernate.current_session_context_class">thread</property>
+		
+		<!-- Set Responsibilities -->
+		<property name="hbm2ddl.auto">update</property>		   
+    </session-factory>
+</hibernate-configuration>

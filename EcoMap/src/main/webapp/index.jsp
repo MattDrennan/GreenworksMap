@@ -9,15 +9,8 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
 
 <html>
     <head>
-        <!--
-            Filename: index.jsp
-            Date of Creation: 27 Sep 2021
-            Editor: Kashai Bingham
-            Edited: 29 Nov 2021
-            Version: 2.5.5
-        -->
-        
         <meta charset="utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=1">
         <title>Eco-Map - City of Orlando</title>
         <link href="stylesheets/ecomap_stylesheet.css" rel="stylesheet" />
         <!-- JQUERY -->
@@ -128,14 +121,10 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
             %>
         </script>
 
-        <!-- Show List Button -->
-        <a href="#/" id="viewChange">[List View]</a>
-
         <div id="mapView">
             <section>
-                <h1>Eco-Map</h1>
                 <!-- Calendar Field -->
-                <input type="text" id="datepicker" style="visibility:hidden;">
+                <input type="text" id="datepicker" style="position: absolute; bottom: 0; visibility: hidden;">
 
                 <div class="map_options">
                     <div id="filter_items">
@@ -217,11 +206,20 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
                 </span>
             </div>
 
-            <span id="calendar_itemsDesktop">
-                <a href="#/" name="openCalendar" type="desktop">
-                    <img id="calendar_icon" src="icons/calendar.png" alt=" ">
-                    <div id="fc_background"><figcaption>Events</figcaption></div>
-                </a>
+            <span id="itemsDesktop">
+                <figure>
+                    <a href="#/" name="viewChange">
+                        <img src="icons/list.png" alt=" ">
+                        <figcaption>List</figcaption>
+                    </a>
+                </figure>
+
+                <figure>
+                    <a href="#/" name="openCalendar" type="desktop">
+                        <img id="calendar_icon" src="icons/calendar.png" alt=" ">
+                    <figcaption>Events</figcaption>
+                    </a>
+                </figure>
             </span>
             
             <!-- Map -->
@@ -230,7 +228,7 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
 
         <!-- List View (Hidden by default) -->
         <div id="listView" style="display: none; text-align: center;">
-            <a href="#/" id="showAll">[All]</a> <a href="#/" id="showEvents">[Show Events]</a>    <a href="#/" id="showLocations">[Show Locations]</a>
+            <a href="#/" name="viewChange">[Map View]</a> <a href="#/" id="showAll">[All]</a> <a href="#/" id="showEvents">[Show Events]</a>    <a href="#/" id="showLocations">[Show Locations]</a>
             <script>
                 $.each(points, function(i, index)
                 {

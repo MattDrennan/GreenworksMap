@@ -93,7 +93,7 @@ $(document).ready(function()
     });
 
     // Change View Button
-    $("#viewChange").on("click", function(event)
+    $("[name=viewChange]").on("click", function(event)
     {
         // If hidden
         if($("#listView").is(":hidden"))
@@ -101,7 +101,6 @@ $(document).ready(function()
             // Show
             $("#listView").show();
             $("#mapView").hide();
-            $("#viewChange").text("[Map View]");
 
             // Show message if none
             if($("[name=locationList]").length == 0 && $("[name=eventList]").length == 0)
@@ -114,7 +113,6 @@ $(document).ready(function()
             // Hide
             $("#listView").hide();
             $("#mapView").show();
-            $("#viewChange").text("[List View]");
         }
     });
 
@@ -257,7 +255,7 @@ $(document).ready(function()
         else
         {
             // Move datepicker near filter button
-            $("#datepicker").css({right: 0, bottom: 40, position: 'absolute'});
+            $("#datepicker").css({right: 0, bottom: 70, position: 'absolute'});
         }
 
         $("#datepicker").datepicker("show");

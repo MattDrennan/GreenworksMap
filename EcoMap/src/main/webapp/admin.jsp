@@ -9,14 +9,6 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
 
 <html>
     <head>
-        <!--
-            Filename: admin.jsp
-            Date of Creation: 18 Jan 2022
-            Editor: Matthew Drennan
-            Edited: 18 Jan 2022
-            Version: 2.5.5
-        -->
-        
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Eco-Map (Admin Panel) - City of Orlando</title>

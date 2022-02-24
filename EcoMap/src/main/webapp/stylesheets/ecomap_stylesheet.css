@@ -1,15 +1,5 @@
 @charset "utf-8";
 
-/*
-Filename: ecomap_stylesheet.css
-Date of creation: 27 Sep 2021
-Editor: Kashai Bingham
-Editor: Matthew Drennan
-Edited: 22 Feb 2022
-*/
-
-/*map scaling issues on mobile devices needs to be addressed*/
-
 a {
     text-decoration: none;
 }
@@ -42,10 +32,8 @@ figcaption {
 body {
     font: black;
     background-color: white;
-    width: inherit;
-    height: 95vh;
-    padding: 0px;
-    margin: 0px;
+    padding: 0px !important;
+    margin: 0px !important;
 }
 #viewDiv {
     width: 100%;
@@ -58,7 +46,7 @@ body {
     width: 300px;
     height: 480px;
     left: 80px;
-    bottom: 0;
+    bottom: 60px;
     z-index: 99;
 }
 #filter h2 {
@@ -100,7 +88,7 @@ body {
 
 #toolTip {
     position:relative;
- }
+}
  
  #toolTip p {
     padding:10px;
@@ -158,21 +146,27 @@ body {
     #filterDesktop {
         position: absolute;
         z-index: 99;
-        bottom: -25px;
+        bottom: 20px;
     }
 
-    #calendar_itemsDesktop {
+    #itemsDesktop {
         position: absolute;
-        right: 10px;
-        bottom: -50px;
+        right: 0;
+        bottom: 0;
         z-index: 99;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    figure {
+        float: left;
     }
  }
 
  /* Mobile */
  @media only screen and (min-width: 0px) and (max-width: 767.9px) {
     #viewDiv {
-        left: 7%;
+        left: 0;
     }
 
     #filterDesktop {
@@ -194,7 +188,7 @@ body {
         bottom: 25px;
     }
     
-    #calendar_itemsDesktop {
+    #itemsDesktop {
         display: none;
     }
  }
