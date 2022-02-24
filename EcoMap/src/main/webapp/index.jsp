@@ -144,6 +144,15 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
                             </a>
                         </figure>
                     </div>
+
+                    <div id="list_view_items">
+                        <figure>
+                            <a href="#/" name="viewChange">
+                                <img src="icons/list.png" alt=" ">
+                                <div id="fc_background"><figcaption>List</figcaption></div>
+                            </a>
+                        </figure>
+                    </div>
                 </div>
             </section>
 
