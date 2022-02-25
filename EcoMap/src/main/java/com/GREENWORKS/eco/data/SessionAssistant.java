@@ -5,40 +5,14 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
 import org.tinylog.Logger;
 
 /***
  * This class is intended to assist the Servlets by performing all the backend database functions. 
  */
-public class SessionAssistant { // TODO: After you get this class working make its methods generic. 
+public class SessionAssistant { 
 	
-    private static SessionFactory sessionFactory = null;
-    // private long locationsSize = 0; // I want the SessionAssistant to know the size of the database tables. 
-    // private long adminSize = 0; // I am commenting these instance variables out, for now. 
-    
-    /***
-     * This method returns the configured builder for the SessionFactory. 
-     * @return returns the configured SessionFactory. 
-     */
-    private static SessionFactory buildSessionFactory() {
-    	try {
-    		Configuration config = new Configuration().configure();
-        	config.addAnnotatedClass(Admin.class);
-        	config.addAnnotatedClass(EventPin.class);
-        	config.addAnnotatedClass(LocationPin.class);
-        	config.addAnnotatedClass(GenericPin.class);
-        	config.addAnnotatedClass(ProblemPin.class);
-            config.addAnnotatedClass(OldEventPin.class);
-            StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(config.getProperties());
-            return config.buildSessionFactory(builder.build());
-        }
-        catch (Throwable ex) {
-            System.err.println("Initial SessionFactory creation failed." + ex);
-            throw new ExceptionInInitializerError(ex);
-        }
-    }
+    private static SessionFactory sessionFactory;
     
     /***
      * In order to instantiate the SessionFactory thi method must be called. The SessionFactory will refer to the private method
@@ -46,7 +20,7 @@ public class SessionAssistant { // TODO: After you get this class working make i
      * @return returns an opened Session. 
      */
     public static Session openSession() {
-    	sessionFactory = buildSessionFactory();
+    	sessionFactory = SessionFactoryUtility.getSessionFactory();
     	return getSessionFactory().openSession();
     }
     
@@ -242,7 +216,6 @@ public class SessionAssistant { // TODO: After you get this class working make i
     	Session session = openSession();
     	return (long)session.createQuery("SELECT COUNT(p) FROM GenericPin p").getSingleResult();
     }
-    
 
     /***
      * This method returns the total number of entries in the admin table. 
@@ -252,13 +225,5 @@ public class SessionAssistant { // TODO: After you get this class working make i
     	Session session = openSession();
     	return (long)session.createQuery("SELECT COUNT(a) FROM Admin a").getSingleResult();
     }
-    
-    /***
-     * This method populates the locationSize and the adminSize instance variables. 
-     */ /*
-    public void getDatabaseCounts() {
-    	locationsSize = getLocationsTableSize();
-    	adminSize = getAdminsTableSize();
-    } */
 
 }
