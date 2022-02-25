@@ -258,7 +258,6 @@ public class SessionAssistantTests {
     	problemPin.setId(problemPinTestId);
     	sessionAssistant.delete(problemPin);
     	
-    	sessionAssistant.shutdown();
+    	sessionAssistant.shutdownSessionFactory();
     }
-    
 }
