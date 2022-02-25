@@ -209,7 +209,7 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
                         <fieldset>
                             <legend>Edit Location</legend>
 
-                            <form action="editlocation" method="POST">
+                            <form action="editlocation#edit_location_box2" method="POST">
                                 <div class="input-container"></div>
                                     <select name="locationID">
                                         <%
