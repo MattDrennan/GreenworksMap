@@ -106,43 +106,42 @@ public class OpenCharge {
                 Objects are matched to JSON data for readabiliy. Review the POJOs on the bottom of this class
                 to determine what data to use. 
                 */
-                if(data[i].StatusType.isOperational == true) { // If the site is not operational then we do not want to show it. 
-                    // Set variables
-                    String address = data[i].AddressInfo.AddressLine1 + ", " + data[i].AddressInfo.Town + ", FL " + data[i].AddressInfo.Postcode;
-                    String name = data[i].OperatorInfo.Title;
-                    String thumbnail = "";
-                    String nameToLowerCase = name.toLowerCase();
+                
+                // Set variables
+                String address = data[i].AddressInfo.AddressLine1 + ", " + data[i].AddressInfo.Town + ", FL " + data[i].AddressInfo.Postcode;
+                String name = data[i].OperatorInfo.Title;
+                String thumbnail = "";
+                String nameToLowerCase = name.toLowerCase();
 
-                    if(nameToLowerCase.contains("tesla")) {
-                        thumbnail = "<img src='https://github.com/EthanNValencia/EcoMapImageRepo/blob/master/tesla.jpg?raw=true' /><br /><br />"; 
-                    } else if (nameToLowerCase.contains("chargepoint")) {
-                        thumbnail = "<img src='https://github.com/EthanNValencia/EcoMapImageRepo/blob/master/chargepoint.png?raw=true' /><br /><br />";
-                    } else if (nameToLowerCase.contains("semaconnect")) {
-                        thumbnail = "<img src='https://github.com/EthanNValencia/EcoMapImageRepo/blob/master/semaconnect.png?raw=true' /><br /><br />";
-                    } else if(nameToLowerCase.contains("")){
-                        thumbnail = "<img src='https://github.com/EthanNValencia/EcoMapImageRepo/blob/master/evgo.png?raw=true' /><br /><br />";
-                    }
-                    
-                    String coord = data[i].AddressInfo.Longitude.toString() + "," + data[i].AddressInfo.Latitude.toString();
-                    String content = "This is an electronic vehicle charging station.";
-                    
-                    for(Connections connections: data[i].Connections) {
-                        content += "<br>Connection Info: " + connections.ConnectionType.Title + ", " + connections.CurrentType.Title + ", " + connections.Level.Title;
-                    }
-
-                    String website = data[i].OperatorInfo.WebsiteURL;
-
-                    Pin pin = new GenericPin();
-                    pin.setApi((byte) 1);
-                    pin.setIconId(1);
-                    pin.setLocationName(name);
-                    pin.setLocationAddress(address);
-                    pin.setThumbnail(thumbnail);
-                    pin.setCoordinates(coord);
-                    pin.setContentNoClean(content);
-                    pin.setLink(website);
-                    pinList.add(pin);
+                if(nameToLowerCase.contains("tesla")) {
+                    thumbnail = "<img src='https://github.com/EthanNValencia/EcoMapImageRepo/blob/master/tesla.jpg?raw=true' /><br /><br />"; 
+                } else if (nameToLowerCase.contains("chargepoint")) {
+                    thumbnail = "<img src='https://github.com/EthanNValencia/EcoMapImageRepo/blob/master/chargepoint.png?raw=true' /><br /><br />";
+                } else if (nameToLowerCase.contains("semaconnect")) {
+                    thumbnail = "<img src='https://github.com/EthanNValencia/EcoMapImageRepo/blob/master/semaconnect.png?raw=true' /><br /><br />";
+                } else if(nameToLowerCase.contains("")){
+                    thumbnail = "<img src='https://github.com/EthanNValencia/EcoMapImageRepo/blob/master/evgo.png?raw=true' /><br /><br />";
                 }
+                
+                String coord = data[i].AddressInfo.Longitude.toString() + "," + data[i].AddressInfo.Latitude.toString();
+                String content = "This is an electronic vehicle charging station.";
+                
+                for(Connections connections: data[i].Connections) {
+                    content += "<br>Connection Info: " + connections.ConnectionType.Title + ", " + connections.CurrentType.Title + ", " + connections.Level.Title;
+                }
+
+                String website = data[i].OperatorInfo.WebsiteURL;
+
+                Pin pin = new GenericPin();
+                pin.setApi((byte) 1);
+                pin.setIconId(1);
+                pin.setLocationName(name);
+                pin.setLocationAddress(address);
+                pin.setThumbnail(thumbnail);
+                pin.setCoordinates(coord);
+                pin.setContentNoClean(content);
+                pin.setLink(website);
+                pinList.add(pin);
             }
             catch(Exception e)
             {
