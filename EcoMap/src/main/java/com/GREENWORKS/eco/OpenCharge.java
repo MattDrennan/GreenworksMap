@@ -6,7 +6,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import com.GREENWORKS.eco.data.GenericPin;
+import com.GREENWORKS.eco.data.Pin;
+import com.GREENWORKS.eco.data.SessionAssistant;
 import com.google.gson.Gson;
 
 public class OpenCharge {
@@ -45,8 +49,9 @@ public class OpenCharge {
         try
         {
             /*
-                The code below connects to the URL and gets the data from the page,
-                and puts it in a string
+            *** Explanation ***
+            The code below connects to the URL and gets the data from the page,
+            and puts it in a string. 
             */
             URL obj = new URL(GET_URL);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -81,7 +86,10 @@ public class OpenCharge {
 
         // Load JSON data to mainData[] object
         mainData[] data = gson.fromJson(jsonString, mainData[].class);
-        
+        System.out.println("Dataset length: " + data.length);
+
+        ArrayList<Pin> pinList = new ArrayList<Pin>();
+
         // Loop through all the data
         for(int i = 0; i <= data.length; i++)
         {
@@ -89,44 +97,65 @@ public class OpenCharge {
             try
             {
                 /*
-                    Get data from JSON like this:
+                *** For Quick String Viewing ***
+                Get data from JSON like this:
+                
+                System.out.println(data.ID);
+                System.out.println(data.DataProvider.Title);
 
-                    System.out.println(data.ID);
-                    System.out.println(data.DataProvider.Title);
-
-                    Objects are matched to JSON data for readabiliy
+                Objects are matched to JSON data for readabiliy. Review the POJOs on the bottom of this class
+                to determine what data to use. 
                 */
-
+                
                 // Set variables
-                String address = data[i].AddressInfo.AddressLine1;
-                String name = data[i].Connections[0].ConnectionType.FormalName;
-                String coord = data[i].AddressInfo.Longitude.toString() + "," + data[i].AddressInfo.Latitude.toString();
-                String content = "API";
+                String address = data[i].AddressInfo.AddressLine1 + ", " + data[i].AddressInfo.Town + ", FL " + data[i].AddressInfo.Postcode;
+                String name = data[i].OperatorInfo.Title;
+                String thumbnail = "";
+                String nameToLowerCase = name.toLowerCase();
 
-                // Insert into database
-                String sql2 = "INSERT INTO locations (iconid, address, name, coord, content, api) VALUES (1, '" + address + "', '" + name + "', '" + coord + "', '" + content + "', 1)";
-                try
-                {
-                    PreparedStatement statement = mysqlConnect.connect().prepareStatement(sql2);
-                    statement.executeUpdate();
-                    
+                if(nameToLowerCase.contains("tesla")) {
+                    thumbnail = "<img src='https://github.com/EthanNValencia/EcoMapImageRepo/blob/master/tesla.jpg?raw=true' /><br /><br />"; 
+                } else if (nameToLowerCase.contains("chargepoint")) {
+                    thumbnail = "<img src='https://github.com/EthanNValencia/EcoMapImageRepo/blob/master/chargepoint.png?raw=true' /><br /><br />";
+                } else if (nameToLowerCase.contains("semaconnect")) {
+                    thumbnail = "<img src='https://github.com/EthanNValencia/EcoMapImageRepo/blob/master/semaconnect.png?raw=true' /><br /><br />";
+                } else if(nameToLowerCase.contains("")){
+                    thumbnail = "<img src='https://github.com/EthanNValencia/EcoMapImageRepo/blob/master/evgo.png?raw=true' /><br /><br />";
                 }
-                catch (SQLException e)
-                {
-                    e.printStackTrace();
+                
+                String coord = data[i].AddressInfo.Longitude.toString() + "," + data[i].AddressInfo.Latitude.toString();
+                String content = "This is an electronic vehicle charging station.";
+                
+                for(Connections connections: data[i].Connections) {
+                    content += "<br>Connection Info: " + connections.ConnectionType.Title + ", " + connections.CurrentType.Title + ", " + connections.Level.Title;
                 }
-                finally
-                {
-                    mysqlConnect.disconnect();
-                }
+
+                String website = data[i].OperatorInfo.WebsiteURL;
+
+                Pin pin = new GenericPin();
+                pin.setApi((byte) 1);
+                pin.setIconId(1);
+                pin.setLocationName(name);
+                pin.setLocationAddress(address);
+                pin.setThumbnail(thumbnail);
+                pin.setCoordinates(coord);
+                pin.setContentNoClean(content);
+                pin.setLink(website);
+                pinList.add(pin);
             }
             catch(Exception e)
             {
                 // Nothing
             }
         }
+        SessionAssistant SessionAssistant = new SessionAssistant();
+        SessionAssistant.saveList(pinList);
     }
 }
+
+/*
+The classes below are POJO classes for JSON to POJO conversion. 
+*/
 
 class mainData
 {
@@ -149,6 +178,7 @@ class DataProvider
 
 class OperatorInfo
 {
+	String WebsiteURL;
     String Title;
 }
 
@@ -189,6 +219,7 @@ class Connections
   Double PowerKW;
   Level Level;
   ConnectionType ConnectionType;
+  CurrentType CurrentType;
 }
 
 class SubmissionStatus
@@ -210,4 +241,9 @@ class ConnectionType
 {
     String FormalName;
     String Description; 
+    String Title;
+}
+
+class CurrentType {
+	String Title;
 }

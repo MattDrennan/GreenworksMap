@@ -250,6 +250,15 @@ public abstract class Pin {
 	}
 
 	/***
+	 * Mutator method for assigning to the content instance variable. Conducts
+	 * cleaning on the parameter. 
+	 * @param coordinates The value to be assigned. 
+	 */
+	public void setContentNoClean(String content) {
+		this.content = content;
+	}
+
+	/***
 	 * Accessor method for the thumbnail instance variable. 
 	 * @return Returns the contents of the instance variable. 
 	 */		
@@ -265,7 +274,11 @@ public abstract class Pin {
 		// Make sure it has a value
 		if(thumbnail != "" && thumbnail != "null" && thumbnail != null)
 		{
-			return "<img src='" + Cred.BASE_URL + "/images/" + thumbnail + "' width='100px' height='100px' /><br /><br />";
+			if(thumbnail.contains("<img src")){
+				return thumbnail;
+			} else {
+				return "<img src='" + Cred.BASE_URL + "/images/" + thumbnail + "' width='100px' height='100px' /><br /><br />";
+			}
 		}
 		else
 		{
@@ -290,7 +303,13 @@ public abstract class Pin {
 		// Make sure it has a value
 		if(link != "" && link != "null" && link != null)
 		{
-			return "<br /><br /><a href='http://" + link + "' target='_blank'>[View Website]</a>";
+			if(link.contains("http://")) {
+				return "<br /><br /><a href='" + link + "' target='_blank'>[View Website]</a>";
+			} else if(link.contains("https://")){
+				return "<br /><br /><a href='" + link + "' target='_blank'>[View Website]</a>";
+			} else {
+				return "<br /><br /><a href='http://" + link + "' target='_blank'>[View Website]</a>";
+			}
 		}
 		else
 		{
