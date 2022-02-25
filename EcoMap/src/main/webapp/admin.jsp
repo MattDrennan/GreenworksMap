@@ -5,7 +5,6 @@
 // Get pin data
 SessionAssistant sa = new SessionAssistant();
 ArrayList<Pin> locationsArrayList = sa.getAllPins();
-sa.shutdownSessionFactory();
 %>
 
 <html>
