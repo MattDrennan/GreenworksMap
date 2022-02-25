@@ -54,7 +54,7 @@ public class SessionAssistant { // TODO: After you get this class working make i
      * This is used to shutdown the SessionFactory. It will close the connection pools and also
      * the cache. 
      */
-    public void shutdown() {
+    public void shutdownSessionFactory() {
         getSessionFactory().close(); // Close caches and connection pools. 
     }
 	
@@ -219,6 +219,7 @@ public class SessionAssistant { // TODO: After you get this class working make i
     	for(Pin pin : genericPinList) {
     		pinList.add(pin);
     	}
+        session.close();
     	return pinList;
     }
     
@@ -229,6 +230,7 @@ public class SessionAssistant { // TODO: After you get this class working make i
     public List<Pin> getAllPinsList() {
     	Session session = openSession();
     	List<Pin> pinList = session.createQuery("SELECT p FROM GenericPin p", Pin.class).getResultList();
+        session.close();
     	return pinList;
     }
    
