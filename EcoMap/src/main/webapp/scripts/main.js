@@ -116,54 +116,6 @@ $(document).ready(function()
         }
     });
 
-    // Add Item - Form Submit
-    $("#addItem input[type=submit]").on("click", function(event)
-    {
-        event.preventDefault();
-
-        // Get coords for address
-        var addressInfo = getAddress($("#addItem input[name=location]").val()).done(function(returndata)
-        {
-            // Get coord data and put in hidden field
-            $("input[name=coord]").val(returndata.x + "," + returndata.y);
-
-            // Send form data
-            $.ajax({   
-                type: "POST",
-                data : $("#addItem").serialize(),
-                url: "additem",   
-                success: function(data)
-                {
-                    window.location.replace("admin.jsp");                
-                }   
-            });
-        });
-    });
-
-    // Edit Item - Form Submit
-    $("#editLocationSubmit").on("click", function(event)
-    {
-        event.preventDefault();
-
-        // Get coords for address
-        var addressInfo = getAddress($("#editLocation input[name=location]").val()).done(function(returndata)
-        {
-            // Get coord data and put in hidden field
-            $("input[name=coord]").val(returndata.x + "," + returndata.y);
-
-            // Send form data
-            $.ajax({   
-                type: "POST",
-                data : $("#editLocation").serialize(),
-                url: "editlocationsave",   
-                success: function(data)
-                {
-                    window.location.replace("admin.jsp");               
-                }   
-            });
-        });
-    });
-
     // If date picker (first option) is changed
     $("#datepicker").on("change", function()
     {
@@ -279,33 +231,4 @@ $(document).ready(function()
             $("#filter").show();
         }
     });
-
-    // getAddress: Get's JSON data from address
-    function getAddress(address)
-    {
-        // Set up return variables
-        var x = 0;
-        var y = 0;
-        var def = $.Deferred();
-
-        // Get JSON from URL (ARCGIS)
-        $.getJSON('https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?singleLine=' + address + '&forStorage=false&f=pjson').done(function(data)
-        {
-            // Loop through JSON data
-            $.each(data, function(i, field)
-            {
-                // There are two sets of data, candidates contains the x and y variable
-                if(i == "candidates")
-                {
-                    def.resolve({
-                        // Get X and Y data
-                        x: field[0]['location']['x'],
-                        y: field[0]['location']['y']
-                    });
-                }
-            });
-        });
-
-        return def;
-    }
 });
