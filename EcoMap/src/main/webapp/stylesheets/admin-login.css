@@ -1,8 +1,6 @@
-/*
-Filename: admin-login.css
-Date of creation: 12 Feb 2022
-Editor: James Rolon
-*/
+body {
+  font-size: 16px;
+}
 
 #app-header {
   padding: 0.5px 0 0 1rem;
@@ -18,12 +16,21 @@ Editor: James Rolon
   border-radius: 6px;
 }
 
+.item-container {
+  display: block;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 .input-container {
   padding: 1rem;
+  font-size: 16px;
 }
 
 .input-container input {
   padding: 3;
+  font-size: 16px;
 }
 
 .button-container {
@@ -37,10 +44,52 @@ Editor: James Rolon
   background: white;
   border: 1px solid gray;
   border-radius: 3px;
+  font-size: 16px;
 }
 
 .button-container .form-submit-btn:hover {
   background-color: gray;
   color: #fff;
   cursor: pointer;
+}
+
+fieldset {
+  display: block;
+  flex-direction: row;
+  justify-content: center;
+  /*box-shadow: 0 1px 6px rgb(32 33 36 / 28%);*/
+  border: 1px solid #000;
+  border-radius: 6px;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+fieldset textarea {
+  width: 100%;
+  font-size: 16px;
+}
+
+fieldset .input-container input[type=text], select {
+  width: 100%;
+  font-size: 16px;
+}
+
+fieldset .button-container input:nth-child(odd) {
+  margin-right: 20px;
+}
+
+.button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border: 1px solid #000;
+}
+
+.error {
+  color: red;
 }
