@@ -38,8 +38,10 @@ public class AddItem extends HttpServlet {
         String username = (String) session.getAttribute("username"); // Verifies that an admin is logged in. 
         
         if(username != "" && username != null) { // Check if session active
-            String startDate = request.getParameter("dateStartEdit");
-    		String endDate = request.getParameter("dateEndEdit");
+            String startDate = request.getParameter("dateStart");
+    		String endDate = request.getParameter("dateEnd");
+
+            String isEvent = request.getParameter("event");
 
         	PinFactory dataFactory = PinFactory.getFactory(startDate, endDate);
         	Pin pin = dataFactory.createPinData();
@@ -52,6 +54,12 @@ public class AddItem extends HttpServlet {
     		pin.setContent(request.getParameter("content"));
             pin.setThumbnail(request.getParameter("thumbnail"));
             pin.setLink(request.getParameter("link"));
+
+            // Server side check
+            if(pin.getLocationName() == "") { return; }
+            if(pin.getLocationAddress() == "") { return; }
+            if(isEvent == "1" && startDate == "") { return; }
+            if(isEvent == "1" && endDate == "") { return; }
 
     		SessionAssistant sessionAssistant = new SessionAssistant();
         	sessionAssistant.insert(pin); // Database insertion. 

@@ -43,6 +43,8 @@ public class EditLocationSave extends HttpServlet {
         String startDate = request.getParameter("dateStartEdit");
 		String endDate = request.getParameter("dateEndEdit");
 
+		String isEvent = request.getParameter("eventEdit");
+
     	PinFactory dataFactory = PinFactory.getFactory(startDate, endDate);
     	Pin pin = dataFactory.createPinData();
     	pin.setId(Integer.parseInt(request.getParameter("id")));
@@ -55,6 +57,13 @@ public class EditLocationSave extends HttpServlet {
 		pin.setContent(request.getParameter("content"));
 		pin.setThumbnail(request.getParameter("thumbnail"));
 		pin.setLink(request.getParameter("link"));
+
+		// Server side check
+		if(pin.getLocationName() == "") { return; }
+		if(pin.getLocationAddress() == "") { return; }
+		if(isEvent == "1" && startDate == "") { return; }
+		if(isEvent == "1" && endDate == "") { return; }
+
 		SessionAssistant sessionAssistant = new SessionAssistant();
     	sessionAssistant.update(pin); // Database updated
     	Logger.info(LoggerConstants.QUERY_UPDATE + pin);
