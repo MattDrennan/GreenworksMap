@@ -42,7 +42,7 @@ public class Login extends HttpServlet {
         Admin admin = sessionAssistant.getByLoginCredentials(username, password);
     	try {
 	    	if(admin == null) { // If the data cannot be matched database side the Admin object will be null. 
-	    		String message = "Invalid username and/or password.";
+	    		String message = "<div class='error'>Invalid username and/or password.</div>";
 	            request.setAttribute("message", message);
 	            Logger.warn("Failed login attempt from" + request.getRemoteAddr() + "! Username: " + username + " Password: " + password);
 	    	} else if (admin != null) { // This is the condition for a successful login. 

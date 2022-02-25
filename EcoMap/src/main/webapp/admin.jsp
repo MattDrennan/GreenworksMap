@@ -93,14 +93,15 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
                             Is this an event: <input type="radio" name="event" value="1" /> Yes / <input type="radio" name="event" value="0" CHECKED /> No
                         </div>
 
-                        <div class="input-container">
-                            <span id="eventDates" style="display: none;">
-                                <br />
+                        <span id="eventDates" style="display: none;">
+                            <div class="input-container">
                                 Date / Time Start: <input type="text" id="dateStart" name="dateStart" readonly="true" />
-                                <br />
+                            </div>
+
+                            <div class="input-container">
                                 Date / Time End: <input type="text" id="dateEnd" name="dateEnd" readonly="true" />
-                            </span>
-                        </div>
+                            </div>
+                        </span>
 
                         <div class="input-container">
                             Icon:
@@ -250,6 +251,8 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
                     <div class="button-container">
                         <input class="form-submit-btn" type="submit" name="submit" value="Login" />
                     </div>
+
+                    ${message}
                 </form>
             </div>
             <%
