@@ -164,7 +164,7 @@ require([
             map: map,
             //Orlando: -81.3789, 28.5384
             center: [-81.3789, 28.5384], // Longitude, latitude of Orlando, FL
-            zoom: 9, // Zoom level
+            zoom: 12, // Zoom level
             container: "viewDiv", // Div element
             ui: {
                 components: ["attribution"] // removes default widgets except for attribution
