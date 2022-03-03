@@ -71,11 +71,5 @@ public class EventPin extends Pin {
 			}
 		this.iconId = iconId;
 	 }
-	
-	@Deprecated
-	@Override
-	public String getInsertQuery() {
-		return "INSERT INTO locations (iconid, address, name, coord, dateStart, dateEnd, thumbnail, link) VALUES ('" + iconId + "', '" + locationAddress + "', '" + locationName + "', '" + coordinates + "', '" + startDate + "', '" + endDate + "', '" + thumbnail + "', '" + link + "')";             
-	}
 	 
 }
