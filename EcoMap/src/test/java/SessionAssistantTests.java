@@ -43,7 +43,7 @@ public class SessionAssistantTests {
 	    pin.setIconId(4); // Because this is an event the IconId will be assigned to 9. 
 	    pin.setStartDate("2022-01-31 15:00:00");
 	    pin.setEndDate("2022-01-31 15:00:00");
-	    pin.setLocationAddress("Test");
+	    pin.setStreet("Test");
 	    pin.setLocationName("Test");
 	    pin.setCoordinates("35,45");
 	    pin.setContent("Test");
@@ -125,7 +125,7 @@ public class SessionAssistantTests {
     public void sessionAssistant_pinShouldLoadPin() {
     	SessionAssistant sessionAssistant = new SessionAssistant();
     	Pin pin = sessionAssistant.load(new GenericPin(pinTestId));
-    	assertEquals("Test", pin.getLocationAddress());
+    	assertEquals("Test, null, null null", pin.getLocationAddress());
     	assertEquals("2022-01-31 15:00:00", pin.getEndDate()); 
     }
     

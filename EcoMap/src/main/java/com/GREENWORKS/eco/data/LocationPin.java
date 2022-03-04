@@ -37,10 +37,5 @@ public class LocationPin extends Pin {
 	public void setEndDate(String endDate) {
 		this.endDate = null;
 	}
-	
-	@Override
-	public String getInsertQuery() {
-		return "INSERT INTO locations (iconid, address, name, coord, content, thumbnail, link) VALUES ('" + iconId + "', '" + locationAddress + "', '" + locationName + "', '" + coordinates + "', '" + content + "', '" + thumbnail + "', '" + link + "')";
-	}
 
 }

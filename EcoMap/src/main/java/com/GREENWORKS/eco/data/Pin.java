@@ -1,5 +1,7 @@
 package com.GREENWORKS.eco.data;
 
+import java.util.ArrayList;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,8 +30,16 @@ public abstract class Pin {
 	protected Integer iconId;
 	@Column(name="name", unique = false, nullable = true, length = 120)
     protected String locationName;
-	@Column(name="address", unique = false, nullable = true, length = 120)
-    protected String locationAddress;
+
+	@Column(name="street", unique = false, nullable = true, length = 120)
+    protected String street;
+	@Column(name="town", unique = false, nullable = true, length = 120)
+    protected String town;
+	@Column(name="state", unique = false, nullable = true, length = 8)
+    protected String state;
+	@Column(name="zip", unique = false, nullable = true, length = 5)
+    protected String zipCode;
+
 	@Column(name="coord", unique = false, nullable = true, length = 80)
     protected String coordinates;
 	@Column(name="content", unique = false, nullable = true, columnDefinition="TEXT")
@@ -51,28 +61,6 @@ public abstract class Pin {
     public Pin() { 
     	
     }
-    
-    /***
-     * This is a full parameter constructor for the Pin abstract class. 
-     * @param id Value to be assigned to the id variable. 
-     * @param iconId Value to be assigned to the iconId variable. 
-     * @param startDate Value to be assigned to the startDate variable. 
-     * @param endDate Value to be assigned to the endDate variable. 
-     * @param locationName Value to be assigned to the locationName variable. 
-     * @param locationAddress Value to be assigned to the locationAddress variable. 
-     * @param coordinates Value to be assigned to the coordinates variable. 
-     * @param content Value to be assigned to the content variable. 
-     */
-	public Pin(int id, Integer iconId, String locationName,
-			String locationAddress, String coordinates, String content) {
-		super();
-		this.id = id;
-		this.iconId = iconId;
-		this.locationName = locationName;
-		this.locationAddress = locationAddress;
-		this.coordinates = coordinates;
-		this.content = content;
-	}
 
 	/***
 	 * This method adds slashes to a String to preserve the backslashes in textual entries. 
@@ -198,21 +186,21 @@ public abstract class Pin {
 		this.locationName = cleanInput(locationName);
 	}
 
-	/***
-	 * Accessor method for the locationAddress instance variable. 
-	 * @return Returns the contents of the instance variable. 
-	 */	
-	public String getLocationAddress() {
-		return locationAddress;
+	public void setLocationAddress(String address) {
+		DatabaseCleaner databaseCleaner = new DatabaseCleaner();
+		ArrayList<String> addressList = databaseCleaner.getAddressAsArrayList(address);
+		this.street = addressList.get(0);
+		this.town = addressList.get(1);
+		this.state = addressList.get(2);
+		this.zipCode = addressList.get(3);
 	}
 
 	/***
-	 * Mutator method for assigning to the locationAddress instance variable. Conducts
-	 * cleaning on the parameter. 
-	 * @param locationAddress The value to be assigned. 
-	 */
-	public void setLocationAddress(String locationAddress) {
-		this.locationAddress = cleanInput(locationAddress);
+	 * Accessor method that returns the entire address in a single string.
+	 * @return Returns the contents of several instance variables in a string that makes sense. 
+	 */	
+	public String getLocationAddress() {
+		return street + ", " + town + ", " + state + " " + zipCode;
 	}
 
 	/***
@@ -349,6 +337,38 @@ public abstract class Pin {
 		this.api = api;
 	}
 
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	public String getTown() {
+		return town;
+	}
+
+	public void setTown(String town) {
+		this.town = town;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getZipCode() {
+		return zipCode;
+	}
+
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
+
 	/***
 	 * This is used for copying one pin to another pin. Useful for when it is desirable to copy one
 	 * pin type to a different pin type. 
@@ -360,12 +380,14 @@ public abstract class Pin {
 		this.locationName = pin.getLocationName();
 		this.startDate = pin.getStartDate();
 		this.endDate = pin.getEndDate();
-		this.locationAddress = pin.getLocationAddress();
+		this.street = pin.street;
+		this.town = pin.town;
+		this.state = pin.state;
+		this.zipCode = pin.zipCode;
 		this.coordinates = pin.getCoordinates();
 		this.content = pin.getContent();
 		this.thumbnail = pin.getThumbnail();
 		this.link = pin.getLink();
-		// this.websiteURL = pin.getWebsiteURL();
 		this.api = pin.getApi();
 	}
 	
@@ -375,30 +397,7 @@ public abstract class Pin {
 	 */
 	@Deprecated
 	public String getIndexString() {
-		return id + "," + iconId + "," + locationAddress + "," + locationName + "," + coordinates + "," + startDate + "," + endDate + "," + content + "," + thumbnail + "," + link;
-	}
-	
-	/***
-	 * This methods generates an update SQL query that is populated with the instance variables. 
-	 * @return Returns the generated update SQL query. 
-	 */	
-	@Deprecated
-	public String getUpdateQuery() {
-		return "UPDATE locations SET iconid = '" + iconId + "', address = '" + locationAddress + 
-											  "', name = '" + locationName + "', coord = '" + coordinates + 
-											  "', dateStart = " + startDate + ", dateEnd = " + endDate + 
-											  ", content = '" + content + "', thumbnail = '" + thumbnail + "', link = '" + link + "' WHERE id = '" + id + "'";
-	}
-	
-	/***
-	 * This method is meant to be overridden in each of it's child classes. 
-	 * @return Returns a string. 
-	 */
-	@Deprecated
-	public String getInsertQuery() {
-		return "INSERT INTO locations (iconid, address, name, coord, dateStart, dateEnd, content, thumbnail, link) VALUES ('" 
-										+ iconId + "', '" + locationAddress + "', '" + locationName + "', '" 
-										+ coordinates + "', '" + startDate + "', '" + endDate + "', '" + content + "', '" + thumbnail + "', '" + link + "')";             
+		return id + "," + iconId + "," + street + ", " + town + ", " + state + " " + zipCode + "," + locationName + "," + coordinates + "," + startDate + "," + endDate + "," + content + "," + thumbnail + "," + link;
 	}
 	
 	/***
@@ -408,16 +407,6 @@ public abstract class Pin {
 	@Deprecated
 	public String getDeleteQuery() {
 		return "DELETE FROM locations WHERE id = '" + id + "'";
-	}
-
-	/***
-	 * Overridden toString() method.
-	 */
-	@Override
-	public String toString() {
-		return "PinData [id=" + id + ", iconId=" + iconId + ", locationName=" + locationName + ", locationAddress="
-				+ locationAddress + ", coordinates=" + coordinates + ", content=" + content + ", startDate=" + startDate
-				+ ", endDate=" + endDate + ", thumbnail=" + thumbnail + ", link=" + link + "]";
 	}
 	
 	/***

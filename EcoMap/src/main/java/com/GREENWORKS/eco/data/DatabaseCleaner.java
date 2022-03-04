@@ -2,6 +2,7 @@ package com.GREENWORKS.eco.data;
 
 import java.util.List;
 import java.util.Set;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,6 +31,9 @@ public class DatabaseCleaner {
 		DatabaseCleaner databaseCleaner = new DatabaseCleaner();
 		HashMap<String, ArrayList<Pin>> addressPinMap = databaseCleaner.findRedundantAddress(pinList);
 		ArrayList<OldEventPin> oldEvents = databaseCleaner.convertOldEvents();
+
+		printPinData(pinList);
+		/*
 		pinList.clear(); // Release memory.
 		ArrayList<Pin> deleteList = databaseCleaner.solveConflicts(addressPinMap);
 		ArrayList<ProblemPin> problemPinList = databaseCleaner.convertToProblemPinList(deleteList);
@@ -38,6 +42,7 @@ public class DatabaseCleaner {
 		sessionAssistant.deleteList(deleteList);
 		sessionAssistant.saveList(oldEvents);
 		sessionAssistant.deleteList(pastDatePinList);
+		*/
 	}
 
 	/***
@@ -105,14 +110,36 @@ public class DatabaseCleaner {
 	 * @param pinList Requires the list of Pins to be printed. 
 	 */
 	public static void printPinDataByIconId(List<Pin> pinList, int iconId) {
+		DatabaseCleaner databaseCleaner = new DatabaseCleaner();
 		for(Pin pin: pinList) {
-			if(pin.getIconId() == iconId) { 
+			ArrayList<String> addressList = databaseCleaner.getAddressAsArrayList(pin.getLocationAddress());
+			//`iconid`, `name`, `street`, `town`, `state`, `zip`, `coord`, `content`, `thumbnail`, `link`, `api`
+
+			if(pin.getIconId() == iconId) {
 				System.out.println(
 						"(" + pin.getIconId() + " ,\"" + pin.getLocationName() + "\", \""
-							+ pin.getLocationAddress() + "\", \"" + pin.getCoordinates() + "\", \""
-							+ pin.getContent() + "\"),"
+							+ addressList.get(0) + "\", \"" + addressList.get(1) + "\", \""
+							+ addressList.get(2) + "\", \"" + addressList.get(3) + "\", \""
+							+ pin.getCoordinates() + "\", \"" + pin.getContent() + "\", \"" 
+							+ pin.getThumbnail() + "\", \"" + pin.getLink() + "\", \"" 
+							+ pin.getApi() + "\"),"
 				);
 			}
+		}
+	}
+
+	public static void printPinData(List<Pin> pinList) {
+		DatabaseCleaner databaseCleaner = new DatabaseCleaner();
+		for(Pin pin: pinList) {
+			ArrayList<String> addressList = databaseCleaner.getAddressAsArrayList(pin.getLocationAddress());
+			System.out.println(
+					"(" + pin.getIconId() + " ,\"" + pin.getLocationName() + "\", \""
+						+ addressList.get(0) + "\", \"" + addressList.get(1) + "\", \""
+						+ addressList.get(2) + "\", \"" + addressList.get(3) + "\", \""
+						+ pin.getCoordinates() + "\", \"" + pin.getContent() + "\", \"" 
+						+ pin.getThumbnail() + "\", \"" + pin.getLink() + "\", \"" 
+						+ pin.getApi() + "\"),"
+			);
 		}
 	}
 	
@@ -201,6 +228,33 @@ public class DatabaseCleaner {
 			}
 		}
 		return deleteList;
+	}
+
+	public ArrayList<String> getAddressAsArrayList(String address) {
+		ArrayList<String> addressList = new ArrayList<>();
+		String zip = getZip(address).toString();
+		String stateStr = "FL";
+		String addressStr = "";
+		String townStr = "";
+
+		for(int i = 0; i < address.length(); i++) { // Iterate to find street address.
+			if(address.charAt(i) == ','){
+				addressStr = address.substring(0, i);
+				i = address.length(); // end loop
+			}
+		}
+
+		townStr = address;
+		townStr = townStr.replace(addressStr, "");
+		townStr = townStr.replace(stateStr, "");
+		townStr = townStr.replace(zip.toString(), "");
+		townStr = townStr.replace(",", "");
+		townStr = townStr.trim(); 
+		addressList.add(addressStr);
+		addressList.add(townStr);
+		addressList.add(stateStr);
+		addressList.add(zip);
+		return addressList;
 	}
 
 	/***

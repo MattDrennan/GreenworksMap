@@ -108,7 +108,12 @@ public class OpenCharge {
                 */
                 
                 // Set variables
-                String address = data[i].AddressInfo.AddressLine1 + ", " + data[i].AddressInfo.Town + ", FL " + data[i].AddressInfo.Postcode;
+                String street = data[i].AddressInfo.AddressLine1;
+                String town = data[i].AddressInfo.Town;
+                String state = "FL";
+                String zip = data[i].AddressInfo.Postcode;
+
+
                 String name = data[i].OperatorInfo.Title;
                 String thumbnail = "";
                 String nameToLowerCase = name.toLowerCase();
@@ -136,7 +141,10 @@ public class OpenCharge {
                 pin.setApi((byte) 1);
                 pin.setIconId(1);
                 pin.setLocationName(name);
-                pin.setLocationAddress(address);
+                pin.setStreet(street);
+                pin.setTown(town);
+                pin.setState(state);
+                pin.setZipCode(zip);
                 pin.setThumbnail(thumbnail);
                 pin.setCoordinates(coord);
                 pin.setContentNoClean(content);
