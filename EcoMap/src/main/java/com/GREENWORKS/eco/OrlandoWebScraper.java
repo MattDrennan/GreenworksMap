@@ -50,7 +50,7 @@ public class OrlandoWebScraper {
 					}
 					if(scannedLine.contains("<p class=\"list-item-address\">")) {
 						address = ecomap.removeTags(scannedLine).trim();
-						pin.setLocationAddress(address);
+						// pin.setLocationAddress(address);
 						content = ecomap.removeTags(scan.nextLine()).trim();
 						pin.setContent(content);
 						pin.setApi((byte) 2);

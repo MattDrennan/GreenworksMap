@@ -2,10 +2,13 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
+import com.GREENWORKS.eco.data.DatabaseCleaner;
 import com.GREENWORKS.eco.data.GenericPin;
 import com.GREENWORKS.eco.data.Pin;
 import com.GREENWORKS.eco.data.PinFactory;
@@ -43,7 +46,10 @@ public class DataPackageTests {
     	PinFactory factory = PinFactory.getFactory(null, null);
     	Pin pin = factory.createPinData();
     	assertNull(pin.getIconId());
-    	assertNull(pin.getLocationAddress());
+    	assertNull(pin.getStreet());
+        assertNull(pin.getState());
+        assertNull(pin.getTown());
+        assertNull(pin.getZipCode());
     	assertNull(pin.getLocationName());
 	}
 	
@@ -400,24 +406,19 @@ public class DataPackageTests {
     	pin.setContent("This is a generic pin.");
     	assertEquals("This is a generic pin.", pin.getContent());
     }
-    
-    /***
-     * The getIndexString() method is used to generate a string that will useful for displaying
-     * pins on the map. 
-     */
+
     @Test
-    public void remoteTags_shouldProduceTheIndexPageString(){
-    	PinFactory dataFactory = PinFactory.getFactory("2022-01-31 15:00:00", "2022-01-31 20:00:00");
-    	Pin pin = dataFactory.createPinData(); // Create event
-    	pin.setId(2);
-    	pin.setIconId(11); // Because this is an event the IconId will be assigned to 9. 
-    	pin.setStartDate("2022-01-31 15:00:00");
-    	pin.setEndDate("2022-01-31 20:00:00");
-    	pin.setLocationAddress("400 W Livingston St, Orlando, FL 32801");
-    	pin.setLocationName("Marriot Edit");
-    	pin.setCoordinates("-81.38423598435905,28.546908012845975");
-    	pin.setContent("");
-    	assertEquals("2,11,400 W Livingston St, Orlando, FL 32801,Marriot Edit,-81.38423598435905,28.546908012845975,2022-01-31 15:00:00,2022-01-31 20:00:00,,null,null", pin.getIndexString());
+    public void databaseCleaner_parseAddress() {
+        DatabaseCleaner databaseCleaner = new DatabaseCleaner();
+        String test = "400 W Livingston St, Orlando, FL 32801";
+        ArrayList<String> addressList = databaseCleaner.getAddressAsArrayList(test);
+        ArrayList<String> testList = new ArrayList<String>();
+        testList.add("400 W Livingston St");
+		testList.add("Orlando");
+		testList.add("FL");
+		testList.add("32801");
+        for(int i = 0; i < testList.size(); i++){
+            assertEquals(testList.get(i), addressList.get(i));
+        }
     }
-   
 }
