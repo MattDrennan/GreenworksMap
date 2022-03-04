@@ -237,7 +237,10 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
 
         <!-- List View (Hidden by default) -->
         <div id="listView" style="display: none; text-align: center;">
-            <a href="#/" name="viewChange">[Map View]</a> <a href="#/" id="showAll">[All]</a> <a href="#/" id="showEvents">[Show Events]</a>    <a href="#/" id="showLocations">[Show Locations]</a>
+            <div class="viewChange">
+                <a href="#/" name="viewChange" class="button">Map View</a> <a href="#/" id="showAll" class="button">All</a> <a href="#/" id="showEvents" class="button">Show Events</a>    <a href="#/" id="showLocations" class="button">Show Locations</a>
+            </div>
+            <div class="viewChangeSpace"></div>
             <script>
                 $.each(points, function(i, index)
                 {

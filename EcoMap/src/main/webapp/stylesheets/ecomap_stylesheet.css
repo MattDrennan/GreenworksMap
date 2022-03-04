@@ -133,6 +133,32 @@ body {
     border-style:solid;
  }
 
+ .viewChange {
+     position: fixed;
+     clear: both;
+     top: 5px;
+     left: 50%;
+     transform: translateX(-50%);
+     display: block;
+     background-color: #fff;
+     width: 100%;
+ }
+
+.viewChangeSpace {
+    margin-top: 75px;
+}
+
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
+
  /* Desktop */
  @media only screen and (min-width: 768px) {
     #viewDiv {
