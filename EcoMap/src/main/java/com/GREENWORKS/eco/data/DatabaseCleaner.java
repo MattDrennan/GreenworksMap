@@ -31,9 +31,7 @@ public class DatabaseCleaner {
 		DatabaseCleaner databaseCleaner = new DatabaseCleaner();
 		HashMap<String, ArrayList<Pin>> addressPinMap = databaseCleaner.findRedundantAddress(pinList);
 		ArrayList<OldEventPin> oldEvents = databaseCleaner.convertOldEvents();
-
-		printPinData(pinList);
-		/*
+		// printPinData(pinList);
 		pinList.clear(); // Release memory.
 		ArrayList<Pin> deleteList = databaseCleaner.solveConflicts(addressPinMap);
 		ArrayList<ProblemPin> problemPinList = databaseCleaner.convertToProblemPinList(deleteList);
@@ -42,7 +40,6 @@ public class DatabaseCleaner {
 		sessionAssistant.deleteList(deleteList);
 		sessionAssistant.saveList(oldEvents);
 		sessionAssistant.deleteList(pastDatePinList);
-		*/
 	}
 
 	/***
@@ -112,15 +109,17 @@ public class DatabaseCleaner {
 	public static void printPinDataByIconId(List<Pin> pinList, int iconId) {
 		DatabaseCleaner databaseCleaner = new DatabaseCleaner();
 		for(Pin pin: pinList) {
-			ArrayList<String> addressList = databaseCleaner.getAddressAsArrayList(pin.getLocationAddress());
-			//`iconid`, `name`, `street`, `town`, `state`, `zip`, `coord`, `content`, `thumbnail`, `link`, `api`
-
+			String[] cordArray = databaseCleaner.getLatitudeLongitude(pin.getCoordinates());
+			//`iconid`, `name`, `street`, `town`, `state`, `zip`, `longitude`, `latitude`, `content`, `thumbnail`, `link`, `api`
+			pin.setLongitude(cordArray[0]);
+			pin.setLatitude(cordArray[1]);
 			if(pin.getIconId() == iconId) {
 				System.out.println(
 						"(" + pin.getIconId() + " ,\"" + pin.getLocationName() + "\", \""
-							+ addressList.get(0) + "\", \"" + addressList.get(1) + "\", \""
-							+ addressList.get(2) + "\", \"" + addressList.get(3) + "\", \""
-							+ pin.getCoordinates() + "\", \"" + pin.getContent() + "\", \"" 
+							+ pin.getStreet()+ "\", \"" + pin.getTown() + "\", \""
+							+ pin.getState() + "\", \"" + pin.getZipCode() + "\", \""
+							+ pin.getLongitude() + "\", \"" + pin.getLatitude() + "\", \"" 
+							+ pin.getContent() + "\", \"" 
 							+ pin.getThumbnail() + "\", \"" + pin.getLink() + "\", \"" 
 							+ pin.getApi() + "\"),"
 				);
@@ -128,10 +127,13 @@ public class DatabaseCleaner {
 		}
 	}
 
+	/***
+	 * This method prints the entire PinList to the console. 
+	 * @param pinList The List of pins that will be printed to the console. 
+	 */
 	public static void printPinData(List<Pin> pinList) {
-		DatabaseCleaner databaseCleaner = new DatabaseCleaner();
 		for(Pin pin: pinList) {
-			ArrayList<String> addressList = databaseCleaner.getAddressAsArrayList(pin.getLocationAddress());
+			ArrayList<String> addressList = pin.getAddressAsArrayList(pin.getLocationAddress());
 			System.out.println(
 					"(" + pin.getIconId() + " ,\"" + pin.getLocationName() + "\", \""
 						+ addressList.get(0) + "\", \"" + addressList.get(1) + "\", \""
@@ -157,7 +159,7 @@ public class DatabaseCleaner {
 				addOldEvent(pin);
 			}
 			String address = pin.getLocationAddress();
-			Integer zip = getZip(address);
+			Integer zip = pin.getZip(address);
 			if(!zipSet.contains(zip)) { 
 				if(address.substring(address.length() - 5).trim().length() != 5) {
 					System.out.println("Zip code error: " + address);
@@ -176,6 +178,11 @@ public class DatabaseCleaner {
 		return addressPinMap;
 	}
 
+	public String[] getLatitudeLongitude(String coordinates){
+		String[] splitCoords = coordinates.split(",");
+		return splitCoords;
+	}
+
 	/***
 	 * This will add the Pin to the oldEventArrayList. 
 	 * @param pin The Pin to be added to the ArrayList. 
@@ -192,22 +199,6 @@ public class DatabaseCleaner {
 	}
 	
 	/***
-	 * This method is used to extract zipcodes from addresses. The format of the address must
-	 * have the zip code trailing on the end.  
-	 * @param address The address as a String. 
-	 * @return Returns the zip code as an Integer. 
-	 */
-	public Integer getZip(String address) {
-		Integer zip = null;
-		try {
-			zip = Integer.parseInt(address.substring(address.length() - 5).trim()); // Assuming the last 5 are the zip code. 
-		} catch (NumberFormatException nfe) {
-			// System.out.println("The provided String did not have content that matched a zipcode.");
-		}
-		return zip;
-	}
-	
-	/***
 	 * This method solves the conflicted pin address by removing pins that have typical markers
 	 * for invalid data entries. If a new marker is identified this is where it should be added. 
 	 * @param addressPinMap The HashMap of conflicted addresses and their pins. 
@@ -220,7 +211,7 @@ public class DatabaseCleaner {
 			ArrayList<Pin> conflictedPins = addressPinMap.get(key);
 			Pin firstPin = conflictedPins.get(0);
 			for(int i = 1; i < conflictedPins.size(); i++) {
-				if(zipSet.contains(getZip(conflictedPins.get(i).getContent()))) {
+				if(zipSet.contains(conflictedPins.get(i).getZip(conflictedPins.get(i).getContent()))) {
 					deleteList.add(conflictedPins.get(i));
 				} else if (firstPin.getContent().equals(conflictedPins.get(i).getContent())) {
 					deleteList.add(conflictedPins.get(i));
@@ -228,33 +219,6 @@ public class DatabaseCleaner {
 			}
 		}
 		return deleteList;
-	}
-
-	public ArrayList<String> getAddressAsArrayList(String address) {
-		ArrayList<String> addressList = new ArrayList<>();
-		String zip = getZip(address).toString();
-		String stateStr = "FL";
-		String addressStr = "";
-		String townStr = "";
-
-		for(int i = 0; i < address.length(); i++) { // Iterate to find street address.
-			if(address.charAt(i) == ','){
-				addressStr = address.substring(0, i);
-				i = address.length(); // end loop
-			}
-		}
-
-		townStr = address;
-		townStr = townStr.replace(addressStr, "");
-		townStr = townStr.replace(stateStr, "");
-		townStr = townStr.replace(zip.toString(), "");
-		townStr = townStr.replace(",", "");
-		townStr = townStr.trim(); 
-		addressList.add(addressStr);
-		addressList.add(townStr);
-		addressList.add(stateStr);
-		addressList.add(zip);
-		return addressList;
 	}
 
 	/***

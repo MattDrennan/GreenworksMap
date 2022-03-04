@@ -39,9 +39,12 @@ public abstract class Pin {
     protected String state;
 	@Column(name="zip", unique = false, nullable = true, length = 5)
     protected String zipCode;
+	
+	@Column(name="latitude", unique = false, nullable = true, length = 40)
+    protected String latitude;
+	@Column(name="longitude", unique = false, nullable = true, length = 40)
+    protected String longitude;
 
-	@Column(name="coord", unique = false, nullable = true, length = 80)
-    protected String coordinates;
 	@Column(name="content", unique = false, nullable = true, columnDefinition="TEXT")
     protected String content; 
 	@Column(name="dateStart", unique = false, nullable = true, columnDefinition="DATETIME")
@@ -187,8 +190,7 @@ public abstract class Pin {
 	}
 
 	public void setLocationAddress(String address) {
-		DatabaseCleaner databaseCleaner = new DatabaseCleaner();
-		ArrayList<String> addressList = databaseCleaner.getAddressAsArrayList(address);
+		ArrayList<String> addressList = getAddressAsArrayList(address);
 		this.street = addressList.get(0);
 		this.town = addressList.get(1);
 		this.state = addressList.get(2);
@@ -208,17 +210,30 @@ public abstract class Pin {
 	 * @return Returns the contents of the instance variable. 
 	 */	
 	public String getCoordinates() {
-		return coordinates;
+		return longitude + "," + latitude;
+	}
+
+	/***
+	 * Accessor method for the coordinates instance variable. 
+	 * @return Returns the contents of the instance variable. 
+	 */	
+	public void setCoordinates(String coordinates) {
+		coordinates = cleanInput(coordinates);
+		String[] split = coordinates.split(",");
+		if(split.length == 2){
+			longitude = split[0];
+			latitude = split[1];
+		}
 	}
 
 	/***
 	 * Mutator method for assigning to the coordinates instance variable. Conducts
 	 * cleaning on the parameter. 
 	 * @param coordinates The value to be assigned. 
-	 */
+	 */ /*
 	public void setCoordinates(String coordinates) {
 		this.coordinates = cleanInput(coordinates);
-	}
+	} */
 	
 	/***
 	 * Accessor method for the content instance variable. 
@@ -369,6 +384,22 @@ public abstract class Pin {
 		this.zipCode = zipCode;
 	}
 
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
 	/***
 	 * This is used for copying one pin to another pin. Useful for when it is desirable to copy one
 	 * pin type to a different pin type. 
@@ -384,7 +415,8 @@ public abstract class Pin {
 		this.town = pin.town;
 		this.state = pin.state;
 		this.zipCode = pin.zipCode;
-		this.coordinates = pin.getCoordinates();
+		this.latitude = pin.latitude;
+		this.longitude = pin.longitude;
 		this.content = pin.getContent();
 		this.thumbnail = pin.getThumbnail();
 		this.link = pin.getLink();
@@ -397,7 +429,8 @@ public abstract class Pin {
 	 */
 	@Deprecated
 	public String getIndexString() {
-		return id + "," + iconId + "," + street + ", " + town + ", " + state + " " + zipCode + "," + locationName + "," + coordinates + "," + startDate + "," + endDate + "," + content + "," + thumbnail + "," + link;
+		return id + "," + iconId + "," + street + ", " + town + ", " + state + " " + zipCode + "," + locationName + "," 
+		+ longitude + "," + latitude + "," + startDate + "," + endDate + "," + content + "," + thumbnail + "," + link;
 	}
 	
 	/***
@@ -434,4 +467,57 @@ public abstract class Pin {
 		
 		return true;
 	}
+
+	/***
+	 * This rather crude method is for spliting an address string into an arraylist. 
+	 * The returned ArrayList is as follows:
+	 * Index 0: Street address
+	 * Index 1: City/Town
+	 * Index 2: State
+	 * Index 3: Zipcode
+	 * @param address The address string. Valid format: "street address, city/town, state zipcode"
+	 * @return The returned address converted to an ArrayList. 
+	 */
+	public ArrayList<String> getAddressAsArrayList(String address) {
+		ArrayList<String> addressList = new ArrayList<>();
+		String zip = getZip(address).toString();
+		String stateStr = "FL";
+		String addressStr = "";
+		String townStr = "";
+
+		for(int i = 0; i < address.length(); i++) { // Iterate to find street address.
+			if(address.charAt(i) == ','){
+				addressStr = address.substring(0, i);
+				i = address.length(); // end loop
+			}
+		}
+		townStr = address;
+		townStr = townStr.replace(addressStr, "");
+		townStr = townStr.replace(stateStr, "");
+		townStr = townStr.replace(zip.toString(), "");
+		townStr = townStr.replace(",", "");
+		townStr = townStr.trim(); 
+		addressList.add(addressStr); // Index 0
+		addressList.add(townStr); // Index 1
+		addressList.add(stateStr); // Index 2
+		addressList.add(zip); // Index 3
+		return addressList;
+	}
+
+	/***
+	 * This method is used to extract zipcodes from addresses. The format of the address must
+	 * have the zip code trailing on the end.  
+	 * @param address The address as a String. 
+	 * @return Returns the zip code as an Integer. 
+	 */
+	public Integer getZip(String address) {
+		Integer zip = null;
+		try {
+			zip = Integer.parseInt(address.substring(address.length() - 5).trim()); // Assuming the last 5 are the zip code. 
+		} catch (NumberFormatException nfe) {
+			// System.out.println("The provided String did not have content that matched a zipcode.");
+		}
+		return zip;
+	}
+
 }

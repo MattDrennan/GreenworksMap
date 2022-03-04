@@ -407,11 +407,14 @@ public class DataPackageTests {
     	assertEquals("This is a generic pin.", pin.getContent());
     }
 
+    /***
+     * Verifies that the Pin method getAddressAsArrayList() is functioning properly.
+     */
     @Test
-    public void databaseCleaner_parseAddress() {
-        DatabaseCleaner databaseCleaner = new DatabaseCleaner();
+    public void pin_parseAddress() {
         String test = "400 W Livingston St, Orlando, FL 32801";
-        ArrayList<String> addressList = databaseCleaner.getAddressAsArrayList(test);
+        Pin pin = new GenericPin();
+        ArrayList<String> addressList = pin.getAddressAsArrayList(test);
         ArrayList<String> testList = new ArrayList<String>();
         testList.add("400 W Livingston St");
 		testList.add("Orlando");
@@ -421,4 +424,18 @@ public class DataPackageTests {
             assertEquals(testList.get(i), addressList.get(i));
         }
     }
+
+    /***
+     * Verifies that the set coordinates method is functioning properly. It should split the coordinates string
+     * into latitude and longitude. 
+     */
+    @Test
+    public void pin_parseCoordinates() {
+        Pin pin = new GenericPin();
+        String test = "81.38656929999999,28.5485126";
+        pin.setCoordinates(test);
+        assertEquals("81.38656929999999", pin.getLongitude());
+        assertEquals("28.5485126", pin.getLatitude());
+    }
+
 }
