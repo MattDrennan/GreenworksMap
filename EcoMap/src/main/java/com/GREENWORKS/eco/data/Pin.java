@@ -520,4 +520,12 @@ public abstract class Pin {
 		return zip;
 	}
 
+	@Override
+	public String toString() {
+		return "Pin [api=" + api + ", content=" + content + ", endDate=" + endDate + ", iconId=" + iconId + ", id=" + id
+				+ ", latitude=" + latitude + ", link=" + link + ", locationName=" + locationName + ", longitude="
+				+ longitude + ", startDate=" + startDate + ", state=" + state + ", street=" + street + ", thumbnail="
+				+ thumbnail + ", town=" + town + ", zipCode=" + zipCode + "]";
+	}
+
 }
