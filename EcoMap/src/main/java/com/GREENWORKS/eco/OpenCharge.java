@@ -124,7 +124,7 @@ public class OpenCharge {
                     thumbnail = "<img src='https://github.com/EthanNValencia/EcoMapImageRepo/blob/master/chargepoint.png?raw=true' /><br /><br />";
                 } else if (nameToLowerCase.contains("semaconnect")) {
                     thumbnail = "<img src='https://github.com/EthanNValencia/EcoMapImageRepo/blob/master/semaconnect.png?raw=true' /><br /><br />";
-                } else if(nameToLowerCase.contains("")){
+                } else if(nameToLowerCase.contains("evgo")){
                     thumbnail = "<img src='https://github.com/EthanNValencia/EcoMapImageRepo/blob/master/evgo.png?raw=true' /><br /><br />";
                 }
                 
