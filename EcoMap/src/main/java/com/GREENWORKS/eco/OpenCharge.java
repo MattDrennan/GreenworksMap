@@ -124,11 +124,14 @@ public class OpenCharge {
                     thumbnail = "<img src='https://github.com/EthanNValencia/EcoMapImageRepo/blob/master/chargepoint.png?raw=true' /><br /><br />";
                 } else if (nameToLowerCase.contains("semaconnect")) {
                     thumbnail = "<img src='https://github.com/EthanNValencia/EcoMapImageRepo/blob/master/semaconnect.png?raw=true' /><br /><br />";
-                } else if(nameToLowerCase.contains("")){
+                } else if(nameToLowerCase.contains("evgo")){
                     thumbnail = "<img src='https://github.com/EthanNValencia/EcoMapImageRepo/blob/master/evgo.png?raw=true' /><br /><br />";
                 }
                 
-                String coord = data[i].AddressInfo.Longitude.toString() + "," + data[i].AddressInfo.Latitude.toString();
+                
+                String lon = data[i].AddressInfo.Longitude.toString();
+                String lat = data[i].AddressInfo.Latitude.toString();
+                
                 String content = "This is an electronic vehicle charging station.";
                 
                 for(Connections connections: data[i].Connections) {
@@ -146,7 +149,8 @@ public class OpenCharge {
                 pin.setState(state);
                 pin.setZipCode(zip);
                 pin.setThumbnail(thumbnail);
-                pin.setCoordinates(coord);
+                pin.setLatitude(lat);
+                pin.setLongitude(lon);
                 pin.setContentNoClean(content);
                 pin.setLink(website);
                 pinList.add(pin);
