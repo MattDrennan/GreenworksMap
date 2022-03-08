@@ -144,10 +144,6 @@ body {
      width: 100%;
  }
 
-.viewChangeSpace {
-    margin-top: 75px;
-}
-
 .button {
     background-color: #4CAF50; /* Green */
     border: none;
@@ -157,6 +153,7 @@ body {
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    margin: 2px;
   }
 
  /* Desktop */
@@ -187,6 +184,10 @@ body {
     figure {
         float: left;
     }
+
+    .viewChangeSpace {
+        margin-top: 75px;
+    }
  }
 
  /* Mobile */
@@ -216,5 +217,9 @@ body {
     
     #itemsDesktop {
         display: none;
+    }
+
+    .viewChangeSpace {
+        margin-top: 120px;
     }
  }
