@@ -119,13 +119,13 @@ public class OpenCharge {
                 String nameToLowerCase = name.toLowerCase();
 
                 if(nameToLowerCase.contains("tesla")) {
-                    thumbnail = "<img src='https://github.com/EthanNValencia/EcoMapImageRepo/blob/master/tesla.jpg?raw=true' /><br /><br />"; 
+                    thumbnail = "<img src='images/tesla.jpg' /><br /><br />"; 
                 } else if (nameToLowerCase.contains("chargepoint")) {
-                    thumbnail = "<img src='https://github.com/EthanNValencia/EcoMapImageRepo/blob/master/chargepoint.png?raw=true' /><br /><br />";
+                    thumbnail = "<img src='images/chargepoint.png' /><br /><br />";
                 } else if (nameToLowerCase.contains("semaconnect")) {
-                    thumbnail = "<img src='https://github.com/EthanNValencia/EcoMapImageRepo/blob/master/semaconnect.png?raw=true' /><br /><br />";
+                    thumbnail = "<img src='images/semaconnect.png' /><br /><br />";
                 } else if(nameToLowerCase.contains("evgo")){
-                    thumbnail = "<img src='https://github.com/EthanNValencia/EcoMapImageRepo/blob/master/evgo.png?raw=true' /><br /><br />";
+                    thumbnail = "<img src='images/evgo.png' /><br /><br />";
                 }
                 
                 
