@@ -210,7 +210,26 @@ $(document).ready(function()
             $("#datepicker").css({right: 0, bottom: 70, position: 'absolute'});
         }
 
-        $("#datepicker").datepicker("show");
+        // If calendar is not visible
+        if(!$("#datepicker").datepicker("widget").is(":visible"))
+        {
+            $("#datepicker").datepicker("show");
+        }
+        else
+        {
+            $("#datepicker").datepicker("hide");
+        }
+    });
+
+    // If click on map
+    $("#viewDiv").click(function(e)
+    {
+        // If filter visible, hide it
+        if($("#filter").is(":visible"))
+        {
+            // Hide
+            $("#filter").hide();
+        }
     });
 
     // Click filter menu button
