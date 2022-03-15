@@ -9,7 +9,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /***
- * The class definition for the SubPillar object. The SubPillar object is a 
+ * The class definition for the SubPillar object. 
  */
 @Entity
 @Table(name = "subpillar")
@@ -32,26 +32,50 @@ public class SubPillar {
 
     }
 
+	/***
+	 * Accessor method for the name subPillarId variable. 
+	 * @return Returns the contents of the instance variable.
+	 */
     public Integer getSubPillarId() {
         return subPillarId;
     }
 
+	/***
+	 * Mutator method for assigning to the subPillarId instance variable. 
+	 * @param subPillarId The value to be assigned. 
+	 */
     public void setSubPillarId(Integer subPillarId) {
         this.subPillarId = subPillarId;
     }
 
+	/***
+	 * Accessor method for the name instance variable. 
+	 * @return Returns the contents of the instance variable.
+	 */
     public String getName() {
         return name;
     }
 
+    /***
+	 * Mutator method for assigning to the name instance variable. 
+	 * @param name The value to be assigned. 
+	 */
     public void setName(String name) {
         this.name = name;
     }
 
+	/***
+	 * Accessor method for the thumbnail instance variable. 
+	 * @return Returns the contents of the instance variable.
+	 */
     public String getThumbnail() {
         return thumbnail;
     }
 
+	/***
+	 * Mutator method for assigning to the thumbnail instance variable. 
+	 * @param thumbnail The value to be assigned. 
+	 */
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
     }

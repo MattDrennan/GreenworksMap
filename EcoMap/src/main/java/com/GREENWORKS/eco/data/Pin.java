@@ -208,7 +208,7 @@ public abstract class Pin {
 	/***
 	 * Mutator method for assigning to the content instance variable. Conducts
 	 * cleaning on the parameter. 
-	 * @param coordinates The value to be assigned. 
+	 * @param content The value to be assigned. 
 	 */
 	public void setContent(String content) {
 		this.content = cleanInput(content);
@@ -217,7 +217,7 @@ public abstract class Pin {
 	/***
 	 * Mutator method for assigning to the content instance variable. Conducts
 	 * cleaning on the parameter. 
-	 * @param coordinates The value to be assigned. 
+	 * @param content The value to be assigned. 
 	 */
 	public void setContentNoClean(String content) {
 		this.content = content;
@@ -324,7 +324,7 @@ public abstract class Pin {
 
     /***
      * Mutator method for assigning to the street instance variable.
-     * @param api The value to be assigned. 
+     * @param street The value to be assigned. 
      */
 	public void setStreet(String street) {
 		this.street = street;
@@ -340,7 +340,7 @@ public abstract class Pin {
 
 	/***
      * Mutator method for assigning to the town instance variable.
-     * @param api The value to be assigned. 
+     * @param town The value to be assigned. 
      */
 	public void setTown(String town) {
 		this.town = town;
@@ -356,7 +356,7 @@ public abstract class Pin {
 
     /***
      * Mutator method for assigning to the state instance variable.
-     * @param api The value to be assigned. 
+     * @param state The value to be assigned. 
      */
 	public void setState(String state) {
 		this.state = state;
@@ -372,7 +372,7 @@ public abstract class Pin {
 
     /***
      * Mutator method for assigning to the zipCode instance variable.
-     * @param api The value to be assigned. 
+     * @param zipCode The value to be assigned. 
      */
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
@@ -388,7 +388,7 @@ public abstract class Pin {
 
 	/***
      * Mutator method for assigning to the latitude instance variable.
-     * @param api The value to be assigned. 
+     * @param latitude The value to be assigned. 
      */
 	public void setLatitude(String latitude) {
 		this.latitude = latitude;
@@ -404,7 +404,7 @@ public abstract class Pin {
 
 	/***
      * Mutator method for assigning to the longitude instance variable.
-     * @param api The value to be assigned. 
+     * @param longitude The value to be assigned. 
      */
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
@@ -420,7 +420,7 @@ public abstract class Pin {
 
 	/***
      * Mutator method for assigning to the subPillar object.
-     * @param api The object to be assigned. 
+     * @param subPillar The object to be assigned. 
      */
 	public void setSubPillar(SubPillar subPillar) {
 		this.subPillar = subPillar;
