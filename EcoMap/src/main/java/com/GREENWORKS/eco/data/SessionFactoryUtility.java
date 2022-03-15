@@ -4,6 +4,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
+/***
+ * The definition of the SessionFactoryUtility class. This class is used to return the configured SessionFactory. 
+ */
 public class SessionFactoryUtility {
     
     private static SessionFactory sessionFactory;
@@ -22,6 +25,7 @@ public class SessionFactoryUtility {
                 config.addAnnotatedClass(GenericPin.class);
                 config.addAnnotatedClass(ProblemPin.class);
                 config.addAnnotatedClass(OldEventPin.class);
+                config.addAnnotatedClass(SubPillar.class);
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(config.getProperties());
                 return config.buildSessionFactory(builder.build());
             }

@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
 import com.GREENWORKS.eco.Cred;
@@ -58,51 +60,16 @@ public abstract class Pin {
 	@Column(name="api", unique = false, nullable = true)
 	protected Byte api;
 
+	@JoinColumn(name="sub_pillar_id", nullable=false)
+	@ManyToOne
+	protected SubPillar subPillar;
+
 	/***
      * Zero parameter constructor. 
      */
     public Pin() { 
     	
     }
-
-	/***
-	 * This method adds slashes to a String to preserve the backslashes in textual entries. 
-	 * @param s The String that will be modified. 
-	 * @return A String that has had additional backslashes added. 
-	 */
-    public String addSlashes(String s) {
-        s = s.replaceAll("\\\\", "\\\\\\\\");
-        s = s.replaceAll("\\n", "\\\\n");
-        s = s.replaceAll("\\r", "\\\\r");
-        s = s.replaceAll("\\00", "\\\\0");
-        s = s.replaceAll("'", "\\\\'");
-        return s;
-    }
-
-	/***
-	 * This method removes HTML tags from a String. It removes the tags <> and what
-	 * is contained within the tags. 
-	 * @param s The String that will be modified. 
-	 * @return A modified String that will have no HTML tags. 
-	 */
-
-	public String removeTags(String s) {
-		String noHTMLString = s.replaceAll("\\<.*?\\>", "");
-		return noHTMLString;
-	}
-
-	/***
-	 * This method executes the removeTags() and the addSlashes() methods consecutively. 
-	 * @param s The String that will be modified.
-	 * @return A modified String that will have no HTML tags and its backslashes preserved. 
-	 */
-	public String cleanInput(String s) {
-		if(s != null) {
-			String returnS = addSlashes(removeTags(s));
-			return returnS;
-		}
-		return "";
-	}
 
 	/***
 	 * Accessor method for the id instance variable. 
@@ -199,23 +166,26 @@ public abstract class Pin {
 
 	/***
 	 * Accessor method that returns the entire address in a single string.
-	 * @return Returns the contents of several instance variables in a string that makes sense. 
+	 * Example output: 5165 Metrowest Blvd, Orlando, FL 32811
+	 * @return Returns the contents of several instance variables in a string. 
 	 */	
 	public String getLocationAddress() {
 		return street + ", " + town + ", " + state + " " + zipCode;
 	}
 
 	/***
-	 * Accessor method for the coordinates instance variable. 
-	 * @return Returns the contents of the instance variable. 
+	 * This method returns the coordinates as a single string.
+	 *  Example output: -81.449722,28.5171
+	 * @return Returns the coordinates in a single string. 
 	 */	
 	public String getCoordinates() {
 		return longitude + "," + latitude;
 	}
 
 	/***
-	 * Accessor method for the coordinates instance variable. 
-	 * @return Returns the contents of the instance variable. 
+	 * This method is used to set both the longitude and latitude from a single string. 
+	 * It is assumed that the string format will be: longitude,latitude
+	 * Example input: -81.449722,28.5171
 	 */	
 	public void setCoordinates(String coordinates) {
 		coordinates = cleanInput(coordinates);
@@ -226,14 +196,6 @@ public abstract class Pin {
 		}
 	}
 
-	/***
-	 * Mutator method for assigning to the coordinates instance variable. Conducts
-	 * cleaning on the parameter. 
-	 * @param coordinates The value to be assigned. 
-	 */ /*
-	public void setCoordinates(String coordinates) {
-		this.coordinates = cleanInput(coordinates);
-	} */
 	
 	/***
 	 * Accessor method for the content instance variable. 
@@ -352,52 +314,155 @@ public abstract class Pin {
 		this.api = api;
 	}
 
+	/***
+	 * Accessor method for the street instance variable. 
+	 * @return Returns the contents of the instance variable.
+	 */
 	public String getStreet() {
 		return street;
 	}
 
+    /***
+     * Mutator method for assigning to the street instance variable.
+     * @param api The value to be assigned. 
+     */
 	public void setStreet(String street) {
 		this.street = street;
 	}
 
+	/***
+	 * Accessor method for the town instance variable. 
+	 * @return Returns the contents of the instance variable.
+	 */
 	public String getTown() {
 		return town;
 	}
 
+	/***
+     * Mutator method for assigning to the town instance variable.
+     * @param api The value to be assigned. 
+     */
 	public void setTown(String town) {
 		this.town = town;
 	}
 
+	/***
+	 * Accessor method for the state instance variable. 
+	 * @return Returns the contents of the instance variable.
+	 */
 	public String getState() {
 		return state;
 	}
 
+    /***
+     * Mutator method for assigning to the state instance variable.
+     * @param api The value to be assigned. 
+     */
 	public void setState(String state) {
 		this.state = state;
 	}
 
+	/***
+	 * Accessor method for the zipCode instance variable. 
+	 * @return Returns the contents of the instance variable.
+	 */
 	public String getZipCode() {
 		return zipCode;
 	}
 
+    /***
+     * Mutator method for assigning to the zipCode instance variable.
+     * @param api The value to be assigned. 
+     */
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
 	}
 
+	/***
+	 * Accessor method for the latitude instance variable. 
+	 * @return Returns the contents of the instance variable.
+	 */
 	public String getLatitude() {
 		return latitude;
 	}
 
+	/***
+     * Mutator method for assigning to the latitude instance variable.
+     * @param api The value to be assigned. 
+     */
 	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
 
+	/***
+	 * Accessor method for the longitude instance variable. 
+	 * @return Returns the contents of the instance variable.
+	 */
 	public String getLongitude() {
 		return longitude;
 	}
 
+	/***
+     * Mutator method for assigning to the longitude instance variable.
+     * @param api The value to be assigned. 
+     */
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
+	}
+
+	/***
+	 * Accessor method for the subPillar instance variable. 
+	 * @return Returns the contents of the instance variable.
+	 */	
+	public SubPillar getSubPillar() {
+		return subPillar;
+	}
+
+	/***
+     * Mutator method for assigning to the subPillar object.
+     * @param api The object to be assigned. 
+     */
+	public void setSubPillar(SubPillar subPillar) {
+		this.subPillar = subPillar;
+	}
+
+		/***
+	 * This method adds slashes to a String to preserve the backslashes in textual entries. 
+	 * @param s The String that will be modified. 
+	 * @return A String that has had additional backslashes added. 
+	 */
+    public String addSlashes(String s) {
+        s = s.replaceAll("\\\\", "\\\\\\\\");
+        s = s.replaceAll("\\n", "\\\\n");
+        s = s.replaceAll("\\r", "\\\\r");
+        s = s.replaceAll("\\00", "\\\\0");
+        s = s.replaceAll("'", "\\\\'");
+        return s;
+    }
+
+	/***
+	 * This method removes HTML tags from a String. It removes the tags <> and what
+	 * is contained within the tags. 
+	 * @param s The String that will be modified. 
+	 * @return A modified String that will have no HTML tags. 
+	 */
+
+	public String removeTags(String s) {
+		String noHTMLString = s.replaceAll("\\<.*?\\>", "");
+		return noHTMLString;
+	}
+
+	/***
+	 * This method executes the removeTags() and the addSlashes() methods consecutively. 
+	 * @param s The String that will be modified.
+	 * @return A modified String that will have no HTML tags and its backslashes preserved. 
+	 */
+	public String cleanInput(String s) {
+		if(s != null) {
+			String returnS = addSlashes(removeTags(s));
+			return returnS;
+		}
+		return "";
 	}
 
 	/***
@@ -406,21 +471,22 @@ public abstract class Pin {
 	 * @param pin The Pin object to be copied. 
 	 */
 	public void copyPin(Pin pin) {
-		this.id = pin.getId();
-		this.iconId = pin.getIconId();
-		this.locationName = pin.getLocationName();
-		this.startDate = pin.getStartDate();
-		this.endDate = pin.getEndDate();
+		this.id = pin.id;
+		this.iconId = pin.iconId;
+		this.locationName = pin.locationName;
+		this.startDate = pin.startDate;
+		this.endDate = pin.endDate;
 		this.street = pin.street;
 		this.town = pin.town;
 		this.state = pin.state;
 		this.zipCode = pin.zipCode;
 		this.latitude = pin.latitude;
 		this.longitude = pin.longitude;
-		this.content = pin.getContent();
-		this.thumbnail = pin.getThumbnail();
-		this.link = pin.getLink();
-		this.api = pin.getApi();
+		this.content = pin.content;
+		this.thumbnail = pin.thumbnail;
+		this.link = pin.link;
+		this.api = pin.api;
+		this.subPillar = pin.subPillar;
 	}
 	
 	/***
@@ -520,12 +586,15 @@ public abstract class Pin {
 		return zip;
 	}
 
+	/***
+	 * toString() method for printing the pin contents in a human readable way. 
+	 */
 	@Override
 	public String toString() {
 		return "Pin [api=" + api + ", content=" + content + ", endDate=" + endDate + ", iconId=" + iconId + ", id=" + id
 				+ ", latitude=" + latitude + ", link=" + link + ", locationName=" + locationName + ", longitude="
-				+ longitude + ", startDate=" + startDate + ", state=" + state + ", street=" + street + ", thumbnail="
-				+ thumbnail + ", town=" + town + ", zipCode=" + zipCode + "]";
+				+ longitude + ", startDate=" + startDate + ", state=" + state + ", street=" + street + ", subPillar="
+				+ subPillar + ", thumbnail=" + thumbnail + ", town=" + town + ", zipCode=" + zipCode + "]";
 	}
 
 }

@@ -4,8 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /***
- * Child class definition of Location. Location is a child class of PinData. Location is 
- * a type of PinData. 
+ * Child class definition of Location. Location is a child class of Pin. Location is 
+ * a type of Pin. 
  */
 @Entity
 @Table(name = "locations")
