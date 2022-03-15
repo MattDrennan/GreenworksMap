@@ -40,6 +40,7 @@ public class DatabaseCleaner {
 		sessionAssistant.deleteList(deleteList);
 		sessionAssistant.saveList(oldEvents);
 		sessionAssistant.deleteList(pastDatePinList);
+		
 	}
 
 	/***
@@ -138,7 +139,8 @@ public class DatabaseCleaner {
 					"(" + pin.getIconId() + " ,\"" + pin.getLocationName() + "\", \""
 						+ addressList.get(0) + "\", \"" + addressList.get(1) + "\", \""
 						+ addressList.get(2) + "\", \"" + addressList.get(3) + "\", \""
-						+ pin.getCoordinates() + "\", \"" + pin.getContent() + "\", \"" 
+						+ pin.getLongitude() + "\", \"" + pin.getLatitude() + "\", \"" 
+						+ pin.getContent() + "\", \"" 
 						+ pin.getThumbnail() + "\", \"" + pin.getLink() + "\", \"" 
 						+ pin.getApi() + "\"),"
 			);
