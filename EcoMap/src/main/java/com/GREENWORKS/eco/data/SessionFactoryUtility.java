@@ -26,6 +26,7 @@ public class SessionFactoryUtility {
                 config.addAnnotatedClass(ProblemPin.class);
                 config.addAnnotatedClass(OldEventPin.class);
                 config.addAnnotatedClass(SubPillar.class);
+                config.addAnnotatedClass(Pillar.class);
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(config.getProperties());
                 return config.buildSessionFactory(builder.build());
             }

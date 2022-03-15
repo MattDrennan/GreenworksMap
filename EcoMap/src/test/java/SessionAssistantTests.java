@@ -4,7 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.ObjectNotFoundException;
 import org.junit.jupiter.api.AfterAll;
@@ -13,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import com.GREENWORKS.eco.data.Admin;
 import com.GREENWORKS.eco.data.GenericPin;
+import com.GREENWORKS.eco.data.Pillar;
 import com.GREENWORKS.eco.data.Pin;
 import com.GREENWORKS.eco.data.PinFactory;
 import com.GREENWORKS.eco.data.ProblemPin;
@@ -27,6 +30,7 @@ public class SessionAssistantTests {
     private static Integer adminTestId = 0;
     private static long locationDatabaseSize = 0;
     private static Integer subPillarTestId = 0;
+    private static Integer pillarTestId = 0;
     
     /***
      * This will insert the test data sets into the database. It runs before all other tests in 
@@ -38,8 +42,15 @@ public class SessionAssistantTests {
     	Pin pin = null;
     	Admin admin = null;
     	ProblemPin problemPin = null;
-        SubPillar testPillar = null;
-    	
+        Pillar testPillar = new Pillar();
+        SubPillar testSubPillar = new SubPillar();
+
+        testSubPillar.setPillar(testPillar);
+
+        testPillar.setPid(pillarTestId);
+        
+        Set<SubPillar> subPillerSet = new HashSet<SubPillar>(); 
+
     	/* pin of type Pin object instantiation */
 	    PinFactory dataFactory = PinFactory.getFactory("2022-01-31 15:00:00", "2022-01-31 15:00:00");
 	    pin = dataFactory.createPinData(); // Create event
@@ -51,10 +62,15 @@ public class SessionAssistantTests {
 	    pin.setCoordinates("35,45");
 	    pin.setContent("Test");
 
-        testPillar = new SubPillar();
-        testPillar.setSubPillarId(subPillarTestId);
-        pin.setSubPillar(testPillar);
+        testSubPillar = new SubPillar();
+        testSubPillar.setSubPillarId(subPillarTestId);
+        subPillerSet.add(testSubPillar);
+        testPillar.setSubPillar(subPillerSet);
+
+        pin.setSubPillar(testSubPillar);
+
         sessionAssistant.insert(testPillar);
+        sessionAssistant.insert(testSubPillar);
 	    sessionAssistant.insert(pin); // pin inserted. 
     	
 	    /* admin of type Admin object instantiation */
@@ -267,29 +283,40 @@ public class SessionAssistantTests {
      */
     @AfterAll
     public static void sessionAssistant_deleteTestData() {
+        /*
     	SessionAssistant sessionAssistant = new SessionAssistant();
     	Admin admin = new Admin();
     	admin.setId(adminTestId);
     	sessionAssistant.delete(admin);
 
+        //Create Pillar
+        Pillar testPillar = new Pillar();
+        testPillar.setPid(pillarTestId);
+        Set<SubPillar> subPillerSet = new HashSet<SubPillar>(); 
+
         // Create SubPillar
-        SubPillar testPillar = new SubPillar();
-        testPillar.setSubPillarId(subPillarTestId);
+        SubPillar testSubPillar = new SubPillar();
+        testSubPillar.setPillar(testPillar);
+        testSubPillar.setSubPillarId(subPillarTestId);
+        subPillerSet.add(testSubPillar);
+        testPillar.setSubPillar(subPillerSet);
 
         // Create Pin
     	Pin pin = new GenericPin();
     	pin.setId(pinTestId);
-        pin.setSubPillar(testPillar);
+        pin.setSubPillar(testSubPillar);
     	
         // Create ProblemPin
     	ProblemPin problemPin = new ProblemPin();
     	problemPin.setId(problemPinTestId);
-        problemPin.setSubPillar(testPillar);
+        problemPin.setSubPillar(testSubPillar);
+        
 
         sessionAssistant.delete(pin); // Delete Pin
     	sessionAssistant.delete(problemPin); // Delete ProblemPin
-        sessionAssistant.delete(testPillar); // Delete TestPillar, must be done last. 
-    	
+        sessionAssistant.delete(testSubPillar); // Delete TestPillar, must be done last. 
+    	sessionAssistant.delete(testPillar);
     	sessionAssistant.shutdownSessionFactory(); // Shutdown
+        */
     }
 }

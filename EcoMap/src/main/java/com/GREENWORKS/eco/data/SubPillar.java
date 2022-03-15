@@ -5,6 +5,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -22,6 +24,11 @@ public class SubPillar {
     protected String name;
     @Column(name="thumbnail", unique = false, nullable = true, length = 120)
     protected String thumbnail;
+    
+    @JoinColumn(name="pillar_id", nullable=true)
+	@ManyToOne
+	protected Pillar pillar;
+
     @OneToMany(mappedBy="subPillar")
     private Set<GenericPin> genericPins;
 
@@ -78,6 +85,22 @@ public class SubPillar {
 	 */
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
+    }
+
+    public Pillar getPillar() {
+        return pillar;
+    }
+
+    public void setPillar(Pillar pillar) {
+        this.pillar = pillar;
+    }
+
+    public Set<GenericPin> getGenericPins() {
+        return genericPins;
+    }
+
+    public void setGenericPins(Set<GenericPin> genericPins) {
+        this.genericPins = genericPins;
     }
 
 }
