@@ -61,7 +61,7 @@ public abstract class Pin {
 	protected Byte api;
 
 	@JoinColumn(name="sub_pillar_id", nullable=false)
-	@ManyToOne
+	@ManyToOne // MANY Pins can be associated with ONE SubPillar. 
 	protected SubPillar subPillar;
 
 	/***
