@@ -9,7 +9,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "pillar")
+@Table(name = "pillars")
 public class Pillar {
 
     @Id

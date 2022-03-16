@@ -14,7 +14,7 @@ import javax.persistence.Table;
  * The class definition for the SubPillar object. 
  */
 @Entity
-@Table(name = "subpillar")
+@Table(name = "subpillars")
 public class SubPillar {
     
     @Id
@@ -24,11 +24,9 @@ public class SubPillar {
     protected String name;
     @Column(name="thumbnail", unique = false, nullable = true, length = 120)
     protected String thumbnail;
-    
     @JoinColumn(name="pillar_id", nullable=true)
 	@ManyToOne
 	protected Pillar pillar;
-
     @OneToMany(mappedBy="subPillar")
     private Set<GenericPin> genericPins;
 
