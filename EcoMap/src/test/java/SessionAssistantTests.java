@@ -283,7 +283,7 @@ public class SessionAssistantTests {
      */
     @AfterAll
     public static void sessionAssistant_deleteTestData() {
-        /*
+        
     	SessionAssistant sessionAssistant = new SessionAssistant();
     	Admin admin = new Admin();
     	admin.setId(adminTestId);
@@ -317,6 +317,6 @@ public class SessionAssistantTests {
         sessionAssistant.delete(testSubPillar); // Delete TestPillar, must be done last. 
     	sessionAssistant.delete(testPillar);
     	sessionAssistant.shutdownSessionFactory(); // Shutdown
-        */
+        
     }
 }
