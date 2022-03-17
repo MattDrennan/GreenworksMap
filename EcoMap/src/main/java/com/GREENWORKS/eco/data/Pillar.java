@@ -1,11 +1,8 @@
 package com.GREENWORKS.eco.data;
 
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /*
@@ -30,12 +27,10 @@ pillar_id       name
 public class Pillar {
 
     @Id
-	@Column(name = "pillar_id", unique = true, nullable = true)
+	@Column(name = "pillar_id", unique = true, nullable = false)
     private Integer pid;
     @Column(name="name", unique = false, nullable = true, length = 120)
     protected String name;
-    @OneToMany(mappedBy="pillar") // ONE Pillar may have MANY SubPillars.
-    private Set<SubPillar> subPillar;
     
     /***
      * Zero parameter constructor. 
@@ -79,17 +74,27 @@ public class Pillar {
 	/***
 	 * Accessor method for the getSubPillar Set. 
 	 * @return Returns the Set.
-	 */
+	 *//*
     public Set<SubPillar> getSubPillar() {
         return subPillar;
-    }
+    }*/
 
 	/***
 	 * Mutator method for assigning the set of SubPillars. 
 	 * @param genericPins The Set to be assigned. 
-	 */
+	 */ /*
     public void setSubPillar(Set<SubPillar> subPillar) {
         this.subPillar = subPillar;
+    } */
+
+	/***
+	 * toString() method for printing the Pillar contents in a human readable way. 
+	 */
+    @Override
+    public String toString() {
+        return "Pillar [name=" + name + ", pid=" + pid + "]";
     }
+
+    
     
 }

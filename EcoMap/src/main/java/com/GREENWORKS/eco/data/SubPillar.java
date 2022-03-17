@@ -2,6 +2,7 @@ package com.GREENWORKS.eco.data;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -47,17 +48,15 @@ pillar_id 	sub_pillar_id 	name
 public class SubPillar {
     
     @Id
-	@Column(name = "sub_pillar_id", unique = true, nullable = true)
+	@Column(name = "sub_pillar_id", unique = true, nullable = false)
 	protected Integer subPillarId;
     @Column(name="name", unique = false, nullable = true, length = 120)
     protected String name;
     @Column(name="thumbnail", unique = false, nullable = true, length = 120)
     protected String thumbnail;
     @JoinColumn(name="pillar_id", nullable=true) 
-	@ManyToOne // MANY SubPillar may have ONE Pillar.
+    @ManyToOne(cascade = CascadeType.ALL) // MANY SubPillar may have ONE Pillar.
 	protected Pillar pillar;
-    @OneToMany(mappedBy="subPillar") // ONE SubPillar may have MANY GenericPins.
-    private Set<GenericPin> genericPins;
 
     /***
      * Zero parameter constructor. 
@@ -131,19 +130,14 @@ public class SubPillar {
     }
 
 	/***
-	 * Accessor method for the Set. 
-	 * @return Returns the set.
+	 * toString() method for printing the SubPillar contents in a human readable way. 
 	 */
-    public Set<GenericPin> getGenericPins() {
-        return genericPins;
+    @Override
+    public String toString() {
+        return "SubPillar [ name=" + name + ", pillar=" + pillar + ", subPillarId="
+                + subPillarId + ", thumbnail=" + thumbnail + "]";
     }
 
-	/***
-	 * Mutator method for assigning the set of GenericPins. 
-	 * @param genericPins The Set to be assigned. 
-	 */
-    public void setGenericPins(Set<GenericPin> genericPins) {
-        this.genericPins = genericPins;
-    }
+    
 
 }
