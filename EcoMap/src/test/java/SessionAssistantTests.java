@@ -255,7 +255,7 @@ public class SessionAssistantTests {
     	problemPinTwo.copyPin(problemPinOne);
     	assertTrue(problemPinOne.equals(problemPinTwo)); 
     }
-    
+
     /***
      * 
      */
