@@ -37,8 +37,10 @@ public class SessionAssistantTests {
     	SessionAssistant sessionAssistant = new SessionAssistant();
 
         Pillar pillar = new Pillar();
+        pillar.setName("TestPillar");
         pillar.setPid(0);
     	SubPillar subPillar = new SubPillar();
+        subPillar.setName("TestSubPillar");
         subPillar.setSubPillarId(0);
         subPillar.setPillar(pillar);
         
@@ -253,6 +255,47 @@ public class SessionAssistantTests {
     	problemPinTwo.copyPin(problemPinOne);
     	assertTrue(problemPinOne.equals(problemPinTwo)); 
     }
+    
+    /***
+     * 
+     */
+    @Test
+    public void sessionAssistant_shouldEqualTestPillarName() {
+    	SessionAssistant sessionAssistant = new SessionAssistant();
+    	Pillar pillar = sessionAssistant.get(new Pillar(0));
+        assertEquals("TestPillar", pillar.getName());
+    }
+
+    /***
+     * 
+     */
+    @Test
+    public void sessionAssistant_shouldEqualTestSubPillarName() {
+    	SessionAssistant sessionAssistant = new SessionAssistant();
+    	SubPillar subPillar = sessionAssistant.get(new SubPillar(0));
+        assertEquals("TestSubPillar", subPillar.getName());
+    }
+
+    /***
+     * 
+     */
+    @Test
+    public void sessionAssistant_shouldReturnPinWithSubPillar() {
+    	SessionAssistant sessionAssistant = new SessionAssistant();
+    	Pin pin = sessionAssistant.get(new GenericPin(pinTestId));
+        assertEquals("TestSubPillar", pin.getSubPillar().getName());
+    }
+
+    /***
+     * 
+     */
+    @Test
+    public void sessionAssistant_shouldReturnPinWithPillar() {
+    	SessionAssistant sessionAssistant = new SessionAssistant();
+    	Pin pin = sessionAssistant.get(new GenericPin(pinTestId));
+        assertEquals("TestPillar", pin.getSubPillar().getPillar().getName());
+    }
+
     
     /***
      * This will delete the test data sets from the database. It wil run after all

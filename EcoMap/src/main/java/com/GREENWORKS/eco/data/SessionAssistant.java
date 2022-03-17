@@ -133,6 +133,34 @@ public class SessionAssistant {
     	session.close();
     	return adminDb;
     }
+
+    /***
+     * 
+     * @param pillar
+     * @return
+     */
+    public Pillar get(Pillar pillar) {
+    	Session session = openSession();
+    	session.beginTransaction();
+    	Pillar data = session.find(pillar.getClass(), pillar.getPid());
+    	Logger.info("Returned pillar: " + data);
+    	session.close();
+    	return data;
+    }
+
+    /***
+     * 
+     * @param subPillar
+     * @return
+     */
+    public SubPillar get(SubPillar subPillar) {
+    	Session session = openSession();
+    	session.beginTransaction();
+    	SubPillar data = session.find(subPillar.getClass(), subPillar.getSubPillarId());
+    	Logger.info("Returned subPillar: " + data);
+    	session.close();
+    	return data;
+    }
    
     /***
    	 * This method uses two Strings to return an Admin object. If the parameters can not be correlated to a database

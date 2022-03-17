@@ -28,7 +28,7 @@ public class Pillar {
 
     @Id
 	@Column(name = "pillar_id", unique = true, nullable = false)
-    private Integer pid;
+    private Integer pId;
     @Column(name="name", unique = false, nullable = true, length = 120)
     protected String name;
     
@@ -39,12 +39,19 @@ public class Pillar {
 
     }
 
+    /***
+     * Single parameter constructor for assigning pid upon instatiation. Good for testing. 
+     */
+    public Pillar(Integer id) {
+        this.pId = id;
+    }
+
 	/***
 	 * Accessor method for the pid instance variable. 
 	 * @return Returns the contents of the instance variable.
 	 */
     public Integer getPid() {
-        return pid;
+        return pId;
     }
 
 	/***
@@ -52,7 +59,7 @@ public class Pillar {
 	 * @param genericPins The integer to be assigned. 
 	 */
     public void setPid(Integer pid) {
-        this.pid = pid;
+        this.pId = pid;
     }
 
 	/***
@@ -92,7 +99,7 @@ public class Pillar {
 	 */
     @Override
     public String toString() {
-        return "Pillar [name=" + name + ", pid=" + pid + "]";
+        return "Pillar [name=" + name + ", pid=" + pId + "]";
     }
 
     

@@ -1,14 +1,11 @@
 package com.GREENWORKS.eco.data;
 
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /*
@@ -49,7 +46,7 @@ public class SubPillar {
     
     @Id
 	@Column(name = "sub_pillar_id", unique = true, nullable = false)
-	protected Integer subPillarId;
+	protected Integer spId;
     @Column(name="name", unique = false, nullable = true, length = 120)
     protected String name;
     @Column(name="thumbnail", unique = false, nullable = true, length = 120)
@@ -65,12 +62,17 @@ public class SubPillar {
 
     }
 
+    
+    public SubPillar(Integer id) {
+        this.spId = id;
+    }
+
 	/***
 	 * Accessor method for the name subPillarId variable. 
 	 * @return Returns the contents of the instance variable.
 	 */
     public Integer getSubPillarId() {
-        return subPillarId;
+        return spId;
     }
 
 	/***
@@ -78,7 +80,7 @@ public class SubPillar {
 	 * @param subPillarId The value to be assigned. 
 	 */
     public void setSubPillarId(Integer subPillarId) {
-        this.subPillarId = subPillarId;
+        this.spId = subPillarId;
     }
 
 	/***
@@ -135,7 +137,7 @@ public class SubPillar {
     @Override
     public String toString() {
         return "SubPillar [ name=" + name + ", pillar=" + pillar + ", subPillarId="
-                + subPillarId + ", thumbnail=" + thumbnail + "]";
+                + spId + ", thumbnail=" + thumbnail + "]";
     }
 
     
