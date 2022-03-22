@@ -2,6 +2,7 @@ package com.GREENWORKS.eco.data;
 
 import java.util.ArrayList;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -59,11 +60,11 @@ public abstract class Pin {
 	protected String link;
 	@Column(name="api", unique = false, nullable = true)
 	protected Byte api;
-
-	@JoinColumn(name="sub_pillar_id", nullable=false)
-	@ManyToOne
+	
+	@JoinColumn(name="sub_pillar_id", nullable=true)
+	@ManyToOne(cascade = CascadeType.ALL) // MANY Pins can be associated with ONE SubPillar. 
 	protected SubPillar subPillar;
-
+	
 	/***
      * Zero parameter constructor. 
      */
@@ -413,7 +414,7 @@ public abstract class Pin {
 	/***
 	 * Accessor method for the subPillar instance variable. 
 	 * @return Returns the contents of the instance variable.
-	 */	
+	 */
 	public SubPillar getSubPillar() {
 		return subPillar;
 	}
@@ -421,7 +422,7 @@ public abstract class Pin {
 	/***
      * Mutator method for assigning to the subPillar object.
      * @param subPillar The object to be assigned. 
-     */
+     */ 
 	public void setSubPillar(SubPillar subPillar) {
 		this.subPillar = subPillar;
 	}
@@ -486,7 +487,7 @@ public abstract class Pin {
 		this.thumbnail = pin.thumbnail;
 		this.link = pin.link;
 		this.api = pin.api;
-		this.subPillar = pin.subPillar;
+		this.subPillar = pin.subPillar; // TESTING
 	}
 	
 	/***
@@ -586,15 +587,14 @@ public abstract class Pin {
 		return zip;
 	}
 
-	/***
-	 * toString() method for printing the pin contents in a human readable way. 
-	 */
 	@Override
 	public String toString() {
-		return "Pin [api=" + api + ", content=" + content + ", endDate=" + endDate + ", iconId=" + iconId + ", id=" + id
-				+ ", latitude=" + latitude + ", link=" + link + ", locationName=" + locationName + ", longitude="
-				+ longitude + ", startDate=" + startDate + ", state=" + state + ", street=" + street + ", subPillar="
-				+ subPillar + ", thumbnail=" + thumbnail + ", town=" + town + ", zipCode=" + zipCode + "]";
+		return "Pin [id=" + id + ", subPillar=" + subPillar + "]";
 	}
+
+	/***
+	 * toString() method for printing the Pin contents in a human readable way. 
+	 */
+	
 
 }

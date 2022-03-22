@@ -106,7 +106,8 @@ public class SessionAssistant {
     }
    
     /***
-     * This method is used to get a GenericPin by id. 
+     * This method can be viewed as an accessor method for finding objects of type Pin that
+     * exist in the database or the cache. Correlation is established by id. 
      * @param pin Requires a Pin object that has a populated id instance variable. 
      * @return Returns a populated Pin. 
      */
@@ -122,7 +123,7 @@ public class SessionAssistant {
     /***
      * This method can be viewed as an accessor method for finding objects of type Admin that
      * exist in the database or the cache. Correlation is established by id. 
-     * @param admin Requires an Admin as a paramter. 
+     * @param admin Requires an Admin object with a populated id instance variable. 
      * @return Returns a populated Admin. 
      */
     public Admin get(Admin admin) {
@@ -132,6 +133,36 @@ public class SessionAssistant {
     	Logger.info("Returned admin: " + adminDb);
     	session.close();
     	return adminDb;
+    }
+
+    /***
+     * This method can be viewed as an accessor method for finding objects of type Pillar that
+     * exist in the database or the cache. Correlation is established by id. 
+     * @param pillar Requires a Pillar object with a populated pId instance variable. 
+     * @return Returns the matching data set. 
+     */
+    public Pillar get(Pillar pillar) {
+    	Session session = openSession();
+    	session.beginTransaction();
+    	Pillar data = session.find(pillar.getClass(), pillar.getPid());
+    	Logger.info("Returned pillar: " + data);
+    	session.close();
+    	return data;
+    }
+
+    /***
+     * This method can be viewed as an accessor method for finding objects of type SubPillar that
+     * exist in the database or the cache. Correlation is established by id. 
+     * @param subPillar Requires a SubPillar object with a populated spId instance variable.
+     * @return Returns the matching data set. 
+     */
+    public SubPillar get(SubPillar subPillar) {
+    	Session session = openSession();
+    	session.beginTransaction();
+    	SubPillar data = session.find(subPillar.getClass(), subPillar.getSubPillarId());
+    	Logger.info("Returned subPillar: " + data);
+    	session.close();
+    	return data;
     }
    
     /***
@@ -153,7 +184,7 @@ public class SessionAssistant {
      * This method loads a Pin object and returns it. The load is specified by the id of the Pin
      * object that is provided as a parameter. Load should only be used when it is certain that the data 
      * provided to this method can be correlated to a database entry or in the cache. 
-     * @param pin A Pin object. 
+     * @param pin A Pin object with a populated id instance variable. 
      * @return The Pin object that has had its instance variables populated from the database. 
      */
     public Pin load(Pin pin) {
@@ -169,7 +200,7 @@ public class SessionAssistant {
      * This method loads an Admin object and returns it. The load is specified by the id of the Admin
      * object that is provided as a parameter. Load should only be used when it is certain that the data 
      * provided to this method can be correlated to a database entry or in the cache. 
-     * @param admin An Admin object. 
+     * @param admin An Admin object with a populated id instance variable. 
      * @return The Admin object that has had its instance variables populated from the database. 
      */
     public Admin load(Admin admin) {
