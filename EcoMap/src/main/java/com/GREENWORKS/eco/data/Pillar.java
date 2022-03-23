@@ -9,6 +9,7 @@ import javax.persistence.Table;
 Pillars are general categories of green-related data.  
 
 pillar_id       name
+0               Unnamed Pillar
 1	            Clean Energy
 2	            Clean Water
 3	            Electric & Alt. Transportation
@@ -102,6 +103,29 @@ public class Pillar {
         return "Pillar [name=" + name + ", pid=" + pId + "]";
     }
 
-    
+    @Override
+    public int hashCode() {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + ((pId == null) ? 0 : pId.hashCode());
+      return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+          return true;
+        if (obj == null)
+          return false;
+        if (getClass() != obj.getClass())
+          return false;
+        Pillar other = (Pillar) obj;
+        if (pId == null) {
+          if (other.pId != null)
+            return false;
+        } else if (!pId.equals(other.pId))
+          return false;
+        return true;
+      }
     
 }

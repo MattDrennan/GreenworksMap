@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.hibernate.ObjectNotFoundException;
@@ -12,6 +14,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import com.GREENWORKS.eco.data.Admin;
+import com.GREENWORKS.eco.data.Data;
 import com.GREENWORKS.eco.data.GenericPin;
 import com.GREENWORKS.eco.data.Pillar;
 import com.GREENWORKS.eco.data.Pin;
@@ -39,6 +42,7 @@ public class SessionAssistantTests {
         Pillar pillar = new Pillar();
         pillar.setName("TestPillar");
         pillar.setPid(0);
+        
     	SubPillar subPillar = new SubPillar();
         subPillar.setName("TestSubPillar");
         subPillar.setSubPillarId(0);
@@ -239,7 +243,7 @@ public class SessionAssistantTests {
     @Test
     public void sessionAssistant_shouldBeTheCorrectTableSize() {
     	SessionAssistant sessionAssistant = new SessionAssistant();
-    	List<Pin> list = sessionAssistant.getAllPins(); // This can be a large resultset depending on db size. 
+    	List<Pin> list = sessionAssistant.getAllPinsList(); // This can be a large resultset depending on db size. 
     	assertEquals(locationDatabaseSize, list.size());
     }
     
@@ -280,7 +284,7 @@ public class SessionAssistantTests {
      * 
      */
     @Test
-    public void sessionAssistant_shouldReturnPinWithSubPillar() {
+    public void sessionAssistant_shouldEqualSubPillarName() {
     	SessionAssistant sessionAssistant = new SessionAssistant();
     	Pin pin = sessionAssistant.get(new GenericPin(pinTestId));
         assertEquals("TestSubPillar", pin.getSubPillar().getName());
@@ -290,12 +294,78 @@ public class SessionAssistantTests {
      * 
      */
     @Test
-    public void sessionAssistant_shouldReturnPinWithPillar() {
+    public void sessionAssistant_shouldEqualPillarName() {
     	SessionAssistant sessionAssistant = new SessionAssistant();
     	Pin pin = sessionAssistant.get(new GenericPin(pinTestId));
         assertEquals("TestPillar", pin.getSubPillar().getPillar().getName());
     }
 
+    /***
+     * 
+     */
+    @Test
+    public void sessionAssistant_shouldEqualPilarId() {
+    	SessionAssistant sessionAssistant = new SessionAssistant();
+    	Pin pin = sessionAssistant.get(new GenericPin(pinTestId));
+        assertEquals(0, pin.getSubPillar().getPillar().getPid());
+    }
+    
+    /***
+     * 
+     */
+    @Test
+    public void sessionAssistant_shouldEqualSubPillarId() {
+    	SessionAssistant sessionAssistant = new SessionAssistant();
+    	Pin pin = sessionAssistant.get(new GenericPin(pinTestId));
+        assertEquals(0, pin.getSubPillar().getSubPillarId());
+    }
+
+    /***
+     * At the time of running this test the database should have at a minimum, the single test Pillar. However,
+     * during normal operation there should be the 7+ Pillars in the database. 
+     */
+    @Test
+    public void sessionAssistant_shouldRetrieveNonEmptyArrayListOfPillar() {
+    	SessionAssistant sessionAssistant = new SessionAssistant();
+    	List<Pillar> list = sessionAssistant.getAllPillars();
+        assertTrue(list.size() >= 1);
+    }
+
+    /***
+     * At the time of running this test the database should have at a minimum, the single test Pillar. However,
+     * during normal operation there should be the 7+ Pillars in the database. 
+     */
+    @Test
+    public void sessionAssistant_shouldRetrieveNonEmptyArrayListOfPins() {
+    	SessionAssistant sessionAssistant = new SessionAssistant();
+    	List<Pin> list = sessionAssistant.getAllPinsList();
+        assertTrue(!list.isEmpty());
+    }
+
+    /***
+     * At the time of running this test the database should have at a minimum, the single test SubPillar. However,
+     * during normal operation there should be the 20+ SubPillars in the database. 
+     */
+    @Test
+    public void sessionAssistant_shouldRetrieveNonEmptyArrayListOfSubPillar() {
+    	SessionAssistant sessionAssistant = new SessionAssistant();
+    	List<SubPillar> list = sessionAssistant.getAllSubPillars();
+        assertTrue(list.size() >= 1);
+    }
+
+    /***
+     * At the time of running this test the database should have at a minimum, the single test SubPillar. However,
+     * during normal operation there should be the 20+ SubPillars in the database. 
+     */
+    @Test
+    public void data_shouldGenerateHashMap() {
+    	Data data = new Data();
+        Pillar pillar = data.getPillarList().get(0);
+        // System.out.println("Print: " + pillar);
+        ArrayList<SubPillar> spList = data.getPillarHashMap().get(pillar);
+        // System.out.println("Print: " + spList);
+        assertEquals(0, spList.get(0).getPillar().getPid());
+    }  
     
     /***
      * This will delete the test data sets from the database. It wil run after all

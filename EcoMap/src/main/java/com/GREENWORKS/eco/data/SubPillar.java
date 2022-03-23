@@ -13,6 +13,7 @@ What is a SubPillar? A SubPillar is a sub-category of a Pillar. Pillars can be l
 categories of data. Those specific categories of data are what we call SubPillars. 
 
 pillar_id 	sub_pillar_id 	name
+0           00              Unnamed Sub-Pillar
 1		    11		        Solar Arrays
 1		    12		        Resilience Hubs
 1		    13		        Solar Tables of Connection
@@ -61,7 +62,6 @@ public class SubPillar {
     public SubPillar() {
 
     }
-
     
     public SubPillar(Integer id) {
         this.spId = id;
@@ -139,7 +139,5 @@ public class SubPillar {
         return "SubPillar [ name=" + name + ", pillar=" + pillar + ", subPillarId="
                 + spId + ", thumbnail=" + thumbnail + "]";
     }
-
     
-
 }
