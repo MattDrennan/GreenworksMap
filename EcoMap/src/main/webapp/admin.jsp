@@ -1,10 +1,10 @@
 <%@ page import="com.GREENWORKS.eco.data.*" %>
-<%@page import="java.util.ArrayList" %>
+<%@page import="java.util.List" %>
 <%@ page isELIgnored="false"%>
 <%
 // Get pin data
 SessionAssistant sa = new SessionAssistant();
-ArrayList<Pin> locationsArrayList = sa.getAllPins();
+Data data = new Data();
 %>
 
 <html>
@@ -214,7 +214,7 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
                                     <select name="locationID">
                                         <%
                                         // Loop through array
-                                        for (Pin location : locationsArrayList)
+                                        for (Pin location : data.getPinList())
                                         {
                                         %>
                                             <option value="<%=location.getId()%>"><%=location.getLocationName()%> - <%=location.getLocationAddress()%></option>

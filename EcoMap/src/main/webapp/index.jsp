@@ -1,10 +1,10 @@
 <%@ page import="com.GREENWORKS.eco.data.*" %>
-<%@page import="java.util.ArrayList" %>
+<%@page import="java.util.List" %>
 <%@ page isELIgnored="false"%>
 <%
 // Get pin data
 SessionAssistant sa = new SessionAssistant();
-ArrayList<Pin> locationsArrayList = sa.getAllPins();
+Data data = new Data(); 
 %>
 
 <html>
@@ -30,7 +30,7 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
             var eventDates = {};
             <%
             // Loop through array
-            for (Pin location : locationsArrayList)
+            for (Pin location : data.getPinList())
             {
                 // Is an event - check to make sure dates are not set to null
                 if(location.getStartDate() != null && location.getEndDate() != null)
@@ -96,7 +96,7 @@ ArrayList<Pin> locationsArrayList = sa.getAllPins();
             int j = 0;
 
             // Loop through array
-            for (Pin location : locationsArrayList)
+            for (Pin location : data.getPinList())
             {
             %>
                 points[<%=j%>] = {
