@@ -25,6 +25,12 @@ import com.GREENWORKS.eco.data.SubPillar;
 /***
  * These are the test cases for the SessionAssistant and for componenets that have functionality that is integrated with
  * the SessionAssitant. 
+ * 
+ * --- HELP: My SessionAssistantTests are failing, why? ---
+ * --- Common Causes ---
+ * 1. Improper database credentials. Verify that the hibernate properties file has the correct credentials to your database. 
+ * 2. Relic test data. Verify that the database does not contain old generated test data. 
+ * 3. Max hourly questions limit reached for user. Wait an hour and increase the max questions limit for your MySQL user. 
  */
 public class SessionAssistantTests {
 	
