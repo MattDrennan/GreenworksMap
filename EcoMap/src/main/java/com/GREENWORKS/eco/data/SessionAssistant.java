@@ -8,7 +8,7 @@ import org.hibernate.SessionFactory;
 import org.tinylog.Logger;
 
 /***
- * This class is intended to assist the Servlets by performing all the backend database functions. 
+ * This class is intended to assist the Servlets by providing a medium for all the backend database functions. 
  */
 public class SessionAssistant { 
 	
@@ -213,8 +213,8 @@ public class SessionAssistant {
     }
 
     /***
-     * This method returns all pins that are stored in the database. It stores all the Pins in a List. 
-     * @return Returns a List of all the Pins. 
+     * This method returns all pins that are stored in the database. It stores all the pins in a List<Pin>. 
+     * @return Returns a List<Pin> of all the Pins. 
      */
     public List<Pin> getAllPinsList() {
     	Session session = openSession();
@@ -224,8 +224,8 @@ public class SessionAssistant {
     }
 
     /***
-     * 
-     * @return
+     * This method returns all pillars that are stored in the database. It stores all the pillars in a List<Pillar>. 
+     * @return Returns a List<Pillar> of all the pillars. 
      */
     public List<Pillar> getAllPillars() {
     	Session session = openSession();
@@ -235,8 +235,8 @@ public class SessionAssistant {
     }
 
     /***
-     * 
-     * @return
+     * This method returns all sub-pillars that are stored in the database. It stores all the sub-pillars in a List<SubPillar>. 
+     * @return Returns a List<SubPillar> of all the sub-pillars. 
      */
     public List<SubPillar> getAllSubPillars() {
     	Session session = openSession();
