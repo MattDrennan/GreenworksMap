@@ -98,7 +98,6 @@ public class Pillar {
       return result;
     }
     /***
-     * 
      * equals() method for comparing Pillars. 
      */
     @Override
