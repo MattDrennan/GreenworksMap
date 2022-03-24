@@ -3,7 +3,6 @@
 <%@ page isELIgnored="false"%>
 <%
 // Get pin data
-SessionAssistant sa = new SessionAssistant();
 Data data = new Data(); 
 %>
 
