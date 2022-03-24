@@ -23,6 +23,10 @@ import com.GREENWORKS.eco.data.ProblemPin;
 import com.GREENWORKS.eco.data.SessionAssistant;
 import com.GREENWORKS.eco.data.SubPillar;
 
+/***
+ * These are the test cases for the SessionAssistant and for componenets that have functionality that is integrated with
+ * the SessionAssitant. 
+ */
 public class SessionAssistantTests {
 	
     /* These are the test values that are generated for the Hibernate CRUD tests. */
@@ -36,7 +40,7 @@ public class SessionAssistantTests {
      * this class will run. 
      */
     @BeforeAll
-    public static void sessionAssistant_insertTestData() {
+    public static void insertTestData() {
     	SessionAssistant sessionAssistant = new SessionAssistant();
 
         Pillar pillar = new Pillar();
@@ -86,8 +90,7 @@ public class SessionAssistantTests {
     }
     
     /***
-     * Verifies that if a Pin does not exist that the returned object will be
-     * null. 
+     * Verifies that if a Pin does not exist that the returned object will be null. 
      */
     @Test
     public void sessionAssistant_pinShouldBeNull() {
@@ -261,47 +264,53 @@ public class SessionAssistantTests {
     }
 
     /***
-     * 
+     * Verifies that the accessor for the Pillar is operating properly. 
      */
     @Test
     public void sessionAssistant_shouldEqualTestPillarName() {
     	SessionAssistant sessionAssistant = new SessionAssistant();
     	Pillar pillar = sessionAssistant.get(new Pillar(0));
         assertEquals("TestPillar", pillar.getName());
+        assertEquals(0, pillar.getPid());
     }
 
     /***
-     * 
+     * Verifies that the accessor for the SubPillar is operating properly.
      */
     @Test
     public void sessionAssistant_shouldEqualTestSubPillarName() {
     	SessionAssistant sessionAssistant = new SessionAssistant();
     	SubPillar subPillar = sessionAssistant.get(new SubPillar(0));
         assertEquals("TestSubPillar", subPillar.getName());
+        assertEquals(0, subPillar.getSubPillarId());
+        assertEquals("TestPillar", subPillar.getPillar().getName());
+        assertEquals(0, subPillar.getPillar().getPid());
     }
 
     /***
-     * 
+     * Verifies that the accessor for a single Pin is handling SubPillar data properly. 
      */
     @Test
     public void sessionAssistant_shouldEqualSubPillarName() {
     	SessionAssistant sessionAssistant = new SessionAssistant();
     	Pin pin = sessionAssistant.get(new GenericPin(pinTestId));
         assertEquals("TestSubPillar", pin.getSubPillar().getName());
+        assertEquals(0, pin.getSubPillar().getSubPillarId());
     }
 
     /***
-     * 
+     * Verifies that the accessor for a single Pin is handling Pillar data properly. 
      */
     @Test
     public void sessionAssistant_shouldEqualPillarName() {
     	SessionAssistant sessionAssistant = new SessionAssistant();
     	Pin pin = sessionAssistant.get(new GenericPin(pinTestId));
         assertEquals("TestPillar", pin.getSubPillar().getPillar().getName());
+        assertEquals("TestPillar", pin.getSubPillar().getPillar().getPid());
     }
 
     /***
-     * 
+     * Verifies that the 
      */
     @Test
     public void sessionAssistant_shouldEqualPilarId() {
@@ -332,8 +341,8 @@ public class SessionAssistantTests {
     }
 
     /***
-     * At the time of running this test the database should have at a minimum, the single test Pillar. However,
-     * during normal operation there should be the 7+ Pillars in the database. 
+     * At the time of running this test the database should have at a minimum, the single test Pin in the database. 
+     * Therefore, it the retrieved List<Pin> should not be empty.  
      */
     @Test
     public void sessionAssistant_shouldRetrieveNonEmptyArrayListOfPins() {
@@ -354,25 +363,46 @@ public class SessionAssistantTests {
     }
 
     /***
-     * At the time of running this test the database should have at a minimum, the single test SubPillar. However,
-     * during normal operation there should be the 20+ SubPillars in the database. 
+     * Verifies that the test Pillar data is being extracted from the database properly. 
      */
     @Test
-    public void data_shouldGenerateHashMap() {
+    public void data_shouldPillarIdShouldEqualZero() {
     	Data data = new Data();
-        Pillar pillar = data.getPillarList().get(0);
-        // System.out.println("Print: " + pillar);
-        ArrayList<SubPillar> spList = data.getPillarHashMap().get(pillar);
-        // System.out.println("Print: " + spList);
+        assertEquals(0, data.getSubPillarList().get(0).getPillar().getPid());
+        assertEquals("TestPillar", data.getSubPillarList().get(0).getPillar().getName());
+    }
+
+    /***
+     * Verifies that the data object can use an element of the Pillar List as a key for the HashMap. 
+     */
+    @Test
+    public void data_shouldFindPillarIdInHashMap() {
+    	Data data = new Data();
+        assertEquals(0, data.getPillarHashMap().get(data.getPillarList().get(0)).get(0).getPillar().getPid());
+        assertEquals("TestPillar", data.getPillarHashMap().get(data.getPillarList().get(0)).get(0).getPillar().getName());
+    }
+
+    /***
+     * Verifies that the data object can be used to extract collections and that those extracted collections operate properly.
+     */
+    @Test
+    public void data_shouldExtractArrayListFromGeneratedHashMap() {
+    	Data data = new Data();
+        Pillar pillar = data.getPillarList().get(0); // Get pillar at position 0.
+        ArrayList<SubPillar> spList = data.getPillarHashMap().get(pillar); // Get SubPillar list that has the pillar as its key. 
+        // Note: In production, it won't be necessary to instantiate additional objects, however, it helps with comprehension. 
         assertEquals(0, spList.get(0).getPillar().getPid());
-    }  
+        assertEquals("TestPillar", spList.get(0).getPillar().getName());
+        assertEquals(0, spList.get(0).getSubPillarId());
+        assertEquals("TestSubPillar", spList.get(0).getName());
+    }
     
     /***
      * This will delete the test data sets from the database. It wil run after all
      * other tests in this test class have been run.  
      */
     @AfterAll
-    public static void sessionAssistant_deleteTestData() {
+    public static void deleteTestData() {
         
     	SessionAssistant sessionAssistant = new SessionAssistant();
     	
