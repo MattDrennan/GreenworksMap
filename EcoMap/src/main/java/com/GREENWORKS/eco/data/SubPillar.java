@@ -63,8 +63,12 @@ public class SubPillar {
 
     }
     
-    public SubPillar(Integer id) {
-        this.spId = id;
+    /***
+     * Single parameter constructor that is used for creating a bare SubPillar with a populated Id. 
+     * @param spId The value that will be assigned to the spId instance variable. 
+     */
+    public SubPillar(Integer spId) {
+        this.spId = spId;
     }
 
 	/***
