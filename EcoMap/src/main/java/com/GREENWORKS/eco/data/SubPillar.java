@@ -68,7 +68,7 @@ public class SubPillar {
     }
 
 	/***
-	 * Accessor method for the name subPillarId variable. 
+	 * Accessor method for the subPillarId variable. 
 	 * @return Returns the contents of the instance variable.
 	 */
     public Integer getSubPillarId() {

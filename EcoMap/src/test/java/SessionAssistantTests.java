@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.hibernate.ObjectNotFoundException;
@@ -306,7 +305,7 @@ public class SessionAssistantTests {
     	SessionAssistant sessionAssistant = new SessionAssistant();
     	Pin pin = sessionAssistant.get(new GenericPin(pinTestId));
         assertEquals("TestPillar", pin.getSubPillar().getPillar().getName());
-        assertEquals("TestPillar", pin.getSubPillar().getPillar().getPid());
+        assertEquals(0, pin.getSubPillar().getPillar().getPid());
     }
 
     /***
