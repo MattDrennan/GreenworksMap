@@ -1,5 +1,5 @@
 package com.GREENWORKS.eco;
-
+/*
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
@@ -13,11 +13,12 @@ import java.util.Scanner;
 import com.GREENWORKS.eco.data.GenericPin;
 import com.GREENWORKS.eco.data.SessionAssistant;
 import com.google.gson.Gson;
-
+*/
 /***
- * This is a webscraper for the City of Orlando website. This is an example of how webscraping can be done. This will not
- * run in its current state. It requires a Google Geocoding API key and the run variable must be true. 
- */
+ * This is a webscraper for the City of Orlando website. This is an example of how webscraping can be done. It requires a 
+ * Google Geocoding API key and the run variable must be true. Around 10% of the data taken from the City of Orlando website 
+ * has errors, incorrect address, or doesn't follow the data patterns. 
+ */ /*
 @Deprecated
 public class OrlandoWebScraper {
 	
@@ -141,7 +142,4 @@ class result{
 class root{
     ArrayList<result> results;
     String status;
-}
-
-
-
+} */
