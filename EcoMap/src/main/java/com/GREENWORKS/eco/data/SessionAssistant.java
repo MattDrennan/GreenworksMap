@@ -8,7 +8,7 @@ import org.hibernate.SessionFactory;
 import org.tinylog.Logger;
 
 /***
- * This class is intended to assist the Servlets by performing all the backend database functions. 
+ * This class is intended to assist the Servlets by providing a medium for all the backend database functions. 
  */
 public class SessionAssistant { 
 	
@@ -211,32 +211,38 @@ public class SessionAssistant {
     	session.close();
     	return adminDb;
     }
-   
+
     /***
-     * This method returns all pins that are stored in the database. It stores all the Pins in an ArrayList. This
-     * method is used in the front-end of the application. 
-     * @return Returns an ArrayList of all the Pins. 
-     */
-    public ArrayList<Pin> getAllPins() {
-    	Session session = openSession();
-    	List<GenericPin> genericPinList = session.createQuery("SELECT p FROM GenericPin p ORDER BY p.locationName", GenericPin.class).getResultList();
-    	ArrayList<Pin> pinList = new ArrayList<Pin>();
-    	for(Pin pin : genericPinList) {
-    		pinList.add(pin);
-    	}
-        session.close();
-    	return pinList;
-    }
-    
-    /***
-     * This method returns all pins that are stored in the database. It stores all the Pins in a List. 
-     * @return Returns a List of all the Pins. 
+     * This method returns all pins that are stored in the database. It stores all the pins in a List<Pin>. 
+     * @return Returns a List<Pin> of all the Pins. 
      */
     public List<Pin> getAllPinsList() {
     	Session session = openSession();
-    	List<Pin> pinList = session.createQuery("SELECT p FROM GenericPin p", Pin.class).getResultList();
+    	List<Pin> pinList = session.createQuery("SELECT p FROM GenericPin p ORDER BY p.locationName", Pin.class).getResultList();
         session.close();
     	return pinList;
+    }
+
+    /***
+     * This method returns all pillars that are stored in the database. It stores all the pillars in a List<Pillar>. 
+     * @return Returns a List<Pillar> of all the pillars. 
+     */
+    public List<Pillar> getAllPillars() {
+    	Session session = openSession();
+    	List<Pillar> pillarList = session.createQuery("SELECT p FROM Pillar p ORDER BY p.pId", Pillar.class).getResultList();
+        session.close();
+    	return pillarList;
+    }
+
+    /***
+     * This method returns all sub-pillars that are stored in the database. It stores all the sub-pillars in a List<SubPillar>. 
+     * @return Returns a List<SubPillar> of all the sub-pillars. 
+     */
+    public List<SubPillar> getAllSubPillars() {
+    	Session session = openSession();
+    	List<SubPillar> subPillarList = session.createQuery("SELECT p FROM SubPillar p ORDER BY p.spId", SubPillar.class).getResultList();
+        session.close();
+    	return subPillarList;
     }
    
     /***

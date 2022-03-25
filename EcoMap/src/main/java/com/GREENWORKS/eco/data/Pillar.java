@@ -9,6 +9,7 @@ import javax.persistence.Table;
 Pillars are general categories of green-related data.  
 
 pillar_id       name
+0               Unnamed Pillar
 1	            Clean Energy
 2	            Clean Water
 3	            Electric & Alt. Transportation
@@ -79,22 +80,6 @@ public class Pillar {
     }
 
 	/***
-	 * Accessor method for the getSubPillar Set. 
-	 * @return Returns the Set.
-	 *//*
-    public Set<SubPillar> getSubPillar() {
-        return subPillar;
-    }*/
-
-	/***
-	 * Mutator method for assigning the set of SubPillars. 
-	 * @param genericPins The Set to be assigned. 
-	 */ /*
-    public void setSubPillar(Set<SubPillar> subPillar) {
-        this.subPillar = subPillar;
-    } */
-
-	/***
 	 * toString() method for printing the Pillar contents in a human readable way. 
 	 */
     @Override
@@ -102,6 +87,34 @@ public class Pillar {
         return "Pillar [name=" + name + ", pid=" + pId + "]";
     }
 
-    
+    /***
+     * hashCode() method for providing a basis of comparison between Pillars. 
+     */
+    @Override
+    public int hashCode() {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + ((pId == null) ? 0 : pId.hashCode());
+      return result;
+    }
+    /***
+     * equals() method for comparing Pillars. 
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+          return true;
+        if (obj == null)
+          return false;
+        if (getClass() != obj.getClass())
+          return false;
+        Pillar other = (Pillar) obj;
+        if (pId == null) {
+          if (other.pId != null)
+            return false;
+        } else if (!pId.equals(other.pId))
+          return false;
+        return true;
+      }
     
 }
