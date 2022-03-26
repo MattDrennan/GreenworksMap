@@ -1,14 +1,14 @@
 @charset "utf-8";
 
-a {
+figure a {
+    color: #000;
     text-decoration: none;
 }
-a:hover, a:focus {
-	color: blue;
-	font-style: italic;
-	text-decoration: underline;
+figure a:hover, a:focus {
+	color: #000;
+    text-decoration: none;
 }
-a:visited, a:link {
+figure a:visited, a:link {
 	text-decoration: none;
 }
 figure {
@@ -24,9 +24,8 @@ figcaption {
     color: black;
 }
 .map_options a:hover, .map_options a:focus {
-    text-decoration: underline;
     font-style: normal;
-    color: blue;
+    color: #000;
 }
 
 body {
@@ -55,6 +54,18 @@ body {
 }
 #filter_settings {
     display: none;
+}
+
+#advancedFilter {
+    display: none;
+    position: absolute;
+    width: 400px;
+    height: 480px;
+    left: 50%;
+    right: 50%;
+    top: 45%;
+    z-index: 99;
+    transform: translate(-50%, -50%);
 }
 
 .map_options {

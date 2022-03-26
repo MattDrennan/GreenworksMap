@@ -111,7 +111,8 @@ Data data = new Data();
                     dateEnd: "<%=location.getEndDate()%>",
                     content: "<%=location.getThumbnailHTML()%><%=location.getLocationAddress()%><br /><br /><%=location.getContent()%><%=location.getLinkHTML()%>",
                     thumbnail: "<%=location.getThumbnail()%>",
-                    link: "<%=location.getLink()%>"
+                    link: "<%=location.getLink()%>",
+                    subpillar: "<%=location.getSubPillar().getSubPillarId()%>"
                 };
             <%
                 // Increment object count
@@ -152,6 +153,15 @@ Data data = new Data();
                             </a>
                         </figure>
                     </div>
+
+                    <div id="advanced_view_items">
+                        <figure>
+                            <a href="#/" name="advancedFilter">
+                                <img src="icons/gear.png" alt=" ">
+                                <div id="fc_background"><figcaption>Advanced</figcaption></div>
+                            </a>
+                        </figure>
+                    </div>
                 </div>
             </section>
 
@@ -188,6 +198,26 @@ Data data = new Data();
                 </div> 
             </div>
 
+
+            <div id="advancedFilter">
+                <div id="tooltip">
+                    <p>
+                        <%
+                        // Loop through array
+                        for (SubPillar subPillar : data.getSubPillarList())
+                        {
+                        %>
+
+                        <input type="checkbox" name="subPillarOption" value="<%=subPillar.getSubPillarId()%>" CHECKED /> <%=subPillar.getName()%>
+                        <br />
+
+                        <%
+                        }
+                        %>
+                    </p>
+                </div>
+            </div>
+
             <div id="filterDesktop">
                 <span class="pillars">
                     <span class="options" id="filterEnergy" value="1">
@@ -215,6 +245,13 @@ Data data = new Data();
             </div>
 
             <span id="itemsDesktop">
+                <figure>
+                    <a href="#/" name="advancedFilter">
+                        <img src="icons/gear.png" alt=" ">
+                        <figcaption>Advanced</figcaption>
+                    </a>
+                </figure>
+
                 <figure>
                     <a href="#/" name="viewChange">
                         <img src="icons/list.png" alt=" ">

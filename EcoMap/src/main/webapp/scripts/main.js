@@ -50,6 +50,40 @@ $(document).ready(function()
         }
     });
 
+    // Filter - Options Pressed
+    $("[name=subPillarOption]").on("click", function(event)
+    {
+        // Loop through all markers on map
+        for(i = 0; i <= globalMarkers.length - 1; i++)
+        {
+            // Set up should hide variable
+            var shouldHide = false;
+
+            // Loop through all options
+            $("[name=subPillarOption]").each(function()
+            {
+                // If the option value matches the marker type
+                if($(this).attr("value") == globalMarkers[i].attr.subpillar && !$(this).is(":checked"))
+                {
+                    // Don't hide
+                    shouldHide = true;
+                }
+            });
+
+            // If should hide is true
+            if(shouldHide)
+            {
+                // Hide
+                globalMarkers[i].visible = false;
+            }
+            else
+            {
+                // Show
+                globalMarkers[i].visible = true;
+            }
+        }
+    });
+
     // List View - Filter Events
     $("#showEvents").on("click", function(event)
     {
@@ -113,6 +147,25 @@ $(document).ready(function()
             // Hide
             $("#listView").hide();
             $("#mapView").show();
+        }
+    });
+
+    // Advanced Button
+    $("[name=advancedFilter]").on("click", function(e)
+    {
+        // Prevent default action
+        e.preventDefault();
+
+        // If visible
+        if($("#advancedFilter").is(":visible"))
+        {
+            // Hide
+            $("#advancedFilter").hide();
+        }
+        else
+        {
+            // Show
+            $("#advancedFilter").show();
         }
     });
 
@@ -229,6 +282,13 @@ $(document).ready(function()
         {
             // Hide
             $("#filter").hide();
+        }
+
+        // If advanced filter visible, hide it
+        if($("#advancedFilter").is(":visible"))
+        {
+            // Hide
+            $("#advancedFilter").hide();
         }
     });
 
