@@ -117,6 +117,26 @@ Data data = new Data();
                         </div>
 
                         <div class="input-container">
+                            Subpillar:
+                            <br />
+                            <select name="subpillar">
+                                <option value="0" SELECTED>None</option>
+
+                                <%
+                                // Loop through array
+                                for (SubPillar subPillar : data.getSubPillarList())
+                                {
+                                %>
+
+                                <option value="<%=subPillar.getSubPillarId()%>"><%=subPillar.getName()%></option>
+
+                                <%
+                                }
+                                %>
+                            </select>
+                        </div>
+
+                        <div class="input-container">
                             Content:
                             <br />
                             <textarea width="75%" rows="10" name="content"></textarea>
@@ -183,6 +203,26 @@ Data data = new Data();
                                         <option value="1" ${iconid == 1 || iconid == 9 ? 'selected' : ''}>Energy</option>
                                         <option value="4" ${iconid == 4 || iconid == 9 ? 'selected' : ''}>Buildings</option>
                                         <option value="3" ${iconid == 3 || iconid == 13 ? 'selected' : ''}>Transportation</option>
+                                    </select>
+                                </div>
+
+                                <div class="input-container">
+                                    Subpillar:
+                                    <br />
+                                    <select name="subpillar">
+                                        <option value="0" SELECTED>None</option>
+        
+                                        <%
+                                        // Loop through array
+                                        for (SubPillar subPillar : data.getSubPillarList())
+                                        {
+                                        %>
+        
+                                        <option value="<%=subPillar.getSubPillarId()%>" ${request.getAttribute("subpillar") == subPillar.getSubPillarId() ? 'selected' : ''}><%=subPillar.getName()%></option>
+                                        
+                                        <%
+                                        }
+                                        %>
                                     </select>
                                 </div>
 

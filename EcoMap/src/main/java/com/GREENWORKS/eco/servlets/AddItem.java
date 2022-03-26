@@ -5,6 +5,7 @@ import java.io.*;
 import com.GREENWORKS.eco.data.Pin;
 import com.GREENWORKS.eco.data.PinFactory;
 import com.GREENWORKS.eco.data.SessionAssistant;
+import com.GREENWORKS.eco.data.SubPillar;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
@@ -54,6 +55,13 @@ public class AddItem extends HttpServlet {
     		pin.setContent(request.getParameter("content"));
             pin.setThumbnail(request.getParameter("thumbnail"));
             pin.setLink(request.getParameter("link"));
+
+            // Set subpillar
+            SubPillar subPillar = new SubPillar();
+            subPillar.setSubPillarId(Integer.parseInt(request.getParameter("subpillar")));
+
+            // Set sub pillar
+            pin.setSubPillar(subPillar);
 
             // Server side check
             if(pin.getLocationName() == "") { return; }
