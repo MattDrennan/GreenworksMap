@@ -101,10 +101,10 @@ Data data = new Data();
                 points[<%=j%>] = {
                     index: <%=j%>,
                     type: "point",
-                    longitude: "<%=location.getCoordinates().split(",")[0]%>",
-                    latitude: "<%=location.getCoordinates().split(",")[1]%>",
+                    longitude: "<%=location.getLongitude()%>",
+                    latitude: "<%=location.getLatitude()%>",
                     dbID: "<%=location.getId()%>",
-                    dbType: "<%=location.getIconId()%>",
+                    dbType: "<%=location.getSubPillar().getPillar().getPid()%>",
                     dbAddress: "<%=location.getLocationAddress()%>",
                     name: "<%=location.getLocationName()%>",
                     dateStart: "<%=location.getStartDate()%>",
