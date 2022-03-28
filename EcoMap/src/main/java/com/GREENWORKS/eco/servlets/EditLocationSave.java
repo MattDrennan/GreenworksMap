@@ -3,10 +3,13 @@ package com.GREENWORKS.eco.servlets;
 import java.io.*;
 
 import com.GREENWORKS.eco.constants.LoggerConstants;
+import com.GREENWORKS.eco.data.EventPin;
+import com.GREENWORKS.eco.data.Pillar;
 import com.GREENWORKS.eco.data.Pin;
 import com.GREENWORKS.eco.data.PinFactory;
 import com.GREENWORKS.eco.data.SessionAssistant;
 import com.GREENWORKS.eco.data.SubPillar;
+import com.mysql.cj.Session;
 
 import org.tinylog.Logger;
 
@@ -58,13 +61,34 @@ public class EditLocationSave extends HttpServlet {
 		pin.setContent(request.getParameter("content"));
 		pin.setThumbnail(request.getParameter("thumbnail"));
 		pin.setLink(request.getParameter("link"));
+		// sessionAssistant.get(new SubPillar(Integer.parseInt(request.getParameter("subpillar"))));
+		Pillar pillar = new Pillar();
+        SubPillar subPillar = new SubPillar();
 
-		// Set subpillar
-		SubPillar subPillar = new SubPillar();
-		subPillar.setSubPillarId(Integer.parseInt(request.getParameter("subpillar")));
-
-		// Set sub pillar
-		pin.setSubPillar(subPillar);
+		try { 
+			// Set Pillar
+			pillar = new Pillar();
+			pillar.setPid(Integer.parseInt(request.getParameter("pillarId"))); // This needs to be implemented on the front-end
+			pillar.setName(request.getParameter("pillarName")); // This needs to be implemented on the front-end
+			// Set sub pillar
+			subPillar = new SubPillar();
+			subPillar.setName(request.getParameter("subPillarName")); // This needs to be implemented on the front-end
+			subPillar.setSubPillarId(Integer.parseInt(request.getParameter("subPillarId"))); // This needs to be implemented on the front-end
+			subPillar.setThumbnail(request.getParameter("subPillarThumbnail")); // This needs to be implemented on the front-end
+			subPillar.setPillar(pillar); // Set Pillar to Sub Pillar
+			pin.setSubPillar(subPillar); // Set Sub Pillar to Pin
+			Logger.info("SubPillar created: " + subPillar);
+		} catch(NumberFormatException nfe){
+			System.out.println("A number format exception occured. This is likely due to attempting to parse a null value to an integer.");
+			SessionAssistant sessionAssistant = new SessionAssistant();
+			subPillar = sessionAssistant.get(new SubPillar(Integer.parseInt(request.getParameter("subpillar"))));
+			pin.setSubPillar(subPillar);
+		} catch(Exception e){
+			System.out.println("An exception occured.");
+			SessionAssistant sessionAssistant = new SessionAssistant();
+			subPillar = sessionAssistant.get(new SubPillar(Integer.parseInt(request.getParameter("subpillar"))));
+			pin.setSubPillar(subPillar);
+		}
 
 		// Server side check
 		if(pin.getLocationName() == "") { return; }

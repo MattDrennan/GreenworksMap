@@ -1,18 +1,21 @@
 package com.GREENWORKS.eco.servlets;
 
-import java.io.*;
-
 import com.GREENWORKS.eco.data.DatabaseCleaner;
 import com.GREENWORKS.eco.data.OldEventPin;
 import com.GREENWORKS.eco.data.Pin;
 import com.GREENWORKS.eco.data.ProblemPin;
 import com.GREENWORKS.eco.data.SessionAssistant;
 
-import jakarta.servlet.*;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.util.List;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -30,8 +33,7 @@ public class CleanDatabase extends HttpServlet {
         super();
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-    {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { // This needs to be implemented on the front-end
         HttpSession session = request.getSession(); // Get session
         String username = (String) session.getAttribute("username"); // Verifies that an admin is logged in. 
         
@@ -55,8 +57,6 @@ public class CleanDatabase extends HttpServlet {
             dispatcher.forward(request, response);
         }
     }
-
-
 }
 
 
