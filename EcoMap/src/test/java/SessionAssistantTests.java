@@ -209,7 +209,7 @@ public class SessionAssistantTests {
     	try {
     		sessionAssistant.load(new GenericPin(9999999)); // This should throw an exception. 
     		fail(); // If this line is reached then the test fails. 
-    	} catch (ObjectNotFoundException onfe) {
+    	} catch (Exception e) {
     		// Test pass.
     	}
     }
@@ -223,7 +223,7 @@ public class SessionAssistantTests {
     	try {
     		sessionAssistant.load(new Admin(9999999)); // This should throw an exception. 
     		fail(); // If this line is reached then the test fails. 
-    	} catch (ObjectNotFoundException onfe) {
+    	} catch (Exception e) {
     		// Test pass.
     	}
     }
