@@ -20,9 +20,12 @@ public class SessionAssistant {
      * @return returns an opened Session. 
      */
     public static Session openSession() {
+        if(sessionFactory != null){
+            return sessionFactory.openSession();
+        }
     	sessionFactory = SessionFactoryUtility.getSessionFactory();
         Logger.info("Opening session.");
-    	return getSessionFactory().openSession();
+    	return sessionFactory.openSession();
     }
     
     /***
