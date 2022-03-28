@@ -62,13 +62,13 @@ public abstract class Pin {
 	protected Byte api;
 	
 	@JoinColumn(name="sub_pillar_id", nullable=true)
-	@ManyToOne(cascade = CascadeType.ALL) // MANY Pins can be associated with ONE SubPillar. 
+	@ManyToOne(cascade = CascadeType.ALL) // MANY Pins can be associated with ONE SubPillar.
 	protected SubPillar subPillar;
 	
 	/***
      * Zero parameter constructor. 
      */
-    public Pin() { 
+    public Pin() {
     	
     }
 
@@ -90,18 +90,21 @@ public abstract class Pin {
 	}
 
 	/***
-	 * Accessor method for the iconId instance variable. 
+	 * Accessor method for the iconId instance variable. This is deprecated. We will be migrating from iconId
+	 * to using pId. See: Pillar.java
 	 * @return Returns the contents of the instance variable. 
 	 */
+	@Deprecated
 	public Integer getIconId() {
 		return iconId;
 	}
 
 	/***
-	 * Mutator method for assigning to the iconId instance variable. Conducts
-	 * cleaning on the parameter. 
+	 * Mutator method for assigning to the iconId instance variable. This is deprecated. We will be migrating from iconId
+	 * to using pId. See: Pillar.java
 	 * @param iconId The value to be assigned. 
 	 */
+	@Deprecated
 	public void setIconId(Integer iconId) {
 		this.iconId = iconId;
 	}
