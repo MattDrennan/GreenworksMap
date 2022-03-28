@@ -21,6 +21,7 @@ public class SessionAssistant {
      */
     public static Session openSession() {
     	sessionFactory = SessionFactoryUtility.getSessionFactory();
+        Logger.info("Opening session.");
     	return getSessionFactory().openSession();
     }
     
@@ -29,6 +30,7 @@ public class SessionAssistant {
      * the cache. 
      */
     public void shutdownSessionFactory() {
+        Logger.info("Closing session.");
         getSessionFactory().close(); // Close caches and connection pools. 
     }
 	
@@ -38,6 +40,7 @@ public class SessionAssistant {
      * @return The instance variable that is a SessionFactory. 
      */
     public static SessionFactory getSessionFactory() {
+        Logger.info("Accessing the SessionFactory.");
         return sessionFactory;
     }
     
@@ -115,8 +118,8 @@ public class SessionAssistant {
     	Session session = openSession();
     	session.beginTransaction();
     	Pin data = session.find(pin.getClass(), pin.getId());
-    	Logger.info("Returned pin: " + data);
     	session.close();
+        Logger.info("Returned pin: " + data);
     	return data;
     }
    
@@ -130,8 +133,8 @@ public class SessionAssistant {
     	Session session = openSession();
     	session.beginTransaction();
     	Admin adminDb = session.find(Admin.class, admin.getId());
-    	Logger.info("Returned admin: " + adminDb);
     	session.close();
+        Logger.info("Returned admin: " + adminDb);
     	return adminDb;
     }
 
@@ -145,8 +148,8 @@ public class SessionAssistant {
     	Session session = openSession();
     	session.beginTransaction();
     	Pillar data = session.find(pillar.getClass(), pillar.getPid());
-    	Logger.info("Returned pillar: " + data);
     	session.close();
+        Logger.info("Returned pillar: " + data);
     	return data;
     }
 
@@ -191,8 +194,8 @@ public class SessionAssistant {
     	Session session = openSession();
     	session.beginTransaction();
     	GenericPin genericPin = session.load(GenericPin.class, pin.getId());
-    	Logger.info("Loaded pin: " + genericPin);
     	session.close();
+        Logger.info("Loaded pin: " + genericPin);
     	return genericPin;
     }
    
@@ -207,8 +210,8 @@ public class SessionAssistant {
     	Session session = openSession();
     	session.beginTransaction();
     	Admin adminDb = session.load(Admin.class, admin.getId());
-    	Logger.info("Loaded admin: " + adminDb);
     	session.close();
+        Logger.info("Loaded admin: " + adminDb);
     	return adminDb;
     }
 
@@ -220,6 +223,7 @@ public class SessionAssistant {
     	Session session = openSession();
     	List<Pin> pinList = session.createQuery("SELECT p FROM GenericPin p ORDER BY p.locationName", Pin.class).getResultList();
         session.close();
+        Logger.info("Retrieved List<Pin> result list.");
     	return pinList;
     }
 
@@ -231,6 +235,7 @@ public class SessionAssistant {
     	Session session = openSession();
     	List<Pillar> pillarList = session.createQuery("SELECT p FROM Pillar p ORDER BY p.pId", Pillar.class).getResultList();
         session.close();
+        Logger.info("Retrieved List<Pillar> result list.");
     	return pillarList;
     }
 
@@ -242,6 +247,7 @@ public class SessionAssistant {
     	Session session = openSession();
     	List<SubPillar> subPillarList = session.createQuery("SELECT p FROM SubPillar p ORDER BY p.spId", SubPillar.class).getResultList();
         session.close();
+        Logger.info("Retrieved List<SubPillar> result list.");
     	return subPillarList;
     }
    
