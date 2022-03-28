@@ -270,6 +270,17 @@ Data data = new Data();
                             </form>
                         </fieldset>
                     </p>
+                    <p id="clean_database_box">
+                        <fieldset>
+                            <legend>Clean Database</legend>
+
+                            <form action="cleandatabase" method="POST">
+                                <div class="button-container">
+                                    <input type="submit" name="cleanDatabase" value="Clean Database" /><p>This button will remove old events and redudant/problem entries from the database. Old events will be moved to the old_events table and redudant/problem entries will be moved to the problem_locations table.</p>
+                                </div>
+                            </form>
+                        </fieldset>
+                    </p>
                 <%
                 }
             }
