@@ -3,13 +3,11 @@ package com.GREENWORKS.eco.servlets;
 import java.io.*;
 
 import com.GREENWORKS.eco.constants.LoggerConstants;
-import com.GREENWORKS.eco.data.EventPin;
 import com.GREENWORKS.eco.data.Pillar;
 import com.GREENWORKS.eco.data.Pin;
 import com.GREENWORKS.eco.data.PinFactory;
 import com.GREENWORKS.eco.data.SessionAssistant;
 import com.GREENWORKS.eco.data.SubPillar;
-import com.mysql.cj.Session;
 
 import org.tinylog.Logger;
 
