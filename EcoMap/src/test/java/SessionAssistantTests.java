@@ -39,6 +39,9 @@ public class SessionAssistantTests {
     private static Integer problemPinTestId = 0;
     private static Integer adminTestId = 0;
     private static long locationDatabaseSize = 0;
+    private static Integer nullPinId = 0;
+    private static Integer testSubPillarId = -1; // This will not be reassigned at runtime. 
+    private static Integer testPillarId = -1; // This will not be reassigned at runtime. 
     
     /***
      * This will insert the test data sets into the database. It runs before all other tests in 
@@ -50,11 +53,11 @@ public class SessionAssistantTests {
 
         Pillar pillar = new Pillar();
         pillar.setName("TestPillar");
-        pillar.setPid(0);
+        pillar.setPid(testPillarId);
         
     	SubPillar subPillar = new SubPillar();
         subPillar.setName("TestSubPillar");
-        subPillar.setSubPillarId(0);
+        subPillar.setSubPillarId(testSubPillarId);
         subPillar.setPillar(pillar);
         
         sessionAssistant.insert(pillar); // save
@@ -67,7 +70,7 @@ public class SessionAssistantTests {
     	/* pin of type Pin object instantiation */
 	    PinFactory dataFactory = PinFactory.getFactory("2022-01-31 15:00:00", "2022-01-31 15:00:00");
 	    pin = dataFactory.createPinData(); // Create event
-	    pin.setIconId(4); // Because this is an event the IconId will be assigned to 9. 
+	    pin.setIconId(4); 
 	    pin.setStartDate("2022-01-31 15:00:00");
 	    pin.setEndDate("2022-01-31 15:00:00");
 	    pin.setStreet("Test");
@@ -87,11 +90,25 @@ public class SessionAssistantTests {
     	problemPin = new ProblemPin();
     	problemPin.copyPin(pin);
     	sessionAssistant.insert(problemPin); // problemPin inserted. 
+
+        Pin nullPin = new GenericPin();  
+    	sessionAssistant.insert(nullPin);
+        nullPinId = nullPin.getId();
     	
     	pinTestId = pin.getId();
     	adminTestId = admin.getId();
     	problemPinTestId = problemPin.getId();
     	locationDatabaseSize = sessionAssistant.getLocationsTableSize();
+    }
+
+    /***
+     * Verifies that a nullable SubPillar is supported by the currently design. 
+     */
+    @Test
+    public void sessionAssistant_shouldHaveNullSubPillarId() {
+    	SessionAssistant sessionAssistant = new SessionAssistant();
+    	Pin pin = sessionAssistant.get(new GenericPin(nullPinId)); 
+        assertEquals(null, pin.getSubPillar());
     }
     
     /***
@@ -274,9 +291,9 @@ public class SessionAssistantTests {
     @Test
     public void sessionAssistant_shouldEqualTestPillarName() {
     	SessionAssistant sessionAssistant = new SessionAssistant();
-    	Pillar pillar = sessionAssistant.get(new Pillar(0));
+    	Pillar pillar = sessionAssistant.get(new Pillar(testPillarId));
         assertEquals("TestPillar", pillar.getName());
-        assertEquals(0, pillar.getPid());
+        assertEquals(testPillarId, pillar.getPid());
     }
 
     /***
@@ -285,11 +302,11 @@ public class SessionAssistantTests {
     @Test
     public void sessionAssistant_shouldEqualTestSubPillarName() {
     	SessionAssistant sessionAssistant = new SessionAssistant();
-    	SubPillar subPillar = sessionAssistant.get(new SubPillar(0));
+    	SubPillar subPillar = sessionAssistant.get(new SubPillar(testSubPillarId));
         assertEquals("TestSubPillar", subPillar.getName());
-        assertEquals(0, subPillar.getSubPillarId());
+        assertEquals(testSubPillarId, subPillar.getSubPillarId());
         assertEquals("TestPillar", subPillar.getPillar().getName());
-        assertEquals(0, subPillar.getPillar().getPid());
+        assertEquals(testSubPillarId, subPillar.getPillar().getPid());
     }
 
     /***
@@ -300,7 +317,7 @@ public class SessionAssistantTests {
     	SessionAssistant sessionAssistant = new SessionAssistant();
     	Pin pin = sessionAssistant.get(new GenericPin(pinTestId));
         assertEquals("TestSubPillar", pin.getSubPillar().getName());
-        assertEquals(0, pin.getSubPillar().getSubPillarId());
+        assertEquals(testSubPillarId, pin.getSubPillar().getSubPillarId());
     }
 
     /***
@@ -311,7 +328,7 @@ public class SessionAssistantTests {
     	SessionAssistant sessionAssistant = new SessionAssistant();
     	Pin pin = sessionAssistant.get(new GenericPin(pinTestId));
         assertEquals("TestPillar", pin.getSubPillar().getPillar().getName());
-        assertEquals(0, pin.getSubPillar().getPillar().getPid());
+        assertEquals(testPillarId, pin.getSubPillar().getPillar().getPid());
     }
 
     /***
@@ -321,7 +338,7 @@ public class SessionAssistantTests {
     public void sessionAssistant_shouldEqualPilarId() {
     	SessionAssistant sessionAssistant = new SessionAssistant();
     	Pin pin = sessionAssistant.get(new GenericPin(pinTestId));
-        assertEquals(0, pin.getSubPillar().getPillar().getPid());
+        assertEquals(testPillarId, pin.getSubPillar().getPillar().getPid());
     }
     
     /***
@@ -331,7 +348,7 @@ public class SessionAssistantTests {
     public void sessionAssistant_shouldEqualSubPillarId() {
     	SessionAssistant sessionAssistant = new SessionAssistant();
     	Pin pin = sessionAssistant.get(new GenericPin(pinTestId));
-        assertEquals(0, pin.getSubPillar().getSubPillarId());
+        assertEquals(testSubPillarId, pin.getSubPillar().getSubPillarId());
     }
 
     /***
@@ -373,7 +390,7 @@ public class SessionAssistantTests {
     @Test
     public void data_shouldPillarIdShouldEqualZero() {
     	Data data = new Data();
-        assertEquals(0, data.getSubPillarList().get(0).getPillar().getPid());
+        assertEquals(testPillarId, data.getSubPillarList().get(0).getPillar().getPid());
         assertEquals("TestPillar", data.getSubPillarList().get(0).getPillar().getName());
     }
 
@@ -383,7 +400,7 @@ public class SessionAssistantTests {
     @Test
     public void data_shouldFindPillarIdInHashMap() {
     	Data data = new Data();
-        assertEquals(0, data.getPillarHashMap().get(data.getPillarList().get(0)).get(0).getPillar().getPid());
+        assertEquals(testPillarId, data.getPillarHashMap().get(data.getPillarList().get(0)).get(0).getPillar().getPid());
         assertEquals("TestPillar", data.getPillarHashMap().get(data.getPillarList().get(0)).get(0).getPillar().getName());
     }
 
@@ -396,9 +413,9 @@ public class SessionAssistantTests {
         Pillar pillar = data.getPillarList().get(0); // Get pillar at position 0.
         ArrayList<SubPillar> spList = data.getPillarHashMap().get(pillar); // Get SubPillar list that has the pillar as its key. 
         // Note: In production, it won't be necessary to instantiate additional objects, however, it helps with comprehension. 
-        assertEquals(0, spList.get(0).getPillar().getPid());
+        assertEquals(testPillarId, spList.get(0).getPillar().getPid());
         assertEquals("TestPillar", spList.get(0).getPillar().getName());
-        assertEquals(0, spList.get(0).getSubPillarId());
+        assertEquals(testSubPillarId, spList.get(0).getSubPillarId());
         assertEquals("TestSubPillar", spList.get(0).getName());
     }
     
@@ -425,11 +442,12 @@ public class SessionAssistantTests {
 
         sessionAssistant.delete(pin); // Delete Pin
     	sessionAssistant.delete(problemPin); // Delete ProblemPin
+        sessionAssistant.delete(new GenericPin(nullPinId));
 
         Pillar pillar = new Pillar();
-        pillar.setPid(0);
+        pillar.setPid(testPillarId);
     	SubPillar subPillar = new SubPillar();
-        subPillar.setSubPillarId(0);
+        subPillar.setSubPillarId(testSubPillarId);
         subPillar.setPillar(pillar);
 
         sessionAssistant.delete(subPillar);
