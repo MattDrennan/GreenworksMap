@@ -1,5 +1,5 @@
 INSERT INTO ecomap.pillars (`pillar_id`, `name`) VALUES
-(0,"Undefined"),
+# (0,"Undefined"),
 (1,"Clean Energy"),
 (2,"Clean Water"),
 (3,"Electric & Alt. Transportation"),
@@ -9,7 +9,7 @@ INSERT INTO ecomap.pillars (`pillar_id`, `name`) VALUES
 (7,"Zero Waste");
 
 INSERT INTO ecomap.subpillars (`pillar_id`, `sub_pillar_id`, `name`) VALUES
-(0,0,"Undefined"),
+# (0,0,"Undefined"),
 (1,11,"Solar Arrays"),
 (1,12,"Resilience Hubs"),
 (1,13,"Solar Tables of Connection"),
