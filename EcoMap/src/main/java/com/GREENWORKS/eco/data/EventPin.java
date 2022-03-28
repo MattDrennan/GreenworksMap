@@ -15,7 +15,20 @@ public class EventPin extends Pin {
 	 * Constructor for Event.  
 	 */
 	public EventPin() {
-	
+		
+	}
+
+	/***
+	 * Overridden mutator method for the content instance variable. This is so that the event date data is 
+	 * displayed within the content. This way a user can see the dates on the frontend. 
+	 * @param content The content of the event. 
+	 */
+	@Override
+	public void setContent(String content) {
+		this.content = content;
+		if(this.startDate != null && this.endDate != null) {
+			this.content = this.content + "<br>Event taking place from " + this.startDate + " to " + this.endDate + ".";
+		}
 	}
 	
 	/***
