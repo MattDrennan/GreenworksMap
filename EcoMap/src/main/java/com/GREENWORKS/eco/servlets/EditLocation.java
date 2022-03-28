@@ -47,14 +47,14 @@ public class EditLocation extends HttpServlet {
 		 * 			database itself. Therefore, performing a load operation should be safe here. 
 		 */
 		Pin pin = sessionAssistant.load(new GenericPin(location)); // Generates a populated pin loaded from the db. 
-		Logger.info("Pin generated: " + pin);        
+		Logger.info("Pin generated: " + pin);
 
 		if(deleteChoose != "" && deleteChoose != null) { // If something is in deleteChoose perform delete. 
             sessionAssistant.delete(pin);
             Logger.info("Pin deleted: " + pin);
         } else if(editChoose != "" && editChoose != null) { // Else if something is in editChoose perform edit.
         	request.setAttribute("id", pin.getId());
-            request.setAttribute("iconid", pin.getIconId());
+            request.setAttribute("iconid", pin.getIconId()); // Icon id is Pillar Id. 
             request.setAttribute("address", pin.getLocationAddress());
             request.setAttribute("name", pin.getLocationName());
             request.setAttribute("coord", pin.getCoordinates());
@@ -63,8 +63,12 @@ public class EditLocation extends HttpServlet {
             request.setAttribute("content", pin.getContent());
             request.setAttribute("thumbnail", pin.getThumbnail());
             request.setAttribute("link", pin.getLink());
-            request.setAttribute("subpillar", pin.getSubPillar().getSubPillarId());
-        }       
+            request.setAttribute("pillarId", pin.getSubPillar().getPillar().getPid()); // This needs to be implemented on the front-end
+            request.setAttribute("pillarName", pin.getSubPillar().getPillar().getName()); // This needs to be implemented on the front-end
+            request.setAttribute("subPillarId", pin.getSubPillar().getSubPillarId()); // This needs to be implemented on the front-end
+            request.setAttribute("subPillarName", pin.getSubPillar().getSubPillarId()); // This needs to be implemented on the front-end
+            request.setAttribute("subPillarThumbnail", pin.getSubPillar().getThumbnail()); // This needs to be implemented on the front-end
+        }
         RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp"); // Redirect. 
         dispatcher.forward(request, response);
     }
