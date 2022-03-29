@@ -60,7 +60,9 @@ public class DatabaseConstants {
         
         <!-- JDBC Connection Pool Settings -->
         <property name="connection.pool_size">10</property>
-        
+        <property name="maxIdle">2</property>
+		<property name="hibernate.enable_lazy_load_no_trans">true</property>
+		
         <!-- Select SQL Dialect -->
     	<property name="hibernate.dialect">org.hibernate.dialect.MySQL57Dialect</property>
         

@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import org.tinylog.Logger;
+
 /***
  * This class will remove redundant points from the locations table and put them in the problem_locations 
  * table. The class has the ability to determine which redundant points are good, so the good points will
@@ -19,6 +21,7 @@ public class DatabaseCleaner {
 	
 	private Set<Integer> zipSet = new HashSet<Integer>(); 
 	private ArrayList<Pin> pastDatePinList = new ArrayList<Pin>();
+	private ArrayList<Pin> notInOrlandoList = new ArrayList<Pin>();
 
 	/***
 	 * For now, this is how this tool will be run, however, it would be good to integrate it into the
@@ -26,30 +29,44 @@ public class DatabaseCleaner {
 	 * Edit: Created a Servlet for this called CleanDatabase.java. 
 	 */
 	public static void main(String[] args) {
-		SessionAssistant sessionAssistant = new SessionAssistant(); 
+		DatabaseCleaner databaseCleaner = new DatabaseCleaner();
+        databaseCleaner.runDatabaseCleaner();
+	}
+
+	public void runDatabaseCleaner() {
+		SessionAssistant sessionAssistant = new SessionAssistant();
 		List<Pin> pinList = sessionAssistant.getAllPinsList();
 		DatabaseCleaner databaseCleaner = new DatabaseCleaner();
-		HashMap<String, ArrayList<Pin>> addressPinMap = databaseCleaner.findRedundantAddress(pinList);
+		HashMap<String, ArrayList<Pin>> addressPinMap = databaseCleaner.findProblems(pinList);
 		ArrayList<OldEventPin> oldEvents = databaseCleaner.convertOldEvents();
-		// printPinData(pinList);
 		pinList.clear(); // Release memory.
 		ArrayList<Pin> deleteList = databaseCleaner.solveConflicts(addressPinMap);
 		ArrayList<ProblemPin> problemPinList = databaseCleaner.convertToProblemPinList(deleteList);
+		ArrayList<Pin> notInOrlandoDelete = databaseCleaner.getNotInOrlandoList();
+		ArrayList<ProblemPin> notInOrlandoSave = databaseCleaner.convertToProblemPinList(notInOrlandoDelete);
 		ArrayList<Pin> pastDatePinList = databaseCleaner.getPastDatePinList();
+		sessionAssistant.saveList(notInOrlandoSave);
+		sessionAssistant.deleteList(notInOrlandoDelete);
 		sessionAssistant.saveList(problemPinList);
 		sessionAssistant.deleteList(deleteList);
 		sessionAssistant.saveList(oldEvents);
 		sessionAssistant.deleteList(pastDatePinList);
-		
+		Logger.info("Number of non-Orlando addresses being removed: " + notInOrlandoDelete.size());
+		Logger.info("Number of redudant addresses being removed: " + deleteList.size());
+		Logger.info("Number of past events being removed: " + pastDatePinList.size());
+	}
+
+	public ArrayList<Pin> getNotInOrlandoList() {
+		return notInOrlandoList;
 	}
 
 	/***
 	 * This converts the ArrayList<Pin> to an ArrayList<OldEventPin>. 
-	 * @return Return the converted ArrayList. 
+	 * @return Return the converted ArrayList.
 	 */
 	public ArrayList<OldEventPin> convertOldEvents(){
 		ArrayList<OldEventPin> oldEventList = new ArrayList<OldEventPin>();
-		for(Pin pin : pastDatePinList){
+		for(Pin pin : pastDatePinList) {
 			OldEventPin oldEventPin = new OldEventPin();
 			oldEventPin.copyPin(pin);
 			oldEventList.add(oldEventPin);
@@ -97,6 +114,8 @@ public class DatabaseCleaner {
 			problemPin.copyPin(pin);
 			problemPinList.add(problemPin);
 		}
+
+
 		return problemPinList;
 	}
 
@@ -153,29 +172,34 @@ public class DatabaseCleaner {
 	 * day to an ArrayList that holds pins with old dates. 
 	 * @param pinList The List<Pin> that will be analyzed. 
 	 */
-	public HashMap<String, ArrayList<Pin>> findRedundantAddress(List<Pin> pinList) {
+	public HashMap<String, ArrayList<Pin>> findProblems(List<Pin> pinList) {
 		HashMap<String, ArrayList<Pin>> pinMap = new HashMap<String, ArrayList<Pin>>();
 		HashMap<String, ArrayList<Pin>> addressPinMap = new HashMap<String, ArrayList<Pin>>();
 		for(Pin pin : pinList) {
-			if(pin.getStartDate() != null && pin.getEndDate() != null) {
-				addOldEvent(pin);
-			}
-			String address = pin.getLocationAddress();
-			Integer zip = pin.getZip(address);
-			if(!zipSet.contains(zip)) { 
-				if(address.substring(address.length() - 5).trim().length() != 5) {
-					System.out.println("Zip code error: " + address);
-				} else
-					zipSet.add(zip);
-			}
-			if(pinMap.containsKey(address)) {
-				ArrayList<Pin> list = pinMap.get(address);
+			if(!pin.getTown().equals("Orlando")){
+				System.out.println("Town is not Orlando: " + pin.getTown());
+				notInOrlandoList.add(pin);
+			} else {
+				if(pin.getStartDate() != null && pin.getEndDate() != null) {
+					addOldEvent(pin);
+				}
+				String address = pin.getLocationAddress();
+				Integer zip = pin.getZip(address);
+				if(!zipSet.contains(zip)) { 
+					if(address.substring(address.length() - 5).trim().length() != 5) {
+						System.out.println("Zip code error: " + address);
+					} else
+						zipSet.add(zip);
+				}
+				if(pinMap.containsKey(address)) {
+					ArrayList<Pin> list = pinMap.get(address);
+					list.add(pin);
+					addressPinMap.put(address, list);
+				}
+				ArrayList<Pin> list = new ArrayList<Pin>();
 				list.add(pin);
-				addressPinMap.put(address, list);
+				pinMap.put(address, list);
 			}
-			ArrayList<Pin> list = new ArrayList<Pin>();
-			list.add(pin);
-			pinMap.put(address, list); 
 		}
 		return addressPinMap;
 	}
@@ -212,7 +236,7 @@ public class DatabaseCleaner {
 		for(String key : keySet) {
 			ArrayList<Pin> conflictedPins = addressPinMap.get(key);
 			Pin firstPin = conflictedPins.get(0);
-			for(int i = 1; i < conflictedPins.size(); i++) {
+			for(int i = 1; i < conflictedPins.size(); i++) { 
 				if(zipSet.contains(conflictedPins.get(i).getZip(conflictedPins.get(i).getContent()))) {
 					deleteList.add(conflictedPins.get(i));
 				} else if (firstPin.getContent().equals(conflictedPins.get(i).getContent())) {

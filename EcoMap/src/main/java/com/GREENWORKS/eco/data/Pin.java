@@ -61,8 +61,8 @@ public abstract class Pin {
 	@Column(name="api", unique = false, nullable = true)
 	protected Byte api;
 	
-	@JoinColumn(name="sub_pillar_id", nullable=true)
-	@ManyToOne(cascade = CascadeType.ALL) // MANY Pins can be associated with ONE SubPillar.
+	@JoinColumn(name="sub_pillar_id", nullable = true)
+	@ManyToOne() // MANY Pins can be associated with ONE SubPillar.
 	protected SubPillar subPillar;
 	
 	/***

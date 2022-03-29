@@ -1,11 +1,15 @@
 package com.GREENWORKS.eco.data;
 
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /*
@@ -55,6 +59,8 @@ public class SubPillar {
     @JoinColumn(name="pillar_id", nullable=true) 
     @ManyToOne(cascade = CascadeType.ALL) // MANY SubPillar may have ONE Pillar.
 	protected Pillar pillar;
+    @OneToMany(mappedBy="subPillar")
+    private Set<GenericPin> genericPinSet; 
 
     /***
      * Zero parameter constructor. 
