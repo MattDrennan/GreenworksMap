@@ -122,6 +122,8 @@ Data data = new Data();
         </script>
 
         <div id="mapView">
+            <img src="images/greenworks.png" class="logo" />
+
             <section>
                 <!-- Calendar Field -->
                 <input type="text" id="datepicker" style="position: absolute; bottom: 0; visibility: hidden;">
