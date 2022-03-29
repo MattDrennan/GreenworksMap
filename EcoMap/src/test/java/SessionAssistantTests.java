@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.LazyInitializationException;
 import org.hibernate.ObjectNotFoundException;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -209,9 +210,11 @@ public class SessionAssistantTests {
     	try {
     		sessionAssistant.load(new GenericPin(9999999)); // This should throw an exception. 
     		fail(); // If this line is reached then the test fails. 
-    	} catch (Exception e) {
+    	} catch (ObjectNotFoundException e) {
     		// Test pass.
-    	}
+    	} catch (LazyInitializationException e){
+            // Test pass.
+        }
     }
     
     /***
@@ -223,9 +226,11 @@ public class SessionAssistantTests {
     	try {
     		sessionAssistant.load(new Admin(9999999)); // This should throw an exception. 
     		fail(); // If this line is reached then the test fails. 
-    	} catch (Exception e) {
+    	} catch (ObjectNotFoundException e) {
     		// Test pass.
-    	}
+    	} catch (LazyInitializationException e){
+            // Test pass.
+        }
     }
     
     /***
