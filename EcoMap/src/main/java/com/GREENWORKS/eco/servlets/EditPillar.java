@@ -25,8 +25,7 @@ public class EditPillar extends HttpServlet {
         super();
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-    {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { // This needs to be implemented on the front-end
         HttpSession session = request.getSession(); // Get session
         String username = (String) session.getAttribute("username"); // Verifies that an admin is logged in. 
         
@@ -39,7 +38,7 @@ public class EditPillar extends HttpServlet {
             SessionAssistant sessionAssistant = new SessionAssistant();
             sessionAssistant.update(pillar);
         	Logger.info("Admin " + username + " edited SubPillar " + pillar + ".");
-            
+
             // Redirect user
             RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
             dispatcher.forward(request, response);

@@ -46,7 +46,7 @@ public class EditSubPillar extends HttpServlet {
             SessionAssistant sessionAssistant = new SessionAssistant();
             sessionAssistant.update(subPillar);
         	Logger.info("Admin " + username + " edited SubPillar " + subPillar + ".");
-
+            
             // Redirect user
             RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
             dispatcher.forward(request, response);
