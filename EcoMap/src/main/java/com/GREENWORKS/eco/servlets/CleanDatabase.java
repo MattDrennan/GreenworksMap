@@ -1,10 +1,6 @@
 package com.GREENWORKS.eco.servlets;
 
 import com.GREENWORKS.eco.data.DatabaseCleaner;
-import com.GREENWORKS.eco.data.OldEventPin;
-import com.GREENWORKS.eco.data.Pin;
-import com.GREENWORKS.eco.data.ProblemPin;
-import com.GREENWORKS.eco.data.SessionAssistant;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -14,10 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import java.util.List;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.tinylog.Logger;
 
@@ -36,21 +29,9 @@ public class CleanDatabase extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { // This needs to be implemented on the front-end
         HttpSession session = request.getSession(); // Get session
         String username = (String) session.getAttribute("username"); // Verifies that an admin is logged in. 
-        
         if(username != "" && username != null) { // Check if session active
-            SessionAssistant sessionAssistant = new SessionAssistant(); 
-            List<Pin> pinList = sessionAssistant.getAllPinsList();
             DatabaseCleaner databaseCleaner = new DatabaseCleaner();
-            HashMap<String, ArrayList<Pin>> addressPinMap = databaseCleaner.findRedundantAddress(pinList);
-            ArrayList<OldEventPin> oldEvents = databaseCleaner.convertOldEvents();
-            pinList.clear(); // Release memory.
-            ArrayList<Pin> deleteList = databaseCleaner.solveConflicts(addressPinMap);
-            ArrayList<ProblemPin> problemPinList = databaseCleaner.convertToProblemPinList(deleteList);
-            ArrayList<Pin> pastDatePinList = databaseCleaner.getPastDatePinList();
-            sessionAssistant.saveList(problemPinList);
-            sessionAssistant.deleteList(deleteList);
-            sessionAssistant.saveList(oldEvents);
-            sessionAssistant.deleteList(pastDatePinList);
+            databaseCleaner.runDatabaseCleaner();
         	Logger.info("Admin " + username + " performed a database clean.");
             // Redirect user
             RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
