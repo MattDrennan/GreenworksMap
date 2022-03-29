@@ -24,7 +24,7 @@ public class SessionAssistant {
             return sessionFactory.openSession();
         }
     	sessionFactory = SessionFactoryUtility.getSessionFactory();
-        Logger.info("Opening session.");
+        Logger.info("A new SessionAssistant has acquiring the SessionFactory.");
     	return sessionFactory.openSession();
     }
     
