@@ -234,7 +234,7 @@ Data data = new Data();
                     <span class="options" id="filterTransportation" value="3" title="Transportation">
                         <img src="icons/transportation.png" width="64px" height="64px" />
                     </span>
-                    <span class="options" id="filterBuildings" value="4" title="Buildings">
+                    <span class="options" id="filterBuildings" value="4" title="Green Buildings">
                         <img src="icons/buildings.png" width="64px" height="64px" />
                     </span>
                     <span class="options" id="filterLivability" value="5" title="Livability">

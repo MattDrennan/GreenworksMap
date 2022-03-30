@@ -324,12 +324,23 @@ $(document).ready(function()
     });
 
     // Removes subpillars where pillar does not match
-    function subpillar_load_list()
+    function subpillar_load_list(changed)
     {
-        var pillarid = $("[name=icon]").val();
+        // Get the action
+        if(changed == "add")
+        {
+            var pillarid = $("div[name=addicon] select[name=icon]").val();
+            var goto = "div[name=addsub] ";
+        }
+        else
+        {
+            var pillarid = $("div[name=editicon] select[name=icon]").val();
+            var goto = "div[name=editsub] ";
+        }
 
-        $("[name=subpillar] option").each(function(index) {
-            if($(this).val() != pillarid)
+        // Loop through options and hide / show based on action
+        $(goto + "select[name=subpillar] option").each(function(index) {
+            if($(this).attr("pillar") != pillarid && $(this).attr("pillar") != "NULL")
             {
                 $(this).hide();
             }
@@ -338,6 +349,12 @@ $(document).ready(function()
                 $(this).show();
             }
         });
+
+        // If edit, and changed, set None to selected
+        if(changed == "edit")
+        {
+            $(goto + "select[name=subpillar]").val(0);
+        }
     }
 
     // Load on page load
@@ -346,7 +363,7 @@ $(document).ready(function()
     // Admin - Change Pillar - Limit Results
     $("[name=icon]").on("change", function()
     {
-        subpillar_load_list();
+        subpillar_load_list($(this).attr("action"));
     });
 
 
