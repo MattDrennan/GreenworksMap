@@ -18,6 +18,9 @@ Data data = new Data();
         <!-- JavaScript -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+        <!-- Pop up CSS -->
+        <script src="https://cdn.jsdelivr.net/qtip2/3.0.3/basic/jquery.qtip.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/qtip2/3.0.3/basic/jquery.qtip.min.css" />
         <!-- Form Validation -->
         <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
         <!-- Time Addon -->
@@ -46,6 +49,31 @@ Data data = new Data();
     </head>
 
     <body>
+        <script>
+        // Set up subpillars
+        var subpillars = [];
+        <%
+        // Set up count
+        int j = 0;
+
+        // Loop through array
+        for (SubPillar subPillar : data.getSubPillarList())
+        {
+        %>
+
+        subpillars[<%=j%>] = {
+            id: <%=subPillar.getSubPillarId()%>,
+            name: "<%=subPillar.getName()%>",
+            pillar: <%=subPillar.getPillar().getPid()%>
+        };
+
+
+        <%
+            j++;
+        }
+        %>
+        </script>
+
         <section>
             <%
             if((String)session.getAttribute("username") != "" && (String)session.getAttribute("username") != null)
@@ -103,9 +131,10 @@ Data data = new Data();
                         </span>
 
                         <div class="input-container">
-                            Icon:
+                            Pillar:
                             <br />
                             <select name="icon">
+                                <option value="0" SELECTED>Please select a pillar...</option>
                                 <option value="6">Food</option>
                                 <option value="5">Livability</option>
                                 <option value="7">Waste</option>
@@ -120,7 +149,7 @@ Data data = new Data();
                             Subpillar:
                             <br />
                             <select name="subpillar">
-                                <option value="0" SELECTED>None</option>
+                                <option value="0" pillar="NULL" SELECTED>None</option>
 
                                 <%
                                 // Loop through array
@@ -128,7 +157,7 @@ Data data = new Data();
                                 {
                                 %>
 
-                                <option value="<%=subPillar.getSubPillarId()%>"><%=subPillar.getName()%></option>
+                                <option value="<%=subPillar.getSubPillarId()%>" pillar="<%=subPillar.getPillar().getPid()%>"><%=subPillar.getName()%></option>
 
                                 <%
                                 }
@@ -193,7 +222,7 @@ Data data = new Data();
                                 </span>
 
                                 <div class="input-container">
-                                    Icon:
+                                    Pillar:
                                     <br />
                                     <select name="icon">
                                         <option value="6" ${iconid == 6 || iconid == 10 ? 'selected' : ''}>Food</option>

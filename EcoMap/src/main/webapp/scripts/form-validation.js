@@ -10,7 +10,7 @@ $(function() {
             },
             icon: {
                 required: true,
-                range: [0, 7]
+                range: [1, 7]
             },
             dateStart: {
                 required: $("[name=event]").val() == 1
@@ -23,7 +23,7 @@ $(function() {
             locationName: "Please enter a location name.",
             location: "Please enter a location address.",
             event: "Please confirm if this is an event.",
-            icon: "Please choose an icon.",
+            icon: "Please choose a pillar.",
             dateStart: "Please choose a start date for the event.",
             dateEnd: "Please choose a end date for the event."
         },

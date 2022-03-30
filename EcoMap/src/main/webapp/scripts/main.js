@@ -322,4 +322,32 @@ $(document).ready(function()
             $("#filter").show();
         }
     });
+
+    // Removes subpillars where pillar does not match
+    function subpillar_load_list()
+    {
+        var pillarid = $("[name=icon]").val();
+
+        $("[name=subpillar] option").each(function(index) {
+            if($(this).val() != pillarid)
+            {
+                $(this).hide();
+            }
+            else
+            {
+                $(this).show();
+            }
+        });
+    }
+
+    // Load on page load
+    subpillar_load_list();
+
+    // Admin - Change Pillar - Limit Results
+    $("[name=icon]").on("change", function()
+    {
+        subpillar_load_list();
+    });
+
+
 });
