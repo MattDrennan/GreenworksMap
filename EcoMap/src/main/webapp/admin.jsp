@@ -18,6 +18,9 @@ Data data = new Data();
         <!-- JavaScript -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+        <!-- Pop up CSS -->
+        <script src="https://cdn.jsdelivr.net/qtip2/3.0.3/basic/jquery.qtip.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/qtip2/3.0.3/basic/jquery.qtip.min.css" />
         <!-- Form Validation -->
         <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
         <!-- Time Addon -->
@@ -46,6 +49,31 @@ Data data = new Data();
     </head>
 
     <body>
+        <script>
+        // Set up subpillars
+        var subpillars = [];
+        <%
+        // Set up count
+        int j = 0;
+
+        // Loop through array
+        for (SubPillar subPillar : data.getSubPillarList())
+        {
+        %>
+
+        subpillars[<%=j%>] = {
+            id: <%=subPillar.getSubPillarId()%>,
+            name: "<%=subPillar.getName()%>",
+            pillar: <%=subPillar.getPillar().getPid()%>
+        };
+
+
+        <%
+            j++;
+        }
+        %>
+        </script>
+
         <section>
             <%
             if((String)session.getAttribute("username") != "" && (String)session.getAttribute("username") != null)
@@ -102,10 +130,11 @@ Data data = new Data();
                             </div>
                         </span>
 
-                        <div class="input-container">
-                            Icon:
+                        <div class="input-container" name="addicon">
+                            Pillar:
                             <br />
-                            <select name="icon">
+                            <select name="icon" action="add">
+                                <option value="0" SELECTED>Please select a pillar...</option>
                                 <option value="6">Food</option>
                                 <option value="5">Livability</option>
                                 <option value="7">Waste</option>
@@ -116,11 +145,11 @@ Data data = new Data();
                             </select>
                         </div>
 
-                        <div class="input-container">
+                        <div class="input-container" name="addsub">
                             Subpillar:
                             <br />
                             <select name="subpillar">
-                                <option value="0" SELECTED>None</option>
+                                <option value="0" pillar="NULL" SELECTED>None</option>
 
                                 <%
                                 // Loop through array
@@ -128,7 +157,7 @@ Data data = new Data();
                                 {
                                 %>
 
-                                <option value="<%=subPillar.getSubPillarId()%>"><%=subPillar.getName()%></option>
+                                <option value="<%=subPillar.getSubPillarId()%>" pillar="<%=subPillar.getPillar().getPid()%>"><%=subPillar.getName()%></option>
 
                                 <%
                                 }
@@ -192,25 +221,25 @@ Data data = new Data();
                                     </div>
                                 </span>
 
-                                <div class="input-container">
-                                    Icon:
+                                <div class="input-container" name="editicon">
+                                    Pillar:
                                     <br />
-                                    <select name="icon">
-                                        <option value="6" ${iconid == 6 || iconid == 10 ? 'selected' : ''}>Food</option>
-                                        <option value="5" ${iconid == 5 || iconid == 11 ? 'selected' : ''}>Livability</option>
-                                        <option value="7" ${iconid == 7 || iconid == 12 ? 'selected' : ''}>Waste</option>
-                                        <option value="2" ${iconid == 2 || iconid == 8 ? 'selected' : ''}>Water</option>
-                                        <option value="1" ${iconid == 1 || iconid == 9 ? 'selected' : ''}>Energy</option>
-                                        <option value="4" ${iconid == 4 || iconid == 9 ? 'selected' : ''}>Buildings</option>
-                                        <option value="3" ${iconid == 3 || iconid == 13 ? 'selected' : ''}>Transportation</option>
+                                    <select name="icon" action="edit">
+                                        <option value="6" ${pillarId == 6 || pillarId == 10 ? 'selected' : ''}>Food</option>
+                                        <option value="5" ${pillarId == 5 || pillarId == 11 ? 'selected' : ''}>Livability</option>
+                                        <option value="7" ${pillarId == 7 || pillarId == 12 ? 'selected' : ''}>Waste</option>
+                                        <option value="2" ${pillarId == 2 || pillarId == 8 ? 'selected' : ''}>Water</option>
+                                        <option value="1" ${pillarId == 1 || pillarId == 9 ? 'selected' : ''}>Energy</option>
+                                        <option value="4" ${pillarId == 4 || pillarId == 9 ? 'selected' : ''}>Buildings</option>
+                                        <option value="3" ${pillarId == 3 || pillarId == 13 ? 'selected' : ''}>Transportation</option>
                                     </select>
                                 </div>
 
-                                <div class="input-container">
+                                <div class="input-container" name="editsub">
                                     Subpillar:
                                     <br />
                                     <select name="subpillar">
-                                        <option value="0" SELECTED>None</option>
+                                        <option value="0" pillar="NULL" ${subpillar == "NULL" ? 'selected' : ''}>None</option>
         
                                         <%
                                         // Loop through array
@@ -218,8 +247,8 @@ Data data = new Data();
                                         {
                                         %>
         
-                                        <option value="<%=subPillar.getSubPillarId()%>" ${request.getAttribute("subpillar") == subPillar.getSubPillarId() ? 'selected' : ''}><%=subPillar.getName()%></option>
-                                        
+                                        <option value="<%=subPillar.getSubPillarId()%>" pillar="<%=subPillar.getPillar().getPid()%>" <% if(request.getAttribute("subPillarId") == subPillar.getSubPillarId()) { %> SELECTED <% } %>><%=subPillar.getName()%></option>
+        
                                         <%
                                         }
                                         %>

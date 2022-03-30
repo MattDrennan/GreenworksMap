@@ -168,7 +168,7 @@ body {
   }
 
  /* Desktop */
- @media only screen and (min-width: 768px) {
+ @media only screen and (min-width: 816px) {
     .logo {
         position: absolute;
         top: 5px;
@@ -209,7 +209,7 @@ body {
  }
 
  /* Mobile */
- @media only screen and (min-width: 0px) and (max-width: 767.9px) {
+ @media only screen and (min-width: 0px) and (max-width: 815.9px) {
     .logo {
         position: absolute;
         top: 10px;

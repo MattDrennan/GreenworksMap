@@ -1,5 +1,17 @@
 $(document).ready(function()
 {
+    // qTip
+    $('[title!=""]').qtip({
+        position: {
+            my: 'bottom center',
+            at: 'top center',
+            adjust : {
+                x: 0,
+                y: -55
+            }
+        }
+    });
+
     // If window is resized
     $(window).resize(function()
     {
@@ -310,4 +322,49 @@ $(document).ready(function()
             $("#filter").show();
         }
     });
+
+    // Removes subpillars where pillar does not match
+    function subpillar_load_list(changed)
+    {
+        // Get the action
+        if(changed == "add")
+        {
+            var pillarid = $("div[name=addicon] select[name=icon]").val();
+            var goto = "div[name=addsub] ";
+        }
+        else
+        {
+            var pillarid = $("div[name=editicon] select[name=icon]").val();
+            var goto = "div[name=editsub] ";
+        }
+
+        // Loop through options and hide / show based on action
+        $(goto + "select[name=subpillar] option").each(function(index) {
+            if($(this).attr("pillar") != pillarid && $(this).attr("pillar") != "NULL")
+            {
+                $(this).hide();
+            }
+            else
+            {
+                $(this).show();
+            }
+        });
+
+        // If edit, and changed, set None to selected
+        if(changed == "edit")
+        {
+            $(goto + "select[name=subpillar]").val(0);
+        }
+    }
+
+    // Load on page load
+    subpillar_load_list();
+
+    // Admin - Change Pillar - Limit Results
+    $("[name=icon]").on("change", function()
+    {
+        subpillar_load_list($(this).attr("action"));
+    });
+
+
 });
