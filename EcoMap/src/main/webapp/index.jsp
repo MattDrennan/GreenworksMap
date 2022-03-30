@@ -17,8 +17,11 @@ Data data = new Data();
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+        <!-- Pop up CSS -->
+        <script src="https://cdn.jsdelivr.net/qtip2/3.0.3/basic/jquery.qtip.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/qtip2/3.0.3/basic/jquery.qtip.min.css" />
         <!-- ARCGIS -->
-        <link rel="stylesheet" href="https://js.arcgis.com/4.22/esri/themes/light/main.css">
+        <link rel="stylesheet" href="https://js.arcgis.com/4.22/esri/themes/light/main.css" />
         <script src="https://js.arcgis.com/4.22/"></script>
         <script src="scripts/esri_api.js"></script>
         <!-- CRED FILE -->
@@ -222,25 +225,25 @@ Data data = new Data();
 
             <div id="filterDesktop">
                 <span class="pillars">
-                    <span class="options" id="filterEnergy" value="1">
+                    <span class="options" id="filterEnergy" value="1" title="Energy">
                         <img src="icons/energy.png" width="64px" height="64px" />
                     </span>
-                    <span class="options" id="filterWater" value="2">
+                    <span class="options" id="filterWater" value="2" title="Water">
                         <img src="icons/water.png" width="64px" height="64px" />
                     </span>
-                    <span class="options" id="filterTransportation" value="3">
+                    <span class="options" id="filterTransportation" value="3" title="Transportation">
                         <img src="icons/transportation.png" width="64px" height="64px" />
                     </span>
-                    <span class="options" id="filterBuildings" value="4">
+                    <span class="options" id="filterBuildings" value="4" title="Buildings">
                         <img src="icons/buildings.png" width="64px" height="64px" />
                     </span>
-                    <span class="options" id="filterLivability" value="5">
+                    <span class="options" id="filterLivability" value="5" title="Livability">
                         <img src="icons/livability.png" width="64px" height="64px" />
                     </span>
-                    <span class="options" id="filterFood" value="6">
+                    <span class="options" id="filterFood" value="6" title="Food">
                         <img src="icons/food.png" width="64px" height="64px" />
                     </span>
-                    <span class="options" id="filterWaste" value="7">
+                    <span class="options" id="filterWaste" value="7" title="Waste">
                         <img src="icons/waste.png" width="64px" height="64px" />
                     </span>
                 </span>

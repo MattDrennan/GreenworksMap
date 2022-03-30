@@ -1,5 +1,17 @@
 $(document).ready(function()
 {
+    // qTip
+    $('[title!=""]').qtip({
+        position: {
+            my: 'bottom center',
+            at: 'top center',
+            adjust : {
+                x: 0,
+                y: -55
+            }
+        }
+    });
+
     // If window is resized
     $(window).resize(function()
     {
