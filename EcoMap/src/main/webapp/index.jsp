@@ -70,17 +70,16 @@ Data data = new Data();
                     $(this).val(d);
                     $(this).change();
                     c.inline = true;
+                    
+                    // Loop through all options to reset options
+                    $(".options").each(function()
+                    {
+                        $(this).find("img").addClass("grayscale");
+                    });
                 },
                 onClose: function(d, c)
                 {
-                    // Loop through all markers on map
-                    for(i = 0; i <= globalMarkers.length - 1; i++)
-                    {
-                        c.inline = false;
-                        
-                        // Show
-                        globalMarkers[i].visible = true;
-                    }
+                    c.inline = false;
                 },
                 dateFormat: "yy-mm-dd",
             });
@@ -213,7 +212,7 @@ Data data = new Data();
                         {
                         %>
 
-                        <input type="checkbox" name="subPillarOption" value="<%=subPillar.getSubPillarId()%>" CHECKED /> <%=subPillar.getName()%>
+                        <input type="checkbox" name="subPillarOption" value="<%=subPillar.getSubPillarId()%>" pillar="<%=subPillar.getPillar().getPid()%>" CHECKED /> <% if(subPillar.getThumbnail() == null) { %> <%=subPillar.getName()%> <% } else { %> <img src="icons/<%=subPillar.getThumbnail()%>" /> <% } %>
                         <br />
 
                         <%

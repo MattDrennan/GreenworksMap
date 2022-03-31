@@ -225,13 +225,13 @@ Data data = new Data();
                                     Pillar:
                                     <br />
                                     <select name="icon" action="edit">
-                                        <option value="6" ${pillarId == 6 || pillarId == 10 ? 'selected' : ''}>Food</option>
-                                        <option value="5" ${pillarId == 5 || pillarId == 11 ? 'selected' : ''}>Livability</option>
-                                        <option value="7" ${pillarId == 7 || pillarId == 12 ? 'selected' : ''}>Waste</option>
-                                        <option value="2" ${pillarId == 2 || pillarId == 8 ? 'selected' : ''}>Water</option>
-                                        <option value="1" ${pillarId == 1 || pillarId == 9 ? 'selected' : ''}>Energy</option>
-                                        <option value="4" ${pillarId == 4 || pillarId == 9 ? 'selected' : ''}>Buildings</option>
-                                        <option value="3" ${pillarId == 3 || pillarId == 13 ? 'selected' : ''}>Transportation</option>
+                                        <option value="6" ${pillarId == 6 ? 'selected' : ''}>Food</option>
+                                        <option value="5" ${pillarId == 5 ? 'selected' : ''}>Livability</option>
+                                        <option value="7" ${pillarId == 7 ? 'selected' : ''}>Waste</option>
+                                        <option value="2" ${pillarId == 2 ? 'selected' : ''}>Water</option>
+                                        <option value="1" ${pillarId == 1 ? 'selected' : ''}>Energy</option>
+                                        <option value="4" ${pillarId == 4 ? 'selected' : ''}>Buildings</option>
+                                        <option value="3" ${pillarId == 3 ? 'selected' : ''}>Transportation</option>
                                     </select>
                                 </div>
 
