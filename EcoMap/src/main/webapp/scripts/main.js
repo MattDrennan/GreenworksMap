@@ -25,7 +25,7 @@ $(document).ready(function()
     // Filter - Options Pressed
     $(".options").on("click", function(event)
     {
-        $(this).find("img").toggleClass("grayscale");
+        $("[value=" + $(this).attr("value") + "] img").toggleClass("grayscale");
 
         // Loop through all markers on map
         for(i = 0; i <= globalMarkers.length - 1; i++)
@@ -192,7 +192,7 @@ $(document).ready(function()
 
             // If the option value matches the marker type
             // Allow other locations to stay on map
-            if($(this).val() == globalMarkers[i].attr.dateStart.split(" ")[0] || globalMarkers[i].attr.dateStart == "null")
+            if($(this).val() == globalMarkers[i].attr.dateStart.split(" ")[0])
             {
                 // Don't hide
                 shouldHide = false;

@@ -70,17 +70,16 @@ Data data = new Data();
                     $(this).val(d);
                     $(this).change();
                     c.inline = true;
+                    
+                    // Loop through all options to reset options
+                    $(".options").each(function()
+                    {
+                        $(this).find("img").addClass("grayscale");
+                    });
                 },
                 onClose: function(d, c)
                 {
-                    // Loop through all markers on map
-                    for(i = 0; i <= globalMarkers.length - 1; i++)
-                    {
-                        c.inline = false;
-                        
-                        // Show
-                        globalMarkers[i].visible = true;
-                    }
+                    c.inline = false;
                 },
                 dateFormat: "yy-mm-dd",
             });
