@@ -241,7 +241,7 @@ public abstract class Pin {
 	 */		
 	public String getThumbnailHTML() {
 		// Make sure it has a value
-		if(thumbnail != "" && thumbnail != "null" && thumbnail != null)
+		if(thumbnail.trim() != "" && thumbnail.trim() != "null" && thumbnail.trim() != null)
 		{
 			if(thumbnail.contains("<img src")){
 				return thumbnail;
