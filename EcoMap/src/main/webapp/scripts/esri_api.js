@@ -82,7 +82,15 @@ var Markers = {
 };
 //creates an enum of formatted custom markers 
 
-function iconSelect(pillar) {
+/**
+ * Get's the pillar ID with date data, to determine which icon to use
+ * 
+ * @param int pillar 
+ * @param string dateStart 
+ * @param string dateEnd 
+ * @returns object
+ */
+function iconSelect(pillar, dateStart, dateEnd) {
     // Set up value
     var value = 1;
 
@@ -90,47 +98,42 @@ function iconSelect(pillar) {
     switch (pillar) {
         case "1":
             value = Markers.ENERGY;
+            // Change to event icon if event
+            if(dateStart != "null" && dateEnd != "null") { value = Markers.CLEANEVENT; }
             break;
         case "2":
             value = Markers.WATER;
+            // Change to event icon if event
+            if(dateStart != "null" && dateEnd != "null") { value = Markers.FOODEVENT; }
             break;
         case "3":
             value = Markers.TRANSPORTATION;
+            // Change to event icon if event
+            if(dateStart != "null" && dateEnd != "null") { value = Markers.TRANSPORTATIONEVENT; }
             break;
         case "4":
             value = Markers.BUILDINGS;
+            // Change to event icon if event
+            if(dateStart != "null" && dateEnd != "null") { value = Markers.GREENEVENT; }
             break;
         case "5":
             value = Markers.LIVABILITY;
+            // Change to event icon if event
+            if(dateStart != "null" && dateEnd != "null") { value = Markers.LIVEVENT; }
             break;
         case "6":
             value = Markers.FOOD;
+            // Change to event icon if event
+            if(dateStart != "null" && dateEnd != "null") { value = Markers.FOODEVENT; }
             break;
         case "7":
             value = Markers.WASTE;
-            break;
-        case "8":
-            value = Markers.CLEANEVENT;
-            break;
-        case "9":
-            value = Markers.GREENEVENT;
-            break;
-        case "10":
-            value = Markers.FOODEVENT;
-            break;
-        case "11":
-            value = Markers.LIVEVENT;
-            break;
-        case "12":
-            value = Markers.WASTEEVENT;
-            break;
-        case "13":
-            value = Markers.TRANSPORTATIONEVENT;
+            // Change to event icon if event
+            if(dateStart != "null" && dateEnd != "null") { value = Markers.WASTEEVENT; }
             break;
     }
     return value;
 }
-//selects the icons based on the corresponding pillar
 
 require([
     "esri/config",
@@ -235,7 +238,7 @@ require([
             //TODO add a distinguising method for each of the points and corresponding marker
             graphic = new Graphic({
                 geometry: point,
-                symbol: iconSelect(point['dbType']),
+                symbol: iconSelect(point['dbType'], point['dateStart'], point['dateEnd']),
                 attr: point
             });
             //add a popupTemplate property for the display content
