@@ -25,7 +25,25 @@ $(document).ready(function()
     // Filter - Options Pressed
     $(".options").on("click", function(event)
     {
+        // Set this option as a global
+        var option = $(this);
+        
+        // Toggle both desktop and mobile, otherwise causes issues
         $("[value=" + $(this).attr("value") + "] img").toggleClass("grayscale");
+
+        // Loop through all options
+        $("[name=subPillarOption][pillar=" + $(this).attr("value") + "]").each(function()
+        {
+            // If option is checked
+            if(option.find("img").hasClass("grayscale"))
+            {
+                $(this).prop("checked", false);
+            }
+            else
+            {
+                $(this).prop("checked", true);
+            }
+        });
 
         // Loop through all markers on map
         for(i = 0; i <= globalMarkers.length - 1; i++)
@@ -38,7 +56,7 @@ $(document).ready(function()
             {
                 // If option is checked
                 if($(this).find("img").hasClass("grayscale"))
-                {
+                {   
                     // If the option value matches the marker type
                     if($(this).attr("value") == globalMarkers[i].attr.dbType)
                     {
