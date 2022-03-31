@@ -80,9 +80,39 @@ $(document).ready(function()
         }
     });
 
-    // Filter - Options Pressed
+    // Advanced Options - Options Pressed
     $("[name=subPillarOption]").on("click", function(event)
     {
+        // Set up if should change pillar color if all options are off or on
+        var on = 0;
+        var off = 0;
+
+        // Loop through all options
+        $("[name=subPillarOption][pillar=" + $(this).attr("pillar") + "]").each(function()
+        {
+            // Check checked status and count
+            if($(this).is(":checked"))
+            {
+                on++;
+            }
+            else
+            {
+                off++;
+            }
+        });
+
+        // If check if all on or off based on length
+        if($("[name=subPillarOption][pillar=" + $(this).attr("pillar") + "]").length == on)
+        {
+            // Color
+            $("[value=" + $(this).attr("pillar") + "] img").removeClass("grayscale");
+        }
+        else if($("[name=subPillarOption][pillar=" + $(this).attr("pillar") + "]").length == off)
+        {
+            // Gray
+            $("[value=" + $(this).attr("pillar") + "] img").addClass("grayscale");
+        }
+
         // Loop through all markers on map
         for(i = 0; i <= globalMarkers.length - 1; i++)
         {
