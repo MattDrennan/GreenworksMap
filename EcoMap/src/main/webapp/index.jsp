@@ -212,7 +212,7 @@ Data data = new Data();
                         {
                         %>
 
-                        <input type="checkbox" name="subPillarOption" value="<%=subPillar.getSubPillarId()%>" pillar="<%=subPillar.getPillar().getPid()%>" CHECKED /> <%=subPillar.getName()%>
+                        <input type="checkbox" name="subPillarOption" value="<%=subPillar.getSubPillarId()%>" pillar="<%=subPillar.getPillar().getPid()%>" CHECKED /> <% if(subPillar.getThumbnail() == null) { %> <%=subPillar.getName()%> <% } else { %> <img src="icons/<%=subPillar.getThumbnail()%>" /> <% } %>
                         <br />
 
                         <%
