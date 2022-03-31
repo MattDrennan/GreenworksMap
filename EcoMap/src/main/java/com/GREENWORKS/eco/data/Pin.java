@@ -241,7 +241,7 @@ public abstract class Pin {
 	 */		
 	public String getThumbnailHTML() {
 		// Make sure it has a value
-		if(thumbnail.trim() != "" && thumbnail.trim() != "null" && thumbnail.trim() != null)
+		if(thumbnail != "" && thumbnail != "null" && thumbnail != null && thumbnail.trim().length() > 0)
 		{
 			if(thumbnail.contains("<img src")){
 				return thumbnail;
@@ -270,7 +270,7 @@ public abstract class Pin {
 	 */		
 	public String getLinkHTML() {
 		// Make sure it has a value
-		if(link != "" && link != "null" && link != null)
+		if(link != "" && link != "null" && link != null && link.trim().length() > 0)
 		{
 			if(link.contains("http://")) {
 				return "<br /><br /><a href='" + link + "' target='_blank'>[View Website]</a>";
