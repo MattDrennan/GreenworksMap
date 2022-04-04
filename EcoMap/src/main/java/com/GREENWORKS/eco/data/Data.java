@@ -22,6 +22,7 @@ public class Data {
      */
     public Data() {
         SessionAssistant sessionAssistant = new SessionAssistant();
+        sessionAssistant.checkSessionFactoryTime();
         subPillarList = sessionAssistant.getAllSubPillars();
         pillarList = sessionAssistant.getAllPillars();
         pinList = sessionAssistant.getAllPinsList();

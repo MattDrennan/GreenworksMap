@@ -1,7 +1,11 @@
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -19,11 +23,37 @@ import com.GREENWORKS.eco.data.PinFactory;
  */
 public class DataPackageTests {
 
+     /***
+     * Verifies that the program can detect a valid number of processors of the host system. 
+     */
+    @Test
+	public void checkNumberofProcessors() {
+        Runtime runtime = Runtime.getRuntime();
+        int numberOfProcessors = runtime.availableProcessors();
+        assertTrue(numberOfProcessors > 0);
+	}
+
+    /***
+     * Verifying that parsing the dates, as they exist in the database does not throw an exception. 
+     */
+    @Test
+	public void dateParse_test() {
+        try {
+            String date = "2022-04-07 03:00:00";
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDate test = LocalDate.parse(date, formatter);
+        } catch (Exception e) {
+            fail();
+        }
+	}
+
     /***
      * The static method .getFactory() should not throw an exception if called.
      */
 	@Test
 	public void createPinData_getFactoryShouldNotThrowException() {
+
+        
         assertDoesNotThrow(() -> PinFactory.getFactory(null, null));
 	}
 

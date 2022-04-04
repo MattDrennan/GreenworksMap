@@ -5,6 +5,8 @@ import java.util.Set;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -54,6 +56,28 @@ public class DatabaseCleaner {
 		Logger.info("Number of non-Orlando addresses being removed: " + notInOrlandoDelete.size());
 		Logger.info("Number of redudant addresses being removed: " + deleteList.size());
 		Logger.info("Number of past events being removed: " + pastDatePinList.size());
+	}
+
+	/***
+	 * 
+	 * @param now
+	 */
+	public void removeOldEvents(LocalDate now) {
+		SessionAssistant sessionAssistant = new SessionAssistant();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		List<Pin> pinList = sessionAssistant.getAllPinsList();
+		for(Pin pin : pinList) {
+			if(pin.getStartDate() != null) { // Most pins are not events (at least in our database) so this is an efficiency check. 
+				LocalDate pinStartDate = LocalDate.parse(pin.getStartDate(), formatter);
+				if(pinStartDate.compareTo(now) <= 0) {
+					Logger.info("OldEvent has been found: " + pin);
+					pastDatePinList.add(pin);
+				}
+			}
+		}
+		ArrayList<OldEventPin> oldEvents = convertOldEvents();
+		sessionAssistant.saveList(oldEvents);
+		sessionAssistant.deleteList(pastDatePinList);
 	}
 
 	public ArrayList<Pin> getNotInOrlandoList() {

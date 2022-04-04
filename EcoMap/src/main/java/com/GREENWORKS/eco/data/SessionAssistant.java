@@ -13,6 +13,16 @@ import org.tinylog.Logger;
 public class SessionAssistant { 
 	
     private static SessionFactory sessionFactory;
+
+    public void checkSessionFactoryTime() {
+        if(!SessionFactoryUtility.getEventsResolved()) {
+            Logger.info("Single-threaded OldEvent cleaning is taking place...");
+            DatabaseCleaner databaseCleaner = new DatabaseCleaner();
+            databaseCleaner.removeOldEvents(SessionFactoryUtility.getDate());
+            SessionFactoryUtility.setEventsResolved(true);
+            Logger.info("Single-threaded OldEvent cleaning has finished.");
+        }
+    }
     
     /***
      * In order to instantiate the SessionFactory thi method must be called. The SessionFactory will refer to the private method
