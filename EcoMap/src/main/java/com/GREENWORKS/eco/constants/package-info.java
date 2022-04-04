@@ -7,4 +7,4 @@
  * deleting data in the database.
  */
 
-package com.GREENWORKS.eco.servlets;
+package com.GREENWORKS.eco.constants;

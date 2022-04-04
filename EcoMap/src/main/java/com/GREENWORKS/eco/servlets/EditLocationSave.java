@@ -40,7 +40,7 @@ public class EditLocationSave extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
     {
-		Logger.info("Edit-save location request recieved from: " + request.getRemoteAddr());
+		Logger.info("Edit-save location request received from: " + request.getRemoteAddr());
 
         String startDate = request.getParameter("dateStartEdit");
 		String endDate = request.getParameter("dateEndEdit");

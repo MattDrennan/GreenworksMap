@@ -22,10 +22,15 @@ import org.tinylog.Logger;
 @WebServlet("/cleandatabase")
 public class CleanDatabase extends HttpServlet {
     
+    /***
+	 * Constructor that makes a call to super. This is neccessary for HttpServlet. 
+	 */
     public CleanDatabase() {
         super();
     }
-
+      /***
+     * This is where the execution of the database cleaner takes place. 
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { // This needs to be implemented on the front-end
         HttpSession session = request.getSession(); // Get session
         String username = (String) session.getAttribute("username"); // Verifies that an admin is logged in. 
