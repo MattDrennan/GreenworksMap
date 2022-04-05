@@ -14,6 +14,10 @@ import com.GREENWORKS.eco.data.Pin;
 import com.GREENWORKS.eco.data.SessionAssistant;
 import com.google.gson.Gson;
 
+/*** This class handles all the NREL API calls to request data related to fuel stations.
+ *  It converts the data into a Json string and calls a session to save the new locations in the database.
+ * 
+ */
 public class NREL {
         // The agent we are identifying as when we send a request
         private static final String USER_AGENT = "Mozilla/5.0";
@@ -21,6 +25,9 @@ public class NREL {
         // Where we will get data from the API
         private static final String GET_URL = "https://developer.nrel.gov/api/alt-fuel-stations/v1.json?fuel_type=ELEC&state=FL&zip=32789,32801,32803,32804,32805,32806,32807,32808,32809,32810,32811,32812,32814,32819,32822,32824,32827,32829,32832,32835,32839&ev_network=Greenlots&limit=100&api_key=" + Cred.NRELAPIKEY;
     
+       /***
+        *  This is where the data request and conversion happens.
+        */
         public static void main(String args[]) {
         // Include MYSQL
         MysqlConnect mysqlConnect = new MysqlConnect();
@@ -48,7 +55,7 @@ public class NREL {
             
             try
             {
-                /*
+                /***
                 *** Explanation ***
                 The code below connects to the URL and gets the data from the page,
                 and puts it in a string. 

@@ -13,6 +13,10 @@ import com.GREENWORKS.eco.data.Pin;
 import com.GREENWORKS.eco.data.SessionAssistant;
 import com.google.gson.Gson;
 
+/*** This class handles all the OpenCharge API calls to request data related to fuel stations.
+ *  It converts the data into a Json string and calls a session to save the new locations in the database.
+ * 
+ */
 public class OpenCharge {
 
     // The agent we are identifying as when we send a request
@@ -21,6 +25,9 @@ public class OpenCharge {
     // Where we will get data from the API
     private static final String GET_URL = "https://api.openchargemap.io/v3/poi?key=" + Cred.OPENCHARGEKEY + "&latitude=28.5384&longitude=-81.3789&distance=25";
 
+    /***
+     *  This is where the data request and conversion happens.
+     */
     public static void main(String args[]) {
 
         // Include MYSQL
