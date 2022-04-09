@@ -29,7 +29,7 @@ public class SessionFactoryUtility {
         
         // The server we are testing on is single virtual, but if this software is deployed to a server with more resources this multi-threading block can be used. 
         if(date != LocalDate.now() || firstRun == true) { // This block should only run once per day. This will run when the first user of the day connects. 
-            if(numberOfProcessors > 30) {
+            if(numberOfProcessors > 1) {
                 OldEventCleanerThread oect = new OldEventCleanerThread(date);
                 Thread thread = new Thread(oect);
                 thread.start();
