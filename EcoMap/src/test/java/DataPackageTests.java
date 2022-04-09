@@ -3,18 +3,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import org.junit.jupiter.api.Test;
 
 import com.GREENWORKS.eco.data.GenericPin;
+import com.GREENWORKS.eco.data.Pillar;
 import com.GREENWORKS.eco.data.Pin;
 import com.GREENWORKS.eco.data.PinFactory;
+import com.GREENWORKS.eco.data.SubPillar;
 
 /***
  * These are the unit tests for the data package. The classes that will be tested are
@@ -465,6 +466,97 @@ public class DataPackageTests {
         pin.setCoordinates(test);
         assertEquals("81.38656929999999", pin.getLongitude());
         assertEquals("28.5485126", pin.getLatitude());
+    }
+
+    /***
+     * Verifies that upon Pillar instantiation by a default constructor results in null instance variables. 
+     */
+    @Test
+    public void pillar_shouldBeNull() {
+        Pillar pillar = new Pillar();
+        assertEquals(null, pillar.getPid());
+        assertEquals(null, pillar.getName());
+    }
+
+    /***
+     * Verifies that the single parameter constructor is assigning the proper value to the pId instance variable. 
+     */
+    @Test
+    public void pillar_singleParamConstructor_shouldBeEqual() {
+        Pillar pillar = new Pillar(5);
+        assertEquals(5, pillar.getPid());
+    }
+
+    /***
+     * Verifies that the mutator and accessor methods for the pId instance variable are functioning as intended. 
+     */
+    @Test
+    public void pillar_setGetId_shouldBeEqual() {
+        Pillar pillar = new Pillar();
+        pillar.setPid(5);
+        assertEquals(5, pillar.getPid());
+    }
+
+    /***
+     * Verfieis that the the accessors and mutators for the name instance variable are functioning as intended. 
+     */
+    @Test
+    public void pillar_setGetName_shouldBeEqual() {
+        Pillar pillar = new Pillar();
+        pillar.setName("Clean Water");;
+        assertEquals("Clean Water", pillar.getName());
+    }
+
+    /***
+     * Verifies that instantiation of a SubPillar through the default constructor results in null instance variables. 
+     */
+    @Test
+    public void subpillar_shouldBeNull() {
+        SubPillar subPillar = new SubPillar();
+        assertEquals(null, subPillar.getSubPillarId());
+        assertEquals(null, subPillar.getName());
+        assertEquals(null, subPillar.getThumbnail());
+        assertEquals(null, subPillar.getPillar());
+    }
+
+    /***
+     * Verifies that the accessor and mutator for the SubPillars spId instance variable are being assigned and accessed correctly. 
+     */
+    @Test
+    public void subpillar_setGetspId_shouldBeEqual(){
+        SubPillar subPillar = new SubPillar();
+        subPillar.setSubPillarId(5);
+        assertEquals(5, subPillar.getSubPillarId());
+    }
+
+    /***
+     * Verifies that the accessor and mutator for the name instance variable are functioning as intended. 
+     */
+    @Test
+    public void subpillar_setGetName_shouldBeEqual(){
+        SubPillar subPillar = new SubPillar();
+        subPillar.setName("Hazardous Waste Facility");
+        assertEquals("Hazardous Waste Facility", subPillar.getName());
+    }
+
+    /***
+     * Verifies that the accessor and mutator for the thumbnail instance variable are functioning as intended. 
+     */
+    @Test
+    public void subpillar_setGetThumbnail_shouldBeEqual(){
+        SubPillar subPillar = new SubPillar();
+        subPillar.setThumbnail("thumbnail.com/test/test.png");
+        assertEquals("thumbnail.com/test/test.png", subPillar.getThumbnail());
+    }
+
+    /***
+     * Verifies that accessor and mutator for the Pillar instance variable of the SubPillar class are functioning as intended. 
+     */
+    @Test
+    public void subpillar_setGetPillar_shouldBeEqual(){
+        SubPillar subPillar = new SubPillar();
+        subPillar.setPillar(new Pillar(5));
+        assertEquals(5, subPillar.getPillar().getPid());
     }
 
 }
