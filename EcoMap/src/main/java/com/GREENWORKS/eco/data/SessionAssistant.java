@@ -1,5 +1,6 @@
 package com.GREENWORKS.eco.data;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class SessionAssistant {
         if(!SessionFactoryUtility.getEventsResolved()) {
             Logger.info("Single-threaded OldEvent cleaning is taking place...");
             DatabaseCleaner databaseCleaner = new DatabaseCleaner();
-            databaseCleaner.removeOldEvents(SessionFactoryUtility.getDate());
+            databaseCleaner.removeOldEvents(LocalDate.now());
             SessionFactoryUtility.setEventsResolved(true);
             Logger.info("Single-threaded OldEvent cleaning has finished.");
         }

@@ -11,7 +11,7 @@ public class OldEventCleanerThread implements Runnable {
 
     @Override
     public void run() {
-
+        
         Logger.info("OldEventCleanerThread is starting.");
         /*
         * This thread will sleep for 30 seconds. The reason for this is because the SessionFactoryUtility needs time to configure. 30 seconds should be a generous 

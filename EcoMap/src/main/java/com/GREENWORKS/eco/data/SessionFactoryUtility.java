@@ -16,7 +16,7 @@ public class SessionFactoryUtility {
 
     private static SessionFactory sessionFactory;
     private static Boolean firstRun = true; // This is 
-    private static LocalDate date = LocalDate.now();
+    private static LocalDate date = null;
     private static Boolean eventsResolved = false;
     private static Runtime runtime = Runtime.getRuntime();
     private static int numberOfProcessors = runtime.availableProcessors();

@@ -2,6 +2,9 @@ package com.GREENWORKS.eco.data;
 
 import java.util.HashMap;
 import java.util.List;
+
+import org.tinylog.Logger;
+
 import java.util.ArrayList;
 
 /***
@@ -26,8 +29,9 @@ public class Data {
         subPillarList = sessionAssistant.getAllSubPillars();
         pillarList = sessionAssistant.getAllPillars();
         pinList = sessionAssistant.getAllPinsList();
-        pillarHashMap = new HashMap<>(); 
+        pillarHashMap = new HashMap<>();
         createHashMap();
+        Logger.info("SessionFactoryUtility date : " + SessionFactoryUtility.getDate());
     }
 
     /***
