@@ -59,7 +59,7 @@ public class DatabaseCleaner {
 	}
 
 	/***
-	 * 
+	 * Method for removing old events. 
 	 * @param now
 	 */
 	public void removeOldEvents(LocalDate now) {
