@@ -11,16 +11,23 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
+import com.GREENWORKS.eco.data.EventPin;
 import com.GREENWORKS.eco.data.GenericPin;
+import com.GREENWORKS.eco.data.LocationPin;
+import com.GREENWORKS.eco.data.OldEventPin;
 import com.GREENWORKS.eco.data.Pillar;
 import com.GREENWORKS.eco.data.Pin;
 import com.GREENWORKS.eco.data.PinFactory;
+import com.GREENWORKS.eco.data.ProblemPin;
 import com.GREENWORKS.eco.data.SubPillar;
 
 /***
  * These are the unit tests for the data package. The classes that will be tested are
- * Pin.java, PinFactory.java, GenericPin.java, LocationPin.java, GenericPin.java, and 
- * Admin.java. If any of these tests fail then the application will not function properly. 
+ * Pin.java, PinFactory.java, GenericPin.java, LocationPin.java, GenericPin.java, 
+ * ProblemPin.java, OldEventPin.java, Admin.java, Pillar.java, SubPilar.java. If any 
+ * of these tests fail then the application will not function properly. 
+ * 
+ * TODO: Unit tests for EventPin
  */
 public class DataPackageTests {
 
@@ -523,7 +530,7 @@ public class DataPackageTests {
      * Verifies that the accessor and mutator for the SubPillars spId instance variable are being assigned and accessed correctly. 
      */
     @Test
-    public void subpillar_setGetspId_shouldBeEqual(){
+    public void subpillar_setGetspId_shouldBeEqual() {
         SubPillar subPillar = new SubPillar();
         subPillar.setSubPillarId(5);
         assertEquals(5, subPillar.getSubPillarId());
@@ -533,7 +540,7 @@ public class DataPackageTests {
      * Verifies that the accessor and mutator for the name instance variable are functioning as intended. 
      */
     @Test
-    public void subpillar_setGetName_shouldBeEqual(){
+    public void subpillar_setGetName_shouldBeEqual() {
         SubPillar subPillar = new SubPillar();
         subPillar.setName("Hazardous Waste Facility");
         assertEquals("Hazardous Waste Facility", subPillar.getName());
@@ -543,7 +550,7 @@ public class DataPackageTests {
      * Verifies that the accessor and mutator for the thumbnail instance variable are functioning as intended. 
      */
     @Test
-    public void subpillar_setGetThumbnail_shouldBeEqual(){
+    public void subpillar_setGetThumbnail_shouldBeEqual() {
         SubPillar subPillar = new SubPillar();
         subPillar.setThumbnail("thumbnail.com/test/test.png");
         assertEquals("thumbnail.com/test/test.png", subPillar.getThumbnail());
@@ -553,10 +560,135 @@ public class DataPackageTests {
      * Verifies that accessor and mutator for the Pillar instance variable of the SubPillar class are functioning as intended. 
      */
     @Test
-    public void subpillar_setGetPillar_shouldBeEqual(){
+    public void subpillar_setGetPillar_shouldBeEqual() {
         SubPillar subPillar = new SubPillar();
         subPillar.setPillar(new Pillar(5));
         assertEquals(5, subPillar.getPillar().getPid());
+    }
+
+    /***
+     * Verifies that the copy method is functioning properly for a GenericPin to a ProblemPin. 
+     */
+    @Test
+    public void copyGenericPinToProblemPin_shouldEqual() {
+        Pin pin = new GenericPin();
+        pin.setContent("Test content");
+        pin.setId(701);
+        pin.setLatitude("80");
+        pin.setLongitude("80");
+        Pin problemPin = new ProblemPin();
+        problemPin.copyPin(pin);
+        assertEquals("Test content", problemPin.getContent());
+        assertEquals(701, problemPin.getId());
+        assertEquals("80", problemPin.getLatitude());
+        assertEquals("80", problemPin.getLongitude());
+    }
+
+    /***
+     * Verifies that the copy method is functioning properly for an EventPin to an OldEventPin.
+     */
+    @Test
+    public void copyGenericPinToEventPin_shouldEqual() {
+        Pin pin = new EventPin();
+        pin.setContent("Test content");
+        pin.setId(701);
+        pin.setLatitude("80");
+        pin.setLongitude("80");
+        Pin oldEventPin = new OldEventPin();
+        oldEventPin.copyPin(pin);
+        assertEquals("Test content", oldEventPin.getContent());
+        assertEquals(701, oldEventPin.getId());
+        assertEquals("80", oldEventPin.getLatitude());
+        assertEquals("80", oldEventPin.getLongitude());
+    }
+
+    /***
+     * Verifies that the single parameter constructor for the ProblemPin class is functioning correctly. 
+     */
+    @Test
+    public void problemPin_zeroParamConstructor_shouldEqual() {
+        ProblemPin problemPin = new ProblemPin(5);
+        assertEquals(5, problemPin.getId());
+    }
+
+    /***
+     * Verifies that the accessor and mutator for the EventPin are assinging the StartDate correctly. 
+     */
+    @Test
+    public void eventPin_setGetStartDate_shouldEqual() {
+        Pin eventPin = new EventPin();
+        eventPin.setStartDate("2020-04-22");
+        assertEquals("2020-04-22", eventPin.getStartDate());
+    }
+
+    /***
+     * Verifies that the accessor and mutator for the EventPin are assinging the endDate correctly. 
+     */
+    @Test
+    public void eventPin_setGetEndDate_shouldEqual() {
+        Pin eventPin = new EventPin();
+        eventPin.setEndDate("2020-04-22");
+        assertEquals("2020-04-22", eventPin.getEndDate());
+    }
+
+    /***
+     * Verifies that the EventPin is having the content modified if the endDate and StartDate instance
+     * variables are not null. This is used in the front-end to display the event dates to users. 
+     */
+    @Test
+    public void eventPin_setGetContent_shouldModifyAndEqual() {
+        Pin eventPin = new EventPin();
+        eventPin.setStartDate("2020-04-22");
+        eventPin.setEndDate("2020-04-22");
+        eventPin.setContent("This is the content.");
+        assertEquals("This is the content.<br>Event taking place from 2020-04-22 to 2020-04-22.", eventPin.getContent());
+    }
+
+    /***
+     * Verifies that assigning the content more than once will overwrite the entire content string, not 
+     * just the beginning of the content string. 
+     */
+    @Test
+    public void eventPin_setGetContentTwice_shouldModifyAndEqual() {
+        Pin eventPin = new EventPin();
+        eventPin.setStartDate("2020-04-22");
+        eventPin.setEndDate("2020-04-22");
+        eventPin.setContent("This is the content.");
+        eventPin.setContent("Now this is the content.");
+        assertEquals("Now this is the content.<br>Event taking place from 2020-04-22 to 2020-04-22.", eventPin.getContent());
+    }
+
+    /***
+     * Verifies that the EventPin will not modify the content string if the startDate and endDate instance variables
+     * are null. 
+     */
+    @Test
+    public void eventPin_setGetContent_shouldEqual() {
+        Pin eventPin = new EventPin();
+        eventPin.setContent("This is the content.");
+        assertEquals("This is the content.", eventPin.getContent());
+    }
+
+    /***
+     * Verifies that the accessor and mutator for the LocationPin are overridden and that 
+     * they prevent date assignment of a non-EventPin data object. 
+     */
+    @Test
+    public void locationPin_setGetEndDate_shouldBeNull() {
+        Pin locationPin = new LocationPin();
+        locationPin.setEndDate("2020-04-22");
+        assertEquals(null, locationPin.getEndDate());
+    }
+
+    /***
+     * Verifies that the accessor and mutator for the LocationPin are overridden and that 
+     * they prevent date assignment of a non-EventPin data object. 
+     */
+    @Test
+    public void locationPin_setGetStartDate_shouldBeNull() {
+        Pin locationPin = new LocationPin();
+        locationPin.setStartDate("2020-04-22");
+        assertEquals(null, locationPin.getStartDate());
     }
 
 }
