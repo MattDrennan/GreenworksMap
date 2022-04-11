@@ -16,13 +16,17 @@ public class SessionAssistant {
     private static SessionFactory sessionFactory;
 
     public void checkSessionFactoryTime() {
-        if(!SessionFactoryUtility.getEventsResolved()) {
+        if(!SessionFactoryUtility.getEventsResolved() && !SessionFactoryUtility.isTestRun()) {
             Logger.info("Single-threaded OldEvent cleaning is taking place...");
             DatabaseCleaner databaseCleaner = new DatabaseCleaner();
             databaseCleaner.removeOldEvents(LocalDate.now());
             SessionFactoryUtility.setEventsResolved(true);
             Logger.info("Single-threaded OldEvent cleaning has finished.");
         }
+    }
+
+    public void setTestRun() {
+        SessionFactoryUtility.setTestRun(true);
     }
     
     /***

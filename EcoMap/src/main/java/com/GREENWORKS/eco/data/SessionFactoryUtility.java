@@ -19,6 +19,7 @@ public class SessionFactoryUtility {
     private static Boolean eventsResolved = false;
     private static Runtime runtime = Runtime.getRuntime();
     private static int numberOfProcessors = runtime.availableProcessors();
+    private static boolean testRun = false;
 
     /***
      * This method returns the configured builder for the SessionFactory. 
@@ -26,19 +27,8 @@ public class SessionFactoryUtility {
      */
     public static SessionFactory getSessionFactory() {
         
-        // The server we are testing on is single virtual, but if this software is deployed to a server with more resources this multi-threading block can be used. 
-        if(!date.equals(LocalDate.now())) { // This block should only run once per day. This should run when the first user of the day connects. 
-            if(numberOfProcessors > 1) {
-                OldEventCleanerThread oect = new OldEventCleanerThread(date);
-                Thread thread = new Thread(oect);
-                thread.start();
-                date = LocalDate.now();
-                eventsResolved = true;
-            } else { // If the else block is reached it means this will be handled in a singled-threaded manner later.
-                Logger.info("Host system does not have enough available cores. OldEvent pins will be handled through a single-threaded solution.");
-                date = LocalDate.now(); 
-                eventsResolved = false;
-            }
+        if(!testRun) {
+            cleanOldEvents();
         }
 
         if(sessionFactory == null) {
@@ -61,6 +51,23 @@ public class SessionFactoryUtility {
             }
         } else {
             return sessionFactory;
+        }
+    }
+
+    public static void cleanOldEvents() {
+        // The server we are testing on is single virtual, but if this software is deployed to a server with more resources this multi-threading block can be used. 
+        if(!date.equals(LocalDate.now())) { // This block should only run once per day. This should run when the first user of the day connects. 
+            if(numberOfProcessors > 1) {
+                OldEventCleanerThread oect = new OldEventCleanerThread(date);
+                Thread thread = new Thread(oect);
+                thread.start();
+                date = LocalDate.now();
+                eventsResolved = true;
+            } else { // If the else block is reached it means this will be handled in a singled-threaded manner later.
+                Logger.info("Host system does not have enough available cores. OldEvent pins will be handled through a single-threaded solution.");
+                date = LocalDate.now(); 
+                eventsResolved = false;
+            }
         }
     }
 
@@ -87,5 +94,15 @@ public class SessionFactoryUtility {
     public static void setNumberOfProcessors(int numberOfProcessors) {
         SessionFactoryUtility.numberOfProcessors = numberOfProcessors;
     }
+
+    public static boolean isTestRun() {
+        return testRun;
+    }
+
+    public static void setTestRun(boolean testRun) {
+        SessionFactoryUtility.testRun = testRun;
+    }
+
+    
     
 }
