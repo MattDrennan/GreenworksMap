@@ -26,7 +26,7 @@ public class EventPin extends Pin {
 	@Override
 	public void setContent(String content) {
 		this.content = content;
-		if(this.startDate != null && this.endDate != null) {
+		if(this.startDate != null && this.endDate != null && !this.content.contains(this.startDate) && !this.content.contains(this.endDate)) {
 			this.content = this.content + "<br>Event taking place from " + this.startDate + " to " + this.endDate + ".";
 		}
 	}

@@ -2,7 +2,6 @@ package com.GREENWORKS.eco.data;
 
 import java.util.ArrayList;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
