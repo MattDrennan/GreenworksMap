@@ -42,16 +42,16 @@ public class SessionAssistantTests {
     private static long locationDatabaseSize = 0;
     private static Integer nullPinId = 0;
     private static Integer testSubPillarId = -1; // This will not be reassigned at runtime. 
-    private static Integer testPillarId = -1; // This will not be reassigned at runtime. 
-    
+    private static Integer testPillarId = -1; // This will not be reassigned at runtime.
+    private static SessionAssistant sessionAssistant = new SessionAssistant();
+    private static String testDate = "2020-01-31 15:00:00";
     /***
      * This will insert the test data sets into the database. It runs before all other tests in 
      * this class will run. 
      */
     @BeforeAll
     public static void insertTestData() {
-    	SessionAssistant sessionAssistant = new SessionAssistant();
-
+        sessionAssistant.setTestRun();
         Pillar pillar = new Pillar();
         pillar.setName("TestPillar");
         pillar.setPid(testPillarId);
@@ -69,11 +69,11 @@ public class SessionAssistantTests {
     	ProblemPin problemPin = null;
 
     	/* pin of type Pin object instantiation */
-	    PinFactory dataFactory = PinFactory.getFactory("2022-01-31 15:00:00", "2022-01-31 15:00:00");
+	    PinFactory dataFactory = PinFactory.getFactory(testDate, testDate);
 	    pin = dataFactory.createPinData(); // Create event
 	    pin.setIconId(4); 
-	    pin.setStartDate("2022-01-31 15:00:00");
-	    pin.setEndDate("2022-01-31 15:00:00");
+	    pin.setStartDate(testDate);
+	    pin.setEndDate(testDate);
 	    pin.setStreet("Test");
 	    pin.setLocationName("Test");
 	    pin.setCoordinates("35,45");
@@ -107,7 +107,6 @@ public class SessionAssistantTests {
      */
     @Test
     public void sessionAssistant_shouldHaveNullSubPillarId() {
-    	SessionAssistant sessionAssistant = new SessionAssistant();
     	Pin pin = sessionAssistant.get(new GenericPin(nullPinId)); 
         assertEquals(null, pin.getSubPillar());
     }
@@ -117,7 +116,6 @@ public class SessionAssistantTests {
      */
     @Test
     public void sessionAssistant_pinShouldBeNull() {
-    	SessionAssistant sessionAssistant = new SessionAssistant();
     	Pin pin = sessionAssistant.get(new GenericPin(999999999)); // This data point should not exist. 
     	assertNull(pin);
     }
@@ -129,7 +127,6 @@ public class SessionAssistantTests {
      */
     @Test
     public void sessionAssistant_shouldEqualAdminEntries() {
-    	SessionAssistant sessionAssistant = new SessionAssistant();
     	Admin admin = sessionAssistant.get(new Admin(adminTestId));
     	assertEquals("Testusername9102", admin.getUsername());
     	assertEquals("Testpassword9120", admin.getPassword());
@@ -142,10 +139,9 @@ public class SessionAssistantTests {
      */
     @Test
     public void sessionAssistant_pinDatesShouldEqualTestDates() {
-    	SessionAssistant sessionAssistant = new SessionAssistant();
     	Pin pin = sessionAssistant.get(new GenericPin(pinTestId));
-    	assertEquals("2022-01-31 15:00:00", pin.getStartDate());
-    	assertEquals("2022-01-31 15:00:00", pin.getEndDate());
+    	assertEquals(testDate, pin.getStartDate());
+    	assertEquals(testDate, pin.getEndDate());
     }
     
     /***
@@ -155,7 +151,6 @@ public class SessionAssistantTests {
      */
     @Test
     public void sessionAssistant_pinDataShouldUpdateAndBeEmpty() {
-    	SessionAssistant sessionAssistant = new SessionAssistant();
     	Pin pin = sessionAssistant.get(new GenericPin(pinTestId));
     	pin.setContent("");
     	sessionAssistant.update(pin);
@@ -170,10 +165,9 @@ public class SessionAssistantTests {
      */
     @Test
     public void sessionAssistant_pinShouldLoadPin() {
-    	SessionAssistant sessionAssistant = new SessionAssistant();
     	Pin pin = sessionAssistant.load(new GenericPin(pinTestId));
     	assertEquals("Test, null, null null", pin.getLocationAddress());
-    	assertEquals("2022-01-31 15:00:00", pin.getEndDate()); 
+    	assertEquals(testDate, pin.getEndDate()); 
     }
     
     /***
@@ -182,7 +176,6 @@ public class SessionAssistantTests {
      */
     @Test
     public void sessionAssistant_shouldReturnAdminBasedOnLoginCreds() {
-    	SessionAssistant sessionAssistant = new SessionAssistant();
     	Admin admin = sessionAssistant.getByLoginCredentials("Testusername9102", "Testpassword9120");
     	assertEquals("Testusername9102", admin.getUsername());
     	assertEquals("Testpassword9120", admin.getPassword());
@@ -194,7 +187,6 @@ public class SessionAssistantTests {
      */
     @Test
     public void sessionAssistant_shouldLoadAdmin() {
-    	SessionAssistant sessionAssistant = new SessionAssistant();
     	Admin admin = sessionAssistant.load(new Admin(adminTestId));
     	assertEquals("Testusername9102", admin.getUsername());
     	assertEquals("Testpassword9120", admin.getPassword());
@@ -206,7 +198,6 @@ public class SessionAssistantTests {
      */
     @Test
     public void sessionAssistant_loadNonexistentPinShouldThrowException() {
-    	SessionAssistant sessionAssistant = new SessionAssistant();
     	try {
     		sessionAssistant.load(new GenericPin(9999999)); // This should throw an exception. 
     		fail(); // If this line is reached then the test fails. 
@@ -222,7 +213,6 @@ public class SessionAssistantTests {
      */
     @Test
     public void sessionAssistant_loadNonexistentAdminShouldThrowException() {
-    	SessionAssistant sessionAssistant = new SessionAssistant();
     	try {
     		sessionAssistant.load(new Admin(9999999)); // This should throw an exception. 
     		fail(); // If this line is reached then the test fails. 
@@ -238,7 +228,6 @@ public class SessionAssistantTests {
      */
     @Test
     public void sessionAssistant_shouldBeNull() {
-    	SessionAssistant sessionAssistant = new SessionAssistant(); 
     	Admin admin = sessionAssistant.getByLoginCredentials("notinthedatabase29123", "notinthedatabase29123");
     	assertNull(admin);
     }
@@ -249,7 +238,6 @@ public class SessionAssistantTests {
      */
     @Test
     public void sessionAssistant_pinsShouldEqualEachOther() {
-    	SessionAssistant sessionAssistant = new SessionAssistant();
     	Pin pin1 = sessionAssistant.get(new GenericPin(pinTestId));
     	Pin pin2 = sessionAssistant.get(new GenericPin(pinTestId));
     	assertTrue(pin1.equals(pin2));
@@ -261,7 +249,6 @@ public class SessionAssistantTests {
      */
     @Test
     public void sessionAssistant_adminsShouldEqualEachOther() {
-    	SessionAssistant sessionAssistant = new SessionAssistant();
     	Admin admin1 = sessionAssistant.get(new Admin(adminTestId));
     	Admin admin2 = sessionAssistant.get(new Admin(adminTestId));
     	assertTrue(admin1.equals(admin2));
@@ -272,7 +259,6 @@ public class SessionAssistantTests {
      */
     @Test
     public void sessionAssistant_shouldBeTheCorrectTableSize() {
-    	SessionAssistant sessionAssistant = new SessionAssistant();
     	List<Pin> list = sessionAssistant.getAllPinsList(); // This can be a large resultset depending on db size. 
     	assertEquals(locationDatabaseSize, list.size());
     }
@@ -282,7 +268,6 @@ public class SessionAssistantTests {
      */
     @Test
     public void sessionAssistant_createProblemPinEntry() {
-    	SessionAssistant sessionAssistant = new SessionAssistant();
     	ProblemPin problemPinOne = new ProblemPin();
     	ProblemPin problemPinTwo = new ProblemPin();
     	problemPinOne = (ProblemPin) sessionAssistant.get(new ProblemPin(problemPinTestId));
@@ -295,7 +280,6 @@ public class SessionAssistantTests {
      */
     @Test
     public void sessionAssistant_shouldEqualTestPillarName() {
-    	SessionAssistant sessionAssistant = new SessionAssistant();
     	Pillar pillar = sessionAssistant.get(new Pillar(testPillarId));
         assertEquals("TestPillar", pillar.getName());
         assertEquals(testPillarId, pillar.getPid());
@@ -306,7 +290,6 @@ public class SessionAssistantTests {
      */
     @Test
     public void sessionAssistant_shouldEqualTestSubPillarName() {
-    	SessionAssistant sessionAssistant = new SessionAssistant();
     	SubPillar subPillar = sessionAssistant.get(new SubPillar(testSubPillarId));
         assertEquals("TestSubPillar", subPillar.getName());
         assertEquals(testSubPillarId, subPillar.getSubPillarId());
@@ -319,7 +302,6 @@ public class SessionAssistantTests {
      */
     @Test
     public void sessionAssistant_shouldEqualSubPillarName() {
-    	SessionAssistant sessionAssistant = new SessionAssistant();
     	Pin pin = sessionAssistant.get(new GenericPin(pinTestId));
         assertEquals("TestSubPillar", pin.getSubPillar().getName());
         assertEquals(testSubPillarId, pin.getSubPillar().getSubPillarId());
@@ -330,7 +312,6 @@ public class SessionAssistantTests {
      */
     @Test
     public void sessionAssistant_shouldEqualPillarName() {
-    	SessionAssistant sessionAssistant = new SessionAssistant();
     	Pin pin = sessionAssistant.get(new GenericPin(pinTestId));
         assertEquals("TestPillar", pin.getSubPillar().getPillar().getName());
         assertEquals(testPillarId, pin.getSubPillar().getPillar().getPid());
@@ -341,7 +322,6 @@ public class SessionAssistantTests {
      */
     @Test
     public void sessionAssistant_shouldEqualPilarId() {
-    	SessionAssistant sessionAssistant = new SessionAssistant();
     	Pin pin = sessionAssistant.get(new GenericPin(pinTestId));
         assertEquals(testPillarId, pin.getSubPillar().getPillar().getPid());
     }
@@ -351,7 +331,6 @@ public class SessionAssistantTests {
      */
     @Test
     public void sessionAssistant_shouldEqualSubPillarId() {
-    	SessionAssistant sessionAssistant = new SessionAssistant();
     	Pin pin = sessionAssistant.get(new GenericPin(pinTestId));
         assertEquals(testSubPillarId, pin.getSubPillar().getSubPillarId());
     }
@@ -362,7 +341,6 @@ public class SessionAssistantTests {
      */
     @Test
     public void sessionAssistant_shouldRetrieveNonEmptyArrayListOfPillar() {
-    	SessionAssistant sessionAssistant = new SessionAssistant();
     	List<Pillar> list = sessionAssistant.getAllPillars();
         assertTrue(list.size() >= 1);
     }
@@ -373,7 +351,6 @@ public class SessionAssistantTests {
      */
     @Test
     public void sessionAssistant_shouldRetrieveNonEmptyArrayListOfPins() {
-    	SessionAssistant sessionAssistant = new SessionAssistant();
     	List<Pin> list = sessionAssistant.getAllPinsList();
         assertTrue(!list.isEmpty());
     }
@@ -384,7 +361,6 @@ public class SessionAssistantTests {
      */
     @Test
     public void sessionAssistant_shouldRetrieveNonEmptyArrayListOfSubPillar() {
-    	SessionAssistant sessionAssistant = new SessionAssistant();
     	List<SubPillar> list = sessionAssistant.getAllSubPillars();
         assertTrue(list.size() >= 1);
     }
@@ -430,33 +406,16 @@ public class SessionAssistantTests {
      */
     @AfterAll
     public static void deleteTestData() {
-        
-    	SessionAssistant sessionAssistant = new SessionAssistant();
-    	
         Admin admin = new Admin();
     	admin.setId(adminTestId);
     	sessionAssistant.delete(admin);
 
-        // Create Pin
-    	Pin pin = new GenericPin();
-    	pin.setId(pinTestId);
-    	
-        // Create ProblemPin
-    	ProblemPin problemPin = new ProblemPin();
-    	problemPin.setId(problemPinTestId);
+        sessionAssistant.delete(new GenericPin(pinTestId)); // Delete Pin
+    	sessionAssistant.delete(new ProblemPin(problemPinTestId)); // Delete ProblemPin
+        sessionAssistant.delete(new GenericPin(nullPinId)); // Delete null pin 
 
-        sessionAssistant.delete(pin); // Delete Pin
-    	sessionAssistant.delete(problemPin); // Delete ProblemPin
-        sessionAssistant.delete(new GenericPin(nullPinId));
-
-        Pillar pillar = new Pillar();
-        pillar.setPid(testPillarId);
-    	SubPillar subPillar = new SubPillar();
-        subPillar.setSubPillarId(testSubPillarId);
-        subPillar.setPillar(pillar);
-
-        sessionAssistant.delete(subPillar);
-        sessionAssistant.delete(pillar);
+        sessionAssistant.delete(new SubPillar(testSubPillarId));
+        sessionAssistant.delete(new Pillar(testPillarId));
         
     	sessionAssistant.shutdownSessionFactory(); // Shutdown
         
