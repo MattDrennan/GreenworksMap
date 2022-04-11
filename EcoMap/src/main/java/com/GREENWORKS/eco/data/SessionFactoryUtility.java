@@ -15,8 +15,7 @@ import org.tinylog.Logger;
 public class SessionFactoryUtility {
 
     private static SessionFactory sessionFactory;
-    private static Boolean firstRun = true; // This is 
-    private static LocalDate date = null;
+    private static LocalDate date = LocalDate.now();
     private static Boolean eventsResolved = false;
     private static Runtime runtime = Runtime.getRuntime();
     private static int numberOfProcessors = runtime.availableProcessors();
@@ -28,7 +27,7 @@ public class SessionFactoryUtility {
     public static SessionFactory getSessionFactory() {
         
         // The server we are testing on is single virtual, but if this software is deployed to a server with more resources this multi-threading block can be used. 
-        if(date != LocalDate.now() || firstRun == true) { // This block should only run once per day. This will run when the first user of the day connects. 
+        if(!date.equals(LocalDate.now())) { // This block should only run once per day. This should run when the first user of the day connects. 
             if(numberOfProcessors > 1) {
                 OldEventCleanerThread oect = new OldEventCleanerThread(date);
                 Thread thread = new Thread(oect);
@@ -54,7 +53,6 @@ public class SessionFactoryUtility {
                 config.addAnnotatedClass(SubPillar.class);
                 config.addAnnotatedClass(Pillar.class);
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(config.getProperties());
-                firstRun = false; 
                 return config.buildSessionFactory(builder.build());
             }
             catch (Throwable ex) {
@@ -64,14 +62,6 @@ public class SessionFactoryUtility {
         } else {
             return sessionFactory;
         }
-    }
-
-    public static Boolean getFirstRun() {
-        return firstRun;
-    }
-
-    public static void setFirstRun(Boolean firstRun) {
-        SessionFactoryUtility.firstRun = firstRun;
     }
 
     public static LocalDate getDate() {
