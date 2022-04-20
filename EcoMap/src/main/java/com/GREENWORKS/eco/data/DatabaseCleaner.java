@@ -35,6 +35,9 @@ public class DatabaseCleaner {
         databaseCleaner.runDatabaseCleaner();
 	}
 
+	/***
+	 * This method is used to run the series of method calls that are necessary for conducting a database clean. 
+	 */
 	public void runDatabaseCleaner() {
 		SessionAssistant sessionAssistant = new SessionAssistant();
 		List<Pin> pinList = sessionAssistant.getAllPinsList();
@@ -52,7 +55,7 @@ public class DatabaseCleaner {
 		sessionAssistant.saveList(problemPinList);
 		sessionAssistant.deleteList(deleteList);
 		sessionAssistant.saveList(oldEvents);
-		sessionAssistant.deleteList(pastDatePinList);
+		sessionAssistant.deleteList(pastDatePinList); 
 		Logger.info("Number of non-Orlando addresses being removed: " + notInOrlandoDelete.size());
 		Logger.info("Number of redudant addresses being removed: " + deleteList.size());
 		Logger.info("Number of past events being removed: " + pastDatePinList.size());
@@ -60,7 +63,7 @@ public class DatabaseCleaner {
 
 	/***
 	 * Method for removing old events. 
-	 * @param now
+	 * @param now The current date. 
 	 */
 	public void removeOldEvents(LocalDate now) {
 		SessionAssistant sessionAssistant = new SessionAssistant();
@@ -80,6 +83,10 @@ public class DatabaseCleaner {
 		sessionAssistant.deleteList(pastDatePinList);
 	}
 
+	/***
+	 * Accessor method for acquring the ArrayList that contains the data points that do not have a clear Orlando address. 
+	 * @return returns the ArrayList<Pin> notInOrlandoList. 
+	 */
 	public ArrayList<Pin> getNotInOrlandoList() {
 		return notInOrlandoList;
 	}
