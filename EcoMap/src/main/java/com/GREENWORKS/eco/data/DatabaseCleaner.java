@@ -68,14 +68,12 @@ public class DatabaseCleaner {
 	public void removeOldEvents(LocalDate now) {
 		SessionAssistant sessionAssistant = new SessionAssistant();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		List<Pin> pinList = sessionAssistant.getAllPinsList();
+		List<EventPin> pinList = sessionAssistant.getAllEvents(); // This will only return data points with a non-null startDate and endDate.
 		for(Pin pin : pinList) {
-			if(pin.getStartDate() != null) { // Most pins are not events (at least in our database) so this is an efficiency check. 
-				LocalDate pinStartDate = LocalDate.parse(pin.getStartDate(), formatter);
-				if(pinStartDate.compareTo(now) <= 0) {
-					Logger.info("OldEvent has been found: " + pin);
-					pastDatePinList.add(pin);
-				}
+			LocalDate pinStartDate = LocalDate.parse(pin.getStartDate(), formatter);
+			if(pinStartDate.compareTo(now) <= 0) {
+				Logger.info("OldEvent has been found: " + pin);
+				pastDatePinList.add(pin);
 			}
 		}
 		ArrayList<OldEventPin> oldEvents = convertOldEvents();
