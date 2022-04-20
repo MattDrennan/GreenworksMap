@@ -111,6 +111,19 @@ public class DataPackageTests {
 	}
 
     /***
+     * This verifies that an address string will be modified so that the image is oriented properly on
+     * the user interface. 
+     */
+    @Test
+    public void pin_getSetThumbnail_shouldEqual() {
+        Pin pin = new GenericPin();
+        pin.setThumbnail("https://github.com/EthanNValencia/EcoMapImageRepo/blob/master/cityorlando.png?raw=true");
+        assertEquals("<img src='https://github.com/EthanNValencia/EcoMapImageRepo/blob/master/cityorlando.png?raw=true' /><br /><br />", pin.getThumbnail());
+    }
+
+    // <img src='https://github.com/EthanNValencia/EcoMapImageRepo/blob/master/cityorlando.png?raw=true' /><br /><br />
+
+    /***
      * Verifies that when a PinData child object does have data assignment to core instance variables 
      * when it is instantiated through the PinDataAbstractFactory.
      */

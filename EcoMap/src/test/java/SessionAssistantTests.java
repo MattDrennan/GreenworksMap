@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import com.GREENWORKS.eco.data.Admin;
 import com.GREENWORKS.eco.data.Data;
+import com.GREENWORKS.eco.data.EventPin;
 import com.GREENWORKS.eco.data.GenericPin;
 import com.GREENWORKS.eco.data.Pillar;
 import com.GREENWORKS.eco.data.Pin;
@@ -110,7 +111,7 @@ public class SessionAssistantTests {
     	Pin pin = sessionAssistant.get(new GenericPin(nullPinId)); 
         assertEquals(null, pin.getSubPillar());
     }
-    
+
     /***
      * Verifies that if a Pin does not exist that the returned object will be null. 
      */

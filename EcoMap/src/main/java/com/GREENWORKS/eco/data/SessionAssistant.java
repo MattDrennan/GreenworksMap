@@ -244,6 +244,15 @@ public class SessionAssistant {
         Logger.info("Retrieved List<Pin> result list.");
     	return pinList;
     }
+    
+    
+    public List<EventPin> getAllEvents() {
+    	Session session = openSession();
+    	List<EventPin> pinList = session.createQuery("SELECT p FROM EventPin p WHERE p.startDate != null AND p.endDate != null", EventPin.class).getResultList();
+        session.close();
+        Logger.info("Retrieved events list.");
+    	return pinList;
+    }
 
     /***
      * This method returns all pillars that are stored in the database. It stores all the pillars in a List<Pillar>. 
