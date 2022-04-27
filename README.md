@@ -1,6 +1,6 @@
-**EcoMap Project:**
+# EcoMap Project:
 
-**How to setup project:**
+# How to setup project:
 
 This project currently relies on three API keys. The first is [ArcGIS](https://developers.arcgis.com/documentation/mapping-apis-and-services/security/api-keys/), the second is [OpenCharge](https://community.openchargemap.org/t/api-keys-are-now-required/161), and the third is [NREL](https://developer.nrel.gov/docs/transportation/alt-fuel-stations-v1/). In addition, it is necessary to create four files: cred.js, Cred.java, DatabaseConstants.java, and hibernate.cfg.xml. The steps for creating these files are below. 
 
@@ -84,3 +84,7 @@ public class DatabaseConstants {
 7. Run all the unit tests in the "EcoMap->src->test->java->" folder. **All of the unit tests must pass.** 
 	1. Optional: Run datainsert.sql to populate database with entries.  
 9. Run the webapp folder on TomCat 10. WARNING: Tomcat 9 will not work.
+
+# Video
+
+https://www.youtube.com/watch?v=V5kqlpHXOTQ
