@@ -5,6 +5,8 @@ import java.util.Set;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -33,6 +35,9 @@ public class DatabaseCleaner {
         databaseCleaner.runDatabaseCleaner();
 	}
 
+	/***
+	 * This method is used to run the series of method calls that are necessary for conducting a database clean. 
+	 */
 	public void runDatabaseCleaner() {
 		SessionAssistant sessionAssistant = new SessionAssistant();
 		List<Pin> pinList = sessionAssistant.getAllPinsList();
@@ -50,12 +55,36 @@ public class DatabaseCleaner {
 		sessionAssistant.saveList(problemPinList);
 		sessionAssistant.deleteList(deleteList);
 		sessionAssistant.saveList(oldEvents);
-		sessionAssistant.deleteList(pastDatePinList);
+		sessionAssistant.deleteList(pastDatePinList); 
 		Logger.info("Number of non-Orlando addresses being removed: " + notInOrlandoDelete.size());
 		Logger.info("Number of redudant addresses being removed: " + deleteList.size());
 		Logger.info("Number of past events being removed: " + pastDatePinList.size());
 	}
 
+	/***
+	 * Method for removing old events. 
+	 * @param now The current date. 
+	 */
+	public void removeOldEvents(LocalDate now) {
+		SessionAssistant sessionAssistant = new SessionAssistant();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		List<EventPin> pinList = sessionAssistant.getAllEvents(); // This will only return data points with a non-null startDate and endDate.
+		for(Pin pin : pinList) {
+			LocalDate pinStartDate = LocalDate.parse(pin.getStartDate(), formatter);
+			if(pinStartDate.compareTo(now) <= 0) {
+				Logger.info("OldEvent has been found: " + pin);
+				pastDatePinList.add(pin);
+			}
+		}
+		ArrayList<OldEventPin> oldEvents = convertOldEvents();
+		sessionAssistant.saveList(oldEvents);
+		sessionAssistant.deleteList(pastDatePinList);
+	}
+
+	/***
+	 * Accessor method for acquring the ArrayList that contains the data points that do not have a clear Orlando address. 
+	 * @return returns the ArrayList<Pin> notInOrlandoList. 
+	 */
 	public ArrayList<Pin> getNotInOrlandoList() {
 		return notInOrlandoList;
 	}

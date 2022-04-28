@@ -2,7 +2,6 @@ package com.GREENWORKS.eco.data;
 
 import java.util.ArrayList;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -256,13 +255,18 @@ public abstract class Pin {
 	}
 
 	/***
-	 * Mutator method for assigning to the thumbnail instance variable. Conducts
-	 * cleaning on the parameter. 
+	 * Mutator method for assigning to the thumbnail instance variable. 
 	 * @param thumbnail The value to be assigned. 
 	 */
 	public void setThumbnail(String thumbnail) {
-		this.thumbnail = thumbnail;
+		if(!thumbnail.contains("<img src='") && !thumbnail.contains("' /><br /><br />")) {
+			this.thumbnail = "<img src='" + thumbnail + "' /><br /><br />";
+		} else {
+			this.thumbnail = thumbnail;
+		}
 	}
+
+	// <img src='https://github.com/MattDrennan/GreenworksMap/blob/master/EcoMap/src/main/webapp/images/4roots.png?raw=true' /><br /><br />
 
 	/***
 	 * Returns the link variable, formatted as an HTML string

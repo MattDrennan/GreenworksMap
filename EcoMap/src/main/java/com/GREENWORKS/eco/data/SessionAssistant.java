@@ -1,5 +1,6 @@
 package com.GREENWORKS.eco.data;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,20 @@ import org.tinylog.Logger;
 public class SessionAssistant { 
 	
     private static SessionFactory sessionFactory;
+
+    public void checkSessionFactoryTime() {
+        if(!SessionFactoryUtility.getEventsResolved() && !SessionFactoryUtility.isTestRun()) {
+            Logger.info("Single-threaded OldEvent cleaning is taking place...");
+            DatabaseCleaner databaseCleaner = new DatabaseCleaner();
+            databaseCleaner.removeOldEvents(LocalDate.now());
+            SessionFactoryUtility.setEventsResolved(true);
+            Logger.info("Single-threaded OldEvent cleaning has finished.");
+        }
+    }
+
+    public void setTestRun() {
+        SessionFactoryUtility.setTestRun(true);
+    }
     
     /***
      * In order to instantiate the SessionFactory thi method must be called. The SessionFactory will refer to the private method
@@ -24,7 +39,7 @@ public class SessionAssistant {
             return sessionFactory.openSession();
         }
     	sessionFactory = SessionFactoryUtility.getSessionFactory();
-        Logger.info("Opening session.");
+        Logger.info("A new SessionAssistant has acquiring the SessionFactory.");
     	return sessionFactory.openSession();
     }
     
@@ -227,6 +242,15 @@ public class SessionAssistant {
     	List<Pin> pinList = session.createQuery("SELECT p FROM GenericPin p ORDER BY p.locationName", Pin.class).getResultList();
         session.close();
         Logger.info("Retrieved List<Pin> result list.");
+    	return pinList;
+    }
+    
+    
+    public List<EventPin> getAllEvents() {
+    	Session session = openSession();
+    	List<EventPin> pinList = session.createQuery("SELECT p FROM EventPin p WHERE p.startDate != null AND p.endDate != null", EventPin.class).getResultList();
+        session.close();
+        Logger.info("Retrieved events list.");
     	return pinList;
     }
 

@@ -6,3 +6,4 @@ Cred.java
 hibernate.properties
 DatabaseConstants.java
 hibernate.cfg.xml
+EcoMap/src/main/webapp/WEB-INF/classes/hibernate 2.properties
